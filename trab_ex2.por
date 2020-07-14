@@ -52,8 +52,8 @@ programa
 	}
 	
 	funcao inicio(){
-		real val1 = 1.0,val2 = 1.0,resp, guardado=0
-		inteiro repetir = 1
+		real val1 = 1.0,val2 = 1.0, guardado=0.0
+		inteiro repetir = 1,resp
 			
 		enquanto(repetir == 1 ou repetir ==2){	
 			se (repetir==2){
@@ -95,7 +95,7 @@ programa
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 866; 
+ * @POSICAO-CURSOR = 1512; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
