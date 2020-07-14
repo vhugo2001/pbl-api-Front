@@ -8,9 +8,7 @@ programa
 		real val1[10],val2[10],val3[10],media[10]
 		inteiro cont
 		cadeia nome[10],situacao[10]
-		cadeia turma[10]
-
-
+		
 		para(cont = 0;cont<10;cont++){
 			escreva("\nO nome do aluno: ")
 			leia(nome[cont])
@@ -48,7 +46,7 @@ programa
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 132; 
+ * @POSICAO-CURSOR = 253; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;

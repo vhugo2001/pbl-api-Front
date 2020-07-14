@@ -6,7 +6,7 @@ programa
         real = numero[10], menor, media = 0.0
         para(inteiro i = 0; i<=9; i++)
         {
-            escreva("Digite o, ", i+1," número: ")
+            escreva("Digite o ", i+1,"° número: ")
             leia(numero[i])
         }
         para(inteiro i = 0; i <= 9; i++)
@@ -35,7 +35,7 @@ programa
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 86; 
+ * @POSICAO-CURSOR = 175; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;

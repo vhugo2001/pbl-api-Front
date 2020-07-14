@@ -3,13 +3,13 @@ programa
 	
 	funcao inicio()
 	{
-		inteiro num[10],cont,cont2,numeracao = 10,aux
+		inteiro num[10],cont,cont2,numeracao = 0,aux
 	     inteiro resp
 	     logico primeiro = verdadeiro
 		para(cont = 0;cont<10;cont++){
-			escreva("Digite ", numeracao, " numeros: ")
+			escreva("Digite ", numeracao +1, "° numero: ")
 			leia(num[cont])
-			numeracao--
+			numeracao++
 		}
 		escreva("Deseja ordenar:\n1)Decrescente \n2)Crescente\nR: ")
 		leia(resp)
@@ -61,7 +61,7 @@ programa
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 1159; 
+ * @POSICAO-CURSOR = 212; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;

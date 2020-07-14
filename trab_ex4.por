@@ -13,9 +13,6 @@ programa
         escreva("Gostaria de ver qual série: ")
         leia(opcao)
 
- 
-
-        
         se(opcao == 1){
             limpa()
             escreva("Quantos elementos gostaria de ver: ")
@@ -38,9 +35,6 @@ programa
         }
     
     }
-
- 
-
     funcao inteiro fibonacci(inteiro sequencia)
     {        
         se (sequencia == 1)
@@ -51,14 +45,8 @@ programa
         {
             retorne 1
         }
-
- 
-
         retorne fibonacci(sequencia - 1) + fibonacci(sequencia - 2)        
     }
-
- 
-
     funcao inteiro fatorial(inteiro n){
         se(n == 0){
             retorne 1
@@ -73,7 +61,7 @@ programa
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 1443; 
+ * @POSICAO-CURSOR = 368; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;

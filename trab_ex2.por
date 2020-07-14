@@ -1,76 +1,90 @@
 programa
 {
-	funcao real somar(real val1, real val2){
-		 
-		escreva("Digite o primeiro valor ")
-		leia(val1)
-		escreva("Digite o segundo valor ")
+	funcao real somar(real val1, real val2, inteiro repetir){
+		real guardado
+		se(repetir!=2){
+			escreva("Digite o primeiro valor: ")
+			leia(val1)
+		}
+		escreva("Digite o segundo valor: ")
 		leia(val2)
-		
-		retorne  val1 + val2
+		guardado = val1 + val2
+		retorne  guardado
 	}
-	funcao real subtrair(real val1, real val2){
-		
-		escreva("Digite o primeiro valor ")
-		leia(val1)
-		escreva("Digite o segundo valor ")
+	funcao real subtrair(real val1, real val2, inteiro repetir){
+		real guardado
+		se(repetir!=2){
+			escreva("Digite o primeiro valor: ")
+			leia(val1)
+		}
+		escreva("Digite o segundo valor: ")
 		leia(val2)
-		
-		retorne val1 - val2
+		guardado = val1 - val2
+		retorne  guardado
 	}
-	funcao real multiplicar(real val1, real val2){ 
-		
-		escreva("Digite o primeiro valor ")
-		leia(val1)
-		escreva("Digite o segundo valor ")
+	funcao real multiplicar(real val1, real val2, inteiro repetir){ 
+		real guardado
+		se(repetir!=2){
+			escreva("Digite o primeiro valor: ")
+			leia(val1)
+		}
+		escreva("Digite o segundo valor: ")
 		leia(val2) 
-		
-		retorne val1 * val2
+		guardado = val1 * val2
+		retorne  guardado
 		}
 		
-	funcao real dividir(real val1, real val2){
-		escreva("Digite o primeiro valor ")
-		leia(val1)
+	funcao real dividir(real val1, real val2, inteiro repetir){
+		real guardado
+		se(repetir!=2){
+			escreva("Digite o primeiro valor: ")
+			leia(val1)
+		}
 		faca{
-			se(val2 <= 0){
-				escreva("Nao e possivel dividir por numeros negativos ou por 0\n")
-			}
-		escreva("Digite o segundo valor ")
+		
+		escreva("Nao e possivel dividir por numeros negativos ou por 0\n")	
+		escreva("Digite o segundo valor: ")
 		leia(val2)
 			
 			}enquanto(val2 <= 0)
-			
-		retorne val1 / val2
+		guardado = val1 / val2
+		retorne  guardado
 	}
 	
 	funcao inicio(){
-		real val1 = 1.0,val2 = 1.0,resp
+		real val1 = 1.0,val2 = 1.0,resp, guardado=0
 		inteiro repetir = 1
 			
-		enquanto(repetir == 1){	
-				
+		enquanto(repetir == 1 ou repetir ==2){	
+			se (repetir==2){
+				val1 = guardado	
+			}
 			escreva("\nDigite: \n 1-Somar \n 2-Subtrair \n 3-Multiplicar \n 4-Dividir \n R: ")
 			leia(resp)
 	
 			se(resp == 1){
-				escreva(somar(val1,val2))
+				guardado = somar(val1,val2,repetir))
+				escreva(guardado)
 			}
 			se(resp == 2){
-				escreva(subtrair(val1,val2))
+				guardado = subtrair(val1,val2,repetir))
+				escreva(guardado)
 			}
 			se(resp == 3){
-				escreva(multiplicar(val1,val2))
+				guardado = multiplicar(val1,val2,repetir))
+				escreva(guardado)
 			}
 			se(resp == 4){
-				escreva(dividir(val1,val2))
+				guardado = dividir(val1,val2,repetir))
+				escreva(guardado)
 			}
 			faca{
-				escreva("\n\nDeseja calcular mais vezes?\n1)Sim \n2)Nao \nR: ")
+				escreva("\n\nDeseja calcular mais vezes?\n1)Sim,com valor diferente \n2)Sim, com o mesmo valor \n3)Nao \nR: ")
 				leia(repetir)
-				se(repetir ==1){
+				se(repetir ==1 ou repetir==3){
 					limpa()
 				}
-			}enquanto(repetir != 1 e repetir !=2)
+			}enquanto(repetir != 1 e repetir !=2 e repetir !=3)
 		}
 		escreva("\nACABOU O PROGRAMA")	
 	}
@@ -81,7 +95,7 @@ programa
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 1317; 
+ * @POSICAO-CURSOR = 866; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
