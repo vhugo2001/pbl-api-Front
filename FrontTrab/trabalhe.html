@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilo.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap-grid.css">
+    <title>Front End Final Trabalhe</title>
+</head>
+<body>
+    <nav class="navi">
+        <h1 id="titulo" >Doguinho's Life</h1>
+        <a href="index.html">Inicio</a>
+        <a href="produtos.html">Produtos</a>
+        <a href="contato.html">Contato</a>  
+        <a href="trabalhe.html">Trabalhe&nbspConosco</a>
+    </nav>
+
+    <form>
+        <fieldset class="col-md-6" id="formulario">
+            <legend>Dados pessoais</legend>
+            <div class="form-group">
+                <label for="nome">Nome completo</label>
+                <input type="text" class="form-control" id="nome"  name="nome" placeholder="Nome e Sobrenome"  >
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="doguinho'slife@gmail.com">
+            </div>
+            <div class="form-group">
+                <label for="tel">Número de telefone</label>
+                <input type="tel" class="form-control" id="tel" name="tel" placeholder="(00)00000-0000 (somente números)" maxlength="10">
+            </div>
+
+            <textarea class="form-group" name="input_9" id="area_texto" class="textarea medium" tabindex="57" placeholder="Resumo do currículo" aria-required="true" 
+            aria-invalid="false" rows="10" cols="50"></textarea>
+
+
+            <input type="file" style="cursor: pointer;" required />
+            <br> 
+            
+            <button id="botao_envio" type="submit" class="btn btn-primary" id="botao-enviar-trabalhe" >
+                Enviar currículo
+            </button>
+        </fieldset>
+    </form>
+
+
+    <footer class="rod-trabalhe" id="rodape">
+        <p>Todos os direitos autorais Doguinho's Life </p>   
+    </footer>
+</body>
+</html>
+
+
+
