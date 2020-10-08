@@ -8,6 +8,33 @@ function Info() {
       <div style={{ marginTop: "60px" }}>
         <text>Info</text>
       </div>
+      <div style={{ marginTop: "60px" }}>
+        <text>Info</text>
+      </div>
+      <div style={{ marginTop: "60px" }}>
+        <text>Info</text>
+      </div>
+      <div style={{ marginTop: "60px" }}>
+        <text>Info</text>
+      </div>
+      <div style={{ marginTop: "60px" }}>
+        <text>Info</text>
+      </div>
+      <div style={{ marginTop: "60px" }}>
+        <text>Info</text>
+      </div>
+      <div style={{ marginTop: "60px" }}>
+        <text>Info</text>
+      </div>
+      <div style={{ marginTop: "60px" }}>
+        <text>Info</text>
+      </div>
+      <div style={{ marginTop: "60px" }}>
+        <text>Info</text>
+      </div>
+      <div style={{ marginTop: "60px" }}>
+        <text>Login</text>
+      </div>
     </>
   );
 }

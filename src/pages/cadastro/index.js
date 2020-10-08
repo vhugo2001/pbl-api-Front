@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../../Components/App.css";
 import DatePicker from "react-date-picker";
-import Button, { ButtonSubmit } from "../../Components/styleEstilos";
+import { ButtonSubmit } from "../../Components/styleEstilos";
 // import * as ReactBootstrap from 'react-bootstrap'
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -213,14 +213,6 @@ function App() {
             </ButtonSubmit>
           </a>
         </form>
-      </div>
-
-      <div className="rodape">
-        <p>
-          Reitoria da UFF Rua Miguel de Frias, 9 - Icaraí, Niterói - RJ
-          24220-900<br></br>
-          CNPJ 28.523.215/0001-06 - Telefone: 21 2629-5000
-        </p>
       </div>
     </div>
   );

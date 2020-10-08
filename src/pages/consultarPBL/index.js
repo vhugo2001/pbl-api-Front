@@ -1,13 +1,10 @@
 import React from "react";
 
 import "bootstrap/dist/css/bootstrap.min.css";
+import RegisterPBL from "../../Components/RegisterPBL";
 
 function ConsultarPBL() {
-  return (
-    <div style={{ marginTop: "60px" }}>
-      <text>ConsultarPBL</text>
-    </div>
-  );
+  return <RegisterPBL />;
 }
 
 export default ConsultarPBL;
