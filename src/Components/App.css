@@ -1,4 +1,5 @@
-html,body{
+html,
+body {
   height: 100%;
   width: 100%;
 }
@@ -42,47 +43,47 @@ html,body{
 }
 
 /*Codigos genericos*/
-.titulo{
+.titulo {
   background-color: #002147;
   text-align: center;
   width: 100%;
   font-size: 16px;
   color: #fff;
 }
-.titulo h1,h2,h3{
-  margin-top:0px;
+.titulo h1,
+h2,
+h3 {
+  margin-top: 0px;
 }
 
-.rodape{
+.rodape {
   background-color: #002147;
   color: #fff;
-  position:absolute;
-  left:0;
-  bottom:0;
-  right:0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
 /*Codigos referentes ao App.js*/
-.ufflogo{
-    width: 95px;
-    height: 120px;
+.ufflogo {
+  width: 95px;
+  height: 120px;
 }
 
 .sidenav {
-  height: 100%; 
-  width: 160px; 
-  position: relative; 
-  z-index: 1; 
+  height: 100%;
+  width: 160px;
+  position: relative;
+  z-index: 1;
   top: 0;
   left: 0;
-  background-color: #2f56ca; 
+  background-color: #2f56ca;
   overflow-x: hidden;
   padding-top: 20px;
   float: left;
-  padding-top:0;
+  padding-top: 0;
   align-items: stretch;
 }
-
 
 .sidenav a {
   padding: 6px 8px 6px 16px;
@@ -109,21 +110,20 @@ a[data-toggle="collapse"] {
   transform: translateY(-50%);
 }
 
-div.checkbox_select{
+div.checkbox_select {
   width: 200px;
 }
-.checkbox_select_anchor{
+.checkbox_select_anchor {
   display: block;
-  background:#002147;
+  background: #002147;
   color: white;
   cursor: pointer;
   padding: 10px 5px 5px;
   position: relative;
 }
-.checkbox_select_anchor:after{
-  width: 0; 
+.checkbox_select_anchor:after {
+  width: 0;
 }
-
 
 .main {
   margin-left: 160px; /* Same as the width of the sidenav */
@@ -132,8 +132,10 @@ div.checkbox_select{
 }
 
 @media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav a {
+    font-size: 18px;
+  }
 }
-
-
