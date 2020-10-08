@@ -14,13 +14,16 @@ const SideDrawer = (props) => {
     <nav className={drawerClasses}>
       <ul>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/">O que é o PBL</Link>
         </li>
         <li>
-          <Link to="/add">Add </Link>
+          <Link to="/consult">Consultar PBL</Link>
         </li>
         <li>
-          <Link to="/">Delete</Link>
+          <Link to="/cadastro">Cadastro</Link>
+        </li>
+        <li>
+          <Link to="/login">Login</Link>
         </li>
       </ul>
     </nav>

@@ -2,14 +2,14 @@ import React from "react";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function Info() {
+function Login() {
   return (
     <>
       <div style={{ marginTop: "60px" }}>
-        <text>Info</text>
+        <text>Login</text>
       </div>
     </>
   );
 }
 
-export default Info;
+export default Login;
