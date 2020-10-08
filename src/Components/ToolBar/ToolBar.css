@@ -1,0 +1,69 @@
+.toolbar {
+  position: fixed;
+  width: 100%;
+  height: 50px;
+  background: #0c0c0d;
+  top: 0px;
+  left: 0px;
+}
+.spacer {
+  flex: 1;
+}
+
+.toolbar_logo {
+  margin-left: 1rem;
+}
+
+.toolbar_navigation {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 1rem;
+}
+
+.toolbar_logo a {
+  color: #f2f2f2;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.toolbar_navigation_items ul {
+  font-family: "Noto Sans JP", sans-serif;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.toolbar_navigation_items li {
+  padding: 0 2rem;
+}
+
+.toolbar_navigation_items a {
+  color: #f2f2f2;
+  text-decoration: none;
+}
+
+.toolbar_navigation_items a:hover,
+.toolbar_navigation_items a:active {
+  color: #f2bf27;
+}
+
+@media (max-width: 768px) {
+  .toolbar_navigation_items {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .toolbar_toggle_button {
+    display: none;
+  }
+  .toolbar_logo {
+    margin-left: 0;
+  }
+}
+.umbreon_logo {
+  display: flex;
+  height: 70px;
+}
