@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "./Toolbar.css";
-import DrawerToggleButton from "../SideDrawer/DrawerToggleButton";
+import DrawerToggleButton from "../Sidedrawer/DrawerToggleButton";
 
 const Toolbar = (props) => {
   return (
@@ -14,9 +14,9 @@ const Toolbar = (props) => {
         <div className="toolbar_logo">
           <a href="/">
             <img
-              className="umbreon_logo"
+              className="uff_logo"
               alt="Toolbar"
-              src={require("../pngegg.png")}
+              src={require("../../Images/Logo_UFF.png")}
             />
           </a>
         </div>
@@ -24,13 +24,16 @@ const Toolbar = (props) => {
         <div className="toolbar_navigation_items">
           <ul>
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/">O que é o PBL</Link>
             </li>
             <li>
-              <Link to="/add">Add </Link>
+              <Link to="/consult">Consultar PBL</Link>
             </li>
             <li>
-              <Link to="/delete">Delete</Link>
+              <Link to="/cadastro">Cadastro</Link>
+            </li>
+            <li>
+              <Link to="/login">Login</Link>
             </li>
           </ul>
         </div>
