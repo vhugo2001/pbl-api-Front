@@ -1,6 +1,6 @@
 .side_drawer {
   height: 100%;
-  background: #0c0c0d;
+  background: #002147;
 
   position: fixed;
   top: 0;
@@ -22,6 +22,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  float: left;
 }
 
 .side_drawer li {
