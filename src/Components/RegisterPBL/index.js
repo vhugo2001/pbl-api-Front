@@ -4,10 +4,21 @@ import DatePicker from "react-date-picker";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ButtonSubmit } from "../../Components/styleEstilos";
 import api from "../../Services/api";
+import { Multiselect } from "multiselect-react-dropdown";
 
 function RegistarPBL() {
   const [inicio, onChange] = useState(new Date());
   const [fim, onChange2] = useState(new Date());
+  const data = [
+    { id: 1, alunos: "aluno 1" },
+    { id: 2, alunos: "aluno 2" },
+    { id: 3, alunos: "aluno 3" },
+    { id: 4, alunos: "aluno 4" },
+    { id: 5, alunos: "aluno 5" },
+    { id: 6, alunos: "aluno 6" },
+    { id: 7, alunos: "aluno 7" },
+  ];
+  const [options] = useState(data);
 
   const handleDateInicio = (data) => {
     console.log(data);
@@ -61,10 +72,10 @@ function RegistarPBL() {
               type="titulo"
               class="form-control"
               placeholder="Titulo do PBL"
-            //   value={pbl.titulo}
-            //     onChange={(e) =>
-            //       setPbl({ ...pbl, titulo: e.target.value })
-            //     }
+              //   value={pbl.titulo}
+              //     onChange={(e) =>
+              //       setPbl({ ...pbl, titulo: e.target.value })
+              //     }
             />
           </div>
 
@@ -188,6 +199,16 @@ function RegistarPBL() {
                 </option>
               </select>
             </div>
+          </div>
+          <div
+            className="col-sm-12"
+            style={{ justifyContent: "center", marginTop: 20 }}
+          >
+            <Multiselect
+              options={options}
+              displayValue="alunos"
+              placeholder="Atribua os alunos"
+            />
           </div>
 
           <a href="/">
