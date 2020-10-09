@@ -3,10 +3,42 @@ import DatePicker from "react-date-picker";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ButtonSubmit } from "../../Components/styleEstilos";
+import api from "../../Services/api";
 
 function RegistarPBL() {
   const [inicio, onChange] = useState(new Date());
   const [fim, onChange2] = useState(new Date());
+
+  const handleDateInicio = (data) => {
+    console.log(data);
+  };
+
+  const [value, setValue] = useState();
+  const [formattedValue, setFormattedValue] = useState();
+
+  //   const [pbl, setPbl] = useState({
+  //     id: 0,
+  //     titulo: "",
+  //     dataInicio: 0,
+  //     dataFim: 1,
+  //     empresa: "",
+  //     tema: "",
+  //     situacaoProblema: "",
+  //   });
+
+  //   const handleAddPBL = async () => {
+  //     try {
+  //       await api.post("/pbl", PBL);
+  //     } catch (error) {
+  //       alert("Erro no acesso a API");
+  //     }
+  //   };
+
+  //   const handleSubmit = (e) => {
+  //     e.preventDefault();
+  //     console.log(pbl);
+  //     handleAddPBL();
+  //   };
 
   return (
     <>
@@ -29,6 +61,10 @@ function RegistarPBL() {
               type="titulo"
               class="form-control"
               placeholder="Titulo do PBL"
+              //   value={pbl.titulo}
+              //     onChange={(e) =>
+              //       setPbl({ ...pbl, titulo: e.target.value })
+              //     }
             />
           </div>
 
@@ -36,13 +72,17 @@ function RegistarPBL() {
             <div className="col-sm" style={{ textAlign: "center" }}>
               <label>Data de Inicio</label>
               <br />
-              <DatePicker onChange={onChange} value={inicio} />
+              <DatePicker onChange={handleDateInicio} value={inicio} />
             </div>
 
             <div className="col-sm" style={{ textAlign: "center" }}>
               <label>Data de Fim</label>
               <br />
-              <DatePicker onChange={onChange2} value={fim} />
+              <DatePicker
+                onChange={onChange2}
+                value={fim}
+                format="dd/MM/yyyy"
+              />
             </div>
 
             <div className="col-sm" style={{ textAlign: "center" }}>
