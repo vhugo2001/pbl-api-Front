@@ -16,7 +16,7 @@ const Toolbar = (props) => {
             <img
               className="uff_logo"
               alt="Toolbar"
-              src={require("../../Images/Logo_UFF.png")}
+              src={require("../../Images/Logo_UFF_2.png")}
             />
           </a>
         </div>
