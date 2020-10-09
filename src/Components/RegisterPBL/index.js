@@ -61,10 +61,10 @@ function RegistarPBL() {
               type="titulo"
               class="form-control"
               placeholder="Titulo do PBL"
-              //   value={pbl.titulo}
-              //     onChange={(e) =>
-              //       setPbl({ ...pbl, titulo: e.target.value })
-              //     }
+            //   value={pbl.titulo}
+            //     onChange={(e) =>
+            //       setPbl({ ...pbl, titulo: e.target.value })
+            //     }
             />
           </div>
 
