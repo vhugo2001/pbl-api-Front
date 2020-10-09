@@ -3,10 +3,12 @@ import DatePicker from "react-date-picker";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ButtonSubmit } from "../../Components/styleEstilos";
+import { Multiselect } from 'multiselect-react-dropdown';
 
 function RegistarPBL() {
   const [inicio, onChange] = useState(new Date());
   const [fim, onChange2] = useState(new Date());
+
 
   return (
     <>

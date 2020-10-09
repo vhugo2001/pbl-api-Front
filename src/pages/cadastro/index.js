@@ -4,10 +4,22 @@ import DatePicker from "react-date-picker";
 import { ButtonSubmit } from "../../Components/styleEstilos";
 // import * as ReactBootstrap from 'react-bootstrap'
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Multiselect } from 'multiselect-react-dropdown';
 
 function App() {
   const [inicio, onChange] = useState(new Date());
   const [fim, onChange2] = useState(new Date());
+  const data = [
+
+    { id: 1, alunos: 'aluno 1' },
+    { id: 2, alunos: 'aluno 2' },
+    { id: 3, alunos: 'aluno 3' },
+    { id: 4, alunos: 'aluno 4' },
+    { id: 5, alunos: 'aluno 5' },
+    { id: 6, alunos: 'aluno 6' },
+    { id: 7, alunos: 'aluno 7' },
+  ]
+  const [options] = useState(data)
 
   return (
     <div
@@ -206,12 +218,16 @@ function App() {
               </select>
             </div>
           </div>
-
-          <a href="/">
-            <ButtonSubmit style={{ marginTop: 20 }}>
-              <b>Cadastrar</b>
-            </ButtonSubmit>
-          </a>
+          <div className='col-sm-12' style={{ justifyContent: 'center', marginTop: 20 }}>
+            <Multiselect options={options} displayValue='alunos' placeholder='Atribua os alunos' />
+          </div>
+          <div>
+            <a href="/" className='botaoSubmit'>
+              <ButtonSubmit style={{ marginTop: 20 }}>
+                <b>Cadastrar</b>
+              </ButtonSubmit>
+            </a>
+          </div>
         </form>
       </div>
     </div>
