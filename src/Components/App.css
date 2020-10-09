@@ -125,6 +125,26 @@ div.checkbox_select {
   width: 0;
 }
 
+.botaoSubmit{
+  margin-Top: 15%;
+}
+
+.dropdown:hover > .dropdown-menu {
+  display: block;
+}
+
+label[for=navbar-toggle-cbox] {
+  cursor: pointer;
+}
+
+#navbar-toggle-cbox:checked ~ .collapse {
+  display: block;
+}
+
+#navbar-toggle-cbox {
+  display: none;
+}
+
 .main {
   margin-left: 160px; /* Same as the width of the sidenav */
   font-size: 28px; /* Increased text to enable scrolling */
