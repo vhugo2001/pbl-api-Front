@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function Info() {
   return (
     <>
-      <div style={{ marginTop: "60px" }}>
+      <div>
         <text>Info</text>
       </div>
       <div style={{ marginTop: "60px" }}>
