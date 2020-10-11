@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import DatePicker from "react-date-picker";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ButtonSubmit } from "../../Components/styleEstilos";
-import api from "../../Services/api";
+
 import { Multiselect } from "multiselect-react-dropdown";
 // import moment from 'react-moment';
 import { format } from 'date-fns'
