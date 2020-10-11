@@ -8,12 +8,12 @@ import "./App.css";
 function App() {
   return (
     <>
-      <div className="App">
-        <BrowserRouter>
-          <Bar />
-          {/* <Routes />  */}
-        </BrowserRouter>
-      </div>
+      {/* <div className="App"> */}
+      <BrowserRouter>
+        <Bar />
+        {/* <Routes />  */}
+      </BrowserRouter>
+      {/* </div> */}
     </>
   );
 }

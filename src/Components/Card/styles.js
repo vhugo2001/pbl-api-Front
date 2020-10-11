@@ -38,6 +38,7 @@ export const Title = styled.label`
 
 export const InputText = styled.input`
   width: 100%;
+  font-size: 1rem;
   height: 40px;
   padding-left: 10px;
   border-radius: 5px;
@@ -50,8 +51,9 @@ export const InputText = styled.input`
   }
 `;
 
-export const InputTextArea= styled.textarea`
+export const InputTextArea = styled.textarea`
   width: 100%;
+  font-size: 1rem;
   height: 150px;
   padding-left: 10px;
   border-radius: 5px;

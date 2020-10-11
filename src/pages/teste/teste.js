@@ -1,66 +1,84 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "../../Components/Card/CardPrincipal";
-import { DropdownButton, Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import DropDownList from "../../Components/DropDownList/Default/DropDownList";
 
-const teste = () => {
+import service from "../../Services/TemaPblService";
+
+const Teste = () => {
+  const [lista, setLista] = useState([]);
+  const [temaSelecionado, setTemaSelecionado] = useState({});
+
+  useEffect(() => {
+    service
+      .listarTodos()
+      .then((response) => {
+        let data = response.data;
+        setLista(data);
+        console.log(lista);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  useEffect(() => {
+    console.log(temaSelecionado)
+  }, [temaSelecionado])
+
   return (
     //Remover a div pai e atribur o padding 30px no componente Home!!!!!
-    <div style={{ padding: "30px" }}>
-      <Card>
-        <Card.Form>
-          <Card.Form.Group style={{ flex: 5 }}>
-            <Card.Form.Title>Tema PBL</Card.Form.Title>
-            <DropdownButton id="dropdown-basic-button" title="Dropdown button">
-              <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-              <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-            </DropdownButton>
-          </Card.Form.Group>
 
-          <Card.Form.Group>
-            <Card.Form.Title>Data Inicio</Card.Form.Title>
-            <Card.Form.InputText />
-          </Card.Form.Group>
+    <Card>
+      <Card.Form>
+        <Card.Form.Group style={{ flex: 5 }}>
+          <Card.Form.Title>Tema PBL</Card.Form.Title>
+          <DropDownList
+            lista={lista}
+            onSelect={setTemaSelecionado}
+          ></DropDownList>
+        </Card.Form.Group>
 
-          <Card.Form.Group>
-            <Card.Form.Title>Data Conclusão</Card.Form.Title>
-            <Card.Form.InputText />
-          </Card.Form.Group>
+        <Card.Form.Group>
+          <Card.Form.Title>Data Inicio</Card.Form.Title>
+          <Card.Form.InputText />
+        </Card.Form.Group>
 
-          <Card.Form.BreakRow />
+        <Card.Form.Group>
+          <Card.Form.Title>Data Conclusão</Card.Form.Title>
+          <Card.Form.InputText />
+        </Card.Form.Group>
 
-          <Card.Form.Group style={{ flex: 5 }}>
-            <Card.Form.Title>Alunos</Card.Form.Title>
-            <Card.Form.InputText />
-          </Card.Form.Group>
+        <Card.Form.BreakRow />
 
-          <Card.Form.Group>
-            <Card.Form.Title>Empresa</Card.Form.Title>
-            <Card.Form.InputText />
-          </Card.Form.Group>
+        <Card.Form.Group style={{ flex: 5 }}>
+          <Card.Form.Title>Alunos</Card.Form.Title>
+          <Card.Form.InputText />
+        </Card.Form.Group>
 
-          <Card.Form.BreakRow />
+        <Card.Form.Group>
+          <Card.Form.Title>Empresa</Card.Form.Title>
+          <Card.Form.InputText />
+        </Card.Form.Group>
 
-          <Card.Form.Group>
-            <Card.Form.Title>Titulo PBL</Card.Form.Title>
-            <Card.Form.InputText />
-          </Card.Form.Group>
+        <Card.Form.BreakRow />
 
-          <Card.Form.BreakRow />
+        <Card.Form.Group>
+          <Card.Form.Title>Titulo PBL</Card.Form.Title>
+          <Card.Form.InputText />
+        </Card.Form.Group>
 
-          <Card.Form.Group>
-            <Card.Form.Title>Situação problema</Card.Form.Title>
-            <Card.Form.InputTextArea />
-          </Card.Form.Group>
+        <Card.Form.BreakRow />
 
-          <Card.Form.GroupButton>
-            <Card.Form.Submit>Salvar</Card.Form.Submit>
-          </Card.Form.GroupButton>
-        </Card.Form>
-      </Card>
-    </div>
+        <Card.Form.Group>
+          <Card.Form.Title>Situação problema</Card.Form.Title>
+          <Card.Form.InputTextArea />
+        </Card.Form.Group>
+
+        <Card.Form.GroupButton>
+          <Card.Form.Submit>Salvar</Card.Form.Submit>
+        </Card.Form.GroupButton>
+      </Card.Form>
+    </Card>
   );
 };
-export default teste;
+export default Teste;
