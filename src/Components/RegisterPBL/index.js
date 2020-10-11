@@ -14,18 +14,7 @@ function RegistarPBL() {
   const [data, setData] = useState([]);
   // const [pbl, setPbl] = useState('');
 
-  useEffect(() => {
-    api.get('/pbl').then(response => {
-      setData(response.data);
-      console.log(response.data)
-    })
-  }, [])
-  useEffect(() => {
-    api.post('/pbl').then(response => {
-      setData(response.data);
-      console.log(response.data)
-    })
-  }, [])
+
 
   const handleClick = () => {
     console.log("click", data)
