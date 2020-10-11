@@ -1,6 +1,6 @@
 import http from "./httpCommon";
 
-const URL_PBL = "/pbl";
+const URL_PBL = "/aluno";
 
 const listarTodos = () => {
   return http.get(URL_PBL);
