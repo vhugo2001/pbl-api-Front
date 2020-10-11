@@ -5,9 +5,11 @@ import Cadastro from "../pages/cadastro";
 import ConsultarPBL from "../pages/consultarPBL";
 import Info from "../pages/info";
 import Login from "../pages/login";
+import Teste from "../pages/teste/teste"
 
 const Routes = () => (
   <Switch>
+    <Route path="/teste" component={Teste} />
     <Route path="/login" component={Login} />
     <Route path="/consult" component={ConsultarPBL} />
     <Route path="/cadastro" component={Cadastro} />
