@@ -1,10 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "../../Components/Card/CardPrincipal";
-import { DropdownButton, Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import DropDownList from "../../Components/DropDownList/Default/DropDownList";
 
-const teste = () => {
+import service from "../../Services/TemaPblService";
+
+const Teste = () => {
+  const [lista, setLista] = useState([]);
+  const [temaSelecionado, setTemaSelecionado] = useState({});
+
+  useEffect(() => {
+    service
+      .listarTodos()
+      .then((response) => {
+        let data = response.data;
+        setLista(data);
+        console.log(lista);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  useEffect(() => {
+   console.log(temaSelecionado)
+  }, [temaSelecionado])
+
   return (
     //Remover a div pai e atribur o padding 30px no componente Home!!!!!
     <div style={{ padding: "30px" }}>
@@ -12,11 +32,10 @@ const teste = () => {
         <Card.Form>
           <Card.Form.Group style={{ flex: 5 }}>
             <Card.Form.Title>Tema PBL</Card.Form.Title>
-            <DropdownButton id="dropdown-basic-button" title="Dropdown button">
-              <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-              <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-            </DropdownButton>
+            <DropDownList
+              lista={lista}
+              onSelect={setTemaSelecionado}
+            ></DropDownList>
           </Card.Form.Group>
 
           <Card.Form.Group>
@@ -63,4 +82,4 @@ const teste = () => {
     </div>
   );
 };
-export default teste;
+export default Teste;
