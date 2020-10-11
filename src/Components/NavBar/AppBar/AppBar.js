@@ -89,7 +89,7 @@ const AppBar = (props) => {
                     <Dropdown>
                         <div class="dropdown-toggle iconesDrop" id="dropdownMenuButton" data-toggle="dropdown"
                             style={{ justifyContent: 'flex-start' }} aria-haspopup="true" aria-expanded="false">
-                            <Nav.Link className='textos-navs'>Pessoa Logada</Nav.Link>
+                            <Nav.Link className='textos-navs'><label>Pessoa Logada</label></Nav.Link>
                         </div>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <Link className='OpcoesLaterais dropdown-item'>Editar Perfil</Link>
@@ -101,12 +101,12 @@ const AppBar = (props) => {
                     <Image className='iconeLogin' src={require('../../Images/loginIcon.png')} />
                 </Navbar>
 
-                <Container>
-                    <div className='CardTitulo'>Iniciar PBL</div>
-                    <div className='CardPrincipal' >
-                        <Routes />
-                    </div>
-                </Container>
+                <div>
+                    {/* <div className='CardTitulo'>Iniciar PBL</div>
+                    <div className='CardPrincipal' > */}
+                    <Routes />
+                    {/* </div> */}
+                </div>
 
             </Col>
         </Row >
