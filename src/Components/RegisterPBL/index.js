@@ -1,31 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-date-picker";
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ButtonSubmit } from "../../Components/styleEstilos";
-import api from "../../Services/api";
+
 import { Multiselect } from "multiselect-react-dropdown";
+// import moment from 'react-moment';
+import { format } from 'date-fns'
+
 
 function RegistarPBL() {
-  const [inicio, onChange] = useState(new Date());
-  const [fim, onChange2] = useState(new Date());
-  const data = [
-    { id: 1, alunos: "aluno 1" },
-    { id: 2, alunos: "aluno 2" },
-    { id: 3, alunos: "aluno 3" },
-    { id: 4, alunos: "aluno 4" },
-    { id: 5, alunos: "aluno 5" },
-    { id: 6, alunos: "aluno 6" },
-    { id: 7, alunos: "aluno 7" },
-  ];
+  const [inicio, setInicio] = useState('');
+  const [fim, setFim] = useState('');
+  const [data, setData] = useState([]);
+  // const [pbl, setPbl] = useState('');
+
+
+
+  const handleClick = () => {
+    console.log("click", data)
+  }
+
   const [options] = useState(data);
+  // const data = [
+  //   { id: 1, alunos: "aluno 1" },
+  //   { id: 2, alunos: "aluno 2" },
+  //   { id: 3, alunos: "aluno 3" },
+  //   { id: 4, alunos: "aluno 4" },
+  //   { id: 5, alunos: "aluno 5" },
+  //   { id: 6, alunos: "aluno 6" },
+  //   { id: 7, alunos: "aluno 7" },
+  // ];
 
-  const handleDateInicio = (data) => {
-    console.log(data);
-  };
-
-  const [value, setValue] = useState();
-  const [formattedValue, setFormattedValue] = useState();
 
   //   const [pbl, setPbl] = useState({
   //     id: 0,
@@ -53,6 +58,7 @@ function RegistarPBL() {
 
   return (
     <>
+
       <div
         className="container"
         style={{
@@ -61,7 +67,7 @@ function RegistarPBL() {
         }}
       >
         <h2>Iniciar PBL</h2>
-        <hr style={{ backgroundColor: "#002147", width: "100%" }}></hr>
+        <hr style={{ backgroundColor: "#002147", width: "50%" }}></hr>
       </div>
 
       <div className="container" style={{ width: "70%" }}>
@@ -72,10 +78,10 @@ function RegistarPBL() {
               type="titulo"
               class="form-control"
               placeholder="Titulo do PBL"
-              //   value={pbl.titulo}
-              //     onChange={(e) =>
-              //       setPbl({ ...pbl, titulo: e.target.value })
-              //     }
+              value={data.titulo}
+              onChange={(e) =>
+                setData({ ...data, titulo: e.target.value })
+              }
             />
           </div>
 
@@ -83,14 +89,26 @@ function RegistarPBL() {
             <div className="col-sm" style={{ textAlign: "center" }}>
               <label>Data de Inicio</label>
               <br />
-              <DatePicker onChange={handleDateInicio} value={inicio} />
+              <DatePicker
+                onChange={(data) => {
+                  setInicio(data)
+                  setData({ ...data, dataInicio: format(data, "dd/MM/yyyy") })
+                }
+                }
+                value={inicio}
+                format="dd/MM/yyyy"
+              />
             </div>
 
             <div className="col-sm" style={{ textAlign: "center" }}>
               <label>Data de Fim</label>
               <br />
               <DatePicker
-                onChange={onChange2}
+                onChange={(data) => {
+                  setFim(data)
+                  setData({ ...data, dataConclusao: format(data, "dd/MM/yyyy") })
+                }
+                }
                 value={fim}
                 format="dd/MM/yyyy"
               />
@@ -148,10 +166,14 @@ function RegistarPBL() {
             <div className="col-sm-8" style={{ marginTop: 20 }}>
               <textarea
                 class="form-control"
-                placeholder="Descreva a situacao Problema"
+                placeholder="Escreva um resumo do problema"
                 rows="5"
+                onChange={(e) =>
+                  setData({ ...data, resumo: e.target.value })
+                }
               ></textarea>
             </div>
+
 
             <div
               className="col-sm-4"
@@ -164,9 +186,15 @@ function RegistarPBL() {
                 name="empresasDropdown"
                 style={{ marginTop: -5 }}
               >
-                <option data-count="1" value="Tema  1">
+                {data.temaPbl && data.temaPbl.map(tema => (
+                  <option key={tema.idTemaPbl} data-count={tema.idTemaPbl} value={tema.descricao}>
+                    {tema.descricao}
+                  </option>
+                ))}
+                {/* <option data-count="1" value="Tema  1">
                   Tema 1
                 </option>
+
                 <option data-count="2" value="Tema  2">
                   Tema 2
                 </option>
@@ -196,7 +224,7 @@ function RegistarPBL() {
                 </option>
                 <option data-count="11" value="Tema  11">
                   Tema 11
-                </option>
+                </option> */}
               </select>
             </div>
           </div>
@@ -211,13 +239,13 @@ function RegistarPBL() {
             />
           </div>
 
-          <a href="/">
-            <div style={{ textAlign: "center" }}>
-              <ButtonSubmit style={{ marginTop: 20 }}>
-                <b>Cadastrar</b>
-              </ButtonSubmit>
-            </div>
-          </a>
+
+          <div style={{ textAlign: "center" }}>
+            <ButtonSubmit style={{ marginTop: 20 }} onClick={handleClick}>
+              <b>Cadastrar</b>
+            </ButtonSubmit>
+          </div>
+
         </form>
       </div>
     </>
