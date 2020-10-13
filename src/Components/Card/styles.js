@@ -38,6 +38,7 @@ export const Title = styled.label`
 
 export const InputText = styled.input`
   width: 100%;
+
   font-size: 1rem;
   height: 40px;
   padding-left: 10px;
