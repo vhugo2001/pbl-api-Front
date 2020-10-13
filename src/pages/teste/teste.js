@@ -28,6 +28,10 @@ const Teste = () => {
   const [aluno, setAluno] = useState();
 
   useEffect(() => {
+    console.log(alunosSelecionados);
+  }, [alunosSelecionados])
+
+  useEffect(() => {
     serviceAluno
       .listarTodos()
       .then((response) => {
