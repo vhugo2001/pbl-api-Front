@@ -3,16 +3,24 @@ import { Card } from "../../Components/Card/CardPrincipal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import DropDownList from "../../Components/DropDownList/Default/DropDownList";
+import DropDownListAlunos from "../../Components/DropDownList/Alunos/DropDownList";
+import serviceAluno from "../../Services/AlunoService";
+import serviceTema from "../../Services/TemaPblService";
+
 import CustomAlert from "../../Components/Alert/CustomAlert"
 import '../../Components/App.css'
 import service from "../../Services/TemaPblService";
 import servicePbl from "../../Services/PblService";
 import { isEmptyObject } from "jquery";
 
+
 const Teste = () => {
+  const [listaAluno, setListaAluno] = useState([]);
+  const [listaTemaPbl, setListaTemaPbl] = useState([]);
   const [lista, setLista] = useState([]);
   const [listaPbl, setListaPbl] = useState([]);
   const [temaSelecionado, setTemaSelecionado] = useState({});
+  const [alunosSelecionados, setAlunosSelecionados] = useState([]);
 
   const [pbl, setPbl] = useState();
   const [titulo, setTitulo] = useState('');
@@ -22,20 +30,24 @@ const Teste = () => {
   const [aluno, setAluno] = useState();
 
   useEffect(() => {
-    service
+    serviceAluno
       .listarTodos()
       .then((response) => {
         let data = response.data;
-        setLista(data);
-        console.log(lista);
+        setListaAluno(data);
       })
       .catch((error) => console.log(error));
   }, []);
 
   useEffect(() => {
-    console.log(temaSelecionado);
-  }, [temaSelecionado]);
-
+    serviceTema
+      .listarTodos()
+      .then((response) => {
+        let data = response.data;
+        setListaTemaPbl(data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   // useEffect(() => {
   //     servicePbl
@@ -123,13 +135,13 @@ const Teste = () => {
       <Card.Form onSubmit={onSubmitHandler}>
         <Card.Form.Group style={{ flex: 5 }}>
           <Card.Form.Title>Tema PBL</Card.Form.Title>
-          <DropDownList required
-            lista={lista}
+          <DropDownList
+            lista={listaTemaPbl}
             onSelect={setTemaSelecionado}
           ></DropDownList>
         </Card.Form.Group>
 
-        <Card.Form.Group>
+        <Card.Form.Group className="form-group">
           <Card.Form.Title>Data Inicio</Card.Form.Title>
           <Card.Form.InputText
             required pattern="\d{1,2}/\d{1,2}/\d{4}" onInput={e => e.target.setCustomValidity("")}
@@ -149,9 +161,11 @@ const Teste = () => {
 
         <Card.Form.Group style={{ flex: 5 }}>
           <Card.Form.Title>Alunos</Card.Form.Title>
-          <Card.Form.InputText
-            required pattern="^[^0-9]*" onInput={e => e.target.setCustomValidity("")}
-            onInvalid={e => e.target.setCustomValidity("Este campo deve ter apenas letras")} />
+          <DropDownListAlunos
+            lista={listaAluno}
+            onSelect={setAlunosSelecionados}
+          ></DropDownListAlunos>
+         
         </Card.Form.Group>
 
         <Card.Form.Group>
