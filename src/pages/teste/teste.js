@@ -22,8 +22,8 @@ const Teste = () => {
   }, []);
 
   useEffect(() => {
-    console.log(temaSelecionado)
-  }, [temaSelecionado])
+    console.log(temaSelecionado);
+  }, [temaSelecionado]);
 
   return (
     //Remover a div pai e atribur o padding 30px no componente Home!!!!!
