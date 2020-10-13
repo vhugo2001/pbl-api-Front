@@ -168,8 +168,8 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
     event.stopPropagation();
 
     setSelectedOption(selectedOption.filter((f) => f.id !== id));
-    onSelect(alunoSelecionado.filter((f) => f.id !== id));
-    setAlunoSelecionado(alunoSelecionado.filter((f) => f.id !== id));
+    onSelect(alunoSelecionado.filter((f) => f.aluno.id !== id));
+    setAlunoSelecionado(alunoSelecionado.filter((f) => f.aluno.id !== id));
   };
 
   const onOptionClicked = (option) => () => {
@@ -177,12 +177,12 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
 
     setAlunoSelecionado((alunoSelecionado) => [
       ...alunoSelecionado,
-      { id: option.id },
+      { aluno: { id: option.id } },
     ]);
     //console.log(alunoSelecionado);
     setSelectedOption([...selectedOption, option]);
 
-    onSelect([...alunoSelecionado, { id: option.id }]);
+    onSelect(alunoSelecionado);
     setIsOpen(false);
     setOptions(nLista);
   };
