@@ -173,7 +173,7 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
   };
 
   const onOptionClicked = (option) => () => {
-    if (alunoSelecionado.filter((f) => f.id === option.id).length > 0) return;
+    if (alunoSelecionado.filter((f) => f.aluno.id === option.id).length > 0) return;
 
     setAlunoSelecionado((alunoSelecionado) => [
       ...alunoSelecionado,
