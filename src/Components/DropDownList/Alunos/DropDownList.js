@@ -173,7 +173,8 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
   };
 
   const onOptionClicked = (option) => () => {
-    if (alunoSelecionado.filter((f) => f.aluno.id === option.id).length > 0) return;
+    if (alunoSelecionado.filter((f) => f.aluno.id === option.id).length > 0)
+      return;
 
     setAlunoSelecionado((alunoSelecionado) => [
       ...alunoSelecionado,
@@ -182,10 +183,13 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
     //console.log(alunoSelecionado);
     setSelectedOption([...selectedOption, option]);
 
-    onSelect(alunoSelecionado);
     setIsOpen(false);
     setOptions(nLista);
   };
+
+  useEffect(() => {
+    onSelect(alunoSelecionado);
+  }, [alunoSelecionado]);
 
   const handleOnSearchChange = (e) => {
     if (e.target.value === "") {

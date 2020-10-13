@@ -35,23 +35,22 @@
 }
 
 .calendar-button {
-  margin-left: 2%;
   font-size: 1.5rem;
   background: none;
-  color: #666;
+  color: #7f89a2;
 }
 .notification-button {
   margin-left: 2%;
   font-size: 1.5rem;
   background: none;
-  color: #666;
+  color: #7f89a2;
 }
 .profile-button {
   margin-left: 2%;
   margin-right: 2%;
   font-size: 2.5rem;
   background: none;
-  color: #666;
+  color: #7f89a2;
 }
 
 .nav-menu {
