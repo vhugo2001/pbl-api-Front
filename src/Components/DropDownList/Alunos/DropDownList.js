@@ -168,17 +168,17 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
     event.stopPropagation();
 
     setSelectedOption(selectedOption.filter((f) => f.id !== id));
-    onSelect(alunoSelecionado.filter((f) => f.aluno.id !== id));
-    setAlunoSelecionado(alunoSelecionado.filter((f) => f.aluno.id !== id));
+    onSelect(alunoSelecionado.filter((f) => f.id !== id));
+    setAlunoSelecionado(alunoSelecionado.filter((f) => f.id !== id));
   };
 
   const onOptionClicked = (option) => () => {
-    if (alunoSelecionado.filter((f) => f.aluno.id === option.id).length > 0)
+    if (alunoSelecionado.filter((f) => f.id === option.id).length > 0)
       return;
 
     setAlunoSelecionado((alunoSelecionado) => [
       ...alunoSelecionado,
-      { aluno: { id: option.id } },
+      { id: option.id },
     ]);
     //console.log(alunoSelecionado);
     setSelectedOption([...selectedOption, option]);

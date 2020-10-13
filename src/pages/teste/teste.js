@@ -28,11 +28,6 @@ const Teste = () => {
   const [aluno, setAluno] = useState();
 
   useEffect(() => {
-    console.log(alunosSelecionados);
-    console.log(alunosSelecionados.id);
-  }, [alunosSelecionados])
-
-  useEffect(() => {
     serviceAluno
       .listarTodos()
       .then((response) => {
@@ -53,19 +48,6 @@ const Teste = () => {
       .catch((error) => console.log(error));
   }, []);
 
-  // useEffect(() => {
-  //     servicePbl
-  //       .incluir(pbl)
-  //       .then((response) => {
-  //         let data = response.data;
-  //         setListaPbl(data);
-  //         console.log(listaPbl);
-  //         alert("Pbl cadastrado com sucesso");
-  //       })
-  //       .catch((error) => console.log(error));
-  //     alert("Erro ao cadastrar PBl");
-  // }, [pbl]);
-
   const onSubmitHandler = (e) => {
     e.preventDefault()
 
@@ -77,9 +59,9 @@ const Teste = () => {
         "resumo": resumo,
         "dataConclusao": dataConclusao,
         "dataInicio": dataInicio,
-        "pblAlunos": alunosSelecionados,
+        "aluno": alunosSelecionados,
         "professor": {
-          "id": 1
+          "idProfessor": 1
         },
         "temaPbl": {
           "id": temaSelecionado.id
@@ -89,6 +71,18 @@ const Teste = () => {
       setPbl(pbl)
       console.log(pbl)
 
+      servicePbl
+        .incluir(pbl)
+        .then((response) => {
+          let data = response.data;
+          setListaPbl(data);
+          console.log(listaPbl);
+          alert("Pbl cadastrado com sucesso");
+        })
+        .catch(error => {
+          console.log(error)
+          alert("Não foi possivel cadastrar o Pbl");
+        })
     } else {
       alert('selecione um tema')
     }
