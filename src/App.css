@@ -8,3 +8,6 @@
   flex: 1;
 }
 
+input:invalid {
+  border-color: red;
+}

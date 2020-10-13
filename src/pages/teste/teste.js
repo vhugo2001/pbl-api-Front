@@ -3,27 +3,40 @@ import { Card } from "../../Components/Card/CardPrincipal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import DropDownList from "../../Components/DropDownList/Default/DropDownList";
+import DropDownListAlunos from "../../Components/DropDownList/Alunos/DropDownList";
 
-import service from "../../Services/TemaPblService";
+import serviceAluno from "../../Services/AlunoService";
+import serviceTema from "../../Services/TemaPblService";
 
 const Teste = () => {
-  const [lista, setLista] = useState([]);
+  const [listaAluno, setListaAluno] = useState([]);
+  const [listaTemaPbl, setListaTemaPbl] = useState([]);
   const [temaSelecionado, setTemaSelecionado] = useState({});
+  const [alunosSelecionados, setAlunosSelecionados] = useState([]);
 
   useEffect(() => {
-    service
+    serviceAluno
       .listarTodos()
       .then((response) => {
         let data = response.data;
-        setLista(data);
-        console.log(lista);
+        setListaAluno(data);
       })
       .catch((error) => console.log(error));
   }, []);
 
   useEffect(() => {
-    console.log(temaSelecionado)
-  }, [temaSelecionado])
+    serviceTema
+      .listarTodos()
+      .then((response) => {
+        let data = response.data;
+        setListaTemaPbl(data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  useEffect(() => {
+    //console.log(alunosSelecionados)
+  }, [alunosSelecionados])
 
   return (
     //Remover a div pai e atribur o padding 30px no componente Home!!!!!
@@ -33,14 +46,14 @@ const Teste = () => {
         <Card.Form.Group style={{ flex: 5 }}>
           <Card.Form.Title>Tema PBL</Card.Form.Title>
           <DropDownList
-            lista={lista}
+            lista={listaTemaPbl}
             onSelect={setTemaSelecionado}
           ></DropDownList>
         </Card.Form.Group>
 
-        <Card.Form.Group>
+        <Card.Form.Group className="form-group">
           <Card.Form.Title>Data Inicio</Card.Form.Title>
-          <Card.Form.InputText />
+          <Card.Form.InputText/>
         </Card.Form.Group>
 
         <Card.Form.Group>
@@ -52,7 +65,11 @@ const Teste = () => {
 
         <Card.Form.Group style={{ flex: 5 }}>
           <Card.Form.Title>Alunos</Card.Form.Title>
-          <Card.Form.InputText />
+          <DropDownListAlunos
+            lista={listaAluno}
+            onSelect={setAlunosSelecionados}
+          ></DropDownListAlunos>
+         
         </Card.Form.Group>
 
         <Card.Form.Group>

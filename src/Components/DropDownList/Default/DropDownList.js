@@ -94,7 +94,7 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
   }
 
   const onOptionClicked = (e) => () => {
-    setSelectedOption(e.descricao);
+    setSelectedOption(e.nome);
     onSelect(e);
     setIsOpen(false);
     setOptions(lista);
@@ -107,7 +107,7 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
 
     setOptions(
       lista.filter((o) =>
-        o.descricao.toLowerCase().startsWith(e.target.value.toLowerCase())
+        o.nome.toLowerCase().startsWith(e.target.value.toLowerCase())
       )
     );
   };
@@ -132,9 +132,9 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
             {options.map((option) => (
               <ListItem
                 onClick={onOptionClicked(option)}
-                key={option.idTemaPbl}
+                key={option.id}
               >
-                {option.descricao}
+                {option.nome}
               </ListItem>
             ))}
           </DropDownList>
