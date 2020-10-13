@@ -7,10 +7,6 @@
 .footer-container {
   flex: 1;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> main
 input:invalid {
   border-color: red;
 }
