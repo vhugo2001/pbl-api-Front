@@ -14,7 +14,7 @@ const RandomColor = () => {
 };
 
 const DropDownContainer = styled("div")`
-  width: 40rem;
+  flex: 1;
   margin: 0;
   cursor: pointer;
 `;
