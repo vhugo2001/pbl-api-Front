@@ -33,8 +33,8 @@ const Teste = () => {
   }, []);
 
   useEffect(() => {
-    console.log(temaSelecionado)
-  }, [temaSelecionado])
+    console.log(temaSelecionado);
+  }, [temaSelecionado]);
 
 
   // useEffect(() => {

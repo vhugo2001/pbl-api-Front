@@ -1,9 +1,10 @@
 import React from "react";
 
 // import Toolbar from "./Toolbar/Toolbar";
-import AppBar from "./AppBar/AppBar";
+//import AppBar from "./AppBar/AppBar";
 // import SideDrawer from "./Sidedrawer/SideDrawer";
 // import Backdrop from "./Backdrop/Backdrop";
+import NavBar from "./Toolbar/Navbar";
 
 function Bar() {
   // const [sideDrawerOpen, setSideDrawerOpen] = useState(false);
@@ -29,7 +30,8 @@ function Bar() {
     //   {backdrop}
     // </div>
     //<Toolbar />
-    <AppBar />
+    //<AppBar />
+    <NavBar />
   );
 }
 export default Bar;
