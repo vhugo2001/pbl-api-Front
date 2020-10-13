@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Alert } from "react-bootstrap/Alert";
+import React, { useState, useEffect } from "react";
+import { Alert } from "react-bootstrap";
 
 const CustomAlert = ({ _mensagem, _variant }) => {
   const [mensagem, setMensagem] = useState(_mensagem);
