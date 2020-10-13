@@ -11,7 +11,7 @@ export const Container = styled.div`
   overflow: hidden;
 `;
 
-export const Form = styled.div`
+export const Form = styled.form`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
