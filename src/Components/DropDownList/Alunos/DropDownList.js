@@ -45,7 +45,7 @@ const DropDownHeader = styled("div")`
 const DropDownListContainer = styled("div")`
   position: absolute;
   margin-top: 0.8em;
-  width: inherit;
+  width: 30rem;
 `;
 
 const DropDownList = styled("div")`
@@ -228,7 +228,7 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
     <DropDownContainer ref={searchInput}>
       <DropDownHeader onClick={toggling}>
         {selectedOption.map((s) => (
-          <Selected style={{ zIndex: 1 }} key={s.id}>
+          <Selected key={s.id}>
             {s.nome}
             <Remove key={s.id} onClick={onRemoveClicked(s.id)}>
               <FontAwesomeIcon

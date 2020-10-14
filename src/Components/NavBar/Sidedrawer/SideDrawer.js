@@ -20,7 +20,7 @@ const SideDrawer = (props) => {
           <Link to="/consult">Consultar PBL</Link>
         </li>
         <li>
-          <Link to="/cadastro">Cadastro</Link>
+          <Link to="/iniciar-pbl">Cadastro</Link>
         </li>
         <li>
           <Link to="/login">Login</Link>
