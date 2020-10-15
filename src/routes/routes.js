@@ -9,7 +9,7 @@ import Teste from "../pages/teste/teste"
 
 const Routes = () => (
   <Switch>
-    <Route path="/teste" component={Teste} />
+    <Route path="/iniciar-pbl" component={Teste} />
     <Route path="/login" component={Login} />
     <Route path="/consult" component={ConsultarPBL} />
     <Route path="/cadastro" component={Cadastro} />

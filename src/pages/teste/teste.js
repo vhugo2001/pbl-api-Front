@@ -9,7 +9,6 @@ import serviceTema from "../../Services/TemaPblService";
 
 import CustomAlert from "../../Components/Alert/CustomAlert"
 import '../../Components/App.css'
-import service from "../../Services/TemaPblService";
 import servicePbl from "../../Services/PblService";
 import { isEmptyObject } from "jquery";
 
@@ -17,7 +16,6 @@ import { isEmptyObject } from "jquery";
 const Teste = () => {
   const [listaAluno, setListaAluno] = useState([]);
   const [listaTemaPbl, setListaTemaPbl] = useState([]);
-  const [lista, setLista] = useState([]);
   const [listaPbl, setListaPbl] = useState([]);
   const [temaSelecionado, setTemaSelecionado] = useState({});
   const [alunosSelecionados, setAlunosSelecionados] = useState([]);
@@ -35,6 +33,7 @@ const Teste = () => {
       .then((response) => {
         let data = response.data;
         setListaAluno(data);
+
       })
       .catch((error) => console.log(error));
   }, []);
@@ -49,19 +48,6 @@ const Teste = () => {
       .catch((error) => console.log(error));
   }, []);
 
-  // useEffect(() => {
-  //     servicePbl
-  //       .incluir(pbl)
-  //       .then((response) => {
-  //         let data = response.data;
-  //         setListaPbl(data);
-  //         console.log(listaPbl);
-  //         alert("Pbl cadastrado com sucesso");
-  //       })
-  //       .catch((error) => console.log(error));
-  //     alert("Erro ao cadastrar PBl");
-  // }, [pbl]);
-
   const onSubmitHandler = (e) => {
     e.preventDefault()
 
@@ -73,40 +59,14 @@ const Teste = () => {
         "resumo": resumo,
         "dataConclusao": dataConclusao,
         "dataInicio": dataInicio,
-        "pblAlunos": [
-          {
-            "aluno": {
-              "idAluno": 2
-            }
-          }
-        ],
+        "aluno": alunosSelecionados,
         "professor": {
-          "idProfessor": 4
+          "idProfessor": 1
         },
-
         "temaPbl": {
-          "idTemaPbl": temaSelecionado.idTemaPbl
+          "id": temaSelecionado.id
         }
       }
-
-      // {
-      //   "aluno": [
-      //     {
-      //       "idAluno": 2,
-      //     }
-      //   ],
-      //   "dataConclusao": dataConclusao,
-      //   "dataInicio": dataInicio,
-      //   "professor": {
-      //     "idProfessor": 4
-      //   },
-      //   "resumo": resumo,
-      //   "situacaoProblema": "Situação Problema AbC",
-      //   "temaPbl": {
-      //     "idTemaPbl": 1
-      //   },
-      //   "titulo": titulo
-      // }
 
       setPbl(pbl)
       console.log(pbl)
@@ -132,10 +92,10 @@ const Teste = () => {
     //Remover a div pai e atribur o padding 30px no componente Home!!!!!
 
     <Card>
-      <Card.Form onSubmit={onSubmitHandler}>
+      <Card.Form onSubmit={onSubmitHandler} >
         <Card.Form.Group style={{ flex: 5 }}>
           <Card.Form.Title>Tema PBL</Card.Form.Title>
-          <DropDownList
+          <DropDownList required
             lista={listaTemaPbl}
             onSelect={setTemaSelecionado}
           ></DropDownList>
@@ -165,7 +125,7 @@ const Teste = () => {
             lista={listaAluno}
             onSelect={setAlunosSelecionados}
           ></DropDownListAlunos>
-         
+
         </Card.Form.Group>
 
         <Card.Form.Group>
@@ -180,7 +140,7 @@ const Teste = () => {
           <Card.Form.InputText
             required pattern="^(?=.*[a-zA-Z])([a-zA-ZÀ-ú0-9 ]+)$" onInput={e => e.target.setCustomValidity("")}
             onInvalid={e => e.target.setCustomValidity("O titulo deve conter ao menos 1 letra")}
-            required onChange={e => setTitulo(e.target.value)} value={titulo} />
+            onChange={e => setTitulo(e.target.value)} value={titulo} placeholder='Digite o Título' />
         </Card.Form.Group>
 
         <Card.Form.BreakRow />
@@ -189,7 +149,8 @@ const Teste = () => {
           <Card.Form.Title>Resumo</Card.Form.Title>
           <Card.Form.InputTextArea required pattern="^(?=.*[a-zA-Z])([a-zA-ZÀ-ú0-9 ]+)$" onInput={e => e.target.setCustomValidity("")}
             onInvalid={e => e.target.setCustomValidity("O resumo deve conter ao menos 1 letra")}
-            required onChange={e => setResumo(e.target.value)} value={resumo} />
+            required onChange={e => setResumo(e.target.value)} value={resumo}
+            placeholder='Digite um resumo' />
         </Card.Form.Group>
 
         <Card.Form.GroupButton>

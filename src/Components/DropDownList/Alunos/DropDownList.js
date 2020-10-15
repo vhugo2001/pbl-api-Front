@@ -45,7 +45,7 @@ const DropDownHeader = styled("div")`
 const DropDownListContainer = styled("div")`
   position: absolute;
   margin-top: 0.8em;
-  width: inherit;
+  width: 30rem;
 `;
 
 const DropDownList = styled("div")`
@@ -173,7 +173,8 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
   };
 
   const onOptionClicked = (option) => () => {
-    if (alunoSelecionado.filter((f) => f.id === option.id).length > 0) return;
+    if (alunoSelecionado.filter((f) => f.id === option.id).length > 0)
+      return;
 
     setAlunoSelecionado((alunoSelecionado) => [
       ...alunoSelecionado,
@@ -182,10 +183,13 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
     //console.log(alunoSelecionado);
     setSelectedOption([...selectedOption, option]);
 
-    onSelect([...alunoSelecionado, { id: option.id }]);
     setIsOpen(false);
     setOptions(nLista);
   };
+
+  useEffect(() => {
+    onSelect(alunoSelecionado);
+  }, [alunoSelecionado]);
 
   const handleOnSearchChange = (e) => {
     if (e.target.value === "") {
@@ -224,7 +228,7 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
     <DropDownContainer ref={searchInput}>
       <DropDownHeader onClick={toggling}>
         {selectedOption.map((s) => (
-          <Selected style={{ zIndex: 1 }} key={s.id}>
+          <Selected key={s.id}>
             {s.nome}
             <Remove key={s.id} onClick={onRemoveClicked(s.id)}>
               <FontAwesomeIcon
