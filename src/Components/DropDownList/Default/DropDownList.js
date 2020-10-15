@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 
 const DropDownContainer = styled("div")`
-  width: 300px;
   margin: 0;
   cursor: pointer;
 `;
@@ -91,7 +90,7 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
 
   const toggling = () => {
     setIsOpen(!isOpen);
-  }
+  };
 
   const onOptionClicked = (e) => () => {
     setSelectedOption(e.nome);
@@ -118,22 +117,22 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
   };
 
   return (
-    <DropDownContainer ref={searchInput} onBlur={(e) => {handlewBlur(e)}}>
-      <DropDownHeader  onClick={toggling}>
-        {selectedOption || ""}
-      </DropDownHeader>
+    <DropDownContainer
+      ref={searchInput}
+      onBlur={(e) => {
+        handlewBlur(e);
+      }}
+    >
+      <DropDownHeader onClick={toggling}>{selectedOption || ""}</DropDownHeader>
       {isOpen && (
         <DropDownListContainer>
           <DropDownList>
-            <Search 
+            <Search
               onChange={handleOnSearchChange}
               placeholder="Pesquisar..."
             />
             {options.map((option) => (
-              <ListItem
-                onClick={onOptionClicked(option)}
-                key={option.id}
-              >
+              <ListItem onClick={onOptionClicked(option)} key={option.id}>
                 {option.nome}
               </ListItem>
             ))}

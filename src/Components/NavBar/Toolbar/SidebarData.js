@@ -13,7 +13,7 @@ export const SidebarData = [
   },
   {
     title: "Cadastrar PBL",
-    path: "/teste",
+    path: "/iniciar-pbl",
     icon: <MdIcons.MdCreateNewFolder />,
     cName: "nav-text",
   },
@@ -24,8 +24,8 @@ export const SidebarData = [
     cName: "nav-text",
   },
   {
-    title: "Team",
-    path: "/team",
+    title: "Consultar Alunos",
+    path: "/alunos",
     icon: <IoIcons.IoMdPeople />,
     cName: "nav-text",
   },

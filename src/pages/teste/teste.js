@@ -90,7 +90,10 @@ const Teste = () => {
 
   return (
     //Remover a div pai e atribur o padding 30px no componente Home!!!!!
-
+    <>
+    <div className="iniciar-pbl-title">
+            <h1>Iniciar PBL</h1>
+          </div>
     <Card>
       <Card.Form onSubmit={onSubmitHandler} >
         <Card.Form.Group style={{ flex: 5 }}>
@@ -158,6 +161,7 @@ const Teste = () => {
         </Card.Form.GroupButton>
       </Card.Form>
     </Card>
+    </>
   );
 };
 export default Teste;

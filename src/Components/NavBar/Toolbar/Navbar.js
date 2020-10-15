@@ -87,12 +87,9 @@ function Navbar() {
           })}
         </div>
         <div className="page-container">
-          <div className="iniciar-pbl-title">
-            <h1>Iniciar PBL</h1>
-          </div>
-          <div>
-            <Routes />
-          </div>
+          
+
+          <Routes />
         </div>
       </div>
     </>
