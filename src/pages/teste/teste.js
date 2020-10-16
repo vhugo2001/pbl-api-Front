@@ -25,7 +25,7 @@ const Teste = () => {
   const [resumo, setResumo] = useState('');
   const [dataConclusao, setDataConclusao] = useState('');
   const [dataInicio, setDataInicio] = useState('');
-  const [aluno, setAluno] = useState();
+
 
   useEffect(() => {
     serviceAluno
@@ -33,7 +33,7 @@ const Teste = () => {
       .then((response) => {
         let data = response.data;
         setListaAluno(data);
-
+        console.log(data);
       })
       .catch((error) => console.log(error));
   }, []);
@@ -139,22 +139,14 @@ const Teste = () => {
         <Card.Form.BreakRow />
 
         <Card.Form.Group>
-          <Card.Form.Title>Titulo PBL</Card.Form.Title>
+          <Card.Form.Title>Problema</Card.Form.Title>
           <Card.Form.InputText
             required pattern="^(?=.*[a-zA-Z])([a-zA-ZÀ-ú0-9 ]+)$" onInput={e => e.target.setCustomValidity("")}
             onInvalid={e => e.target.setCustomValidity("O titulo deve conter ao menos 1 letra")}
-            onChange={e => setTitulo(e.target.value)} value={titulo} placeholder='Digite o Título' />
+            onChange={e => setTitulo(e.target.value)} value={titulo} />
         </Card.Form.Group>
 
         <Card.Form.BreakRow />
-
-        <Card.Form.Group>
-          <Card.Form.Title>Resumo</Card.Form.Title>
-          <Card.Form.InputTextArea required pattern="^(?=.*[a-zA-Z])([a-zA-ZÀ-ú0-9 ]+)$" onInput={e => e.target.setCustomValidity("")}
-            onInvalid={e => e.target.setCustomValidity("O resumo deve conter ao menos 1 letra")}
-            required onChange={e => setResumo(e.target.value)} value={resumo}
-            placeholder='Digite um resumo' />
-        </Card.Form.Group>
 
         <Card.Form.GroupButton>
           <Card.Form.Submit >Salvar</Card.Form.Submit>
