@@ -8,6 +8,7 @@ import {
   Group,
   Title,
   InputText,
+  InputDate,
   InputTextArea,
   Breakrow,
   GroupButton,
@@ -65,6 +66,15 @@ Card.Form.InputText = function FormInputText({ classes, ...restProps }) {
   return (
     <InputText
       className={classNames("card__form__inputtext", classes)}
+      {...restProps}
+    />
+  );
+};
+
+Card.Form.InputDate = function FormInputDate({ classes, ...restProps }) {
+  return (
+    <InputText
+      className={classNames("card__form__inputdate", classes)}
       {...restProps}
     />
   );
