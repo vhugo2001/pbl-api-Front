@@ -52,6 +52,22 @@ export const InputText = styled.input`
   }
 `;
 
+export const InputDate = styled.input`
+  width: 100%;
+
+  font-size: 1rem;
+  height: 40px;
+  padding-left: 10px;
+  border-radius: 5px;
+  border: 1px solid #d2d2d2;
+  -webkit-box-shadow: 0 1px 0 0 #d2d2d2;
+  box-shadow: 0 1px 0 0 #d2d2d2;
+  &:focus {
+    border: 1px solid #8ebfed !important;
+    outline: none;
+  }
+`;
+
 export const InputTextArea = styled.textarea`
   width: 100%;
   font-size: 1rem;
