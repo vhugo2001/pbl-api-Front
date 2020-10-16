@@ -85,7 +85,9 @@ export const InputTextArea = styled.textarea`
 
 export const Image = styled.img`
   width: 100%;
-  max-width: 550px;
+  max-width: 350px;
+  height: 100%;
+  max-height: 350px;
 `;
 
 export const GroupButton = styled.div`
