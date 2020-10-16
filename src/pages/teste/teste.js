@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Card } from "../../Components/Card/CardPrincipal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import DatePicker from "react-datepicker";
 import DropDownList from "../../Components/DropDownList/Default/DropDownList";
 import DropDownListAlunos from "../../Components/DropDownList/Alunos/DropDownList";
 import serviceAluno from "../../Services/AlunoService";
@@ -12,6 +13,8 @@ import '../../Components/App.css'
 import servicePbl from "../../Services/PblService";
 import { isEmptyObject } from "jquery";
 
+import 'react-datepicker/dist/react-datepicker.css';
+
 
 const Teste = () => {
   const [listaAluno, setListaAluno] = useState([]);
@@ -21,11 +24,10 @@ const Teste = () => {
   const [alunosSelecionados, setAlunosSelecionados] = useState([]);
 
   const [pbl, setPbl] = useState();
-  const [titulo, setTitulo] = useState('');
-  const [resumo, setResumo] = useState('');
+  const [problema, setProblema] = useState('');
   const [dataConclusao, setDataConclusao] = useState('');
   const [dataInicio, setDataInicio] = useState('');
-  const [aluno, setAluno] = useState();
+
 
   useEffect(() => {
     serviceAluno
@@ -33,7 +35,7 @@ const Teste = () => {
       .then((response) => {
         let data = response.data;
         setListaAluno(data);
-
+        console.log(data);
       })
       .catch((error) => console.log(error));
   }, []);
@@ -54,14 +56,12 @@ const Teste = () => {
     if (isEmptyObject(temaSelecionado) === false) {
       const pbl =
       {
-        "titulo": titulo,
-        "situacaoProblema": "Situação Problema mais teste",
-        "resumo": resumo,
+        "problema": problema,
         "dataConclusao": dataConclusao,
         "dataInicio": dataInicio,
         "aluno": alunosSelecionados,
         "professor": {
-          "idProfessor": 1
+          "id": 2
         },
         "temaPbl": {
           "id": temaSelecionado.id
@@ -106,10 +106,7 @@ const Teste = () => {
 
         <Card.Form.Group className="form-group">
           <Card.Form.Title>Data Inicio</Card.Form.Title>
-          <Card.Form.InputText
-            required pattern="\d{1,2}/\d{1,2}/\d{4}" onInput={e => e.target.setCustomValidity("")}
-            onInvalid={e => e.target.setCustomValidity("Digite uma data válida")}
-            onChange={e => setDataInicio(e.target.value)} value={dataInicio} placeholder="dd/mm/aaaa" />
+         <DatePicker customInput={<Card.Form.InputDate/>}/>
         </Card.Form.Group>
 
         <Card.Form.Group>
@@ -139,22 +136,14 @@ const Teste = () => {
         <Card.Form.BreakRow />
 
         <Card.Form.Group>
-          <Card.Form.Title>Titulo PBL</Card.Form.Title>
+          <Card.Form.Title>Problema</Card.Form.Title>
           <Card.Form.InputText
             required pattern="^(?=.*[a-zA-Z])([a-zA-ZÀ-ú0-9 ]+)$" onInput={e => e.target.setCustomValidity("")}
             onInvalid={e => e.target.setCustomValidity("O titulo deve conter ao menos 1 letra")}
-            onChange={e => setTitulo(e.target.value)} value={titulo} placeholder='Digite o Título' />
+            onChange={e => setProblema(e.target.value)} value={problema} />
         </Card.Form.Group>
 
         <Card.Form.BreakRow />
-
-        <Card.Form.Group>
-          <Card.Form.Title>Resumo</Card.Form.Title>
-          <Card.Form.InputTextArea required pattern="^(?=.*[a-zA-Z])([a-zA-ZÀ-ú0-9 ]+)$" onInput={e => e.target.setCustomValidity("")}
-            onInvalid={e => e.target.setCustomValidity("O resumo deve conter ao menos 1 letra")}
-            required onChange={e => setResumo(e.target.value)} value={resumo}
-            placeholder='Digite um resumo' />
-        </Card.Form.Group>
 
         <Card.Form.GroupButton>
           <Card.Form.Submit >Salvar</Card.Form.Submit>

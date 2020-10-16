@@ -256,7 +256,7 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
                 </Image>
                 <ListInfo>
                   <Nome>{option.nome}</Nome>
-                  <Email>{option.usuario.email}</Email>
+                  <Email>{option.email}</Email>
                 </ListInfo>
               </ListItem>
             ))}

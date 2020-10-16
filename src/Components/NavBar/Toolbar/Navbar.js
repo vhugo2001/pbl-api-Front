@@ -37,7 +37,7 @@ function Navbar() {
         <Link to="/" className="notification-button">
           <MdIcons.MdNotificationsNone />
         </Link>
-        <Link to="/" className="profile-button">
+        <Link to="/perfil-usuario" className="profile-button">
           <CgIcons.CgProfile />
         </Link>
       </div>

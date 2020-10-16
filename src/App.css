@@ -7,6 +7,6 @@
 .footer-container {
   flex: 1;
 }
-textarea:required:not(:placeholder-shown):invalid,input:required:not(:placeholder-shown):invalid {
+input:invalid {
   border-color: red;
 }
