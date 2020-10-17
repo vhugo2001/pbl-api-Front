@@ -46,6 +46,7 @@ const DropDownListContainer = styled("div")`
   position: absolute;
   margin-top: 0.8em;
   width: 30rem;
+  z-index: 998;
 `;
 
 const DropDownList = styled("div")`
@@ -88,7 +89,6 @@ const ListItem = styled("div")`
   &:hover {
     background-color: #f1f1f1;
   }
-
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -134,13 +134,21 @@ const Selected = styled("div")`
   flex-direction: row;
   margin-right: 0.2rem;
   background: #ebebeb;
-  color: #383838;
+  color: #727280;
   padding: 0 0.5rem;
   font-weight: 550;
 `;
 
+const SelectedTitle = styled("div")`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const Remove = styled("div")`
+  display: flex;
   margin-left: 0.5rem;
+  align-items: center;
   justify-content: center;
 `;
 
@@ -173,8 +181,7 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
   };
 
   const onOptionClicked = (option) => () => {
-    if (alunoSelecionado.filter((f) => f.id === option.id).length > 0)
-      return;
+    if (alunoSelecionado.filter((f) => f.id === option.id).length > 0) return;
 
     setAlunoSelecionado((alunoSelecionado) => [
       ...alunoSelecionado,
@@ -229,10 +236,12 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
       <DropDownHeader onClick={toggling}>
         {selectedOption.map((s) => (
           <Selected key={s.id}>
+            <SelectedTitle>
             {s.nome}
+            </SelectedTitle>
             <Remove key={s.id} onClick={onRemoveClicked(s.id)}>
               <FontAwesomeIcon
-                style={{ color: "#ff7a7a" }}
+                style={{ color: "#ff7777" }}
                 icon={faWindowClose}
               />
             </Remove>

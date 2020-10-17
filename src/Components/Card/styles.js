@@ -21,6 +21,9 @@ export const Form = styled.form`
 
 export const Group = styled.div`
   flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
   margin: 10px;
 `;
 
