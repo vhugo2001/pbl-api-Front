@@ -29,7 +29,8 @@ const DropDownHeader = styled("div")`
 const DropDownListContainer = styled("div")`
   position: absolute;
   margin-top: 0.8em;
-  width: inherit;
+  width: 20rem;
+  z-index: 999;
 `;
 
 const DropDownList = styled("ul")`
