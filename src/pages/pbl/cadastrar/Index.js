@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Card } from "../../Components/Card/CardPrincipal";
+import { Card } from "../../../Components/Card/CardPrincipal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import DatePicker from "react-datepicker";
 import subDays from "date-fns/subDays";
 import pt from "date-fns/locale/pt";
 import { format } from "date-fns";
-import DropDownList from "../../Components/DropDownList/Default/DropDownList";
-import DropDownListAlunos from "../../Components/DropDownList/Alunos/DropDownList";
-import serviceAluno from "../../Services/AlunoService";
-import serviceTema from "../../Services/TemaPblService";
+import DropDownList from "../../../Components/DropDownList/Default/DropDownList";
+import DropDownListAlunos from "../../../Components/DropDownList/Alunos/DropDownList";
+import serviceAluno from "../../../Services/AlunoService";
+import serviceTema from "../../../Services/TemaPblService";
+import servicePbl from "../../../Services/PblService";
+import Alert from "../../../Components/Alert/CustomAlert";
 
-import Alert from "../../Components/Alert/CustomAlert";
-
-import servicePbl from "../../Services/PblService";
 import { isEmptyObject } from "jquery";
 
 import "react-datepicker/dist/react-datepicker.css";
-import "../../Components/App.css";
 
 const Teste = () => {
   const [listaAluno, setListaAluno] = useState([]);
@@ -25,8 +23,6 @@ const Teste = () => {
   const [listaPbl, setListaPbl] = useState([]);
   const [temaSelecionado, setTemaSelecionado] = useState({});
   const [alunosSelecionados, setAlunosSelecionados] = useState([]);
-
-  const [pbl, setPbl] = useState();
   const [problema, setProblema] = useState("");
   const [dataConclusao, setDataConclusao] = useState("");
   const [dataInicio, setDataInicio] = useState("");
@@ -72,9 +68,6 @@ const Teste = () => {
         },
       };
 
-      setPbl(pbl);
-      console.log(pbl);
-
       servicePbl
         .incluir(pbl)
         .then((response) => {
@@ -96,8 +89,7 @@ const Teste = () => {
   return (
     //Remover a div pai e atribur o padding 30px no componente Home!!!!!
     <>
-      
-      <div className="iniciar-pbl-title">
+      <div className="title-container">
         <h1>Iniciar PBL</h1>
         <Alert _mensagem={messagem} _variant={variant} />
       </div>

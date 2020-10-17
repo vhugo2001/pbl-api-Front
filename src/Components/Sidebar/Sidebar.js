@@ -17,7 +17,7 @@ const Sidebar = (props) => {
                 aria-expanded={openPBL}>Pbl</Nav.Link>
             <Collapse in={openPBL}>
                 <Nav.Item id="example-collapse-text">
-                    <Nav.Link href="/">Cadastrar PBL</Nav.Link>
+                    <Nav.Link href="/">Iniciar PBL</Nav.Link>
                     <Nav.Link href="/">Consultar PBL</Nav.Link>
                 </Nav.Item>
             </Collapse>
