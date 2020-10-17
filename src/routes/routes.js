@@ -7,11 +7,11 @@ import PerfilUsuario from "../pages/perfilUsuario";
 import Info from "../pages/info";
 
 
-import Teste from "../pages/teste/teste"
+import IniciarPBL from "../pages/pbl/cadastrar/Index"
 
 const Routes = () => (
   <Switch>
-    <Route path="/iniciar-pbl" component={Teste} />
+    <Route path="/iniciar-pbl" component={IniciarPBL} />
     <Route path="/alunos" component={ConsultarAlunos} />
     <Route path="/perfil-usuario" component={PerfilUsuario} />
     <Route path="/cadastro" component={Cadastro} />
