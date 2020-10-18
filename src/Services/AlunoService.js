@@ -7,7 +7,7 @@ const listarTodos = () => {
 };
 
 const listarID = (id) => {
-  return http.get(URL_PBL`/${id}`);
+  return http.get(URL_PBL + `/${id}`);
 };
 
 const incluir = (data) => {
@@ -15,11 +15,11 @@ const incluir = (data) => {
 };
 
 const atualizar = (id, data) => {
-  return http.put(URL_PBL`/${id}`, data);
+  return http.put(URL_PBL + `/${id}`, data);
 };
 
 const deletar = (id) => {
-  return http.delete(URL_PBL`/${id}`);
+  return http.delete(URL_PBL + `/${id}`);
 };
 
 export default {
