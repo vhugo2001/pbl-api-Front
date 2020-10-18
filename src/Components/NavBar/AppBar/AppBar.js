@@ -39,8 +39,8 @@ const AppBar = (props) => {
                 className="iconesSubMenu"
                 src={require("../../Images/paperPlane.png")}
               />
-              <Link to="/teste" className="OpcoesLaterais">
-                Cadastrar PBL
+              <Link to="/iniciar-pbl" className="OpcoesLaterais">
+                Iniciar PBL
               </Link>
             </Nav.Item>
             <Nav.Item className="SubMenusLaterais">
