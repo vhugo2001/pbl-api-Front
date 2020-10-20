@@ -2,110 +2,166 @@ import React, { useState, useEffect } from "react";
 import { Card } from "../../Components/Card/CardPrincipal";
 import alunoService from "../../Services/AlunoService";
 import Alert from "../../Components/Alert/CustomAlert";
+import { Formik, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 function PerfilUsuario() {
   const [aluno, setAluno] = useState({});
   const [mensagem, setMensagem] = useState("");
+  const [variant, setVariant] = useState("");
 
   useEffect(() => {
-    alunoService.listarID(2).then((response) => {
-      setAluno(response.data);
-      console.log(mensagem);
-    });
+    alunoService
+      .listarID(2)
+      .then((response) => {
+        setAluno(response.data);
+      })
+      .catch((error) => {
+        setMensagem("Erro ao acessar a lista de alunos.");
+        setVariant("danger");
+      });
   }, []);
 
-  useEffect(() => {
-    console.log(mensagem);
-  }, [mensagem]);
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setAluno({ ...aluno, [name]: value });
-  };
-
-  const handleOnClick = (event) => {
-    event.preventDefault();
+  const onSubmitHandler = (data) => {
+    console.log(data);
     alunoService
       .atualizar(2, aluno)
       .then((response) => {
-        setMensagem("Entrou");
+        setMensagem("Perfil atualizado com sucesso.");
+        setVariant("success");
+        //setFieldValues(aluno);
       })
       .catch((error) => {
-        setMensagem(error);
+        setMensagem("Erro ao atualizar perfil.");
+        setVariant("danger");
       });
   };
 
   return (
     <>
-      <div className="meu-perfil-title">
+      <div className="meu-perfil-title title-container">
         <h1>Meu Perfil</h1>
+        <Alert _mensagem={mensagem} _variant={variant} />
       </div>
       <Card>
-        <div
-          style={{ flex: 1, textAlign: "center", paddingTop: 10 }}
-          className="iniciar-pbl-title"
+        <Formik
+          enableReinitialize
+          initialValues={{
+            nome: aluno.nome,
+            email: aluno.email,
+            matricula: aluno.matricula,
+          }}
+          validationSchema={Yup.object().shape({
+            nome: Yup.string()
+              .required("* Campo Nome é obrigatório")
+              .nullable(),
+            email: Yup.string()
+              .required("* Campo E-mail é obrigatório")
+              .nullable(),
+            matricula: Yup.string()
+              .required("* Campo Matricula é obrigatório")
+              .nullable(),
+          })}
+          onSubmit={(values) => onSubmitHandler(values)}
         >
-          <h2>{aluno.nome}</h2>
-        </div>
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <Card.Image
-            src={require("../../Components/Images/default_profile.png")}
-          />
+          {({
+            values,
+            errors,
+            touched,
+            handleSubmit,
+            handleChange,
+            isSubmitting,
+            validating,
+            valid,
+          }) => {
+            return (
+              <>
+                <div
+                  style={{
+                    width: "100%",
+                    textAlign: "center",
+                    paddingTop: 10,
+                  }}
+                  className="iniciar-pbl-title"
+                >
+                  <h2>{values.nome}</h2>
+                </div>
+                <div style={{ display: "flex", flexDirection: "row" }}>
+                  <Card.Image
+                    src={require("../../Components/Images/default_profile.png")}
+                  />
 
-          <Card.Form onSubmit={handleOnClick}>
-            <Card.Form.Group>
-              <Card.Form.Title>Nome</Card.Form.Title>
-              <Card.Form.InputText
-                name="nome"
-                onChange={(e) => handleInputChange(e)}
-                defaultValue={aluno.nome}
-                placeholder="Nome"
-              ></Card.Form.InputText>
-            </Card.Form.Group>
+                  <Card.Form
+                    method="post"
+                    autoComplete="off"
+                    onSubmit={handleSubmit}
+                  >
+                    <Card.Form.Group>
+                      <Card.Form.Title>Nome</Card.Form.Title>
+                      <Card.Form.InputText
+                        name="nome"
+                        value={values.nome}
+                        onChange={handleChange}
+                        valid={touched.nome && !errors.nome}
+                        error={touched.nome && errors.nome}
+                        placeholder="Nome"
+                      />
+                      {errors.nome && touched.nome && (
+                        <Card.Form.StyledInlineErrorMessage>
+                          {errors.nome}
+                        </Card.Form.StyledInlineErrorMessage>
+                      )}
+                    </Card.Form.Group>
 
-            <Card.Form.BreakRow />
+                    <Card.Form.BreakRow />
 
-            <Card.Form.Group>
-              <Card.Form.Title>E-mail</Card.Form.Title>
-              <Card.Form.InputText
-                name="email"
-                onChange={(e) => handleInputChange(e)}
-                defaultValue={aluno.email}
-                placeholder="E-mail"
-              ></Card.Form.InputText>
-            </Card.Form.Group>
+                    <Card.Form.Group>
+                      <Card.Form.Title>E-mail</Card.Form.Title>
+                      <Card.Form.InputText
+                        name="email"
+                        value={values.email}
+                        onChange={handleChange}
+                        valid={touched.email && !errors.email}
+                        error={touched.email && errors.email}
+                        placeholder="E-mail"
+                      />
+                      {errors.email && touched.email && (
+                        <Card.Form.StyledInlineErrorMessage>
+                          {errors.email}
+                        </Card.Form.StyledInlineErrorMessage>
+                      )}
+                    </Card.Form.Group>
 
-            <Card.Form.BreakRow />
+                    <Card.Form.BreakRow />
 
-            <Card.Form.Group>
-              <Card.Form.Title>Matricula</Card.Form.Title>
-              <Card.Form.InputText
-                name="matricula"
-                onChange={(e) => handleInputChange(e)}
-                defaultValue={aluno.matricula}
-                placeholder="Matricula"
-              ></Card.Form.InputText>
-            </Card.Form.Group>
+                    <Card.Form.Group>
+                      <Card.Form.Title>Matricula</Card.Form.Title>
+                      <Card.Form.InputText
+                        name="matricula"
+                        onChange={handleChange}
+                        valid={touched.matricula && !errors.matricula}
+                        error={touched.matricula && errors.matricula}
+                        value={values.matricula}
+                        placeholder="Matricula"
+                      />
+                      {errors.matricula && touched.matricula && (
+                        <Card.Form.StyledInlineErrorMessage>
+                          {errors.matricula}
+                        </Card.Form.StyledInlineErrorMessage>
+                      )}
+                    </Card.Form.Group>
 
-            <Card.Form.BreakRow />
+                    <Card.Form.BreakRow />
 
-            <Card.Form.Group>
-              <Card.Form.Title>Senha</Card.Form.Title>
-              <Card.Form.InputText placeholder="Senha"></Card.Form.InputText>
-            </Card.Form.Group>
-
-            <Card.Form.Group>
-              <Card.Form.Title>Nova Senha</Card.Form.Title>
-              <Card.Form.InputText placeholder="Nova Senha"></Card.Form.InputText>
-            </Card.Form.Group>
-
-            <Card.Form.BreakRow />
-
-            <Card.Form.GroupButton>
-              <Card.Form.Submit type="submit">Salvar</Card.Form.Submit>
-            </Card.Form.GroupButton>
-          </Card.Form>
-        </div>
+                    <Card.Form.GroupButton>
+                      <Card.Form.Submit type="submit">Salvar</Card.Form.Submit>
+                    </Card.Form.GroupButton>
+                  </Card.Form>
+                </div>
+              </>
+            );
+          }}
+        </Formik>
       </Card>
     </>
   );
