@@ -46,33 +46,13 @@ export const InputText = styled.input`
   height: 40px;
   padding-left: 10px;
   border-radius: 5px;
-  border: ${props => props.border || '1px solid #d2d2d2' };
+  border: 1px solid #d2d2d2;
   -webkit-box-shadow: 0 1px 0 0 #d2d2d2;
   box-shadow: 0 1px 0 0 #d2d2d2;
   &:focus {
     border: 1px solid #8ebfed !important;
     outline: none;
   }
-
-  ${({ valid }) =>
-    valid &&
-    css`
-    border: 1px solid #8ebfed !important;
-
-      &:focus,
-      &:active {
-        border: 1px solid #8ebfed !important;
-        outline: none;
-      }
-
-      /* Autocomplete styles in Chrome*/
-      &:-webkit-autofill,
-      &:-webkit-autofill:hover,
-      &:-webkit-autofill:focus {
-        border: 1px solid #8ebfed !important;
-      }
-    `}
-
 
   ${({ error }) =>
     error &&
@@ -82,24 +62,14 @@ export const InputText = styled.input`
 
       &:focus,
       &:active {
-        box-shadow: rgb(244, 129, 116) 0px 0px 2px 1px, rgb(251, 178, 174) 0px 0px
-            0px 3px;
-        border: 1px solid #ffffff;
-        outline: none;
-      }
-
-      /* Autocomplete styles in Chrome*/
-      &:-webkit-autofill,
-      &:-webkit-autofill:hover,
-      &:-webkit-autofill:focus {
         border: 1px solid rgb(191, 49, 12);
+        outline: none;
       }
     `}
 `;
 
 export const InputDate = styled.input`
   width: 100%;
-
   font-size: 1rem;
   height: 40px;
   padding-left: 10px;
