@@ -1,6 +1,7 @@
 import React from "react";
 import { useField, useFormikContext } from "formik";
 import DatePicker from "react-datepicker";
+import { BsFillCaretDownFill } from "react-icons/bs";
 
 export const DatePickerField = ({ ...props }) => {
   const { setFieldValue } = useFormikContext();

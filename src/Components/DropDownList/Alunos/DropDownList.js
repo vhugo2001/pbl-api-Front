@@ -26,7 +26,8 @@ const DropDownContainer = styled("div")`
 const DropDownHeader = styled("div")`
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
+  align-items: center;
   height: 40px;
   border: 1px solid #d2d2d2;
   border-radius: 5px;
@@ -44,6 +45,10 @@ const DropDownHeader = styled("div")`
   -ms-user-select: none;
   user-select: none;
   outline: 0;
+`;
+
+const DropDownHeaderContent = styled("div")`
+  display: flex;
 `;
 
 const DropDownListContainer = styled("div")`
@@ -249,7 +254,7 @@ const DefaultDropDownList = ({ lista, onSelect, ...props }) => {
         }}
         onClick={toggling}
       >
-        <div>
+        <DropDownHeaderContent>
           {selectedOption.map((s) => (
             <Selected key={s.id}>
               <SelectedTitle>{s.nome}</SelectedTitle>
@@ -261,8 +266,8 @@ const DefaultDropDownList = ({ lista, onSelect, ...props }) => {
               </Remove>
             </Selected>
           ))}
-        </div>
-        <BsFillCaretDownFill />
+        </DropDownHeaderContent>
+        <BsFillCaretDownFill style={{color: '#8d8d8d'}} />
       </DropDownHeader>
       {isOpen && (
         <DropDownListContainer>
