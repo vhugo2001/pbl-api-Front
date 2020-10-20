@@ -8,7 +8,7 @@ function PerfilUsuario() {
   const [mensagem, setMensagem] = useState("");
 
   useEffect(() => {
-    alunoService.listarID(1).then((response) => {
+    alunoService.listarID(2).then((response) => {
       setAluno(response.data);
       console.log(mensagem);
     });
@@ -26,7 +26,7 @@ function PerfilUsuario() {
   const handleOnClick = (event) => {
     event.preventDefault();
     alunoService
-      .atualizar(1, aluno)
+      .atualizar(2, aluno)
       .then((response) => {
         setMensagem("Entrou");
       })
@@ -69,6 +69,7 @@ function PerfilUsuario() {
               <Card.Form.Title>E-mail</Card.Form.Title>
               <Card.Form.InputText
                 name="email"
+                onChange={(e) => handleInputChange(e)}
                 defaultValue={aluno.email}
                 placeholder="E-mail"
               ></Card.Form.InputText>
@@ -80,6 +81,7 @@ function PerfilUsuario() {
               <Card.Form.Title>Matricula</Card.Form.Title>
               <Card.Form.InputText
                 name="matricula"
+                onChange={(e) => handleInputChange(e)}
                 defaultValue={aluno.matricula}
                 placeholder="Matricula"
               ></Card.Form.InputText>
