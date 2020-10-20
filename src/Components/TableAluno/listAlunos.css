@@ -6,6 +6,7 @@ td{
     background: none;
     color: #7f89a2;
   }
+ 
   .trash-button:hover {
     color:red;
   }
@@ -16,5 +17,6 @@ td{
     -o-transform: scale(2); /* Opera */
     transform: scale(2);
     width: 30%;
+    padding-top: 5px;
     text-align: center;
   }

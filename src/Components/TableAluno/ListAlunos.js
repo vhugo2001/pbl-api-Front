@@ -8,137 +8,204 @@ import * as MdIcons from "react-icons/md";
 import * as IoIcons from "react-icons/io";
 import './listAlunos.css'
 import serviceAluno from "../../Services/AlunoService";
-import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
-import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table2-paginator';
-// import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import paginationFactory from 'react-bootstrap-table2-paginator';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import {
     Container,
-    Title
+    Title,
+    GroupButton,
+    Ativar,
+    Desativar
 } from './style'
 
 const { SearchBar } = Search;
 
-
-
 export default function ListAluno(props) {
-
-
-    // const alunos = [
-    //     { id: 1, nome: "Jorge", email: "jj@gmail.com", matricula: '111111111', ativo: true, excluir: false },
-    //     { id: 2, nome: "Mateus", email: "MM@gmail.com", matricula: '222222222', ativo: true, excluir: false },
-    //     { id: 3, nome: "Carla", email: "CL@gmail.com", matricula: '333333333', ativo: true, excluir: false },
-    //     { id: 4, nome: "Francielle", email: "Fran@gmail.com", matricula: '444444444', ativo: true, excluir: false },
-    //     { id: 5, nome: "Cleiton", email: "CC@gmail.com", matricula: '555555555', ativo: true, excluir: false }
-    // ];
-    const colunas = [
-        {
-            dataField: "id",
-            text: "Perfil"
-        },
-        {
-            dataField: "nome",
-            text: "Nome"
-        },
-        {
-            dataField: "email",
-            text: "Email"
-        },
-        {
-            dataField: "matricula",
-            text: "Matrícula"
-        },
-        {
-            dataField: "ativo",
-            text: "Ativo",
-            formatter: (cellContent, row) => (
-                <div className="checkbox">
-                    <label>
-                        <input type="checkbox" />
-                    </label>
-                </div>
-            )
-        },
-        {
-            dataField: "excluir",
-            text: "Excluir",
-            formatter: (cellContent, row) => (
-                <Link to="/" className="trash-button">
-                    <IoIcons.IoMdTrash />
-                </Link>
-            )
-        },
-    ];
-
-
     const [alunos, setAlunos] = useState([]);
+    const [linha, setLinha] = useState([]);
+
     useEffect(() => {
         serviceAluno
             .listarTodos()
             .then((response) => {
                 let data = response.data;
-                setAlunos(data);
-
+                setAlunos(data.filter((f) => f.excluido !== true));
             })
             .catch((error) => console.log(error));
     }, []);
 
+    const colunas = [
+        // {
+        //     dataField: "id",
+        //     text: "Perfil",
+        //     sort: true
 
-    const options = {
-        custom: true,
-        hideSizePerPage: true,
-        hidePageListOnlyOnePage: true,
-        pageStartIndex: 1,
-        firstPageText: 'Primeira página',
-        prePageText: 'voltar',
-        nextPageText: 'Próximo',
-        lastPageText: 'Último',
-        nextPageTitle: 'Primeira página',
-        firstPageTitle: 'Próxima pagina',
-        lastPageTitle: 'Última página',
-        // showTotal: true,
-        // totalSize: colunas.length
-        sizePerPage: 1,
-        hideSizePerPage: true,
-        hidePageListOnlyOnePage: true,
+        // },
+        {
+            dataField: "nome",
+            text: "Nome",
+            sort: true
+        },
+        {
+            dataField: "email",
+            text: "Email",
+            sort: true
+        },
+        {
+            dataField: "matricula",
+            text: "Matrícula",
+            sort: true
+        },
+        {
+            dataField: "ativo",
+            text: "Ativo",
+            sort: true
+            // formatter: (cellContent, row) => (
+            //     <div className="checkbox">
+            //         <label>
+
+            //             {console.log(row)}
+            //             <input type="checkbox" checked={row.ativo} />
+            //         </label>
+            //     </div>
+            // )
+        },
+        {
+            dataField: "excluir",
+            text: "Excluir",
+            formatter: (cellContent, row) => (
+                <div>
+                    <Link className="trash-button" >
+                        <IoIcons.IoMdTrash />
+                    </Link>
+                </div>
+            )
+        },
+    ];
+
+    const selectRow = {
+        mode: "checkbox",
+        clickToSelect: false,
+        classes: "selection-row",
+        onSelect: (row, isSelect, rowIndex, e) => {
+            setAlunos((rows) => {
+                return rows.map((r) => {
+                    if (r.id !== row.id) {
+                        return r;
+                    }
+
+                    return { ...r, isSelect };
+                });
+            });
+
+        },
+
+        onSelectAll: (isSelect, rows, e) => {
+            setAlunos((rows) => {
+                return rows.map((row) => {
+                    return { ...row, isSelect };
+                });
+            });
+        }
     };
 
+    const selectedRows = alunos.filter((row) => row.isSelect);
+    let result = selectedRows.map(valor => valor.id);
 
-    const contentTable = ({ paginationProps, paginationTableProps }) => (
+    const handleAtivar = () => {
 
-        <>
+        const ativoStatus = {
+            "ativo": true
+            // "email": "string",
+            // "matricula": "string",
+            // "nome": "string",
+        }
+
+        let atribuiResult = result.forEach(atualizarAtivo);
+
+        function atualizarAtivo(item) {
+            serviceAluno
+                .atualizarAtivo(item, ativoStatus)
+                .then((response) => {
+                    let data = response.data;
+                    setAlunos(data);
+                    alert("Alunos ativados")
+                })
+                .catch((error) => console.log(error))
+        }
+    }
+    const handleDesativar = () => {
+        const ativoStatus = {
+            "ativo": false
+        }
+        let atribuiResult = result.forEach(atualizarDesativo);
+
+        function atualizarDesativo(item) {
+            serviceAluno
+                .atualizarAtivo(item, ativoStatus)
+                .then((response) => {
+                    let data = response.data;
+                    setAlunos(data);
+                    alert("Alunos desativados")
+                })
+                .catch((error) => console.log(error))
+        }
+    }
+
+    const rowStyle = (row, rowIndex) => {
+
+        if (row.ativo === false) {
+            return { backgroundColor: '#c3b6b6' };
+        } else {
+            return {};
+        }
+
+    };
+
+    const options = paginationFactory({
+        page: 1,
+        hideSizePerPage: true,
+        hidePageListOnlyOnePage: true,
+        sizePerPage: 5,
+        lastPageText: '>>',
+        firstPageText: '<<',
+        nextPageText: '>',
+        prePageText: '<',
+        showTotal: true,
+
+    });
+
+    return (
+        <Container>
             <Title>Alunos cadastrados </Title>
             <ToolkitProvider
-                keyField="nome"
+                keyField='nome'
                 data={alunos}
                 columns={colunas}
-                search>
+                search
+            >
                 {
                     props => (
                         <div>
+                            <SearchBar {...props.searchProps} placeholder='Buscar aluno por nome...' />
 
-                            <SearchBar {...props.searchProps} placeholder="buscar aluno por nome..." />
-                            <hr />
-                            <BootstrapTable keyField="id" {...props.baseProps} {...paginationTableProps}
-                                bordered={false} striped hover condensed />
+                            <BootstrapTable
+                                pagination={options}
+                                {...props.baseProps}
+                                bordered={false}
+                                rowStyle={rowStyle}
+                                striped hover condensed
+
+                                selectRow={selectRow}
+                            />
                         </div>
                     )
                 }
             </ToolkitProvider>
-            <PaginationListStandalone {...paginationProps} />
-        </>
-    );
-
-
-    return (
-        <Container>
-            <PaginationProvider
-                pagination={
-                    paginationFactory(options)
-                }
-            >
-                {contentTable}
-            </PaginationProvider>
+            <GroupButton>
+                <Ativar onClick={handleAtivar}>Ativar</Ativar>
+                <Desativar onClick={handleDesativar}>Desativar</Desativar>
+            </GroupButton>
         </Container>
     );
 }

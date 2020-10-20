@@ -65,3 +65,54 @@ export const Tr = styled.tr`
 export const Th = styled.th`
 
 `;
+
+export const Image = styled("div")`
+  border-radius: 50%;
+
+  width: 3.5rem;
+  height: 3.5rem;
+  text-transform: uppercase;
+  color: #ffffff;
+  font-size: 1.6rem;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const GroupButton = styled.div`
+  display: flex;
+  justify-content:center;
+  width: 100%;
+  margin: 50px 0 10px;
+`;
+
+export const Ativar = styled.button`
+  background-color: #07a7e3;
+  color: white;
+  font-size: 16px;
+  font-weight: 900;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  border: 0;
+  border-radius: 10px;
+  padding: 15px 32px;
+  display: inline-block;
+  margin-right:50px;
+`;
+
+export const Desativar = styled.button`
+  background-color: #cc0000;
+  color: white;
+  font-size: 16px;
+  font-weight: 900;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  border: 0;
+  border-radius: 10px;
+  padding: 15px 32px;
+  display: inline-block;
+ margin-left:50px;
+`;
