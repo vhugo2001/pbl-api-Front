@@ -11,6 +11,7 @@ import DropDownList from "../../../Components/DropDownList/Default/DropDownList"
 import DropDownListAlunos from "../../../Components/DropDownList/Alunos/DropDownList";
 import serviceAluno from "../../../Services/AlunoService";
 import serviceTema from "../../../Services/TemaPblService";
+import serviceDisciplina from "../../../Services/DisciplinaService";
 import servicePbl from "../../../Services/PblService";
 import Alert from "../../../Components/Alert/CustomAlert";
 
@@ -21,11 +22,13 @@ import { isEmptyObject } from "jquery";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-const Teste = () => {
+const Index = () => {
   const [listaAluno, setListaAluno] = useState([]);
   const [listaTemaPbl, setListaTemaPbl] = useState([]);
+  const [listaDisciplina, setListaDisciplina] = useState([]);
   const [listaPbl, setListaPbl] = useState([]);
   const [temaSelecionado, setTemaSelecionado] = useState({});
+  const [disciplinaSelecionada, setDisciplinaSelecionada] = useState({});
   const [alunosSelecionados, setAlunosSelecionados] = useState([]);
 
   const [dataConclusao, setDataConclusao] = useState("");
@@ -48,11 +51,23 @@ const Teste = () => {
   }, []);
 
   useEffect(() => {
+    console.log(disciplinaSelecionada.id);
     serviceTema
+      .listarIDDisciplina(disciplinaSelecionada.id)
+      .then((response) => {
+        let data = response.data;
+        console.log(data);
+        setListaTemaPbl(data);
+      })
+      .catch((error) => console.log(error));
+  }, [disciplinaSelecionada]);
+
+  useEffect(() => {
+    serviceDisciplina
       .listarTodos()
       .then((response) => {
         let data = response.data;
-        setListaTemaPbl(data);
+        setListaDisciplina(data);
       })
       .catch((error) => console.log(error));
   }, []);
@@ -104,9 +119,18 @@ const Teste = () => {
             dataInicio: Yup.date()
               .required("* Campo Data Início é obrigatório")
               .nullable(),
-            dataConclusao: Yup.date().required("* Campo Data Conclusão é obrigatório").nullable()
-            .when("dataInicio",
-                (started, yup) => started && yup.min(started, "* Data Conclusão não pode ser anterior à Data Inicio")),
+            dataConclusao: Yup.date()
+              .required("* Campo Data Conclusão é obrigatório")
+              .nullable()
+              .when(
+                "dataInicio",
+                (started, yup) =>
+                  started &&
+                  yup.min(
+                    started,
+                    "* Data Conclusão não pode ser anterior à Data Inicio"
+                  )
+              ),
             aluno: Yup.string().required("* Campo Aluno é obrigatório"),
             problema: Yup.string().required("* Campo problema é obrigatório"),
           })}
@@ -124,7 +148,19 @@ const Teste = () => {
           }) => {
             return (
               <>
-                <Card.Form method="post" autoComplete="off" onSubmit={handleSubmit}>
+                <Card.Form
+                  method="post"
+                  autoComplete="off"
+                  onSubmit={handleSubmit}
+                >
+                  <Card.Form.Group style={{ flex: 4 }}>
+                    <Card.Form.Title>Disciplina</Card.Form.Title>
+                    <DropDownList
+                      lista={listaDisciplina}
+                      onSelect={setDisciplinaSelecionada}
+                    ></DropDownList>
+                  </Card.Form.Group>
+
                   <Card.Form.Group style={{ flex: 4 }}>
                     <Card.Form.Title>Tema PBL</Card.Form.Title>
                     <DropDownList
@@ -152,7 +188,8 @@ const Teste = () => {
                       selected={dataInicio}
                       customInput={
                         <Card.Form.InputText
-                        onfocus="this.removeAttribute('readonly');" readonly
+                          onfocus="this.removeAttribute('readonly');"
+                          readonly
                           value={dataInicio}
                           valid={touched.dataInicio && !errors.dataInicio}
                           error={touched.dataInicio && errors.dataInicio}
@@ -218,7 +255,7 @@ const Teste = () => {
                   <Card.Form.Group>
                     <Card.Form.Title>Problema</Card.Form.Title>
                     <Card.Form.InputText
-                     autocomplete="off"
+                      autocomplete="off"
                       name="problema"
                       onChange={handleChange}
                       valid={touched.problema && !errors.problema}
@@ -245,4 +282,4 @@ const Teste = () => {
     </>
   );
 };
-export default Teste;
+export default Index;
