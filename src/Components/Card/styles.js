@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Container = styled.div`
   display: flex;
@@ -21,6 +21,9 @@ export const Form = styled.form`
 
 export const Group = styled.div`
   flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
   margin: 10px;
 `;
 
@@ -39,6 +42,34 @@ export const Title = styled.label`
 export const InputText = styled.input`
   width: 100%;
 
+  font-size: 1rem;
+  height: 40px;
+  padding-left: 10px;
+  border-radius: 5px;
+  border: 1px solid #d2d2d2;
+  -webkit-box-shadow: 0 1px 0 0 #d2d2d2;
+  box-shadow: 0 1px 0 0 #d2d2d2;
+  &:focus {
+    border: 1px solid #8ebfed !important;
+    outline: none;
+  }
+
+  ${({ error }) =>
+    error &&
+    css`
+      border: 1px solid rgb(191, 49, 12);
+      outline: none;
+
+      &:focus,
+      &:active {
+        border: 1px solid rgb(191, 49, 12);
+        outline: none;
+      }
+    `}
+`;
+
+export const InputDate = styled.input`
+  width: 100%;
   font-size: 1rem;
   height: 40px;
   padding-left: 10px;
@@ -69,7 +100,9 @@ export const InputTextArea = styled.textarea`
 
 export const Image = styled.img`
   width: 100%;
-  max-width: 550px;
+  max-width: 350px;
+  height: 100%;
+  max-height: 350px;
 `;
 
 export const GroupButton = styled.div`
@@ -102,4 +135,9 @@ export const Button = styled.button`
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+`;
+
+export const StyledInlineErrorMessage = styled.div`
+  color: rgb(120, 27, 0);
+  white-space: pre-line;
 `;

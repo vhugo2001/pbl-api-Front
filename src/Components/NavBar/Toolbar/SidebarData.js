@@ -12,7 +12,7 @@ export const SidebarData = [
     cName: "nav-text",
   },
   {
-    title: "Cadastrar PBL",
+    title: "Iniciar PBL",
     path: "/iniciar-pbl",
     icon: <MdIcons.MdCreateNewFolder />,
     cName: "nav-text",

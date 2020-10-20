@@ -8,10 +8,12 @@ import {
   Group,
   Title,
   InputText,
+  InputDate,
   InputTextArea,
   Breakrow,
   GroupButton,
   Submit,
+  StyledInlineErrorMessage,
 } from "./styles";
 
 export function Card({ classes, children, ...restProps }) {
@@ -70,14 +72,26 @@ Card.Form.InputText = function FormInputText({ classes, ...restProps }) {
   );
 };
 
-Card.Form.InputTextArea = function FormInputTextArea({ classes, ...restProps }) {
-    return (
-      <InputTextArea
-        className={classNames("card__form__inputtextarea", classes)}
-        {...restProps}
-      />
-    );
-  };
+Card.Form.InputDate = function FormInputDate({ classes, ...restProps }) {
+  return (
+    <InputDate
+      className={classNames("card__form__inputdate", classes)}
+      {...restProps}
+    />
+  );
+};
+
+Card.Form.InputTextArea = function FormInputTextArea({
+  classes,
+  ...restProps
+}) {
+  return (
+    <InputTextArea
+      className={classNames("card__form__inputtextarea", classes)}
+      {...restProps}
+    />
+  );
+};
 
 Card.Image = function CardImage({ src, classes, ...restProps }) {
   return (
@@ -118,3 +132,15 @@ Card.Button = function CardButton({ classes, ...restProps }) {
     <Button className={classNames("card__button", classes)} {...restProps} />
   );
 };
+
+Card.Form.StyledInlineErrorMessage = function CardButton({ classes, children, ...restProps }) {
+  return (
+    <StyledInlineErrorMessage
+      className={classNames("card__form_styledInlineErrorMessage", classes)}
+      {...restProps}
+    >
+       {children}
+    </StyledInlineErrorMessage>
+  );
+};
+
