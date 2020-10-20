@@ -6,9 +6,6 @@
 .footer-container {
   flex: 1;
 }
-input:invalid {
-  border-color: red;
-}
 
 .title-container{
   display: flex;
@@ -27,5 +24,14 @@ input:invalid {
 
 .alert-title{
   font-size: 1rem !important;
+}
+
+p {
+  color: #bf1650;
+}
+
+p::before {
+  display: inline;
+  content: "⚠ ";
 }
 

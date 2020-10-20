@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useField, useFormikContext } from "formik";
 import styled from "styled-components";
 
 const DropDownContainer = styled("div")`
@@ -78,7 +79,9 @@ const Search = styled("input")`
   }
 `;
 
-const DefaultDropDownList = ({ lista, onSelect }) => {
+const DefaultDropDownList = ({ lista, onSelect, ...props  }) => {
+  const { setFieldValue } = useFormikContext();
+  const [field] = useField(props);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState();
   const [options, setOptions] = useState(lista);
@@ -96,6 +99,7 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
   const onOptionClicked = (e) => () => {
     setSelectedOption(e.nome);
     onSelect(e);
+    setFieldValue(field.name, e);
     setIsOpen(false);
     setOptions(lista);
   };
@@ -124,7 +128,7 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
         handlewBlur(e);
       }}
     >
-      <DropDownHeader onClick={toggling}>{selectedOption || ""}</DropDownHeader>
+      <DropDownHeader style={{border : props.valid === false ? '1px solid rgb(191, 49, 12)':'1px solid #d2d2d2'}} onClick={toggling}>{selectedOption || ""}</DropDownHeader>
       {isOpen && (
         <DropDownListContainer>
           <DropDownList>
