@@ -73,6 +73,16 @@ const AppBar = (props) => {
               </Link>
             </Nav.Item>
 
+            <Nav.Item className="SubMenusLaterais">
+              <Image
+                className="iconesSubMenu"
+                src={require("../../Images/paperPlane.png")}
+              />
+              <Link to="/cadastrar-disciplina" className="OpcoesLaterais">
+                Cadastrar Disciplina
+              </Link>
+            </Nav.Item>
+
             <Nav.Item className="MenusLaterais">Teste</Nav.Item>
             <Nav.Item className="SubMenusLaterais">
               <Image
