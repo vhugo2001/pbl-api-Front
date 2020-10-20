@@ -1,0 +1,22 @@
+td{
+    overflow-wrap: break-word
+}
+.trash-button {
+    font-size: 1.7rem;
+    background: none;
+    color: #7f89a2;
+  }
+ 
+  .trash-button:hover {
+    color:red;
+  }
+  .checkbox{
+    -ms-transform: scale(2); /* IE */
+    -moz-transform: scale(2); /* FF */
+    -webkit-transform: scale(2); /* Safari and Chrome */
+    -o-transform: scale(2); /* Opera */
+    transform: scale(2);
+    width: 30%;
+    padding-top: 5px;
+    text-align: center;
+  }

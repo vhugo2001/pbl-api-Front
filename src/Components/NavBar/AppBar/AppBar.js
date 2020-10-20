@@ -68,7 +68,7 @@ const AppBar = (props) => {
                 className="iconesSubMenu"
                 src={require("../../Images/paperPlane.png")}
               />
-              <Link to="/consult" className="OpcoesLaterais">
+              <Link to="/alunos" className="OpcoesLaterais">
                 Consultar Aluno
               </Link>
             </Nav.Item>
