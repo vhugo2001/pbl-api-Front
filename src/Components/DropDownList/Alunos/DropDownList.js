@@ -4,6 +4,10 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 
+import { useField, useFormikContext } from "formik";
+
+import { BsFillCaretDownFill } from "react-icons/bs";
+
 const RandomColor = () => {
   var letters = "0123456789ABCDEF";
   var color = "#";
@@ -22,7 +26,8 @@ const DropDownContainer = styled("div")`
 const DropDownHeader = styled("div")`
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
+  align-items: center;
   height: 40px;
   border: 1px solid #d2d2d2;
   border-radius: 5px;
@@ -42,10 +47,15 @@ const DropDownHeader = styled("div")`
   outline: 0;
 `;
 
+const DropDownHeaderContent = styled("div")`
+  display: flex;
+`;
+
 const DropDownListContainer = styled("div")`
   position: absolute;
   margin-top: 0.8em;
   width: 30rem;
+  z-index: 998;
 `;
 
 const DropDownList = styled("div")`
@@ -88,7 +98,6 @@ const ListItem = styled("div")`
   &:hover {
     background-color: #f1f1f1;
   }
-
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -134,17 +143,27 @@ const Selected = styled("div")`
   flex-direction: row;
   margin-right: 0.2rem;
   background: #ebebeb;
-  color: #383838;
+  color: #727280;
   padding: 0 0.5rem;
   font-weight: 550;
 `;
 
-const Remove = styled("div")`
-  margin-left: 0.5rem;
+const SelectedTitle = styled("div")`
+  display: flex;
+  align-items: center;
   justify-content: center;
 `;
 
-const DefaultDropDownList = ({ lista, onSelect }) => {
+const Remove = styled("div")`
+  display: flex;
+  margin-left: 0.5rem;
+  align-items: center;
+  justify-content: center;
+`;
+
+const DefaultDropDownList = ({ lista, onSelect, ...props }) => {
+  const { setFieldValue } = useFormikContext();
+  const [field] = useField(props);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState([]);
   const [alunoSelecionado, setAlunoSelecionado] = useState([]);
@@ -173,8 +192,7 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
   };
 
   const onOptionClicked = (option) => () => {
-    if (alunoSelecionado.filter((f) => f.id === option.id).length > 0)
-      return;
+    if (alunoSelecionado.filter((f) => f.id === option.id).length > 0) return;
 
     setAlunoSelecionado((alunoSelecionado) => [
       ...alunoSelecionado,
@@ -189,6 +207,7 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
 
   useEffect(() => {
     onSelect(alunoSelecionado);
+    setFieldValue(field.name, alunoSelecionado);
   }, [alunoSelecionado]);
 
   const handleOnSearchChange = (e) => {
@@ -226,18 +245,29 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
 
   return (
     <DropDownContainer ref={searchInput}>
-      <DropDownHeader onClick={toggling}>
-        {selectedOption.map((s) => (
-          <Selected key={s.id}>
-            {s.nome}
-            <Remove key={s.id} onClick={onRemoveClicked(s.id)}>
-              <FontAwesomeIcon
-                style={{ color: "#ff7a7a" }}
-                icon={faWindowClose}
-              />
-            </Remove>
-          </Selected>
-        ))}
+      <DropDownHeader
+        style={{
+          border:
+            props.valid === false
+              ? "1px solid rgb(191, 49, 12)"
+              : "1px solid #d2d2d2",
+        }}
+        onClick={toggling}
+      >
+        <DropDownHeaderContent>
+          {selectedOption.map((s) => (
+            <Selected key={s.id}>
+              <SelectedTitle>{s.nome}</SelectedTitle>
+              <Remove key={s.id} onClick={onRemoveClicked(s.id)}>
+                <FontAwesomeIcon
+                  style={{ color: "#ff7777" }}
+                  icon={faWindowClose}
+                />
+              </Remove>
+            </Selected>
+          ))}
+        </DropDownHeaderContent>
+        <BsFillCaretDownFill style={{color: '#8d8d8d'}} />
       </DropDownHeader>
       {isOpen && (
         <DropDownListContainer>
@@ -256,7 +286,7 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
                 </Image>
                 <ListInfo>
                   <Nome>{option.nome}</Nome>
-                  <Email>{option.usuario.email}</Email>
+                  <Email>{option.email}</Email>
                 </ListInfo>
               </ListItem>
             ))}

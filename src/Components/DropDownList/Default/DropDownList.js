@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useField, useFormikContext } from "formik";
+import { BsFillCaretDownFill } from "react-icons/bs";
 import styled from "styled-components";
 
 const DropDownContainer = styled("div")`
@@ -7,6 +9,9 @@ const DropDownContainer = styled("div")`
 `;
 
 const DropDownHeader = styled("div")`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   height: 40px;
   border: 1px solid #d2d2d2;
   border-radius: 5px;
@@ -26,10 +31,15 @@ const DropDownHeader = styled("div")`
   outline: 0;
 `;
 
+const DropDownHeaderContent = styled("div")`
+  display: flex;
+`;
+
 const DropDownListContainer = styled("div")`
   position: absolute;
   margin-top: 0.8em;
-  width: inherit;
+  width: 15rem;
+  z-index: 999;
 `;
 
 const DropDownList = styled("ul")`
@@ -77,7 +87,9 @@ const Search = styled("input")`
   }
 `;
 
-const DefaultDropDownList = ({ lista, onSelect }) => {
+const DefaultDropDownList = ({ lista, onSelect, ...props }) => {
+  const { setFieldValue } = useFormikContext();
+  const [field] = useField(props);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState();
   const [options, setOptions] = useState(lista);
@@ -95,6 +107,7 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
   const onOptionClicked = (e) => () => {
     setSelectedOption(e.nome);
     onSelect(e);
+    setFieldValue(field.name, e);
     setIsOpen(false);
     setOptions(lista);
   };
@@ -123,7 +136,18 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
         handlewBlur(e);
       }}
     >
-      <DropDownHeader onClick={toggling}>{selectedOption || ""}</DropDownHeader>
+      <DropDownHeader
+        style={{
+          border:
+            props.valid === false
+              ? "1px solid rgb(191, 49, 12)"
+              : "1px solid #d2d2d2",
+        }}
+        onClick={toggling}
+      >
+        <DropDownHeaderContent>{selectedOption || ""}</DropDownHeaderContent>
+        <BsFillCaretDownFill style={{ color: "#8d8d8d" }} />
+      </DropDownHeader>
       {isOpen && (
         <DropDownListContainer>
           <DropDownList>

@@ -6,6 +6,10 @@ const listarTodos = () => {
   return http.get(URL_PBL);
 };
 
+const listarIDDisciplina = (id) => {
+  return http.get(URL_PBL + `/disciplina/${id}`);
+};
+
 const listarID = (id) => {
   return http.get(URL_PBL`/${id}`);
 };
@@ -24,6 +28,7 @@ const deletar = (id) => {
 
 export default {
   listarTodos,
+  listarIDDisciplina,
   incluir,
   atualizar,
   deletar,

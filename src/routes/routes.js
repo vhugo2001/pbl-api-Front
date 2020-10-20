@@ -3,16 +3,17 @@ import { Switch, Route } from "react-router-dom";
 
 import Cadastro from "../pages/cadastro";
 import ConsultarAlunos from "../pages/consultarAlunos";
-import ConsultarPBL from "../pages/consultarPBL";
+import PerfilUsuario from "../pages/perfilUsuario";
 import Info from "../pages/info";
 
-import Teste from "../pages/teste/teste"
+
+import IniciarPBL from "../pages/pbl/cadastrar/Index"
 
 const Routes = () => (
   <Switch>
-    <Route path="/iniciar-pbl" component={Teste} />
+    <Route path="/iniciar-pbl" component={IniciarPBL} />
     <Route path="/alunos" component={ConsultarAlunos} />
-    <Route path="/consult" component={ConsultarPBL} />
+    <Route path="/perfil-usuario" component={PerfilUsuario} />
     <Route path="/cadastro" component={Cadastro} />
     <Route exact path="/" component={Info} />
   </Switch>
