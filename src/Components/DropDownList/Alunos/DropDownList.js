@@ -4,6 +4,10 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 
+import { useField, useFormikContext } from "formik";
+
+import { BsFillCaretDownFill } from "react-icons/bs";
+
 const RandomColor = () => {
   var letters = "0123456789ABCDEF";
   var color = "#";
@@ -152,7 +156,9 @@ const Remove = styled("div")`
   justify-content: center;
 `;
 
-const DefaultDropDownList = ({ lista, onSelect }) => {
+const DefaultDropDownList = ({ lista, onSelect, ...props }) => {
+  const { setFieldValue } = useFormikContext();
+  const [field] = useField(props);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState([]);
   const [alunoSelecionado, setAlunoSelecionado] = useState([]);
@@ -196,6 +202,7 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
 
   useEffect(() => {
     onSelect(alunoSelecionado);
+    setFieldValue(field.name, alunoSelecionado);
   }, [alunoSelecionado]);
 
   const handleOnSearchChange = (e) => {
@@ -233,20 +240,29 @@ const DefaultDropDownList = ({ lista, onSelect }) => {
 
   return (
     <DropDownContainer ref={searchInput}>
-      <DropDownHeader onClick={toggling}>
-        {selectedOption.map((s) => (
-          <Selected key={s.id}>
-            <SelectedTitle>
-            {s.nome}
-            </SelectedTitle>
-            <Remove key={s.id} onClick={onRemoveClicked(s.id)}>
-              <FontAwesomeIcon
-                style={{ color: "#ff7777" }}
-                icon={faWindowClose}
-              />
-            </Remove>
-          </Selected>
-        ))}
+      <DropDownHeader
+        style={{
+          border:
+            props.valid === false
+              ? "1px solid rgb(191, 49, 12)"
+              : "1px solid #d2d2d2",
+        }}
+        onClick={toggling}
+      >
+        <div>
+          {selectedOption.map((s) => (
+            <Selected key={s.id}>
+              <SelectedTitle>{s.nome}</SelectedTitle>
+              <Remove key={s.id} onClick={onRemoveClicked(s.id)}>
+                <FontAwesomeIcon
+                  style={{ color: "#ff7777" }}
+                  icon={faWindowClose}
+                />
+              </Remove>
+            </Selected>
+          ))}
+        </div>
+        <BsFillCaretDownFill />
       </DropDownHeader>
       {isOpen && (
         <DropDownListContainer>

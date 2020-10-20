@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card } from "../../../Components/Card/CardPrincipal";
+import DatePickerField from "../../../Components/DatePicker/DatePickerField";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import DatePicker from "react-datepicker";
@@ -13,6 +14,9 @@ import serviceTema from "../../../Services/TemaPblService";
 import servicePbl from "../../../Services/PblService";
 import Alert from "../../../Components/Alert/CustomAlert";
 
+import { Formik, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
+
 import { isEmptyObject } from "jquery";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -23,11 +27,13 @@ const Teste = () => {
   const [listaPbl, setListaPbl] = useState([]);
   const [temaSelecionado, setTemaSelecionado] = useState({});
   const [alunosSelecionados, setAlunosSelecionados] = useState([]);
-  const [problema, setProblema] = useState("");
+
   const [dataConclusao, setDataConclusao] = useState("");
   const [dataInicio, setDataInicio] = useState("");
   const [messagem, setMensagem] = useState("");
   const [variant, setVariant] = useState("");
+
+  const [formValues, setFormValues] = useState();
 
   useEffect(() => {
     serviceAluno
@@ -51,39 +57,28 @@ const Teste = () => {
       .catch((error) => console.log(error));
   }, []);
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
+  const onSubmitHandler = (data) => {
+    data = {
+      ...data,
+      professor: 1,
+      dataInicio: format(data.dataInicio, "dd/MM/yyyy"),
+      dataConclusao: format(data.dataConclusao, "dd/MM/yyyy"),
+      temaPbl: { id: data.temaPbl.id },
+    };
 
-    if (isEmptyObject(temaSelecionado) === false) {
-      const pbl = {
-        problema: problema,
-        dataConclusao: format(dataConclusao, "dd/MM/yyyy"),
-        dataInicio: format(dataInicio, "dd/MM/yyyy"),
-        aluno: alunosSelecionados,
-        professor: {
-          id: 2,
-        },
-        temaPbl: {
-          id: temaSelecionado.id,
-        },
-      };
-
-      servicePbl
-        .incluir(pbl)
-        .then((response) => {
-          let data = response.data;
-          setListaPbl(data);
-          console.log(listaPbl);
-          setMensagem("Pbl cadastrado com sucesso.");
-          setVariant("success");
-        })
-        .catch((error) => {
-          setMensagem("Erro ao cadastrar o PBL.");
-          setVariant("danger");
-        });
-    } else {
-      alert("selecione um tema");
-    }
+    servicePbl
+      .incluir(data)
+      .then((response) => {
+        let data = response.data;
+        setListaPbl(data);
+        console.log(listaPbl);
+        setMensagem("Pbl cadastrado com sucesso.");
+        setVariant("success");
+      })
+      .catch((error) => {
+        setMensagem("Erro ao cadastrar o PBL.");
+        setVariant("danger");
+      });
   };
 
   return (
@@ -94,83 +89,156 @@ const Teste = () => {
         <Alert _mensagem={messagem} _variant={variant} />
       </div>
       <Card>
-        <Card.Form onSubmit={onSubmitHandler}>
-          <Card.Form.Group style={{ flex: 4 }}>
-            <Card.Form.Title>Tema PBL</Card.Form.Title>
-            <DropDownList
-              required
-              lista={listaTemaPbl}
-              onSelect={setTemaSelecionado}
-            ></DropDownList>
-          </Card.Form.Group>
+        <Formik
+          initialValues={{
+            temaPbl: "",
+            dataInicio: "",
+            dataConclusao: "",
+            aluno: "",
+            problema: "",
+          }}
+          validationSchema={Yup.object().shape({
+            temaPbl: Yup.string()
+              .required("* Campo Tema PBL é obrigatório")
+              .nullable(),
+            dataInicio: Yup.string()
+              .required("* Campo Data Início é obrigatório")
+              .nullable(),
+            dataConclusao: Yup.string()
+              .required("* Campo Data Conclusão é obrigatório")
+              .nullable(),
+            aluno: Yup.string().required("* Campo Aluno é obrigatório"),
+            problema: Yup.string().required("* Campo problema é obrigatório"),
+          })}
+          onSubmit={(values) => onSubmitHandler(values)}
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleSubmit,
+            handleChange,
+            isSubmitting,
+            validating,
+            valid,
+          }) => {
+            return (
+              <>
+                <Card.Form method="post" onSubmit={handleSubmit}>
+                  <Card.Form.Group style={{ flex: 4 }}>
+                    <Card.Form.Title>Tema PBL</Card.Form.Title>
+                    <DropDownList
+                      name="temaPbl"
+                      lista={listaTemaPbl}
+                      onSelect={setTemaSelecionado}
+                      valid={touched.temaPbl && !errors.temaPbl}
+                      error={touched.temaPbl && errors.temaPbl}
+                    ></DropDownList>
+                    {errors.temaPbl && touched.temaPbl && (
+                      <Card.Form.StyledInlineErrorMessage>
+                        {errors.temaPbl}
+                      </Card.Form.StyledInlineErrorMessage>
+                    )}
+                  </Card.Form.Group>
 
-          <Card.Form.Group>
-            <Card.Form.Title>Data Inicio</Card.Form.Title>
-            <DatePicker
-              required
-              locale={pt}
-              minDate={subDays(new Date(), 0)}
-              useShortMonthInDropdown
-              dateFormat="dd/MM/yyyy"
-              selected={dataInicio}
-              onChange={(date) => setDataInicio(date)}
-              customInput={<Card.Form.InputDate value={dataInicio} />}
-            />
-          </Card.Form.Group>
+                  <Card.Form.Group>
+                    <Card.Form.Title>Data Inicio</Card.Form.Title>
+                    <DatePickerField
+                      name="dataInicio"
+                      locale={pt}
+                      minDate={subDays(new Date(), 0)}
+                      useShortMonthInDropdown
+                      dateFormat="dd/MM/yyyy"
+                      selected={dataInicio}
+                      customInput={
+                        <Card.Form.InputText
+                          value={dataInicio}
+                          valid={touched.dataInicio && !errors.dataInicio}
+                          error={touched.dataInicio && errors.dataInicio}
+                        />
+                      }
+                    />
+                    {errors.dataInicio && touched.dataInicio && (
+                      <Card.Form.StyledInlineErrorMessage>
+                        {errors.dataInicio}
+                      </Card.Form.StyledInlineErrorMessage>
+                    )}
+                  </Card.Form.Group>
 
-          <Card.Form.Group>
-            <Card.Form.Title>Data Conclusão</Card.Form.Title>
-            <DatePicker
-              required
-              locale={pt}
-              minDate={subDays(new Date(), 0)}
-              useShortMonthInDropdown
-              dateFormat="dd/MM/yyyy"
-              selected={dataConclusao}
-              onChange={(date) => setDataConclusao(date)}
-              customInput={<Card.Form.InputDate value={dataConclusao} />}
-            />
-          </Card.Form.Group>
+                  <Card.Form.Group>
+                    <Card.Form.Title>Data Conclusão</Card.Form.Title>
+                    <DatePickerField
+                      name="dataConclusao"
+                      locale={pt}
+                      minDate={subDays(new Date(), 0)}
+                      useShortMonthInDropdown
+                      dateFormat="dd/MM/yyyy"
+                      selected={dataConclusao}
+                      customInput={
+                        <Card.Form.InputText
+                          value={dataConclusao}
+                          valid={touched.dataConclusao && !errors.dataConclusao}
+                          error={touched.dataConclusao && errors.dataConclusao}
+                        />
+                      }
+                    />
+                    {errors.dataConclusao && touched.dataConclusao && (
+                      <Card.Form.StyledInlineErrorMessage>
+                        {errors.dataConclusao}
+                      </Card.Form.StyledInlineErrorMessage>
+                    )}
+                  </Card.Form.Group>
 
-          <Card.Form.BreakRow />
+                  <Card.Form.BreakRow />
 
-          <Card.Form.Group style={{ flex: 5 }}>
-            <Card.Form.Title>Alunos</Card.Form.Title>
-            <DropDownListAlunos
-              lista={listaAluno}
-              onSelect={setAlunosSelecionados}
-            ></DropDownListAlunos>
-          </Card.Form.Group>
+                  <Card.Form.Group style={{ flex: 5 }}>
+                    <Card.Form.Title>Alunos</Card.Form.Title>
+                    <DropDownListAlunos
+                      name="aluno"
+                      lista={listaAluno}
+                      onSelect={setAlunosSelecionados}
+                      valid={touched.aluno && !errors.aluno}
+                      error={touched.aluno && errors.aluno}
+                    ></DropDownListAlunos>
+                    {errors.aluno && touched.aluno && (
+                      <Card.Form.StyledInlineErrorMessage>
+                        {errors.aluno}
+                      </Card.Form.StyledInlineErrorMessage>
+                    )}
+                  </Card.Form.Group>
 
-          <Card.Form.Group>
-            <Card.Form.Title>Empresa</Card.Form.Title>
-            <Card.Form.InputText />
-          </Card.Form.Group>
+                  <Card.Form.Group>
+                    <Card.Form.Title>Empresa</Card.Form.Title>
+                    <Card.Form.InputText />
+                  </Card.Form.Group>
 
-          <Card.Form.BreakRow />
+                  <Card.Form.BreakRow />
 
-          <Card.Form.Group>
-            <Card.Form.Title>Problema</Card.Form.Title>
-            <Card.Form.InputText
-              required
-              pattern="^(?=.*[a-zA-Z])([a-zA-ZÀ-ú0-9 ]+)$"
-              onInput={(e) => e.target.setCustomValidity("")}
-              onInvalid={(e) =>
-                e.target.setCustomValidity(
-                  "O titulo deve conter ao menos 1 letra"
-                )
-              }
-              onChange={(e) => setProblema(e.target.value)}
-              value={problema}
-            />
-          </Card.Form.Group>
+                  <Card.Form.Group>
+                    <Card.Form.Title>Problema</Card.Form.Title>
+                    <Card.Form.InputText
+                      name="problema"
+                      onChange={handleChange}
+                      valid={touched.problema && !errors.problema}
+                      error={touched.problema && errors.problema}
+                    />
+                    {errors.problema && touched.problema && (
+                      <Card.Form.StyledInlineErrorMessage>
+                        {errors.problema}
+                      </Card.Form.StyledInlineErrorMessage>
+                    )}
+                  </Card.Form.Group>
 
-          <Card.Form.BreakRow />
+                  <Card.Form.BreakRow />
 
-          <Card.Form.GroupButton>
-            <Card.Form.Submit>Salvar</Card.Form.Submit>
-          </Card.Form.GroupButton>
-        </Card.Form>
+                  <Card.Form.GroupButton>
+                    <Card.Form.Submit type="submit">Salvar</Card.Form.Submit>
+                  </Card.Form.GroupButton>
+                </Card.Form>
+              </>
+            );
+          }}
+        </Formik>
       </Card>
     </>
   );

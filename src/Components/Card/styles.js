@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Container = styled.div`
   display: flex;
@@ -46,13 +46,55 @@ export const InputText = styled.input`
   height: 40px;
   padding-left: 10px;
   border-radius: 5px;
-  border: 1px solid #d2d2d2;
+  border: ${props => props.border || '1px solid #d2d2d2' };
   -webkit-box-shadow: 0 1px 0 0 #d2d2d2;
   box-shadow: 0 1px 0 0 #d2d2d2;
   &:focus {
     border: 1px solid #8ebfed !important;
     outline: none;
   }
+
+  ${({ valid }) =>
+    valid &&
+    css`
+    border: 1px solid #8ebfed !important;
+
+      &:focus,
+      &:active {
+        border: 1px solid #8ebfed !important;
+        outline: none;
+      }
+
+      /* Autocomplete styles in Chrome*/
+      &:-webkit-autofill,
+      &:-webkit-autofill:hover,
+      &:-webkit-autofill:focus {
+        border: 1px solid #8ebfed !important;
+      }
+    `}
+
+
+  ${({ error }) =>
+    error &&
+    css`
+      border: 1px solid rgb(191, 49, 12);
+      outline: none;
+
+      &:focus,
+      &:active {
+        box-shadow: rgb(244, 129, 116) 0px 0px 2px 1px, rgb(251, 178, 174) 0px 0px
+            0px 3px;
+        border: 1px solid #ffffff;
+        outline: none;
+      }
+
+      /* Autocomplete styles in Chrome*/
+      &:-webkit-autofill,
+      &:-webkit-autofill:hover,
+      &:-webkit-autofill:focus {
+        border: 1px solid rgb(191, 49, 12);
+      }
+    `}
 `;
 
 export const InputDate = styled.input`
@@ -123,4 +165,9 @@ export const Button = styled.button`
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+`;
+
+export const StyledInlineErrorMessage = styled.div`
+  color: rgb(120, 27, 0);
+  white-space: pre-line;
 `;
