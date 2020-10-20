@@ -101,12 +101,12 @@ const Teste = () => {
             temaPbl: Yup.string()
               .required("* Campo Tema PBL é obrigatório")
               .nullable(),
-            dataInicio: Yup.string()
+            dataInicio: Yup.date()
               .required("* Campo Data Início é obrigatório")
               .nullable(),
-            dataConclusao: Yup.string()
-              .required("* Campo Data Conclusão é obrigatório")
-              .nullable(),
+            dataConclusao: Yup.date().required("* Campo Data Conclusão é obrigatório").nullable()
+            .when("dataInicio",
+                (started, yup) => started && yup.min(started, "* Data Conclusão não pode ser anterior à Data Inicio")),
             aluno: Yup.string().required("* Campo Aluno é obrigatório"),
             problema: Yup.string().required("* Campo problema é obrigatório"),
           })}
@@ -124,7 +124,7 @@ const Teste = () => {
           }) => {
             return (
               <>
-                <Card.Form method="post" onSubmit={handleSubmit}>
+                <Card.Form method="post" autoComplete="off" onSubmit={handleSubmit}>
                   <Card.Form.Group style={{ flex: 4 }}>
                     <Card.Form.Title>Tema PBL</Card.Form.Title>
                     <DropDownList
@@ -152,6 +152,7 @@ const Teste = () => {
                       selected={dataInicio}
                       customInput={
                         <Card.Form.InputText
+                        onfocus="this.removeAttribute('readonly');" readonly
                           value={dataInicio}
                           valid={touched.dataInicio && !errors.dataInicio}
                           error={touched.dataInicio && errors.dataInicio}
@@ -217,6 +218,7 @@ const Teste = () => {
                   <Card.Form.Group>
                     <Card.Form.Title>Problema</Card.Form.Title>
                     <Card.Form.InputText
+                     autocomplete="off"
                       name="problema"
                       onChange={handleChange}
                       valid={touched.problema && !errors.problema}
