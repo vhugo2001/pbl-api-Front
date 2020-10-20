@@ -187,8 +187,8 @@ const DefaultDropDownList = ({ lista, onSelect, ...props }) => {
     event.stopPropagation();
 
     setSelectedOption(selectedOption.filter((f) => f.id !== id));
-    onSelect(alunoSelecionado.filter((f) => f.id !== id));
-    setAlunoSelecionado(alunoSelecionado.filter((f) => f.id !== id));
+    onSelect(alunoSelecionado.filter((f) => f.aluno.id !== id));
+    setAlunoSelecionado(alunoSelecionado.filter((f) => f.aluno.id !== id));
   };
 
   const onOptionClicked = (option) => () => {
@@ -196,7 +196,7 @@ const DefaultDropDownList = ({ lista, onSelect, ...props }) => {
 
     setAlunoSelecionado((alunoSelecionado) => [
       ...alunoSelecionado,
-      { id: option.id },
+      { aluno: { id: option.id } },
     ]);
     //console.log(alunoSelecionado);
     setSelectedOption([...selectedOption, option]);
@@ -267,7 +267,7 @@ const DefaultDropDownList = ({ lista, onSelect, ...props }) => {
             </Selected>
           ))}
         </DropDownHeaderContent>
-        <BsFillCaretDownFill style={{color: '#8d8d8d'}} />
+        <BsFillCaretDownFill style={{ color: '#8d8d8d' }} />
       </DropDownHeader>
       {isOpen && (
         <DropDownListContainer>

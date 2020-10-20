@@ -18,6 +18,10 @@ const atualizar = (id, data) => {
   return http.put(URL_PBL + `/${id}`, data);
 };
 
+const atualizarAtivo = (id, data) => {
+  return http.put(URL_PBL + `/altera-status-ativo/${id}`, data);
+};
+
 const deletar = (id) => {
   return http.delete(URL_PBL + `/${id}`);
 };
@@ -28,4 +32,5 @@ export default {
   atualizar,
   deletar,
   listarID,
+  atualizarAtivo,
 };
