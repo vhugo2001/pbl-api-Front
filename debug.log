@@ -1,1 +1,5 @@
 [1013/110712.568:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema não pode encontrar o caminho especificado. (0x3)
+[1018/124023.265:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema não pode encontrar o caminho especificado. (0x3)
+[1018/125501.178:ERROR:process_reader_win.cc(151)] SuspendThread: Acesso negado. (0x5)
+[1018/125501.179:ERROR:exception_snapshot_win.cc(99)] thread ID 7968 not found in process
+[1020/084545.373:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema não pode encontrar o caminho especificado. (0x3)
