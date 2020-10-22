@@ -16,12 +16,8 @@ const CustomAlert = ({ _mensagem, _variant }) => {
   }, [_mensagem]);
 
   return (
-    <Alert
-      show={show}
-      variant={_variant}
-      onClose={() => setShow(false)}
-    >
-      <Alert.Heading className="alert-title">Menssagem do sistema</Alert.Heading>
+    <Alert show={show} variant={_variant} onClose={() => setShow(false)}>
+      <Alert.Heading className="alert-title">Mensagem do sistema</Alert.Heading>
       {_mensagem}
     </Alert>
   );
