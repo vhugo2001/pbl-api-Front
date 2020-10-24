@@ -13,7 +13,7 @@ import serviceAluno from "../../../Services/AlunoService";
 import serviceTema from "../../../Services/TemaPblService";
 import serviceDisciplina from "../../../Services/DisciplinaService";
 import servicePbl from "../../../Services/PblService";
-import Alert from "../../../Components/Alert/CustomAlert";
+import { toast } from "react-toastify";
 
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -45,8 +45,7 @@ const Index = () => {
         setListaAluno(response.data);
       })
       .catch((error) => {
-        setMensagem("Erro ao acessar a lista de alunos.");
-        setVariant("danger");
+        toast.error("Erro ao acessar a lista de alunos.");
       });
   }, []);
 
@@ -87,12 +86,10 @@ const Index = () => {
         let data = response.data;
         setListaPbl(data);
         console.log(listaPbl);
-        setMensagem("Pbl cadastrado com sucesso.");
-        setVariant("success");
+        toast.success("Pbl cadastrado com sucesso.")
       })
       .catch((error) => {
-        setMensagem("Erro ao cadastrar o PBL.");
-        setVariant("danger");
+        toast.error("Erro ao cadastrar o PBL.")
       });
   };
 
@@ -101,7 +98,6 @@ const Index = () => {
     <>
       <div className="title-container">
         <h1>Iniciar PBL</h1>
-        <Alert _mensagem={messagem} _variant={variant} />
       </div>
       <Card>
         <Formik
