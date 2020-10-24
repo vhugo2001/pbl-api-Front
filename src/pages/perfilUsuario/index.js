@@ -12,7 +12,7 @@ function PerfilUsuario() {
 
   useEffect(() => {
     alunoService
-      .listarID(2)
+      .listarID(3)
       .then((response) => {
         setAluno(response.data);
       })
@@ -23,13 +23,17 @@ function PerfilUsuario() {
   }, []);
 
   const onSubmitHandler = (data) => {
-    console.log(data);
+    data = {
+      ...data,
+      id: 3,
+    };
+
     alunoService
-      .atualizar(2, aluno)
+      .atualizar(3, data)
       .then((response) => {
+        console.log(data);
         setMensagem("Perfil atualizado com sucesso.");
         setVariant("success");
-        //setFieldValues(aluno);
       })
       .catch((error) => {
         setMensagem("Erro ao atualizar perfil.");
