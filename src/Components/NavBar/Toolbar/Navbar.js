@@ -31,7 +31,7 @@ function Navbar() {
           />
         </div>
         <div style={{ flex: 1 }}></div>
-        <Link to="/" className="calendar-button">
+        <Link to="/dashboard" className="calendar-button">
           <IoIcons.IoMdCalendar />
         </Link>
         <Link to="/" className="notification-button">

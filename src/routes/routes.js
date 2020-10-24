@@ -8,10 +8,12 @@ import Info from "../pages/info";
 
 
 import IniciarPBL from "../pages/pbl/cadastrar/Index"
+import Dashboard from "../pages/dashboard";
 
 const Routes = () => (
   <Switch>
     <Route path="/iniciar-pbl" component={IniciarPBL} />
+    <Route path="/dashboard" component={Dashboard} />
     <Route path="/alunos" component={ConsultarAlunos} />
     <Route path="/perfil-usuario" component={PerfilUsuario} />
     <Route path="/cadastro" component={Cadastro} />
