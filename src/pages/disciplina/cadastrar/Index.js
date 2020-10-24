@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Card } from "../../../Components/Card/CardPrincipal";
-import Alert from "../../../Components/Alert/CustomAlert";
 import serviceDisciplina from "../../../Services/DisciplinaService";
+import { toast } from "react-toastify";
 
 const Index = () => {
 
@@ -16,12 +16,10 @@ const Index = () => {
           .incluir(data)
           .then((response) => {
             let data = response.data;
-            setMensagem("Disciplina cadastrada com sucesso.");
-            setVariant("success");
+            toast.success("Disciplina cadastrada com sucesso.");
           })
           .catch((error) => {
-            setMensagem("Erro ao cadastrar disciplina.");
-            setVariant("danger");
+            toast.error("Erro ao cadastrar disciplina.");
           });
       };
 
@@ -30,7 +28,6 @@ const Index = () => {
         <>
           <div className="title-container">
             <h1>Cadastrar disciplina</h1>
-            <Alert _mensagem={messagem} _variant={variant} />
           </div>
           <Card>
             <Formik
