@@ -9,7 +9,7 @@ import * as IoIcons from "react-icons/io";
 import '../../Components/TableAtividade/listAtividades.css'
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
-import Alert from "../../Components/Alert/CustomAlert";
+import { toast } from "react-toastify";
 import { Card } from "../../Components/Card/CardPrincipal";
 import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
 import {
@@ -173,7 +173,6 @@ function ListagemAtividades() {
         <>
             <div className="title-container">
                 <h1>Agenda de Atividades</h1>
-                <Alert _mensagem={messagem} _variant={variant} />
             </div>
             <Card>
                 <ToolkitProvider

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Card } from "../../Components/Card/CardPrincipal";
 import alunoService from "../../Services/AlunoService";
-import Alert from "../../Components/Alert/CustomAlert";
+import { toast } from "react-toastify";
+
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
@@ -12,28 +13,29 @@ function PerfilUsuario() {
 
   useEffect(() => {
     alunoService
-      .listarID(2)
+      .listarID(3)
       .then((response) => {
         setAluno(response.data);
       })
       .catch((error) => {
-        setMensagem("Erro ao acessar a lista de alunos.");
-        setVariant("danger");
+        toast.error("Erro ao acessar a lista de alunos.");
       });
   }, []);
 
   const onSubmitHandler = (data) => {
-    console.log(data);
+    data = {
+      ...data,
+      id: 3,
+    };
+
     alunoService
-      .atualizar(2, aluno)
+      .atualizar(3, data)
       .then((response) => {
-        setMensagem("Perfil atualizado com sucesso.");
-        setVariant("success");
-        //setFieldValues(aluno);
+        console.log(data);
+        toast.success("Perfil atualizado com sucesso.");
       })
       .catch((error) => {
-        setMensagem("Erro ao atualizar perfil.");
-        setVariant("danger");
+        toast.error("Erro ao atualizar perfil.");
       });
   };
 
@@ -41,7 +43,6 @@ function PerfilUsuario() {
     <>
       <div className="meu-perfil-title title-container">
         <h1>Meu Perfil</h1>
-        <Alert _mensagem={mensagem} _variant={variant} />
       </div>
       <Card>
         <Formik

@@ -39,7 +39,7 @@ import serviceUsuario from "../../Services/UsuarioService";
 import serviceAluno from "../../Services/AlunoService";
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
-import Alert from "../../Components/Alert/CustomAlert";
+import { toast } from "react-toastify";
 import { Card } from "../../Components/Card/CardPrincipal";
 import {
   Container,
@@ -54,8 +54,6 @@ const { SearchBar } = Search;
 export default function ListAluno(props) {
   const [alunos, setAlunos] = useState([]);
   const [aluno, setAluno] = useState({});
-  const [messagem, setMensagem] = useState("");
-  const [variant, setVariant] = useState("");
 
   useEffect(() => {
     serviceAluno
@@ -67,8 +65,7 @@ export default function ListAluno(props) {
         }
       })
       .catch((error) => {
-        setMensagem("Erro ao acessar a lista de alunos.");
-        setVariant("danger");
+        toast.error("Erro ao acessar a lista de alunos.");
       });
   }, [aluno]);
 
@@ -154,8 +151,7 @@ export default function ListAluno(props) {
 
       })
       .catch((error) => {
-        setMensagem("Erro ao atualizar a lista de alunos.");
-        setVariant("danger");
+        toast.error("Erro ao atualizar lista de alunos")
       })
   }
 
@@ -164,16 +160,14 @@ export default function ListAluno(props) {
     result.forEach((item) => {
       atualizarAluno(item, { "ativo": true })
     })
-    setMensagem("Sucesso ao ativar os alunos.");
-    setVariant("success");
+    toast.success("Sucesso ao ativar os alunos.")
   }
 
   const handleDesativar = () => {
     result.forEach((item) => {
       atualizarAluno(item, { "ativo": false })
     })
-    setMensagem("Sucesso ao desativar os alunos.");
-    setVariant("success");
+    toast.success("Sucesso ao desativar os alunos.")
   }
 
 
@@ -189,12 +183,10 @@ export default function ListAluno(props) {
       .then((response) => {
         let data = response.data;
         setAluno(data)
-        setMensagem("Sucesso ao excluir o aluno.");
-        setVariant("success");
+        toast.success("Sucesso ao excluir os aluno.")
       })
       .catch((error) => {
-        setMensagem("Erro ao excluir o aluno da lista.");
-        setVariant("danger");
+        toast.error("Erro ao excluir o aluno.")
       })
   }
 
@@ -228,7 +220,6 @@ export default function ListAluno(props) {
     <>
       <div className="title-container">
         <h1>Consultar Alunos</h1>
-        <Alert _mensagem={messagem} _variant={variant} />
       </div>
       <Card className="cardPrincipal">
         <Container className="cardListagem">

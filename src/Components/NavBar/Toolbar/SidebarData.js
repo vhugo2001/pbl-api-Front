@@ -30,6 +30,12 @@ export const SidebarData = [
     cName: "nav-text",
   },
   {
+    title: "Cadastrar Disciplina",
+    path: "/cadastrar-disciplina",
+    icon: <IoIcons.IoMdPeople />,
+    cName: "nav-text",
+  },
+  {
     title: "Messages",
     path: "/messages",
     icon: <FaIcons.FaEnvelopeOpenText />,
