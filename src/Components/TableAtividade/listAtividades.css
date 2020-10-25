@@ -1,18 +1,42 @@
 td{
     overflow-wrap: break-word;
     font-size: 17px;
+    border: 0 !important;
 }
+
+td.selection-cell{
+  padding: 5px 2% 5px 5px !important;
+}
+
+
+td:nth-child(3){
+  text-align: end!important;
+}
+
 th{
   font-size: 18px;
 }
-.trash-button {
+
+th:nth-child(3){
+  text-align: end!important;
+}
+th.selection-cell-header{
+  text-align: center;
+  width: 14% !important;
+}
+td.selection-cell{
+  text-align: center;
+}
+
+.icon-button {
     font-size: 1.7rem;
     background: none;
     color: #7f89a2;
+
   }
  
-  .trash-button:hover {
-    color:red;
+  .icon-button:hover {
+    color:#1c4fcf;
   }
   .checkbox{
     -ms-transform: scale(2); /* IE */
@@ -69,10 +93,27 @@ th{
       float: none;
     }
     .scrollExpandir{
-        min-height: 350px ;
+        /* min-height: 350px ; */
         max-height: 500px ;
         overflow: auto;
     }
     div.row-expansion-style{
         padding: 1px 0 1px 0 !important;
+    }
+
+    .descricaoLista{
+      color: black ;
+      font-size: 16px;
+      margin: 10px !important;
+      overflow-wrap: break-word;
+    }
+    input.form-control, label.search-label{
+      padding-bottom: 0 !important;
+      margin-bottom: 0 !important;
+    }
+    .DescHeader{
+      white-space: nowrap; 
+      width: 150%; 
+      overflow: hidden;
+      text-overflow: ellipsis; 
     }

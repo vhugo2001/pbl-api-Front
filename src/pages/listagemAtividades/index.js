@@ -11,7 +11,7 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import Alert from "../../Components/Alert/CustomAlert";
 import { Card } from "../../Components/Card/CardPrincipal";
-import cellEditFactory from 'react-bootstrap-table2-editor';
+import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
 import {
     Container,
     Title,
@@ -20,100 +20,114 @@ import {
     Desativar
 } from '../../Components/TableAtividade/style'
 import { isEmptyObject } from "jquery";
+import { endOfDay } from "date-fns";
+
+
 
 const { SearchBar } = Search;
 
 function ListagemAtividades() {
     const [messagem, setMensagem] = useState("");
     const [variant, setVariant] = useState("");
-
-
     const tarefa = [
         {
-            id: 1, nome: "Direcionamento da pesquisa ", atividades: [
-                { id: 1, nome: "Ativ 1", responsavel: "aluno 1", entrega: "06/11/2020" },
-                { id: 2, nome: "Ativ 2", responsavel: "aluno 2", entrega: "06/11/2020" }
-            ]
+            atividade: { id: 1 }, professor: { id: 1 }, nota: 10, titulo: "Atividade 1", dataFim: "11/11/2011", descricao: "Descrição curta"
         },
         {
-            id: 2, nome: "Projeto de Pesquisa", atividades: [{
-                id: 2, nome: "Ativ 2", responsavel: "aluno 3", entrega: "06/11/2020"
-            },
-            ]
+            atividade: { id: 2 }, professor: { id: 2 }, nota: 8.3, titulo: "Exercicio", dataFim: "11/11/2011",
+            descricao: "Descrição de tamanho bem mediana, na média. Entre longa e curta."
         },
-        { id: 3, nome: "Relatório de pesquisa", atividades: [] },
-        { id: 4, nome: "Produtos ", atividades: [] },
+        { atividade: { id: 3 }, professor: { id: 3 }, nota: 3.8, titulo: "Pesquisa academica", dataFim: "11/11/2011", descricao: "" },
+        {
+            atividade: { id: 4 }, professor: { id: 4 }, nota: 5, titulo: "Trabalho de campo", dataFim: "11/11/2011",
+            descricao: "Uma descrição beeeeeeeeeeeeeeeeeeeeem looooooooooooooooonga para verficar como o espaço irá se comportar, e bla bla bla bla. Muito longo mesmo, hmmm, aé Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse dignissim, sapien ac luctus hendrerit, massa nisl lacinia lacus, vel porta erat mi id est."
+        },
     ]
 
-    const colspanForLastRow = (cell, row, rowIndex, colIndex) => {
-        return { colSpan: `3` }
-    }
-    const hiddenColForLastRow = (cell, row, rowIndex, colIndex) => {
-        return { hidden: true }
-    }
+    const colunas = [
+        {
+            dataField: "excluir",
+            text: "",
+            editable: false,
+            formatter: (cellContent, row) => (
+                <div>
+                    <Link className="icon-button" >
+                        <IoIcons.IoMdRadioButtonOff />
+                    </Link>
+                </div>
+            ),
+            headerStyle: (colum, colIndex) => {
+                return { width: '35px', textAlign: 'center' };
+            }
+        },
+        {
+            dataField: 'titulo',
+            text: 'Atividade',
+            formatter: (cellContent, row) => (
+                <div>
+                    <label><b>{row.titulo}</b></label><br />
+                    <label className="DescHeader">{row.descricao}</label>
+                </div>
+            )
 
-    const colunas = [{
-        dataField: 'nome',
-        text: 'Atividade',
-        attrs: colspanForLastRow,
-    }, {
-        dataField: 'resp',
-        text: 'Responsavel',
-        attrs: hiddenColForLastRow,
-    }, {
-        dataField: 'entreg',
-        text: 'Data de Entrega',
-        attrs: hiddenColForLastRow,
-    }];
+        },
+        {
+            dataField: 'dataFim',
+            text: 'Data de entrega',
+
+        },
+    ];
 
     const subcolunas = [{
-        dataField: 'nome',
-        text: 'Nome da atividade',
+        dataField: 'descricao',
+        text: 'descrição',
+        editor: {
+            type: Type.TEXTAREA
+        },
         headerStyle: {
             display: 'none'
         }
     }, {
-        dataField: 'responsavel',
-        text: 'Responsável pela tarefa',
+        dataField: 'nota',
+        text: 'Nota',
         headerStyle: {
             display: 'none'
-        }
-    }, {
-        dataField: 'entrega',
-        text: 'Data de entrega',
-        headerStyle: {
-            display: 'none'
-        }
-
-    }];
+        },
+        formatter: (cellContent, row) => (
+            <div>
+                <label>Nota: {`${row.nota}`}</label>
+            </div>
+        )
+    }
+    ];
 
     const rowStyle = (row, rowIndex) => {
-        return { backgroundColor: '#b1b1b1' };
+        return { backgroundColor: 'rgba(153, 186, 194,0.3)' };
 
     };
 
-    function verificarSub(row) {
-        if (row.atividades.length === 0) {
-            const subLinhaVazia = [{ nome: "Não há tarefas para esta atividades" }]
-            return subLinhaVazia
+    const onAfterSaveCell = (valorAntigo, valorNovo, row, column) => {
+        // Inserir metodo PUT para edição
+        console.log(row.descricao)
+        valorAntigo = valorNovo
+    }
+
+    const verificaDesc = (row) => {
+        if (row.descricao === "" || row.descricao === null) {
+            row.descricao = "Não há descrição para esta atividade"
+            return [row]
         } else {
-            return row.atividades
+            return [row]
         }
     }
 
-    function verificarEdit(row) {
-        if (row.atividades.length === 0) {
-            return ""
-        } else {
-            return cellEditFactory({ mode: 'click' })
-        }
-    }
     const expandRow = {
         renderer: (row) => (
+
             <div>
                 <ToolkitProvider
                     keyField='id'
-                    data={verificarSub(row)}
+                    data={verificaDesc(row)}
                     columns={subcolunas}
 
                 >
@@ -123,16 +137,36 @@ function ListagemAtividades() {
                                 <BootstrapTable
                                     {...props.baseProps}
                                     bordered={false}
-                                    hover condensed
-                                    rowStyle={rowStyle}
-                                    cellEdit={verificarEdit(row)}
+                                    condensed
+                                    cellEdit={cellEditFactory({ mode: 'click', blurToSave: true, afterSaveCell: onAfterSaveCell })}
+
                                 />
                             </div>
                         )
                     }
                 </ToolkitProvider>
-            </div>
-        )
+            </div >
+        ),
+        expandColumnPosition: 'right',
+        expandByColumnOnly: true,
+        showExpandColumn: true,
+        expandHeaderColumnRenderer: ({ isAnyExpands }) => {
+            if (isAnyExpands) {
+                return <b>-</b>;
+            }
+            return <b>+</b>;
+        },
+        expandColumnRenderer: ({ expanded }) => {
+            if (expanded) {
+                return (
+                    <label>v</label>
+                );
+            }
+            return (
+                <label>&lt;</label> // &lt; equivale a < 
+            );
+        }
+
     };
 
     return (
@@ -143,7 +177,7 @@ function ListagemAtividades() {
             </div>
             <Card>
                 <ToolkitProvider
-                    keyField='id'
+                    keyField='atividade'
                     data={tarefa}
                     columns={colunas}
                     search
@@ -152,14 +186,15 @@ function ListagemAtividades() {
                     {
                         props => (
                             <div className="scrollExpandir">
-                                <SearchBar keyField='nome'{...props.searchProps} placeholder='Buscar atividade...' />
+                                <SearchBar keyField='titulo'{...props.searchProps} placeholder='Buscar atividade...' />
                                 <BootstrapTable
                                     {...props.baseProps}
                                     bordered={false}
-                                    hover condensed
+                                    condensed
                                     expandRow={expandRow}
-
-
+                                    noDataIndication="Sem resultados"
+                                    rowStyle={rowStyle}
+                                    cellEdit={cellEditFactory({ mode: 'click', blurToSave: true })}
                                 />
                             </div>
                         )
