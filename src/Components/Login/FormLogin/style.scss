@@ -21,12 +21,14 @@ $br: 4px;
 }
 
 html {
-	overflow-y: scroll; 
+  overflow-y: scroll; 
+  height: 100%;
 }
 
 body {
   background:$body-bg;
   font-family: 'Titillium Web', sans-serif;
+  height: 100%;
 }
 
 a {
