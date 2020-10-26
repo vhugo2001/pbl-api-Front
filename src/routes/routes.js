@@ -10,10 +10,15 @@ import Info from "../pages/info";
 import CadastrarDisciplina from "../pages/disciplina/cadastrar/Index";
 import IniciarPBL from "../pages/pbl/cadastrar/Index"
 import DashBoardProfessor from "../pages/professor/dashboard/dashboard"
+import Dashboard from "../pages/dashboard";
+
+
+   
 
 const Routes = () => (
   <Switch>
     <Route path="/pbl" exact component={DashBoardProfessor} />
+    <Route path="/dashboard" component={Dashboard} />
     <Route path="/iniciar-pbl" exact component={IniciarPBL} />
     <Route path="/alunos" component={ConsultarAlunos} />
     <Route path="/perfil-usuario" component={PerfilUsuario} />
@@ -21,7 +26,6 @@ const Routes = () => (
     <Route path="/listagemAtividades" component={listagemAtividade} />
     <Route path="/cadastro" component={Cadastro} />
     <Route path="/cadastrar-disciplina" component={CadastrarDisciplina} />
-    <Route path="/" exact component={IniciarPBL} />
   </Switch>
 );
 

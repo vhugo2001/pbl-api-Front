@@ -1,5 +1,6 @@
 import http from "./httpCommon";
 
+
 const URL_AUT = "/pbl-api/auth";
 
 const login = (data) => {
@@ -14,8 +15,13 @@ const getCurrentUser = () => {
   return JSON.parse(localStorage.getItem("user"));
 }
 
+const logout = () => {
+  localStorage.removeItem("user");
+}
+
 export default {
   registrarAluno,
   getCurrentUser,
-  login
+  login,
+  logout
 };
