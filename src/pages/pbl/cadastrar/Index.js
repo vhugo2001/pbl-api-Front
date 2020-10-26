@@ -74,11 +74,20 @@ const Index = () => {
   const onSubmitHandler = (data) => {
     data = {
       ...data,
-      professor: 1,
+      professor: { id: 5 },
       dataInicio: format(data.dataInicio, "dd/MM/yyyy"),
       dataConclusao: format(data.dataConclusao, "dd/MM/yyyy"),
-      temaPbl: { id: data.temaPbl.id },
+      pblTemaDisciplina: {
+        disciplina: {
+          id: disciplinaSelecionada.id,
+        },
+        tema: {
+          id: temaSelecionado.id,
+        },
+      },
     };
+
+    console.log(data);
 
     servicePbl
       .incluir(data)
@@ -86,10 +95,10 @@ const Index = () => {
         let data = response.data;
         setListaPbl(data);
         console.log(listaPbl);
-        toast.success("Pbl cadastrado com sucesso.")
+        toast.success("Pbl cadastrado com sucesso.");
       })
       .catch((error) => {
-        toast.error("Erro ao cadastrar o PBL.")
+        toast.error("Erro ao cadastrar o PBL.");
       });
   };
 
