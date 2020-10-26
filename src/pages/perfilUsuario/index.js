@@ -9,8 +9,7 @@ import * as Yup from "yup";
 
 function PerfilUsuario() {
   const [aluno, setAluno] = useState(authService.getCurrentUser());
-  const [mensagem, setMensagem] = useState("");
-  const [variant, setVariant] = useState("");
+
 
   useEffect(() => {
     alunoService

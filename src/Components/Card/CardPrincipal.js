@@ -14,6 +14,7 @@ import {
   GroupButton,
   Submit,
   StyledInlineErrorMessage,
+  Delete,
 } from "./styles";
 
 export function Card({ classes, children, ...restProps }) {
@@ -127,11 +128,21 @@ Card.Form.Submit = function CardFromSubmit({ classes, ...restProps }) {
   );
 };
 
+Card.Form.Delete = function CardFromDelete({ classes, ...restProps }) {
+  return (
+    <Delete
+      className={classNames("card__form__delete", classes)}
+      {...restProps}
+    />
+  );
+};
+
 Card.Button = function CardButton({ classes, ...restProps }) {
   return (
     <Button className={classNames("card__button", classes)} {...restProps} />
   );
 };
+
 
 Card.Form.StyledInlineErrorMessage = function CardButton({ classes, children, ...restProps }) {
   return (

@@ -30,6 +30,7 @@
     "react-icons": "^3.11.0",
     "react-moment": "^1.0.0",
     "react-native-vector-icons": "^7.1.0",
+    "react-navbar-dropdown": "^1.4.2",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
