@@ -16,6 +16,16 @@ export const Title = styled.label`
   margin-left: 10px;
 `;
 
+export const LabelClick = styled.label`
+  font-family: Montserrat, sans-serif !important;
+  font-size: 18px;
+  font-weight: 500;
+  color: #6c8bdb;
+  margin-top: 30px;
+  margin-left: 10px;
+  cursor: pointer;
+`;
+
 export const Span = styled.span`
   font-family: Montserrat, sans-serif !important;
   font-size: 14px;
@@ -85,6 +95,13 @@ export const GroupButton = styled.div`
   justify-content:center;
   width: 100%;
   margin: 50px 0 10px;
+`;
+
+export const Group = styled.div`
+  display: flex;
+  justify-content:flex-end;
+  width: 100%;
+  margin: 0px 25px 10px 0px;
 `;
 
 export const Ativar = styled.button`

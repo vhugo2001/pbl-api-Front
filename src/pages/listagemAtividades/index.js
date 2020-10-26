@@ -12,49 +12,67 @@ import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import { toast } from "react-toastify";
 import { Card } from "../../Components/Card/CardPrincipal";
 import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
+import serviceAtividade from '../../Services/AtividadeService'
+import moment from 'moment'
 import {
-    Container,
     Title,
-    GroupButton,
-    Ativar,
-    Desativar
+    Group,
+    LabelClick
 } from '../../Components/TableAtividade/style'
 import { isEmptyObject } from "jquery";
 import { endOfDay } from "date-fns";
 
 
-
 const { SearchBar } = Search;
 
-function ListagemAtividades() {
-    const [messagem, setMensagem] = useState("");
-    const [variant, setVariant] = useState("");
-    const tarefa = [
-        {
-            atividade: { id: 1 }, professor: { id: 1 }, nota: 10, titulo: "Atividade 1", dataFim: "11/11/2011", descricao: "Descrição curta"
-        },
-        {
-            atividade: { id: 2 }, professor: { id: 2 }, nota: 8.3, titulo: "Exercicio", dataFim: "11/11/2011",
-            descricao: "Descrição de tamanho bem mediana, na média. Entre longa e curta."
-        },
-        { atividade: { id: 3 }, professor: { id: 3 }, nota: 3.8, titulo: "Pesquisa academica", dataFim: "11/11/2011", descricao: "" },
-        {
-            atividade: { id: 4 }, professor: { id: 4 }, nota: 5, titulo: "Trabalho de campo", dataFim: "11/11/2011",
-            descricao: "Uma descrição beeeeeeeeeeeeeeeeeeeeem looooooooooooooooonga para verficar como o espaço irá se comportar, e bla bla bla bla. Muito longo mesmo, hmmm, aé Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse dignissim, sapien ac luctus hendrerit, massa nisl lacinia lacus, vel porta erat mi id est."
-        },
-    ]
+function ListagemAtividades({ idPBL }) {
+    const [atividade, setAtividade] = useState([])
+    idPBL = 1
+    useEffect(() => {
+        serviceAtividade
+            .listarIdDisciplina(idPBL)
+            .then((response) => {
+                let data = response.data;
+                setAtividade(data);
 
+            })
+            .catch((error) => console.log(error));
+    }, [idPBL]);
+
+    // {
+    //     "dataConclusao": "15/10/2012",
+    //     "dataCriacao": "03/07/2011",
+    //     "descricao": "Descrição 2",
+    //     "disciplina": {
+    //       "id": 1
+    //     },
+    //     "professor": {
+    //       "id": 1
+    //     },
+    //     "titulo": "Titulo2"
+    //   }
+
+    const tarefa = atividade
     const colunas = [
         {
-            dataField: "excluir",
+            dataField: "icone",
             text: "",
-            editable: false,
             formatter: (cellContent, row) => (
-                <div>
-                    <Link className="icon-button" >
+
+                < div >
+                    <div className="BordaIconeTop" />
+                    <div className="icon-button">
+                        {/* {moment(row.dataConclusao, "DD[/]MM[/]YYYY").isSameOrBefore(moment().add(1, 'days').format("DD[/]MM[/]YYYY"), 'day') ? <IoIcons.IoMdRadioButtonOff style={{ color: '#BB157C' }} />
+                            : moment('10/10/2002', "DD[/]MM[/]YYYY").isSameOrBefore(moment(row.dataConclusao, "DD[/]MM[/]YYYY").format("DD[/]MM[/]YYYY"), 'day') ? <IoIcons.IoMdRadioButtonOff style={{ color: 'green' }} /> : <IoIcons.IoMdRadioButtonOff style={{ color: '#C38A0E' }} />}
+
+                        {moment().isAfter(moment(row.dataConclusao, "DD[/]MM[/]YYYY", 'day') ? <IoIcons.IoMdRadioButtonOff style={{ color: '#BB157C' }} />
+                            : 1 === 1 ? <IoIcons.IoMdRadioButtonOff style={{ color: 'green' }} /> : <IoIcons.IoMdRadioButtonOff style={{ color: '#C38A0E' }} />} */}
+
+                        {/*e adicionar isEmptyObject(dataEntrega) ==false ,substituir valor base por dataEntrega */}
                         <IoIcons.IoMdRadioButtonOff />
-                    </Link>
-                </div>
+                    </div>
+                    <div className="BordaIconeBottom" />
+                </div >
             ),
             headerStyle: (colum, colIndex) => {
                 return { width: '35px', textAlign: 'center' };
@@ -62,43 +80,60 @@ function ListagemAtividades() {
         },
         {
             dataField: 'titulo',
-            text: 'Atividade',
+            text: '',
             formatter: (cellContent, row) => (
                 <div>
-                    <label><b>{row.titulo}</b></label><br />
+                    <label className="TituloTexto"><b>{row.titulo}</b></label><br />
                     <label className="DescHeader">{row.descricao}</label>
                 </div>
             )
-
         },
         {
-            dataField: 'dataFim',
-            text: 'Data de entrega',
-
+            dataField: 'dataConclusao',
+            text: '',
+            formatter: (cellContent, row) => (
+                <div>
+                    <label className="ConclusaoTexto">{row.dataConclusao}</label><br />
+                </div>
+            )
         },
     ];
 
-    const subcolunas = [{
-        dataField: 'descricao',
-        text: 'descrição',
-        editor: {
-            type: Type.TEXTAREA
+    const subcolunas = [
+        {
+            dataField: 'aluno',
+            text: 'Aluno responsável',
+            editable: false
+
+        }, {
+            dataField: 'dataEntrega',
+            text: 'Entregue no dia',
+            editable: false,
+
+
+        }, {
+            dataField: "icone",
+            text: "Arquivo",
+            formatter: (cellContent, row) => (
+                <div>
+                    <div className="icon-file-button">
+                        <IoIcons.IoIosDocument />
+                    </div>
+                </div>
+            ),
+            editable: false
         },
-        headerStyle: {
-            display: 'none'
+        {
+            dataField: 'nota',
+            text: 'Nota',
+            formatter: (cellContent, row) => (
+                <div>
+                    <label style={{ cursor: 'pointer' }}><b>{row.nota}</b></label><br />
+
+                </div>
+            )
+
         }
-    }, {
-        dataField: 'nota',
-        text: 'Nota',
-        headerStyle: {
-            display: 'none'
-        },
-        formatter: (cellContent, row) => (
-            <div>
-                <label>Nota: {`${row.nota}`}</label>
-            </div>
-        )
-    }
     ];
 
     const rowStyle = (row, rowIndex) => {
@@ -120,11 +155,10 @@ function ListagemAtividades() {
             return [row]
         }
     }
-
     const expandRow = {
         renderer: (row) => (
 
-            <div>
+            < div >
                 <ToolkitProvider
                     keyField='id'
                     data={verificaDesc(row)}
@@ -152,18 +186,22 @@ function ListagemAtividades() {
         showExpandColumn: true,
         expandHeaderColumnRenderer: ({ isAnyExpands }) => {
             if (isAnyExpands) {
-                return <b>-</b>;
+                return <b ></b>;
             }
-            return <b>+</b>;
+            return <b></b>;
         },
         expandColumnRenderer: ({ expanded }) => {
             if (expanded) {
                 return (
-                    <label>v</label>
+                    <div className='SetasExpandir'>
+                        <IoIcons.IoMdArrowDropdown />
+                    </div>
                 );
             }
             return (
-                <label>&lt;</label> // &lt; equivale a < 
+                <div className='SetasExpandir'>
+                    <IoIcons.IoMdArrowDropleft />
+                </div>
             );
         }
 
@@ -174,11 +212,13 @@ function ListagemAtividades() {
             <div className="title-container">
                 <h1>Agenda de Atividades</h1>
             </div>
+
             <Card>
                 <ToolkitProvider
-                    keyField='atividade'
+                    keyField='id'
                     data={tarefa}
                     columns={colunas}
+
                     search
 
                 >
@@ -186,6 +226,11 @@ function ListagemAtividades() {
                         props => (
                             <div className="scrollExpandir">
                                 <SearchBar keyField='titulo'{...props.searchProps} placeholder='Buscar atividade...' />
+                                <div className="icon-button" style={{ marginTop: '10px', marginBottom: '15px' }}>
+                                    <IoIcons.IoMdRadioButtonOff style={{ color: 'green', marginLeft: '15px' }} /> <label className="StatusTexto">Entregue</label>
+                                    <IoIcons.IoMdRadioButtonOff style={{ color: '#C38A0E' }} /><label className="StatusTexto">Pendente</label>
+                                    <IoIcons.IoMdRadioButtonOff style={{ color: '#BB157C' }} /><label className="StatusTexto">Atrasado</label>
+                                </div>
                                 <BootstrapTable
                                     {...props.baseProps}
                                     bordered={false}
@@ -193,12 +238,15 @@ function ListagemAtividades() {
                                     expandRow={expandRow}
                                     noDataIndication="Sem resultados"
                                     rowStyle={rowStyle}
-                                    cellEdit={cellEditFactory({ mode: 'click', blurToSave: true })}
                                 />
                             </div>
                         )
                     }
                 </ToolkitProvider>
+                <Group>
+                    <LabelClick onClick={() => alert("Fui clicado")}>Adicionar Tarefa</LabelClick>
+                </Group>
+
 
             </Card>
         </>
@@ -206,3 +254,29 @@ function ListagemAtividades() {
 }
 
 export default ListagemAtividades;
+
+
+// {
+//     "atividadePbls": [
+//         {
+//             "aluno": {
+//                 "id": 1,
+//                 "matricula": "string",
+//                 "nome": "Thomas"
+//             },
+//             "dataEntrega": "10/10/2010",
+//             "id": 1,
+//             "nota": 8
+//         }
+//     ],
+//         "dataConclusao": "11/11/2011",
+//             "dataCriacao": "09/09/2009",
+//                 "descricao": "Descrição Teste",
+//                     "disciplina": {
+//         "id": 1
+//     },
+//     "professor": {
+//         "id": 1
+//     },
+//     "titulo": "Titulo Teste"
+// }
