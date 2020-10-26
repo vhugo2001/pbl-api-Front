@@ -8,26 +8,53 @@ import subDays from "date-fns/subDays";
 import pt from "date-fns/locale/pt";
 import DatePickerField from "../DatePicker/DatePickerField";
 import { toast } from "react-toastify";
+import { id } from "date-fns/locale";
 
-function CardCadastroTarefa({idTarefa}) {
-  const [tarefa, setTarefa] = useState({});
+function CardCadastroTarefa({idTarefa, idDisciplina}) {
+  const [tarefa, setTarefa] = useState('');
   const [dataConclusao, setDataConclusao] = useState("");
   const [botaoExcluir, setBotaoExcluir] = useState(false);
 
-  useEffect (() => {
-    setTarefa(idTarefa);
-  }, []);
 
-  useEffect (() => {
-    setTarefa(idTarefa);
-    if (tarefa != null && tarefa != undefined ){
+
+  useEffect (() => {  
+    if (tarefa !== undefined && tarefa !== null && tarefa !== ''){
+      setBotaoExcluir(true);
+      // console.log('alterado' + botaoExcluir);
+      // console.log(tarefa);
     }
-  }, [idTarefa]);
+    else {
+      setBotaoExcluir(false);
+      // console.log('nao alterado' + botaoExcluir)
+    }
+  }, [tarefa]);
+
+  // const testeAlterarID = (evento) => {
+  //  setTarefa(evento.target.value)
+  // //  console.log('testando');
+  // }
+
+useEffect(() => {
+  atividadeService
+      .listarID(4)
+      .then((response) => {
+        setTarefa(response.data);
+      })
+      .catch((error) => {
+        toast.error("Erro ao acessar a lista de tarefas.");
+      });
+}, [])
+
+const onDeleteHandler = (id) => {
+  atividadeService.deletar(id)
+  .catch((error) => {
+    toast.error("Erro ao acessar a API.")})
+}
 
   const onSubmitHandler = (data) => {
     data = {
       ...data,
-      dataCriacao: "10/10/2020",
+      dataCriacao: '01/10/2020',
       disciplina: {
         id: 1,
       },
@@ -41,7 +68,6 @@ function CardCadastroTarefa({idTarefa}) {
       .incluir(data)
       .then((response) => {
         let data = response.data;
-        console.log(data);
         setTarefa(data);
         toast.success("Tarefa cadastrada com sucesso.");
       })
@@ -53,12 +79,13 @@ function CardCadastroTarefa({idTarefa}) {
   return (
     <>
       <Card>
+  
         <Formik
           enableReinitialize
           initialValues={{
-            titulo: "",
-            dataConclusao: "",
-            descricao: "",
+            titulo: tarefa.titulo,
+            dataConclusao: '',
+            descricao: tarefa.descricao,
           }}
           validationSchema={Yup.object().shape({
             titulo: Yup.string()
@@ -123,10 +150,10 @@ function CardCadastroTarefa({idTarefa}) {
                         minDate={subDays(new Date(), 0)}
                         useShortMonthInDropdown
                         dateFormat="dd/MM/yyyy"
-                        selected={dataConclusao}
+                        selected={tarefa.dataConclusao}
                         customInput={
                           <Card.Form.InputText
-                            value={dataConclusao}
+                            value={tarefa.dataConclusao}
                             valid={
                               touched.dataConclusao && !errors.dataConclusao
                             }
@@ -166,9 +193,7 @@ function CardCadastroTarefa({idTarefa}) {
 
                     <Card.Form.GroupButton>
                       <Card.Form.Submit type="submit">Salvar</Card.Form.Submit>
-                      <Card.Form.Delete style={{if () {
-                        
-                      }}}> Excluir</Card.Form.Delete>
+                      {botaoExcluir && <Card.Form.Delete type="button" onClick={onDeleteHandler}>Excluir</Card.Form.Delete> }
                     </Card.Form.GroupButton>
                   </Card.Form>
                 </div>

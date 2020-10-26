@@ -21,7 +21,6 @@ const Routes = () => (
     <Route path="/perfil-usuario" component={PerfilUsuario} />
     <Route path="/cadastro" component={Cadastro} />
     <Route path="/cadastrar-disciplina" component={CadastrarDisciplina} />
-    <Route path="/" exact component={IniciarPBL} />
   </Switch>
 );
 

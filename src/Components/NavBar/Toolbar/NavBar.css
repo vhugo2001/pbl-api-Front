@@ -168,3 +168,32 @@ span {
     display: none;
   }
 }
+
+.example1-dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  top: 28px;
+  right: 5px;
+  padding: 8px 0px;
+  background-color: #ffffff;
+  border-radius: 3px;
+  box-shadow: 0px 0px 5px #c3c5c7;
+}
+
+.example1-dropdown-menu-item {
+  display: flex;
+  flex-direction: row;
+  
+  padding: 6px 26px;
+  font-size: 15px;
+  color: #333537;
+
+}
+.example1-dropdown-menu-item__text{
+  padding-left: 10px;
+}
+
+.link-menu{
+  display: flex;
+  flex-direction: row;
+}

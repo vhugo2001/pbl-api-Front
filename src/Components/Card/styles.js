@@ -108,7 +108,7 @@ export const Image = styled.img`
 
 export const GroupButton = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-around;
   width: 100%;
   margin: 50px 0 10px;
 `;
