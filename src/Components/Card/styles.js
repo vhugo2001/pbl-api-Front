@@ -102,7 +102,7 @@ export const InputTextArea = styled.textarea`
 export const Image = styled.img`
   width: 100%;
   max-width: 350px;
-  height: 100%;
+  height: 100vh;
   max-height: 350px;
 `;
 

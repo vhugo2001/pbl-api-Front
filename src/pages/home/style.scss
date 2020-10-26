@@ -27,7 +27,7 @@ html {
 body {
   background:$body-bg;
   font-family: 'Titillium Web', sans-serif;
-  overflow: hidden; /* Hide scrollbars */
+ 
 }
 
 a {
@@ -40,6 +40,7 @@ a {
 }
 
 .form-login {
+  overflow: hidden; /* Hide scrollbars */
   background:rgba($form-bg,.9);
   padding: 40px;
   max-width:600px;

@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Card } from "../../Components/Card/CardPrincipal";
 import alunoService from "../../Services/AlunoService";
+import authService from "../../Services/AuthService";
 import { toast } from "react-toastify";
 
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 function PerfilUsuario() {
-  const [aluno, setAluno] = useState({});
+  const [aluno, setAluno] = useState(authService.getCurrentUser());
   const [mensagem, setMensagem] = useState("");
   const [variant, setVariant] = useState("");
 
   useEffect(() => {
     alunoService
-      .listarID(3)
+      .listarID(aluno.id)
       .then((response) => {
         setAluno(response.data);
       })
@@ -23,19 +24,20 @@ function PerfilUsuario() {
   }, []);
 
   const onSubmitHandler = (data) => {
-    data = {
-      ...data,
-      id: 3,
-    };
 
+    data = {
+      ...data, id: aluno.id
+    }
+
+    console.log(data);
     alunoService
-      .atualizar(3, data)
+      .atualizar(data.id, data)
       .then((response) => {
         console.log(data);
         toast.success("Perfil atualizado com sucesso.");
       })
       .catch((error) => {
-        toast.error("Erro ao atualizar perfil.");
+          toast.error(error.response.data.mensage);
       });
   };
 
