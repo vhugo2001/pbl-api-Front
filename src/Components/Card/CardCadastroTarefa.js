@@ -20,8 +20,7 @@ function CardCadastroTarefa({idTarefa, idDisciplina}) {
   useEffect (() => {  
     if (tarefa !== undefined && tarefa !== null && tarefa !== ''){
       setBotaoExcluir(true);
-      // console.log('alterado' + botaoExcluir);
-      // console.log(tarefa);
+   
     }
     else {
       setBotaoExcluir(false);
