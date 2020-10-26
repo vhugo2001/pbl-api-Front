@@ -87,8 +87,6 @@ function Navbar() {
           })}
         </div>
         <div className="page-container">
-          
-
           <Routes />
         </div>
       </div>
