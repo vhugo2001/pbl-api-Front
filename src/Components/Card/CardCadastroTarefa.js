@@ -21,7 +21,6 @@ function CardCadastroTarefa({idTarefa}) {
   useEffect (() => {
     setTarefa(idTarefa);
     if (tarefa != null && tarefa != undefined ){
-
     }
   }, [idTarefa]);
 

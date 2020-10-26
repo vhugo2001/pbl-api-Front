@@ -7,7 +7,7 @@ import * as MdIcons from "react-icons/md";
 export const SidebarData = [
   {
     title: "PBL",
-    path: "/",
+    path: "/pbl",
     icon: <AiIcons.AiFillHome />,
     cName: "nav-text",
   },

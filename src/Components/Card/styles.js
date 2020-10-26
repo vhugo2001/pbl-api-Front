@@ -6,6 +6,7 @@ export const Container = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   background-color: #fff;
+  border: 0;
   border-radius: 0.4167rem;
   box-shadow: 0 9px 23px rgba(0, 0, 0, 0.09), 0 5px 5px rgba(0, 0, 0, 0.06) !important;
   overflow: hidden;
@@ -101,7 +102,7 @@ export const InputTextArea = styled.textarea`
 export const Image = styled.img`
   width: 100%;
   max-width: 350px;
-  height: 100%;
+  height: 100vh;
   max-height: 350px;
 `;
 
