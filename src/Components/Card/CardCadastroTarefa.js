@@ -1,19 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { Card } from "../../Components/Card/CardPrincipal";
 import atividadeService from "../../Services/AtividadeService";
-import Alert from "../Alert/CustomAlert";
+import {Card} from "./CardPrincipal"
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { format } from "date-fns";
 import subDays from "date-fns/subDays";
 import pt from "date-fns/locale/pt";
 import DatePickerField from "../DatePicker/DatePickerField";
+import { toast } from "react-toastify";
 
-function CardCadastroTarefa() {
+function CardCadastroTarefa({idTarefa}) {
   const [tarefa, setTarefa] = useState({});
-  const [mensagem, setMensagem] = useState("");
-  const [variant, setVariant] = useState("");
   const [dataConclusao, setDataConclusao] = useState("");
+  const [botaoExcluir, setBotaoExcluir] = useState(false);
+
+  useEffect (() => {
+    setTarefa(idTarefa);
+  }, []);
+
+  useEffect (() => {
+    setTarefa(idTarefa);
+    if (tarefa != null && tarefa != undefined ){
+
+    }
+  }, [idTarefa]);
 
   const onSubmitHandler = (data) => {
     data = {
@@ -34,18 +44,15 @@ function CardCadastroTarefa() {
         let data = response.data;
         console.log(data);
         setTarefa(data);
-        setMensagem("Tarefa cadastrada com sucesso.");
-        setVariant("success");
+        toast.success("Tarefa cadastrada com sucesso.");
       })
       .catch((error) => {
-        setMensagem("Erro ao cadastrar tarefa.");
-        setVariant("danger");
+        toast.error("Erro ao cadastrar tarefa.");
       });
   };
 
   return (
     <>
-      <Alert _mensagem={mensagem} _variant={variant} />
       <Card>
         <Formik
           enableReinitialize
@@ -160,6 +167,9 @@ function CardCadastroTarefa() {
 
                     <Card.Form.GroupButton>
                       <Card.Form.Submit type="submit">Salvar</Card.Form.Submit>
+                      <Card.Form.Delete style={{if () {
+                        
+                      }}}> Excluir</Card.Form.Delete>
                     </Card.Form.GroupButton>
                   </Card.Form>
                 </div>

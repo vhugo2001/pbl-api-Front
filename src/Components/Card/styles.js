@@ -126,6 +126,20 @@ export const Submit = styled.button`
   display: inline-block;
 `;
 
+export const Delete = styled.button`
+  background-color: #FF0000;
+  color: white;
+  font-size: 16px;
+  font-weight: 900;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  border: 0;
+  border-radius: 10px;
+  padding: 15px 32px;
+  display: inline-block;
+`;
+
 export const Button = styled.button`
   background-color: #4caf50; /* Green */
   border: none;
@@ -136,6 +150,7 @@ export const Button = styled.button`
   display: inline-block;
   font-size: 16px;
 `;
+
 
 export const StyledInlineErrorMessage = styled.div`
   color: rgb(120, 27, 0);
