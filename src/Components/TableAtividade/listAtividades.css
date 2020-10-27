@@ -1,0 +1,162 @@
+td{
+    overflow-wrap: break-word;
+    font-size: 17px;
+    border: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+td.selection-cell{
+  padding: 5px 2% 5px 5px !important;
+}
+
+
+td:nth-child(3){
+  text-align: end!important;
+}
+td:nth-child(4){
+  text-align: end!important;
+}
+
+th{
+  font-size: 18px;
+  border-top: none !important;
+}
+
+th:nth-child(3){
+  text-align: end!important;
+}
+th:nth-child(4){
+  text-align: end!important;
+}
+th.selection-cell-header{
+  text-align: center;
+  width: 14% !important;
+}
+td.selection-cell{
+  text-align: center;
+}
+.icon-button {
+  font-size: 1.7rem;
+  background: none;
+  color: #7f89a2;
+  margin-top: -10px;
+  height: 35px;
+}
+
+.icon-file-button {
+  font-size: 2rem;
+  background: none;
+  color: #7f89a2;
+  margin-top: -10px;
+  height: 35px;
+}
+
+.checkbox{
+  -ms-transform: scale(2); /* IE */
+  -moz-transform: scale(2); /* FF */
+  -webkit-transform: scale(2); /* Safari and Chrome */
+  -o-transform: scale(2); /* Opera */
+  transform: scale(2);
+  width: 30%;
+  padding-top: 5px;
+  text-align: center;
+}
+
+.cardPrincipal{
+  justify-content: center !important;
+    
+}
+
+.cardListagem{
+  margin-left: 3%;
+  margin-right: 3%;
+  margin-top: 2%;
+}
+
+table thead .caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  vertical-align: middle;
+  border-top: 4px dashed;
+  border-top: 4px solid \9;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+}
+    
+table thead .dropup .caret, table thead .navbar-fixed-bottom .dropdown .caret {
+  border-top: 0;
+  border-bottom: 4px dashed;
+  border-bottom: 4px solid \9;
+  margin: 0;
+  content: "";
+}
+span.order{
+  margin: 0;
+  overflow-wrap: break-word ;
+}
+.react-bootstrap-table-pagination-list {
+  text-align: center;
+  transform: translateX(-50%);
+}  
+.react-bootstrap-table-page-btns-ul {
+  float: none;
+}
+.scrollExpandir{
+  max-height: 300px ;
+  overflow: auto;
+}
+div.row-expansion-style{
+  padding: 1px 0 1px 0 !important;
+}
+
+.descricaoLista{
+  color: black ;
+  font-size: 16px;
+  margin: 10px !important;
+  overflow-wrap: break-word;
+}
+input.form-control, label.search-label{
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+.DescHeader{
+  white-space: nowrap; 
+  width: 150%; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
+.BordaIconeTop, .BordaIconeBottom{
+  margin-left: 9px;
+  height: 40px; 
+  width: 5px;
+  border-right: 1px gray solid;
+} 
+    
+.SetasExpandir{
+  font-size: 1.7rem;
+  background: none;
+}
+
+.SetasExpandir svg{
+  margin-left: -10px;
+  margin-top: 25px;
+  cursor: pointer;
+}
+.TituloTexto{
+  margin-top: 30px;
+  padding-bottom: -10px ;
+  margin-bottom: -10px;
+}
+.StatusTexto{
+  font-size: 18px;
+  margin-left: 3px;
+  margin-right: 20px;
+  color: gray;
+}
+.ConclusaoTexto{
+  margin-top: 25px;
+  padding-bottom: -10px ;
+  margin-bottom: -10px;
+}

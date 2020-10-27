@@ -19,7 +19,7 @@ export const SidebarData = [
   },
   {
     title: "Consultar PBL",
-    path: "/products",
+    path: "/listagemAtividades",
     icon: <IoIcons.IoIosPaper />,
     cName: "nav-text",
   },
@@ -35,16 +35,5 @@ export const SidebarData = [
     icon: <IoIcons.IoMdPeople />,
     cName: "nav-text",
   },
-  {
-    title: "Messages",
-    path: "/messages",
-    icon: <FaIcons.FaEnvelopeOpenText />,
-    cName: "nav-text",
-  },
-  {
-    title: "Support",
-    path: "/support",
-    icon: <IoIcons.IoMdHelpCircle />,
-    cName: "nav-text",
-  },
+ 
 ];

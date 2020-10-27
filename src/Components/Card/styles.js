@@ -108,13 +108,27 @@ export const Image = styled.img`
 
 export const GroupButton = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-around;
   width: 100%;
   margin: 50px 0 10px;
 `;
 
 export const Submit = styled.button`
   background-color: #07a7e3;
+  color: white;
+  font-size: 16px;
+  font-weight: 900;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  border: 0;
+  border-radius: 10px;
+  padding: 15px 32px;
+  display: inline-block;
+`;
+
+export const Delete = styled.button`
+  background-color: #FF0000;
   color: white;
   font-size: 16px;
   font-weight: 900;
@@ -137,6 +151,7 @@ export const Button = styled.button`
   display: inline-block;
   font-size: 16px;
 `;
+
 
 export const StyledInlineErrorMessage = styled.div`
   color: rgb(120, 27, 0);
