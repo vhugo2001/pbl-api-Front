@@ -196,7 +196,7 @@ const DefaultDropDownList = ({ lista, onSelect, ...props }) => {
 
     setAlunoSelecionado((alunoSelecionado) => [
       ...alunoSelecionado,
-      { aluno: { id: option.id } },
+      {  id: option.id },
     ]);
     //console.log(alunoSelecionado);
     setSelectedOption([...selectedOption, option]);
