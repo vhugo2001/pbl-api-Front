@@ -19,7 +19,7 @@ export const SidebarData = [
   },
   {
     title: "Consultar PBL",
-    path: "/products",
+    path: "/listagemAtividades",
     icon: <IoIcons.IoIosPaper />,
     cName: "nav-text",
   },

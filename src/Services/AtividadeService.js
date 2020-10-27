@@ -11,7 +11,7 @@ const listarID = (id) => {
 };
 
 const listarIdDisciplina = (id) => {
-  return http.get(URL_ATV +  `/disciplina/${id}`);
+  return http.get(URL_ATV + `/disciplina/${id}`);
 };
 
 const incluir = (data) => {
