@@ -9,15 +9,15 @@ function Dashboard() {
 
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <ListagemAtividades />
+          <Card>
+            <h1>Quadro 1</h1>
+          </Card>
 
           <CardCadastroTarefa />
 
         </div>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <Card>
-            <h1>Quadro 3</h1>
-          </Card>
+          <ListagemAtividades />
           <Card>
             <h1>Quadro 4</h1>
           </Card>

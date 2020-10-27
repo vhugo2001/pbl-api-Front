@@ -210,9 +210,9 @@ function ListagemAtividades({ idPBL }) {
     return (
         <>
             <Card>
-                {/* <div className="title-container">
+                <div className="title-container">
                     <h1>Agenda de Atividades</h1>
-                </div> */}
+                </div>
                 <ToolkitProvider
                     keyField='id'
                     data={tarefa}
