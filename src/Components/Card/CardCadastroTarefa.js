@@ -57,8 +57,8 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
   const onUpdateHandler = (data) => {
     // console.log(data);
     // console.log(tarefa)
-    data = { ...data, id: tarefa.id};
-   
+    data = { ...data, id: tarefa.id };
+
     atividadeService
       .atualizar(data.id, data)
       .then((response) => {
@@ -142,10 +142,8 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
                   <h2>Incluir nova tarefa</h2>
                 </div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                  <Card.Form
-                    method="post"
-                    autoComplete="off"
-                    onSubmit={handleSubmit}
+                  <Card.Form method="post" autoComplete="off" onSubmit={handleSubmit}
+                    style={{ height: '320px', overflow: 'auto' }}
                   >
                     <Card.Form.Group>
                       <Card.Form.Title>Título</Card.Form.Title>
@@ -223,7 +221,7 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
                         <Card.Form.Submit
                           type="button"
                           onClick={onSubmitHandler}
-                         
+
                         >
                           Atualizar
                         </Card.Form.Submit>

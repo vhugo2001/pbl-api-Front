@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import { Card } from "../../Components/Card/CardPrincipal";
 import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
 import serviceAtividade from '../../Services/AtividadeService'
-import moment from 'moment'
+
 import {
     Title,
     Group,
@@ -47,10 +47,20 @@ function ListagemAtividades({ idPBL }) {
     //       "id": 1
     //     },
     //     "professor": {
-    //       "id": 1
+    //       "id": 4
     //     },
     //     "titulo": "Titulo2"
     //   }
+    // "atividadePbls": [
+    //     {
+    //       "aluno": {
+    //         "id": 0,
+    //       },
+    //       "dataEntrega": "2020-10-27T19:26:47.085Z",
+    //       "id": 0,
+    //       "nota": 0,
+    //     }
+    //   ],
 
     const tarefa = atividade
     const colunas = [
@@ -209,42 +219,41 @@ function ListagemAtividades({ idPBL }) {
 
     return (
         <>
-            <div style={{ display: "flex", flexDirection: "row", width: '100%' }}>
-                <Card>
-                    <div className="title-container">
-                        <h1>Agenda de Atividades</h1>
-                    </div>
-                    <ToolkitProvider
-                        keyField='id'
-                        data={tarefa}
-                        columns={colunas}
+            <Card>
+                <div className="title-container">
+                    <h1>Agenda de Atividades</h1>
+                </div>
+                <ToolkitProvider
+                    keyField='id'
+                    data={tarefa}
+                    columns={colunas}
 
-                        search
+                    search
 
-                    >
-                        {
-                            props => (
-                                <div className="scrollExpandir">
-                                    <SearchBar keyField='titulo'{...props.searchProps} placeholder='Buscar atividade...' />
-                                    <div className="icon-button" style={{ marginTop: '10px', marginBottom: '15px' }}>
-                                        <IoIcons.IoMdRadioButtonOff style={{ color: 'green', marginLeft: '15px' }} /> <label className="StatusTexto">Entregue</label>
-                                        <IoIcons.IoMdRadioButtonOff style={{ color: '#C38A0E' }} /><label className="StatusTexto">Pendente</label>
-                                        <IoIcons.IoMdRadioButtonOff style={{ color: '#BB157C' }} /><label className="StatusTexto">Atrasado</label>
-                                    </div>
-                                    <BootstrapTable
-                                        {...props.baseProps}
-                                        bordered={false}
-                                        condensed
-                                        expandRow={expandRow}
-                                        noDataIndication="Sem resultados"
-                                        rowStyle={rowStyle}
-                                    />
+                >
+                    {
+                        props => (
+                            <div className="scrollExpandir">
+                                <SearchBar keyField='titulo'{...props.searchProps} placeholder='Buscar atividade...' />
+                                <div className="icon-button" style={{ marginTop: '10px', marginBottom: '15px' }}>
+                                    <IoIcons.IoMdRadioButtonOff style={{ color: 'green', marginLeft: '15px' }} /> <label className="StatusTexto">Entregue</label>
+                                    <IoIcons.IoMdRadioButtonOff style={{ color: '#C38A0E' }} /><label className="StatusTexto">Pendente</label>
+                                    <IoIcons.IoMdRadioButtonOff style={{ color: '#BB157C' }} /><label className="StatusTexto">Atrasado</label>
                                 </div>
-                            )
-                        }
-                    </ToolkitProvider>
-                </Card>
-            </div>
+                                <BootstrapTable
+                                    {...props.baseProps}
+                                    bordered={false}
+                                    condensed
+                                    expandRow={expandRow}
+                                    noDataIndication="Sem resultados"
+                                    rowStyle={rowStyle}
+                                />
+                            </div>
+                        )
+                    }
+                </ToolkitProvider>
+            </Card>
+
         </>
     );
 }
