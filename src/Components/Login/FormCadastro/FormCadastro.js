@@ -6,7 +6,7 @@ import FormAluno from "./Aluno"
 const FormCadastro = () => {
   return (
     <>
-      <div class="sub-tab">
+      <div className="sub-tab">
         <Tabs defaultActiveKey="aluno">
           <Tab eventKey="aluno" title="Aluno">
             <FormAluno/>

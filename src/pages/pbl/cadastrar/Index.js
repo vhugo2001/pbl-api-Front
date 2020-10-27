@@ -50,7 +50,8 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    console.log(disciplinaSelecionada.id);
+    if(disciplinaSelecionada.id !== undefined && disciplinaSelecionada.id !== ""){
+    console.log(disciplinaSelecionada.id)
     serviceTema
       .listarIDDisciplina(disciplinaSelecionada.id)
       .then((response) => {
@@ -58,6 +59,7 @@ const Index = () => {
         setListaTemaPbl(data);
       })
       .catch((error) => toast.error("Erro ao acessar a lista de temas."));
+    }
   }, [disciplinaSelecionada]);
 
   useEffect(() => {
@@ -71,9 +73,10 @@ const Index = () => {
   }, []);
 
   const onSubmitHandler = (data) => {
+    console.log(data)
     data = {
       ...data,
-      professor: { id: 5 },
+      professor: { id: 2 },
       dataInicio: format(data.dataInicio, "dd/MM/yyyy"),
       dataConclusao: format(data.dataConclusao, "dd/MM/yyyy"),
       pblTemaDisciplina: {

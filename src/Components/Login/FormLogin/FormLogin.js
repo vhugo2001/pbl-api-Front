@@ -56,7 +56,7 @@ const Login = ({setIsLogado}) => {
               <form method="post"
                   autoComplete="off"
                   onSubmit={handleSubmit}>
-                <div class="field-wrap">
+                <div className="field-wrap">
                   <input
                     name="email"
                     type="email"
@@ -66,11 +66,11 @@ const Login = ({setIsLogado}) => {
                     onChange={handleChange}
                   />
                   {errors.email && touched.email && (
-                    <div class="error-message">{errors.email}</div>
+                    <div className="error-message">{errors.email}</div>
                   )}
                 </div>
 
-                <div class="field-wrap">
+                <div className="field-wrap">
                   <input
                     name="senha"
                     type="password"
@@ -80,15 +80,15 @@ const Login = ({setIsLogado}) => {
                     onChange={handleChange}
                   />
                    {errors.senha && touched.senha && (
-                    <div class="error-message">{errors.senha}</div>
+                    <div className="error-message">{errors.senha}</div>
                   )}
                 </div>
 
-                <p class="forgot">
+                <p className="forgot">
                   <a href="/">Recuperar Senha?</a>
                 </p>
 
-                <button type="submit" class="button button-block">Login</button>
+                <button type="submit" className="button button-block">Login</button>
                 
               </form>
             </>
