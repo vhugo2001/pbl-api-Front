@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import atividadeService from "../../Services/AtividadeService";
-import {Card} from "./CardPrincipal"
+import { Card } from "./CardPrincipal";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { format } from "date-fns";
@@ -10,50 +10,70 @@ import DatePickerField from "../DatePicker/DatePickerField";
 import { toast } from "react-toastify";
 import { id } from "date-fns/locale";
 
-function CardCadastroTarefa({idTarefa, idDisciplina}) {
-  const [tarefa, setTarefa] = useState('');
+function CardCadastroTarefa({ idTarefa, idDisciplina }) {
+  const [tarefa, setTarefa] = useState("");
   const [dataConclusao, setDataConclusao] = useState("");
   const [botaoExcluir, setBotaoExcluir] = useState(false);
+  const [botaoSalvar, setBotaoSalvar] = useState(false);
+  const [botaoAtualizar, setBotaoAtualizar] = useState(false);
 
-
-
-  useEffect (() => {  
-    if (tarefa !== undefined && tarefa !== null && tarefa !== ''){
+  useEffect(() => {
+    if (tarefa !== undefined && tarefa !== null && tarefa !== "") {
       setBotaoExcluir(true);
-   
-    }
-    else {
+      setBotaoAtualizar(true);
+      setBotaoSalvar(false);
+    } else {
       setBotaoExcluir(false);
-      // console.log('nao alterado' + botaoExcluir)
+      setBotaoAtualizar(false);
+      setBotaoSalvar(true);
     }
   }, [tarefa]);
 
-  // const testeAlterarID = (evento) => {
-  //  setTarefa(evento.target.value)
-  // //  console.log('testando');
-  // }
-
-useEffect(() => {
-  atividadeService
-      .listarID(4)
+  useEffect(() => {
+    atividadeService
+      .listarID(9)
       .then((response) => {
+        response.data.dataConclusao = new Date(
+          response.data.dataConclusao.split("/").reverse().join("-")
+        );
         setTarefa(response.data);
+        console.log(tarefa);
+        console.log(response.data);
       })
       .catch((error) => {
         toast.error("Erro ao acessar a lista de tarefas.");
       });
-}, [])
+  }, []);
 
-const onDeleteHandler = (id) => {
-  atividadeService.deletar(id)
-  .catch((error) => {
-    toast.error("Erro ao acessar a API.")})
-}
+  const onDeleteHandler = (id) => {
+    atividadeService
+      .deletar(tarefa.id)
+      .then(toast.success("Tarefa deletada com sucesso."))
+      .catch((error) => {
+        toast.error("Erro ao acessar a API.");
+      });
+  };
+
+  const onUpdateHandler = (data) => {
+    // console.log(data);
+    // console.log(tarefa)
+    data = { ...data, id: tarefa.id};
+   
+    atividadeService
+      .atualizar(data.id, data)
+      .then((response) => {
+        console.log(data);
+        toast.success("Tarefa atualizado com sucesso.");
+      })
+      .catch((error) => {
+        toast.error("Erro ao atualizar tarefa.");
+      });
+  };
 
   const onSubmitHandler = (data) => {
     data = {
       ...data,
-      dataCriacao: '01/10/2020',
+      dataCriacao: "01/10/2020",
       disciplina: {
         id: 1,
       },
@@ -61,7 +81,8 @@ const onDeleteHandler = (id) => {
         id: 1,
       },
       dataConclusao: format(data.dataConclusao, "dd/MM/yyyy"),
-    };
+    }
+    console.log(data)
 
     atividadeService
       .incluir(data)
@@ -78,12 +99,11 @@ const onDeleteHandler = (id) => {
   return (
     <>
       <Card>
-  
         <Formik
           enableReinitialize
           initialValues={{
             titulo: tarefa.titulo,
-            dataConclusao: '',
+            dataConclusao: tarefa.dataConclusao,
             descricao: tarefa.descricao,
           }}
           validationSchema={Yup.object().shape({
@@ -122,7 +142,10 @@ const onDeleteHandler = (id) => {
                   <h2>Incluir nova tarefa</h2>
                 </div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                  <Card.Form method="post" autoComplete="off" onSubmit={handleSubmit}
+                  <Card.Form
+                    method="post"
+                    autoComplete="off"
+                    onSubmit={handleSubmit}
                   >
                     <Card.Form.Group>
                       <Card.Form.Title>Título</Card.Form.Title>
@@ -146,13 +169,13 @@ const onDeleteHandler = (id) => {
                       <DatePickerField
                         name="dataConclusao"
                         locale={pt}
-                        minDate={subDays(new Date(), 0)}
                         useShortMonthInDropdown
+                        minDate={subDays(new Date(), 0)}
                         dateFormat="dd/MM/yyyy"
-                        selected={tarefa.dataConclusao}
+                        selected={dataConclusao}
                         customInput={
                           <Card.Form.InputText
-                            value={tarefa.dataConclusao}
+                            value={dataConclusao}
                             valid={
                               touched.dataConclusao && !errors.dataConclusao
                             }
@@ -191,8 +214,28 @@ const onDeleteHandler = (id) => {
                     <Card.Form.BreakRow />
 
                     <Card.Form.GroupButton>
-                      <Card.Form.Submit type="submit">Salvar</Card.Form.Submit>
-                      {botaoExcluir && <Card.Form.Delete type="button" onClick={onDeleteHandler}>Excluir</Card.Form.Delete> }
+                      {botaoSalvar && (
+                        <Card.Form.Submit type="submit">
+                          Salvar
+                        </Card.Form.Submit>
+                      )}
+                      {botaoAtualizar && (
+                        <Card.Form.Submit
+                          type="button"
+                          onClick={onSubmitHandler}
+                         
+                        >
+                          Atualizar
+                        </Card.Form.Submit>
+                      )}
+                      {botaoExcluir && (
+                        <Card.Form.Delete
+                          type="button"
+                          onClick={onDeleteHandler}
+                        >
+                          Excluir
+                        </Card.Form.Delete>
+                      )}
                     </Card.Form.GroupButton>
                   </Card.Form>
                 </div>
