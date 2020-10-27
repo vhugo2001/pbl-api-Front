@@ -63,7 +63,6 @@ export const Tr = styled.tr`
 `;
 
 export const Th = styled.th`
-
 `;
 
 export const Image = styled("div")`

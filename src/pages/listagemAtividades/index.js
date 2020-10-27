@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import { Card } from "../../Components/Card/CardPrincipal";
 import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
 import serviceAtividade from '../../Services/AtividadeService'
-import moment from 'moment'
+
 import {
     Title,
     Group,
