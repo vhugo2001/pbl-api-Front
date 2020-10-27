@@ -73,7 +73,7 @@ const Index = () => {
   const onSubmitHandler = (data) => {
     data = {
       ...data,
-      professor: { id: 5 },
+      professor: { id: 4 },
       dataInicio: format(data.dataInicio, "dd/MM/yyyy"),
       dataConclusao: format(data.dataConclusao, "dd/MM/yyyy"),
       pblTemaDisciplina: {
