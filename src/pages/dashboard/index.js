@@ -2,31 +2,40 @@ import React from "react";
 import { Card } from "../../Components/Card/CardPrincipal";
 import CardCadastroTarefa from '../../Components/Card/CardCadastroTarefa'
 import ListagemAtividades from "../../pages/listagemAtividades/index"
+import { Container, Row, Col } from 'react-bootstrap'
 
 function Dashboard() {
   return (
     <>
 
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <Card>
-            <h1>Quadro 1</h1>
-          </Card>
+      <Container>
+        <Row>
+          <Col>
+            <Card>
+              <h1>Quadro 1</h1>
+            </Card>
 
+          </Col>
 
-          <CardCadastroTarefa />
+          <Col>
+            <CardCadastroTarefa />
+          </Col>
+        </Row>
 
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <Row style={{ paddingTop: '10px' }}>
           {/* <Card>
             <h1>Quadro 3</h1>
           </Card> */}
-          <ListagemAtividades />
-          <Card>
-            <h1>Quadro 4</h1>
-          </Card>
-        </div>
-      </div>
+          <Col>
+            <ListagemAtividades />
+          </Col>
+          <Col>
+            <Card>
+              <h1>Quadro 4</h1>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 }
