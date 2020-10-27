@@ -7,7 +7,7 @@ import FormCadastroAluno from "../../Components/Login/FormCadastro/FormCadastro"
 function Login({setIsLogado}) {
   return (
     <Container fluid>
-      <div class="form-login">
+      <div className="form-login">
         <Tabs defaultActiveKey="login">
           <Tab eventKey="login" title="Login">
             <FormLogin setIsLogado={setIsLogado} />

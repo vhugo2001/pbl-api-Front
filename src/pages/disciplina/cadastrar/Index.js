@@ -15,11 +15,10 @@ const Index = () => {
         serviceDisciplina
           .incluir(data)
           .then((response) => {
-            let data = response.data;
             toast.success("Disciplina cadastrada com sucesso.");
           })
           .catch((error) => {
-            toast.error("Erro ao cadastrar disciplina.");
+            toast.error(error.response.data);
           });
       };
 

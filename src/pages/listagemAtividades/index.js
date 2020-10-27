@@ -12,7 +12,7 @@ import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import { toast } from "react-toastify";
 import { Card } from "../../Components/Card/CardPrincipal";
 import serviceAtividade from '../../Services/AtividadeService'
-import moment from 'moment'
+
 import {
     Title,
     Group,

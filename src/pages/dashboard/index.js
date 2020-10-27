@@ -3,6 +3,7 @@ import { Card } from "../../Components/Card/CardPrincipal";
 import CardCadastroTarefa from '../../Components/Card/CardCadastroTarefa'
 import ListagemAtividades from "../../pages/listagemAtividades/index"
 import { Container, Row, Col } from 'react-bootstrap'
+import CardCharts from '../../Components/Charts/Professor/Radial';
 
 function Dashboard() {
   return (
@@ -31,7 +32,7 @@ function Dashboard() {
           </Col>
           <Col>
             <Card>
-              <h1>Quadro 4</h1>
+            <CardCharts/>
             </Card>
           </Col>
         </Row>
