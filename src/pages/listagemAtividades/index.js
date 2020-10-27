@@ -209,45 +209,42 @@ function ListagemAtividades({ idPBL }) {
 
     return (
         <>
-            <Card>
-                <div className="title-container">
-                    <h1>Agenda de Atividades</h1>
-                </div>
-                <ToolkitProvider
-                    keyField='id'
-                    data={tarefa}
-                    columns={colunas}
+            <div style={{ display: "flex", flexDirection: "row", width: '100%' }}>
+                <Card>
+                    <div className="title-container">
+                        <h1>Agenda de Atividades</h1>
+                    </div>
+                    <ToolkitProvider
+                        keyField='id'
+                        data={tarefa}
+                        columns={colunas}
 
-                    search
+                        search
 
-                >
-                    {
-                        props => (
-                            <div className="scrollExpandir">
-                                <SearchBar keyField='titulo'{...props.searchProps} placeholder='Buscar atividade...' />
-                                <div className="icon-button" style={{ marginTop: '10px', marginBottom: '15px' }}>
-                                    <IoIcons.IoMdRadioButtonOff style={{ color: 'green', marginLeft: '15px' }} /> <label className="StatusTexto">Entregue</label>
-                                    <IoIcons.IoMdRadioButtonOff style={{ color: '#C38A0E' }} /><label className="StatusTexto">Pendente</label>
-                                    <IoIcons.IoMdRadioButtonOff style={{ color: '#BB157C' }} /><label className="StatusTexto">Atrasado</label>
+                    >
+                        {
+                            props => (
+                                <div className="scrollExpandir">
+                                    <SearchBar keyField='titulo'{...props.searchProps} placeholder='Buscar atividade...' />
+                                    <div className="icon-button" style={{ marginTop: '10px', marginBottom: '15px' }}>
+                                        <IoIcons.IoMdRadioButtonOff style={{ color: 'green', marginLeft: '15px' }} /> <label className="StatusTexto">Entregue</label>
+                                        <IoIcons.IoMdRadioButtonOff style={{ color: '#C38A0E' }} /><label className="StatusTexto">Pendente</label>
+                                        <IoIcons.IoMdRadioButtonOff style={{ color: '#BB157C' }} /><label className="StatusTexto">Atrasado</label>
+                                    </div>
+                                    <BootstrapTable
+                                        {...props.baseProps}
+                                        bordered={false}
+                                        condensed
+                                        expandRow={expandRow}
+                                        noDataIndication="Sem resultados"
+                                        rowStyle={rowStyle}
+                                    />
                                 </div>
-                                <BootstrapTable
-                                    {...props.baseProps}
-                                    bordered={false}
-                                    condensed
-                                    expandRow={expandRow}
-                                    noDataIndication="Sem resultados"
-                                    rowStyle={rowStyle}
-                                />
-                            </div>
-                        )
-                    }
-                </ToolkitProvider>
-                <Group>
-                    <LabelClick onClick={() => alert("Fui clicado")}>Adicionar Tarefa</LabelClick>
-                </Group>
-
-
-            </Card>
+                            )
+                        }
+                    </ToolkitProvider>
+                </Card>
+            </div>
         </>
     );
 }
