@@ -26,10 +26,14 @@ const { SearchBar } = Search;
 
 function ListagemAtividades({ idPBL }) {
     const [atividade, setAtividade] = useState([])
+    let notas
+    let dataEntreg
+    let alunoResp
+
     idPBL = 1
     useEffect(() => {
         serviceAtividade
-            .listarIdDisciplina(idPBL)
+            .listarIdPbl(idPBL)
             .then((response) => {
                 let data = response.data;
                 setAtividade(data);
@@ -64,6 +68,7 @@ function ListagemAtividades({ idPBL }) {
 
 
     const tarefa = atividade
+
     const colunas = [
         {
             dataField: "icone",
@@ -112,16 +117,34 @@ function ListagemAtividades({ idPBL }) {
 
     const subcolunas = [
         {
-            dataField: 'aluno',
+            dataField: 'atividadePbls',
             text: 'Aluno responsável',
-            editable: false
+            formatter: (cellContent, row) => (
+                <div>
+                    {cellContent.forEach((item) => {
 
+                        alunoResp = item.aluno.nome
+                        console.log(alunoResp)
+                    })}
+                    <label style={{ cursor: 'pointer' }}><b>{alunoResp}</b></label><br />
+
+                </div>
+            )
         }, {
-            dataField: 'dataEntrega',
+            dataField: 'atividadePbls',
             text: 'Entregue no dia',
-            editable: false,
+            formatter: (cellContent, row) => (
+                <div>
+                    {cellContent.forEach((item) => {
+                        dataEntreg = item.dataEntrega
+
+                    })}
 
 
+                    <label style={{ cursor: 'pointer' }}><b>{dataEntreg}</b></label><br />
+
+                </div>
+            )
         }, {
             dataField: "icone",
             text: "Arquivo",
@@ -139,8 +162,12 @@ function ListagemAtividades({ idPBL }) {
             text: 'Nota',
             formatter: (cellContent, row) => (
                 <div>
-                    {/* {(cellContent.forEach((item)=>{<b>{item}</b>}))} */}
-                    <label style={{ cursor: 'pointer' }}><b>{'a'}</b></label><br />
+                    {cellContent.forEach((item) => {
+
+                        notas = item.nota
+
+                    })}
+                    <label style={{ cursor: 'pointer' }}><b>{notas}</b></label><br />
 
                 </div>
             )
@@ -167,9 +194,10 @@ function ListagemAtividades({ idPBL }) {
                 <ToolkitProvider
                     keyField='id'
                     data={verificaDesc(row)}
-                    columns={subcolunas}
 
+                    columns={subcolunas}
                 >
+
                     {
                         props => (
                             <div>
@@ -180,6 +208,7 @@ function ListagemAtividades({ idPBL }) {
                                 />
                             </div>
                         )
+
                     }
                 </ToolkitProvider>
             </div >

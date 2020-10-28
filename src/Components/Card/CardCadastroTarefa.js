@@ -31,12 +31,12 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
 
   useEffect(() => {
     atividadeService
-      .listarID(3)
+      .listarID(idTarefa)
       .then((response) => {
         response.data.dataConclusao = new Date(
           response.data.dataConclusao.split("/").reverse().join("-"));
-          setDataConclusao(response.data.dataConclusao);
-        
+        setDataConclusao(response.data.dataConclusao);
+
         setTarefa(response.data);
         console.log(tarefa);
         console.log(response.data);
@@ -74,7 +74,7 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
   const onSubmitHandler = (data) => {
     data = {
       ...data,
-      dataCriacao:  format(new Date(), "dd/MM/yyyy"),
+      dataCriacao: format(new Date(), "dd/MM/yyyy"),
       disciplina: {
         id: 1,
       },
@@ -89,7 +89,7 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
       .incluir(data)
       .then((response) => {
         let data = response.data;
-         toast.success("Tarefa cadastrada com sucesso.");
+        toast.success("Tarefa cadastrada com sucesso.");
       })
       .catch((error) => {
         toast.error("Erro ao cadastrar tarefa.");
