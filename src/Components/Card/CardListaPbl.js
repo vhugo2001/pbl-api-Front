@@ -30,17 +30,23 @@ function CardListaPbl() {
     };
 
     const colunas = [
+      {
+        dataField: "",
+        text: "Status",
+        
+   
+      },
         {
           dataField: "problema",
           text: "PBL",
           headerStyle: (colum, colIndex) => {
-            return { width: '70%' };
+            return { width: '60%' };
         }
      
         },
         {
           dataField: "dataConclusao",
-          text: "Data de Conclusão",
+          text: "Entrega",
           sort: true,
           headerStyle: (colum, colIndex) => {
             return { fontSize: '14px' };
