@@ -10,8 +10,8 @@ import { SidebarData } from "./SidebarData";
 import "./NavBar.css";
 import { IconContext } from "react-icons";
 import Routes from "../../../routes/routes";
-import NavbarDropdown from 'react-navbar-dropdown';
-import ServiceAuth from '../../../Services/AuthService'
+import NavbarDropdown from "react-navbar-dropdown";
+import ServiceAuth from "../../../Services/AuthService";
 
 function Navbar() {
   const [sidebar, setSidebar] = useState(false);
@@ -34,6 +34,7 @@ function Navbar() {
           />
         </div>
         <div style={{ flex: 1 }}></div>
+        <div className="container-right">
         <Link to="/admin/dashboard" className="calendar-button">
           <IoIcons.IoMdCalendar />
         </Link>
@@ -41,51 +42,52 @@ function Navbar() {
           <MdIcons.MdNotificationsNone />
         </Link>
 
-        <NavbarDropdown>
+        <NavbarDropdown className="drop-perfil">
+          <NavbarDropdown.Toggle className="menu__item">
+            <NavbarDropdown.Open>
+              <CgIcons.CgProfile className="profile-button" />
+            </NavbarDropdown.Open>
+            <NavbarDropdown.Close>
+              <CgIcons.CgProfile className="profile-button" />
+            </NavbarDropdown.Close>
+          </NavbarDropdown.Toggle>
 
-        <NavbarDropdown.Toggle className="menu__item">
-      <NavbarDropdown.Open>
-      <CgIcons.CgProfile className="profile-button"/>
-      </NavbarDropdown.Open>
-      <NavbarDropdown.Close>
-      <CgIcons.CgProfile className="profile-button"/>
-      </NavbarDropdown.Close>
-    </NavbarDropdown.Toggle>
-        
-          
-   
-        <NavbarDropdown.CSSTransitionMenu
-      className="example1-dropdown-menu"
-      classNames="example1-dropdown-menu"
-      timeout={200}
-    >
-      <NavbarDropdown.Item className="example1-dropdown-menu-item" >
-      <Link to="/admin/perfil-usuario" className="link-menu">
-        <div>
-        <GrIcons.GrUserManager className="dropdown-button"/>
-        </div>
-        <div className="example1-dropdown-menu-item__spacer" />
-        <div className="example1-dropdown-menu-item__text">Meu Perfil</div>
-        </Link>
-      </NavbarDropdown.Item>
-      <NavbarDropdown.Item className="example1-dropdown-menu-item" >
-      <a href="/admin/" className="link-menu" onClick={ServiceAuth.logout}>
-        <div>
-        <GrIcons.GrLogout className="dropdown-button"/>
-        </div>
-        <div className="example1-dropdown-menu-item__spacer" />
-        <div className="example1-dropdown-menu-item__text">Sair</div>
-        </a>
-      </NavbarDropdown.Item>
-
-      </NavbarDropdown.CSSTransitionMenu>
+          <NavbarDropdown.CSSTransitionMenu
+            className="example1-dropdown-menu"
+            classNames="example1-dropdown-menu"
+            timeout={200}
+          >
+            <NavbarDropdown.Item className="example1-dropdown-menu-item">
+              <Link to="/admin/perfil-usuario" className="link-menu">
+                <div>
+                  <GrIcons.GrUserManager className="dropdown-button" />
+                </div>
+                <div className="example1-dropdown-menu-item__spacer" />
+                <div className="example1-dropdown-menu-item__text">
+                  Meu Perfil
+                </div>
+              </Link>
+            </NavbarDropdown.Item>
+            <NavbarDropdown.Item className="example1-dropdown-menu-item">
+              <a
+                href="/admin/"
+                className="link-menu"
+                onClick={ServiceAuth.logout}
+              >
+               
+                <div className="example1-dropdown-menu-item__spacer" />
+                <div className="example1-dropdown-menu-item__text">Sair</div>
+              </a>
+            </NavbarDropdown.Item>
+          </NavbarDropdown.CSSTransitionMenu>
         </NavbarDropdown>
 
+        </div>
       </div>
       <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
         <ul className="nav-menu-items" onClick={showSidebar}>
           <li className="navbar-toggle">
-            <Link to="/admin/#" className="menu-bars">
+            <Link to="#" className="menu-bars">
               <AiIcons.AiOutlineClose />
             </Link>
           </li>
