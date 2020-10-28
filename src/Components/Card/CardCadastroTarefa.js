@@ -31,7 +31,7 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
 
   useEffect(() => {
     atividadeService
-      .listarID(3)
+      .listarID(2)
       .then((response) => {
         response.data.dataConclusao = new Date(
           response.data.dataConclusao.split("/").reverse().join("-"));

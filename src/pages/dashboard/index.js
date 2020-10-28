@@ -1,9 +1,11 @@
 import React from "react";
 import { Card } from "../../Components/Card/CardPrincipal";
 import CardCadastroTarefa from '../../Components/Card/CardCadastroTarefa'
+import CardListaPbl from '../../Components/Card/CardListaPbl'
 import ListagemAtividades from "../../pages/listagemAtividades/index"
 import { Container, Row, Col } from 'react-bootstrap'
 import CardCharts from '../../Components/Charts/Professor/Radial';
+
 
 function Dashboard() {
   return (
@@ -37,16 +39,9 @@ function Dashboard() {
 
         <Row>
           <Col xl={6} lg={6} style={{ paddingLeft: '6px', paddingRight: '6px' }}>
-            <Card>
-              <h1>Quadro 1</h1>
-              <h1>Quadro 1</h1>
-              <h1>Quadro 1</h1>
-              <h1>Quadro 1</h1>
-              <h1>Quadro 1</h1>
-            </Card>
-
+            <CardListaPbl />
+         
             <ListagemAtividades />
-
 
           </Col>
 
@@ -54,8 +49,9 @@ function Dashboard() {
             <CardCadastroTarefa />
 
             <Card>
-              <h1>Quadro 4</h1>
+            <CardCharts/>
             </Card>
+            
           </Col>
        
           </Row>
