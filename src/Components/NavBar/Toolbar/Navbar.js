@@ -59,9 +59,7 @@ function Navbar() {
           >
             <NavbarDropdown.Item className="example1-dropdown-menu-item">
               <Link to="/admin/perfil-usuario" className="link-menu">
-                <div>
-                  <GrIcons.GrUserManager className="dropdown-button" />
-                </div>
+                
                 <div className="example1-dropdown-menu-item__spacer" />
                 <div className="example1-dropdown-menu-item__text">
                   Meu Perfil
