@@ -76,7 +76,7 @@ const Index = () => {
     console.log(data)
     data = {
       ...data,
-      professor: { id: 4 },
+      professor: { id: 2 },
       dataInicio: format(data.dataInicio, "dd/MM/yyyy"),
       dataConclusao: format(data.dataConclusao, "dd/MM/yyyy"),
       pblTemaDisciplina: {

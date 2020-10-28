@@ -26,11 +26,11 @@ const { SearchBar } = Search;
 
 function ListagemAtividades({ idPBL }) {
     const [atividade, setAtividade] = useState([])
+    const [tarefas, setTarefas] = useState('')
     let notas
     let dataEntreg
     let alunoResp
-
-    idPBL = 1
+    idPBL = 13
     useEffect(() => {
         serviceAtividade
             .listarIdPbl(idPBL)
@@ -41,6 +41,10 @@ function ListagemAtividades({ idPBL }) {
             })
             .catch((error) => console.log(error));
     }, [idPBL]);
+
+
+
+
 
     // {
     //     "dataConclusao": "01/10/2021",
@@ -124,9 +128,9 @@ function ListagemAtividades({ idPBL }) {
                     {cellContent.forEach((item) => {
 
                         alunoResp = item.aluno.nome
-                        console.log(alunoResp)
+
                     })}
-                    <label style={{ cursor: 'pointer' }}><b>{alunoResp}</b></label><br />
+                    <label ><b>{alunoResp}</b></label><br />
 
                 </div>
             )
@@ -141,7 +145,7 @@ function ListagemAtividades({ idPBL }) {
                     })}
 
 
-                    <label style={{ cursor: 'pointer' }}><b>{dataEntreg}</b></label><br />
+                    <label ><b>{dataEntreg}</b></label><br />
 
                 </div>
             )
@@ -167,7 +171,7 @@ function ListagemAtividades({ idPBL }) {
                         notas = item.nota
 
                     })}
-                    <label style={{ cursor: 'pointer' }}><b>{notas}</b></label><br />
+                    <label ><b>{notas}</b></label><br />
 
                 </div>
             )
@@ -188,6 +192,7 @@ function ListagemAtividades({ idPBL }) {
         }
     }
     const expandRow = {
+
         renderer: (row) => (
 
             < div >
@@ -200,9 +205,13 @@ function ListagemAtividades({ idPBL }) {
 
                     {
                         props => (
-                            <div>
+
+                            < div >
+                                {console.log(row.id)}
                                 <BootstrapTable
                                     {...props.baseProps}
+                                    {...setTarefas(row.id)}
+
                                     bordered={false}
                                     condensed
                                 />
@@ -213,6 +222,7 @@ function ListagemAtividades({ idPBL }) {
                 </ToolkitProvider>
             </div >
         ),
+
         expandColumnPosition: 'right',
         expandByColumnOnly: true,
         showExpandColumn: true,
@@ -223,6 +233,7 @@ function ListagemAtividades({ idPBL }) {
             return <b></b>;
         },
         expandColumnRenderer: ({ expanded }) => {
+
             if (expanded) {
                 return (
                     <div className='SetasExpandir'>
@@ -236,7 +247,6 @@ function ListagemAtividades({ idPBL }) {
                 </div>
             );
         }
-
     };
 
     return (
@@ -277,7 +287,9 @@ function ListagemAtividades({ idPBL }) {
             </Card>
 
         </>
+
     );
+
 }
 
 export default ListagemAtividades;
