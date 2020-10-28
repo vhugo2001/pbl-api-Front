@@ -9,6 +9,7 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import * as ReactBootStrap from 'react-bootstrap'
 
 
+
 function CardListaPbl() {
 
     const [pblList, setPblList] = useState([]);
@@ -31,20 +32,20 @@ function CardListaPbl() {
     const colunas = [
         {
           dataField: "problema",
-          text: "Problema",
+          text: "PBL",
+          headerStyle: (colum, colIndex) => {
+            return { width: '70%' };
+        }
      
-        },
-        {
-          dataField: "dataInicio",
-          text: "Data de Inicio",
-          sort: true,
-        
         },
         {
           dataField: "dataConclusao",
           text: "Data de Conclusão",
           sort: true,
+          headerStyle: (colum, colIndex) => {
+            return { fontSize: '14px' };
         },
+      }
       ];
 
       const options = paginationFactory({
