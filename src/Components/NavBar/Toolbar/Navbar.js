@@ -34,10 +34,10 @@ function Navbar() {
           />
         </div>
         <div style={{ flex: 1 }}></div>
-        <Link to="/dashboard" className="calendar-button">
+        <Link to="/admin/dashboard" className="calendar-button">
           <IoIcons.IoMdCalendar />
         </Link>
-        <Link to="/" className="notification-button">
+        <Link to="/admin/" className="notification-button">
           <MdIcons.MdNotificationsNone />
         </Link>
 
@@ -60,7 +60,7 @@ function Navbar() {
       timeout={200}
     >
       <NavbarDropdown.Item className="example1-dropdown-menu-item" >
-      <Link to="/perfil-usuario" className="link-menu">
+      <Link to="/admin/perfil-usuario" className="link-menu">
         <div>
         <GrIcons.GrUserManager className="dropdown-button"/>
         </div>
@@ -69,7 +69,7 @@ function Navbar() {
         </Link>
       </NavbarDropdown.Item>
       <NavbarDropdown.Item className="example1-dropdown-menu-item" >
-      <a href="/" className="link-menu" onClick={ServiceAuth.logout}>
+      <a href="/admin/" className="link-menu" onClick={ServiceAuth.logout}>
         <div>
         <GrIcons.GrLogout className="dropdown-button"/>
         </div>
@@ -85,7 +85,7 @@ function Navbar() {
       <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
         <ul className="nav-menu-items" onClick={showSidebar}>
           <li className="navbar-toggle">
-            <Link to="#" className="menu-bars">
+            <Link to="/admin/#" className="menu-bars">
               <AiIcons.AiOutlineClose />
             </Link>
           </li>
