@@ -1,51 +1,24 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter } from "react-router-dom";
-import NavBar from "./Components/NavBar/Toolbar/Navbar";
+import React from "react";
+import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import PrivateRoute from './Components/PrivatRouter/Router';
 import { ToastContainer } from "react-toastify";
+import NavBar from "./Components/NavBar/Toolbar/Navbar";
 import Home from "./pages/home/index";
+
 import "../src/pages/home/style.scss";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
-import AuthService from "./Services/AuthService";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-
 
 
 function App() {
-  const [isLogado, setIsLogado] = useState(false);
-
-  useEffect(() => {
-    // console.log('entrou' + AuthHeader());
-    // let teste = AuthHeader();
-    // console.log('entrou' + teste);
-    if(AuthService.getCurrentUser())
-    setIsLogado(true);
-  }, [])
-
-  function HomeScreen() {
-    if (!isLogado) {
-      return <> 
-      <ToastContainer />
-      <Home setIsLogado={setIsLogado}/>
-      </>;
-    } else {
-      return (
-        <>
-          <ToastContainer />
-          <BrowserRouter>
-            <NavBar />
-          </BrowserRouter>
-        </>
-      );
-    }
-  }
-
   return (
     <>
+    <ToastContainer />
       <Router>
-        <HomeScreen />
         <Switch>
-          <Route exact path="/"/>
+          <Route exact path="/" component={Home} />
+          <Route path="/login" component={Home} />
+          <PrivateRoute path="/admin" component={NavBar} />
         </Switch>
       </Router>
     </>
