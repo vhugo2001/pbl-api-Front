@@ -132,18 +132,13 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
             return (
               <>
                 <div
-                  style={{
-                    width: "100%",
-                    textAlign: "center",
-                    paddingTop: 10,
-                  }}
-                  className="iniciar-tarefa-title"
+                  className="title-container"
                 >
-                  <h2>Incluir nova tarefa</h2>
+                  <h3>Incluir nova tarefa</h3>
                 </div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <Card.Form method="post" autoComplete="off" onSubmit={handleSubmit}
-                    style={{ height: '320px', overflow: 'auto' }}
+                    
                   >
                     <Card.Form.Group>
                       <Card.Form.Title>Título</Card.Form.Title>

@@ -4,6 +4,7 @@ import * as AiIcons from "react-icons/ai";
 import * as IoIcons from "react-icons/io";
 import * as MdIcons from "react-icons/md";
 import * as CgIcons from "react-icons/cg";
+import * as GrIcons from "react-icons/gr";
 import { Link } from "react-router-dom";
 import { SidebarData } from "./SidebarData";
 import "./NavBar.css";
@@ -61,7 +62,7 @@ function Navbar() {
       <NavbarDropdown.Item className="example1-dropdown-menu-item" >
       <Link to="/perfil-usuario" className="link-menu">
         <div>
-        <IoIcons.IoMdCalendar className="notification-button"/>
+        <GrIcons.GrUserManager className="dropdown-button"/>
         </div>
         <div className="example1-dropdown-menu-item__spacer" />
         <div className="example1-dropdown-menu-item__text">Meu Perfil</div>
@@ -70,7 +71,7 @@ function Navbar() {
       <NavbarDropdown.Item className="example1-dropdown-menu-item" >
       <a href="/" className="link-menu" onClick={ServiceAuth.logout}>
         <div>
-        <IoIcons.IoMdCalendar className="notification-button"/>
+        <GrIcons.GrLogout className="dropdown-button"/>
         </div>
         <div className="example1-dropdown-menu-item__spacer" />
         <div className="example1-dropdown-menu-item__text">Sair</div>
