@@ -7,31 +7,31 @@ import * as MdIcons from "react-icons/md";
 export const SidebarData = [
   {
     title: "PBL",
-    path: "/pbl",
+    path: "/admin/pbl",
     icon: <AiIcons.AiFillHome />,
     cName: "nav-text",
   },
   {
     title: "Iniciar PBL",
-    path: "/iniciar-pbl",
+    path: "/admin/iniciar-pbl",
     icon: <MdIcons.MdCreateNewFolder />,
     cName: "nav-text",
   },
   {
     title: "Consultar PBL",
-    path: "/listagemAtividades",
+    path: "/admin/listagemAtividades",
     icon: <IoIcons.IoIosPaper />,
     cName: "nav-text",
   },
   {
     title: "Consultar Alunos",
-    path: "/alunos",
+    path: "/admin/alunos",
     icon: <IoIcons.IoMdPeople />,
     cName: "nav-text",
   },
   {
     title: "Cadastrar Disciplina",
-    path: "/cadastrar-disciplina",
+    path: "/admin/cadastrar-disciplina",
     icon: <IoIcons.IoMdPeople />,
     cName: "nav-text",
   },

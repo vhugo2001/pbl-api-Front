@@ -1,29 +1,27 @@
-import React , {useState} from "react";
-import { Formik, Form, ErrorMessage } from "formik";
+import React, { useState } from "react";
+import { Formik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import AuthService from "../../../Services/AuthService";
 
-
-const Login = ({setIsLogado}) => {
- let history = useHistory();
-  const [loginErro, setLoginErro] = useState("");
+const Login = () => {
+  const history = useHistory();
 
   const onSubmitHandler = (data) => {
     AuthService.login(data)
       .then((response) => {
-        console.log(response.data);
         localStorage.setItem("user", JSON.stringify(response.data));
-
-        setIsLogado(true);
+        console.log("entrou")
+         history.push("/admin");
       })
-      .catch((error) =>{toast.error("Usuario ou senha inválido"); console.log(error)});
+      .catch((error) => {
+        toast.error("Usuario ou senha inválido");
+      });
   };
 
   return (
     <>
-    
       <Formik
         enableReinitialize
         initialValues={{
@@ -40,22 +38,11 @@ const Login = ({setIsLogado}) => {
         })}
         onSubmit={(values) => onSubmitHandler(values)}
       >
-        {({
-          values,
-          errors,
-          touched,
-          handleSubmit,
-          handleChange,
-          isSubmitting,
-          validating,
-          valid,
-        }) => {
+        {({ errors, touched, handleSubmit, handleChange }) => {
           return (
             <>
               <h1>FEST - PROJETO PBL</h1>
-              <form method="post"
-                  autoComplete="off"
-                  onSubmit={handleSubmit}>
+              <form method="post" autoComplete="off" onSubmit={handleSubmit}>
                 <div className="field-wrap">
                   <input
                     name="email"
@@ -79,7 +66,7 @@ const Login = ({setIsLogado}) => {
                     placeholder="Senha"
                     onChange={handleChange}
                   />
-                   {errors.senha && touched.senha && (
+                  {errors.senha && touched.senha && (
                     <div className="error-message">{errors.senha}</div>
                   )}
                 </div>
@@ -88,8 +75,9 @@ const Login = ({setIsLogado}) => {
                   <a href="/">Recuperar Senha?</a>
                 </p>
 
-                <button type="submit" className="button button-block">Login</button>
-                
+                <button type="submit" className="button button-block">
+                  Login
+                </button>
               </form>
             </>
           );
