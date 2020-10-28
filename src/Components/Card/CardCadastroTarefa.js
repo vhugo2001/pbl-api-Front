@@ -13,19 +13,14 @@ import { id } from "date-fns/locale";
 function CardCadastroTarefa({ idTarefa, idDisciplina }) {
   const [tarefa, setTarefa] = useState("");
   const [dataConclusao, setDataConclusao] = useState("");
-  const [botaoExcluir, setBotaoExcluir] = useState(false);
-  const [botaoSalvar, setBotaoSalvar] = useState(false);
-  const [botaoAtualizar, setBotaoAtualizar] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   useEffect(() => {
     if (tarefa !== undefined && tarefa !== null && tarefa !== "") {
-      setBotaoExcluir(true);
-      setBotaoAtualizar(true);
-      setBotaoSalvar(false);
+      setIsUpdating(true);
+     
     } else {
-      setBotaoExcluir(false);
-      setBotaoAtualizar(false);
-      setBotaoSalvar(true);
+      setIsUpdating(false);
     }
   }, [tarefa]);
 
@@ -38,8 +33,7 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
           setDataConclusao(response.data.dataConclusao);
         
         setTarefa(response.data);
-        console.log(tarefa);
-        console.log(response.data);
+      
       })
       .catch((error) => {
         toast.error("Erro ao acessar a lista de tarefas.");
@@ -68,6 +62,8 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
       })
       .catch((error) => {
         toast.error("Erro ao atualizar tarefa.");
+        console.log(data);
+        console.log(error);
       });
   };
 
@@ -79,7 +75,7 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
         id: 1,
       },
       professor: {
-        id: 2,
+        id: 3,
       },
       dataConclusao: format(data.dataConclusao, "dd/MM/yyyy"),
     }
@@ -117,7 +113,15 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
               .required("* Campo Descrição é obrigatório")
               .nullable(),
           })}
-          onSubmit={(values) => onSubmitHandler(values)}
+          onSubmit={(values) =>  {
+            if(isUpdating){
+              return onUpdateHandler(values);
+            }
+            else{
+              return onSubmitHandler(values);
+            }
+          }
+            }
         >
           {({
             values,
@@ -132,18 +136,13 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
             return (
               <>
                 <div
-                  style={{
-                    width: "100%",
-                    textAlign: "center",
-                    paddingTop: 10,
-                  }}
-                  className="iniciar-tarefa-title"
+                  className="title-container"
                 >
-                  <h2>Incluir nova tarefa</h2>
+                  <h3>Incluir nova tarefa</h3>
                 </div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <Card.Form method="post" autoComplete="off" onSubmit={handleSubmit}
-                    style={{ height: '320px', overflow: 'auto' }}
+                    
                   >
                     <Card.Form.Group>
                       <Card.Form.Title>Título</Card.Form.Title>
@@ -212,21 +211,21 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
                     <Card.Form.BreakRow />
 
                     <Card.Form.GroupButton>
-                      {botaoSalvar && (
+                      {!isUpdating && (
                         <Card.Form.Submit type="submit">
                           Salvar
                         </Card.Form.Submit>
                       )}
-                      {botaoAtualizar && (
+                      {isUpdating && (
                         <Card.Form.Submit
                           type="button"
-                          onClick={onSubmitHandler}
+                          onClick={onUpdateHandler}
 
                         >
                           Atualizar
                         </Card.Form.Submit>
                       )}
-                      {botaoExcluir && (
+                      {isUpdating && (
                         <Card.Form.Delete
                           type="button"
                           onClick={onDeleteHandler}
