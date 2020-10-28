@@ -12,6 +12,7 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import { Container, Title, GroupButton, Ativar, Desativar } from "./style";
 import { IconContext } from "react-icons";
+import { data } from "jquery";
 
 const { SearchBar } = Search;
 
@@ -21,6 +22,7 @@ export default function ListAluno(props) {
 
   useEffect(() => {
     listarTodos();
+   
   }, []);
 
   const listarTodos = () => {
