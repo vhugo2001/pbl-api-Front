@@ -4,7 +4,7 @@ body {
 }
 
 .navbars {
-  height: 80px;
+  height: 10vh;
   display: flex;
   align-items: center;
   background-color: #fff;
@@ -12,6 +12,7 @@ body {
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
   width: 100%;
   position: relative;
+  z-index: 1;
 }
 
 .container-right {
@@ -77,8 +78,6 @@ width: 12rem !important;
   font-size: .75rem !important;
   font-weight: 300;
 }
-
-
 
 .toggle-holder {
   background-color: #506c86;
@@ -226,10 +225,12 @@ ul {
 .page-container {
   display: flex;
   width: 100%;
-  padding-top: 3%;
+  height: 90vh;
+  padding-top: 2%;
   padding-left: 2%;
-  padding-bottom: 2%;
+  padding-bottom: 1%;
   padding-right: 2%;
+  overflow-y:scroll;
 }
 
 span {
@@ -239,7 +240,7 @@ span {
 .sidebar-main {
   background-color: #506c86;
   min-width: 300px;
-  height: 100vh;
+  height: 90vh;
   z-index: 1;
 }
 

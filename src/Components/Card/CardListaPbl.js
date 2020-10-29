@@ -49,9 +49,12 @@ function CardListaPbl() {
       dataField: "dataConclusao",
       text: "Entrega",
       sort: true,
-      headerStyle: (colum, colIndex) => {
-        return { fontSize: "14px" };
-      },
+      
+      formatter: (cellContent, row) => (
+        <div>
+            <label className="DataHeader">{row.dataConclusao}</label>
+        </div>
+    )
     },
   ];
 
@@ -71,8 +74,8 @@ function CardListaPbl() {
   return (
     <>
       <Card>
-        <div className="title-container">
-          <h3>Lista de PBLs</h3>
+        <div className="title-container ">
+          <h5 className="title-card">Lista de PBLs</h5>
         </div>
         <ToolkitProvider keyField="id" data={pblList} columns={colunas} search >
           {(props) => (
