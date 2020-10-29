@@ -14,6 +14,10 @@ const listarIdDisciplina = (id) => {
   return http.get(URL_ATV + `/disciplina/${id}`);
 };
 
+const listarIdPbl = (id) => {
+  return http.get(URL_ATV + `/pbl/${id}`);
+};
+
 const incluir = (data) => {
   return http.post(URL_ATV, data);
 };
@@ -33,4 +37,5 @@ export default {
   deletar,
   listarID,
   listarIdDisciplina,
+  listarIdPbl
 };

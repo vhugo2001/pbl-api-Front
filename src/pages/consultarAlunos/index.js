@@ -20,10 +20,12 @@ import {
   Ativar,
   Desativar
 } from '../../Components/TableAluno/style'
+import '../../Components/TableAluno/listAlunos.css'
+import ListAluno from '../../Components/TableAluno/ListAlunos'
 
 const { SearchBar } = Search;
 
-export default function ListAluno(props) {
+export default function ListAluno2(props) {
   const [alunos, setAlunos] = useState([]);
   const [aluno, setAluno] = useState({});
 
@@ -163,8 +165,6 @@ export default function ListAluno(props) {
       })
   }
 
-
-
   const rowStyle = (row, rowIndex) => {
 
     if (row.ativo === false) {
@@ -190,40 +190,42 @@ export default function ListAluno(props) {
   });
 
   return (
-    <>
-      <div className="title-container">
-        <h1>Consultar Alunos</h1>
-      </div>
-      <Card className="cardPrincipal">
-        <Container className="cardListagem">
-          <ToolkitProvider
-            keyField='id'
-            data={alunos}
-            columns={colunas}
-            search
-          >
-            {
-              props => (
-                <div>
-                  <SearchBar keyField='nome'{...props.searchProps} placeholder='Buscar aluno por nome...' />
-                  <BootstrapTable
-                    pagination={options}
-                    {...props.baseProps}
-                    bordered={false}
-                    rowStyle={rowStyle}
-                    hover condensed
-                    selectRow={selectRow}
-                  />
+
+    <Container>
+      <Title>Alunos cadastrados </Title>
+
+      <ToolkitProvider keyField="nome" data={alunos} columns={colunas} search>
+        {(props) => (
+          <div>
+            <div class="table-custom-container">
+              <div class="table-search">
+                <SearchBar
+                  {...props.searchProps}
+                  placeholder="Buscar aluno por nome..."
+                />
+                <div class="table-search-icon">
+                  <IoIcons.IoMdSearch class="search-icon" />
                 </div>
-              )
-            }
-          </ToolkitProvider>
-        </Container>
-        <GroupButton>
-          <Ativar onClick={handleAtivar}>Ativar</Ativar>
-          <Desativar onClick={handleDesativar}>Desativar</Desativar>
-        </GroupButton>
-      </Card>
-    </>
+              </div>
+              <BootstrapTable
+                pagination={options}
+                {...props.baseProps}
+                bordered={false}
+                rowStyle={rowStyle}
+                striped
+                hover
+                condensed
+                selectRow={selectRow}
+              />
+            </div>
+          </div>
+        )}
+      </ToolkitProvider>
+      <GroupButton>
+        <Ativar onClick={handleAtivar}>Ativar</Ativar>
+        <Desativar onClick={handleDesativar}>Desativar</Desativar>
+      </GroupButton>
+    </Container>
+
   );
 }

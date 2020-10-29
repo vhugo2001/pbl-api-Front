@@ -50,15 +50,15 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    if(disciplinaSelecionada.id !== undefined && disciplinaSelecionada.id !== ""){
-    console.log(disciplinaSelecionada.id)
-    serviceTema
-      .listarIDDisciplina(disciplinaSelecionada.id)
-      .then((response) => {
-        let data = response.data;
-        setListaTemaPbl(data);
-      })
-      .catch((error) => toast.error("Erro ao acessar a lista de temas."));
+    if (disciplinaSelecionada.id !== undefined && disciplinaSelecionada.id !== "") {
+      console.log(disciplinaSelecionada.id)
+      serviceTema
+        .listarIDDisciplina(disciplinaSelecionada.id)
+        .then((response) => {
+          let data = response.data;
+          setListaTemaPbl(data);
+        })
+        .catch((error) => toast.error("Erro ao acessar a lista de temas."));
     }
   }, [disciplinaSelecionada]);
 
@@ -76,7 +76,7 @@ const Index = () => {
     console.log(data)
     data = {
       ...data,
-      professor: { id: 3 },
+      professor: { id: 2 },
       dataInicio: format(data.dataInicio, "dd/MM/yyyy"),
       dataConclusao: format(data.dataConclusao, "dd/MM/yyyy"),
       pblTemaDisciplina: {
