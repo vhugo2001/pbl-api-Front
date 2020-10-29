@@ -39,35 +39,11 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
             .then((response) => {
                 let data = response.data;
                 setAtividade(data);
+
                 console.log(response.data)
             })
             .catch((error) => console.log(error));
     }, [selectedPbl]);
-
-    // {
-    //     "dataConclusao": "01/10/2021",
-    //     "dataCriacao": "01/05/2020",
-    //     "descricao": "Descrição 2 testando atividade",
-    //     "disciplina": {
-    //       "id": 1
-    //     },
-    //     "professor": {
-    //       "id": 4
-    //     },
-    //     "titulo": "Titulo Testando atividadePbls"
-    // "atividadePbls": [
-    //     {
-    //       "aluno": {
-    //         "id": 2
-    //       },
-    //       "dataEntrega": "07/11/2020",
-    //       "id": 2,
-    //       "nota": 8
-    //     }
-    //   ],
-    //   }
-
-
 
     const tarefa = atividade
 
@@ -113,10 +89,11 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
             dataField: 'dataConclusao',
             text: '',
             formatter: (cellContent, row) => (
-                <div>
+                <div style={{ textAlign: 'end' }}>
                     <label className="ConclusaoTexto">{row.dataConclusao}</label><br />
                 </div>
             ),
+
             headerStyle: {
                 display: 'none'
             }
@@ -126,7 +103,7 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
     const subcolunas = [
         {
             dataField: 'atividadePbls',
-            text: 'Aluno responsável',
+            text: 'Aluno',
             formatter: (cellContent, row) => (
                 <div className='valoresNoExpand'>
                     {cellContent.forEach((item) => {
@@ -143,7 +120,7 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
             )
         }, {
             dataField: 'atividadePbls',
-            text: 'Data da Entrega',
+            text: 'Data Entrega',
             formatter: (cellContent, row) => (
                 <div className='valoresNoExpand'>
                     {cellContent.forEach((item) => {
@@ -214,6 +191,7 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
             return [row]
         }
     }
+
     const expandRow = {
 
         renderer: (row) => (
@@ -248,6 +226,7 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
 
         expandColumnPosition: 'right',
         expandByColumnOnly: true,
+        onlyOneExpanding: true,
         showExpandColumn: true,
         expandHeaderColumnRenderer: ({ isAnyExpands }) => {
             if (isAnyExpands) {
@@ -274,7 +253,7 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
 
     return (
         <>
-            <Card>
+            <Card >
                 <div className="title-container">
                     <h5 className="title-card">Agenda de Atividades</h5>
                 </div>
@@ -296,7 +275,7 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
                                     </div>
                                 </div>
                                 <div className="scrollExpandir">
-                                    <div className="icon-button" style={{ marginTop: '10px', marginBottom: '15px' }}>
+                                    <div className="icon-button-Indicativo">
                                         <IoIcons.IoMdRadioButtonOff style={{ color: 'green', marginLeft: '15px' }} /> <label className="StatusTexto">Entregue</label>
                                         <IoIcons.IoMdRadioButtonOff style={{ color: '#C38A0E' }} /><label className="StatusTexto">Pendente</label>
                                         <IoIcons.IoMdRadioButtonOff style={{ color: '#BB157C' }} /><label className="StatusTexto">Atrasado</label>
