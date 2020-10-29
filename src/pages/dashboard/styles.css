@@ -1,42 +1,88 @@
-.card-form{
+.card-form {
   padding: 0px 10px 20px 10px !important;
 }
 
-.group-button{
-    margin-top: 15px !important;
+.group-button {
+  margin-top: 15px !important;
 }
 
-.delete-button{
-   
-   margin-right: 10px;
-    font-size: 1.5rem;
-    background: none;
-    color: white;
-    float: right;
-    background-color: #007bff;
-    width: 38px;
-    height: 37.5px;
-    text-align: center;
-    border-radius: 4px;
+.delete-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+ 
+  color: #b5b5b5;
+  border: 1px solid #b5b5b5;
+  background-color: white;
+  margin-top: 10px;
+  width: 25px;
+  height: 25px;
+
+  border-radius: 50%;
 }
-.spacer-div{
+.delete-button :hover {
+ 
+color: red;
+}
+.icone-deletar{
+    flex: 0 0 auto;
+    height: 16px;
+    width: 16px;
+}
+.spacer-div {
+  flex: 1;
+}
+
+.TabelaListaPbl {
+  padding-top: 15px !important;
+  white-space: nowrap;
+  width: 110%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+}
+
+.TabelaListaData {
+  white-space: nowrap;
+  width: 110%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  padding-right: 25px;
+  padding-top: 15px !important;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+
+  flex-direction: row;
+}
+.title-pbl-container{
     flex: 1;
 }
-
-.TabelaListaPbl{
-    padding-top: 15px !important;
-    white-space: nowrap; 
-    width: 110%; 
-    overflow: hidden;
-    text-overflow: ellipsis; 
-    font-size: 14px;
-  
+.table-search-pbl{
+  padding-top: 5px;
+    display: flex;
+  justify-content: flex-end;
 }
-
-.TabelaListaData{white-space: nowrap; 
-    width: 110%; 
-    overflow: hidden;
-    text-overflow: ellipsis; 
-    font-size: 14px;
-    padding-right: 10px;
-    padding-top: 15px !important;}
+.table-search-pbl .search-label {
+    max-width: 60%;
+    margin-left: 10px;
+  }
+  
+  .table-search-pbl  .table-search-icon {
+    cursor: pointer;
+    vertical-align: middle !important;
+    margin: 0 10px .5rem 15px;
+    font-size: 1.5rem;
+    color: white;
+    background-color: #6cb4ff;
+    text-align: center;
+    width: 38px;
+    height: 37.5px;
+    justify-content: center;
+    border-radius: 4px;
+    
+  }
