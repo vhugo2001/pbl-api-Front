@@ -1,6 +1,7 @@
 html, body {
   height: 90vh;
   overflow-y: hidden;
+  background-color: white;
 }
 
 .page-container {
