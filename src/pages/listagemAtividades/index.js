@@ -24,24 +24,24 @@ import { endOfDay } from "date-fns";
 
 const { SearchBar } = Search;
 
-function ListagemAtividades({ idPBL }) {
+function ListagemAtividades({ selectedPbl }) {
     const [atividade, setAtividade] = useState([])
     const [alunoId, setAlunoId] = useState('')
     let notas
     let dataEntreg
     let alunoResp
 
-    idPBL = 10
     useEffect(() => {
+       
         serviceAtividade
-            .listarIdPbl(idPBL)
+            .listarIdPbl(selectedPbl)
             .then((response) => {
                 let data = response.data;
                 setAtividade(data);
-
+                console.log(response.data)
             })
             .catch((error) => console.log(error));
-    }, [idPBL]);
+    }, [selectedPbl]);
 
     // {
     //     "dataConclusao": "01/10/2021",

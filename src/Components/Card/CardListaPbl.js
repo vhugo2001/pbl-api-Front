@@ -11,7 +11,7 @@ import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css";
 import '../TableAtividade/listAtividades.css'
 
-function CardListaPbl() {
+function CardListaPbl({setSelectedPbl}) {
   const [pblList, setPblList] = useState([]);
 
   useEffect(() => {
@@ -24,11 +24,19 @@ function CardListaPbl() {
       .then((response) => {
         let data = response.data;
         setPblList(data);
+        console.log(data);
       })
       .catch((error) => console.log(error));
   };
 
   const colunas = [
+    {
+      dataFields: "idPbl",
+      hidden: true,
+      formatter: (cellContent, row) => (
+       row.idPbl
+      )
+    },
     {
       dataField: "",
       text: "Status",
@@ -69,6 +77,12 @@ function CardListaPbl() {
     prePageText: "<",
   });
 
+  const tableRowEvents = {
+    onClick: (e, row, rowIndex) => {
+      setSelectedPbl(row.idPbl)
+    },
+ }
+
   const { SearchBar } = Search;
 
   return (
@@ -89,7 +103,7 @@ function CardListaPbl() {
               <BootstrapTable
                 {...props.baseProps}
                 keyField="nome"
-              
+                rowEvents={tableRowEvents}
                 noDataIndication="Sem resultados"
                 pagination={options}
                 rowStyle={{
