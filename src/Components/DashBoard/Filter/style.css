@@ -1,0 +1,49 @@
+.container-filter {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: end;
+    background-color: #fff;
+    height: 36px;
+    padding-left: 24px;
+    padding-right: 24px;
+    border: 0;
+    border-radius: 0.4167rem;
+    box-shadow: 0 9px 23px rgba(0, 0, 0, 0.09), 0 5px 5px rgba(0, 0, 0, 0.06) !important;
+    overflow: hidden;
+}
+
+.container-filter .menu__item .menu__item__label {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-filter .menu__item .menu__item__label label {
+ margin: 0;
+}
+
+.container-filter .item {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.drop-items{
+    z-index: 1;
+}
+
+
+
+.container-filter .item .drop-perfil .menu__item {
+    margin: 0 !important;
+}
+
+
+.container-filter .menu__item svg {
+    font-size: 1rem;
+    margin-right: 3px;
+}
