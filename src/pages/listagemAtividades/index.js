@@ -187,6 +187,14 @@ function ListagemAtividades({ idPBL }) {
         }
     ];
 
+    const selectRow = {
+        mode: 'radio',
+        clickToSelect: true,
+        hideSelectColumn: true,
+        bgColor: '#dee2e6',
+
+    };
+
     const rowStyle = (row, rowIndex) => {
         return { backgroundColor: 'rgba(153, 186, 194,0.3)' };
 
@@ -218,8 +226,7 @@ function ListagemAtividades({ idPBL }) {
                                 {console.log(alunoId)}
                                 <BootstrapTable
                                     {...props.baseProps}
-
-
+                                    selectRow={selectRow}
                                     bordered={false}
                                     condensed
                                 />

@@ -11,7 +11,11 @@ td.selection-cell{
   padding: 5px 2% 5px 5px !important;
 }
 
-
+.row-expansion-style .react-bootstrap-table tbody > tr {
+  justify-content: center;
+ height: 55px;
+ cursor: pointer;
+}
 td:nth-child(3){
   text-align: end!important;
 }
@@ -47,7 +51,7 @@ td.selection-cell{
 .icon-button {
   font-size: 1.7rem;
   background: none;
-  color: #7f89a2;
+  color:#7f89a2;
   margin-top: -10px;
   height: 35px;
   margin-bottom: 0px !important;
