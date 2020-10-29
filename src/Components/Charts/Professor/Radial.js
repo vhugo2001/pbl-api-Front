@@ -10,8 +10,8 @@ const Radial = () => {
       type: "radialBar"
     },
     responsive: [{
-        breakpoint: undefined,
-        options: {},
+      breakpoint: undefined,
+      options: {},
     }],
     plotOptions: {
       radialBar: {

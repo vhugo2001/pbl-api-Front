@@ -144,12 +144,14 @@ input.form-control, label.search-label{
 .SetasExpandir{
   font-size: 1.7rem;
   background: none;
+  
 }
 
 .SetasExpandir svg{
   margin-left: -10px;
   margin-top: 25px;
   cursor: pointer;
+  
 }
 .TituloTexto{
   margin-top: 30px;
@@ -199,4 +201,7 @@ input.form-control, label.search-label{
   
 }
 
+.TabelaListaPbl, .TabelaListaData{
+  cursor: pointer;
+}
 
