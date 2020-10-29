@@ -27,9 +27,12 @@ const { SearchBar } = Search;
 function ListagemAtividades({ idPBL }) {
     const [atividade, setAtividade] = useState([])
     const [alunoId, setAlunoId] = useState('')
-    let notas
-    let dataEntreg
-    let alunoResp
+    const [notas, setNotas] = useState('')
+    const [dataEntreg, setDataEntreg] = useState('')
+    const [alunoResp, setAlunoResp] = useState('')
+    // let notas
+    // let dataEntreg
+    // let alunoResp
 
     idPBL = 17
     useEffect(() => {
@@ -130,7 +133,7 @@ function ListagemAtividades({ idPBL }) {
                 <div className='valoresNoExpand'>
                     {cellContent.forEach((item) => {
                         if (item.aluno !== null && item.aluno !== undefined) {
-                            alunoResp = item.aluno.nome
+                            setAlunoResp(item.aluno.nome)
 
                         }
                         setAlunoId(item.id)
@@ -146,7 +149,7 @@ function ListagemAtividades({ idPBL }) {
                 <div className='valoresNoExpand'>
                     {cellContent.forEach((item) => {
 
-                        dataEntreg = item.dataEntrega
+                        setDataEntreg(item.dataEntrega)
 
 
                     })}
@@ -175,8 +178,7 @@ function ListagemAtividades({ idPBL }) {
                 <div className='valoresNoExpand'>
                     {cellContent.forEach((item) => {
 
-                        notas = item.notas
-
+                        setNotas(item.notas)
 
                     })}
                     <label ><b>{notas}</b></label><br />
@@ -223,7 +225,7 @@ function ListagemAtividades({ idPBL }) {
                         props => (
 
                             < div >
-                                {console.log(alunoId)}
+
                                 <BootstrapTable
                                     {...props.baseProps}
                                     selectRow={selectRow}
@@ -241,6 +243,7 @@ function ListagemAtividades({ idPBL }) {
         expandColumnPosition: 'right',
         expandByColumnOnly: true,
         showExpandColumn: true,
+        onlyOneExpanding: true,
         expandHeaderColumnRenderer: ({ isAnyExpands }) => {
             if (isAnyExpands) {
                 return <b ></b>;
