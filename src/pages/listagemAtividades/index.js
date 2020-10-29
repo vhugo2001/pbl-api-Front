@@ -11,7 +11,6 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import { toast } from "react-toastify";
 import { Card } from "../../Components/Card/CardPrincipal";
-import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
 import serviceAtividade from '../../Services/AtividadeService'
 
 import {
@@ -27,10 +26,15 @@ const { SearchBar } = Search;
 
 function ListagemAtividades({ idPBL }) {
     const [atividade, setAtividade] = useState([])
-    idPBL = 1
+    const [alunoId, setAlunoId] = useState('')
+    let notas
+    let dataEntreg
+    let alunoResp
+
+    idPBL = 17
     useEffect(() => {
         serviceAtividade
-            .listarIdDisciplina(idPBL)
+            .listarIdPbl(idPBL)
             .then((response) => {
                 let data = response.data;
                 setAtividade(data);
@@ -40,29 +44,32 @@ function ListagemAtividades({ idPBL }) {
     }, [idPBL]);
 
     // {
-    //     "dataConclusao": "15/10/2012",
-    //     "dataCriacao": "03/07/2011",
-    //     "descricao": "Descrição 2",
+    //     "dataConclusao": "01/10/2021",
+    //     "dataCriacao": "01/05/2020",
+    //     "descricao": "Descrição 2 testando atividade",
     //     "disciplina": {
     //       "id": 1
     //     },
     //     "professor": {
     //       "id": 4
     //     },
-    //     "titulo": "Titulo2"
-    //   }
+    //     "titulo": "Titulo Testando atividadePbls"
     // "atividadePbls": [
     //     {
     //       "aluno": {
-    //         "id": 0,
+    //         "id": 2
     //       },
-    //       "dataEntrega": "2020-10-27T19:26:47.085Z",
-    //       "id": 0,
-    //       "nota": 0,
+    //       "dataEntrega": "07/11/2020",
+    //       "id": 2,
+    //       "nota": 8
     //     }
     //   ],
+    //   }
+
+
 
     const tarefa = atividade
+
     const colunas = [
         {
             dataField: "icone",
@@ -111,16 +118,38 @@ function ListagemAtividades({ idPBL }) {
 
     const subcolunas = [
         {
-            dataField: 'aluno',
+            dataField: 'atividadePbls',
             text: 'Aluno responsável',
-            editable: false
+            formatter: (cellContent, row) => (
+                <div>
+                    {cellContent.forEach((item) => {
+                        if (item.aluno !== null && item.aluno !== undefined) {
+                            alunoResp = item.aluno.nome
 
+                        }
+                        setAlunoId(item.id)
+                    })}
+                    <label ><b>{alunoResp}</b></label><br />
+
+                </div>
+            )
         }, {
-            dataField: 'dataEntrega',
+            dataField: 'atividadePbls',
             text: 'Entregue no dia',
-            editable: false,
+            formatter: (cellContent, row) => (
+                <div>
+                    {cellContent.forEach((item) => {
+
+                        dataEntreg = item.dataEntrega
 
 
+                    })}
+
+
+                    <label ><b>{dataEntreg}</b></label><br />
+
+                </div>
+            )
         }, {
             dataField: "icone",
             text: "Arquivo",
@@ -134,11 +163,17 @@ function ListagemAtividades({ idPBL }) {
             editable: false
         },
         {
-            dataField: 'nota',
+            dataField: 'atividadePbls',
             text: 'Nota',
             formatter: (cellContent, row) => (
                 <div>
-                    <label style={{ cursor: 'pointer' }}><b>{row.nota}</b></label><br />
+                    {cellContent.forEach((item) => {
+
+                        notas = item.notas
+
+
+                    })}
+                    <label ><b>{notas}</b></label><br />
 
                 </div>
             )
@@ -150,13 +185,6 @@ function ListagemAtividades({ idPBL }) {
         return { backgroundColor: 'rgba(153, 186, 194,0.3)' };
 
     };
-
-    const onAfterSaveCell = (valorAntigo, valorNovo, row, column) => {
-        // Inserir metodo PUT para edição
-        console.log(row.descricao)
-        valorAntigo = valorNovo
-    }
-
     const verificaDesc = (row) => {
         if (row.descricao === "" || row.descricao === null) {
             row.descricao = "Não há descrição para esta atividade"
@@ -166,31 +194,37 @@ function ListagemAtividades({ idPBL }) {
         }
     }
     const expandRow = {
+
         renderer: (row) => (
 
             < div >
                 <ToolkitProvider
                     keyField='id'
                     data={verificaDesc(row)}
-                    columns={subcolunas}
 
+                    columns={subcolunas}
                 >
+
                     {
                         props => (
-                            <div>
+
+                            < div >
+                                {console.log(alunoId)}
                                 <BootstrapTable
                                     {...props.baseProps}
+
+
                                     bordered={false}
                                     condensed
-                                    cellEdit={cellEditFactory({ mode: 'click', blurToSave: true, afterSaveCell: onAfterSaveCell })}
-
                                 />
                             </div>
                         )
+
                     }
                 </ToolkitProvider>
             </div >
         ),
+
         expandColumnPosition: 'right',
         expandByColumnOnly: true,
         showExpandColumn: true,
@@ -201,6 +235,7 @@ function ListagemAtividades({ idPBL }) {
             return <b></b>;
         },
         expandColumnRenderer: ({ expanded }) => {
+
             if (expanded) {
                 return (
                     <div className='SetasExpandir'>
@@ -214,7 +249,6 @@ function ListagemAtividades({ idPBL }) {
                 </div>
             );
         }
-
     };
 
     return (
@@ -233,55 +267,121 @@ function ListagemAtividades({ idPBL }) {
                 >
                     {
                         props => (
-                            <div className="scrollExpandir">
-                                <SearchBar keyField='titulo'{...props.searchProps} placeholder='Buscar atividade...' />
-                                <div className="icon-button" style={{ marginTop: '10px', marginBottom: '15px' }}>
-                                    <IoIcons.IoMdRadioButtonOff style={{ color: 'green', marginLeft: '15px' }} /> <label className="StatusTexto">Entregue</label>
-                                    <IoIcons.IoMdRadioButtonOff style={{ color: '#C38A0E' }} /><label className="StatusTexto">Pendente</label>
-                                    <IoIcons.IoMdRadioButtonOff style={{ color: '#BB157C' }} /><label className="StatusTexto">Atrasado</label>
+                            <>
+                                <div className="table-searchAtividades">
+                                    <SearchBar keyField='titulo'{...props.searchProps} placeholder='Buscar atividade...' />
+                                    <div class="table-search-icon">
+                                        <IoIcons.IoMdSearch class="search-icon" />
+                                    </div>
                                 </div>
-                                <BootstrapTable
-                                    {...props.baseProps}
-                                    bordered={false}
-                                    condensed
-                                    expandRow={expandRow}
-                                    noDataIndication="Sem resultados"
-                                    rowStyle={rowStyle}
-                                />
-                            </div>
+                                <div className="scrollExpandir">
+                                    <div className="icon-button" style={{ marginTop: '10px', marginBottom: '15px' }}>
+                                        <IoIcons.IoMdRadioButtonOff style={{ color: 'green', marginLeft: '15px' }} /> <label className="StatusTexto">Entregue</label>
+                                        <IoIcons.IoMdRadioButtonOff style={{ color: '#C38A0E' }} /><label className="StatusTexto">Pendente</label>
+                                        <IoIcons.IoMdRadioButtonOff style={{ color: '#BB157C' }} /><label className="StatusTexto">Atrasado</label>
+                                    </div>
+                                    <BootstrapTable
+                                        {...props.baseProps}
+                                        bordered={false}
+                                        condensed
+                                        expandRow={expandRow}
+                                        noDataIndication="Sem resultados"
+                                        rowStyle={rowStyle} />
+                                </div>
+                            </>
                         )
                     }
                 </ToolkitProvider>
             </Card>
 
         </>
+
     );
+
 }
 
 export default ListagemAtividades;
 
 
 // {
-//     "atividadePbls": [
-//         {
-//             "aluno": {
-//                 "id": 1,
-//                 "matricula": "string",
-//                 "nome": "Thomas"
-//             },
-//             "dataEntrega": "10/10/2010",
-//             "id": 1,
-//             "nota": 8
-//         }
-//     ],
-//         "dataConclusao": "11/11/2011",
-//             "dataCriacao": "09/09/2009",
-//                 "descricao": "Descrição Teste",
-//                     "disciplina": {
-//         "id": 1
+//     "id": 2,
+//     "titulo": "Tit",
+//     "descricao": "Desc",
+//     "dataCriacao": "01/04/2020",
+//     "dataConclusao": "11/12/2020",
+//     "disciplina": {
+//       "id": 1,
+//       "nome": "Finanças"
 //     },
 //     "professor": {
-//         "id": 1
+//       "id": 4,
+//       "email": "prof1@gmail.com",
+//       "ativo": true,
+//       "excluido": false,
+//       "perfil": [],
+//       "nome": "Professor",
+//       "disciplina": {
+//         "id": 1,
+//         "nome": "Finanças"
+//       }
 //     },
-//     "titulo": "Titulo Teste"
-// }
+//     "atividadePbls": [
+//       {
+//         "id": 1,
+//         "dataEntrega": "10/08/2020",
+//         "nota": 8,
+//         "pbl": {
+//           "idPbl": 1,
+//           "problema": "Problema",
+//           "situacaoProblema": "sitProb",
+//           "resumo": "resumo",
+//           "dataInicio": "01/01/2020",
+//           "dataConclusao": "05/05/2021",
+//           "professor": {
+//             "id": 4,
+//             "email": "prof1@gmail.com",
+//             "ativo": true,
+//             "excluido": false,
+//             "perfil": [],
+//             "nome": "Professor",
+//             "disciplina": {
+//               "id": 1,
+//               "nome": "Finanças"
+//             }
+//           },
+//           "aluno": [],
+//           "pblTemaDisciplina": {
+//             "tema": {
+//               "id": 1,
+//               "nome": "Tema F1",
+//               "disciplinas": [
+//                 {
+//                   "id": 1,
+//                   "nome": "Finanças"
+//                 }
+//               ]
+//             },
+//             "disciplina": {
+//               "id": 1,
+//               "nome": "Finanças"
+//             },
+//             "id": 1
+//           }
+//         },
+//         "aluno": {
+//           "id": 3,
+//           "email": "usuario1@gmail.com",
+//           "ativo": true,
+//           "excluido": false,
+//           "perfil": [
+//             {
+//               "nome": "ROLE_ALUNO",
+//               "id": 1
+//             }
+//           ],
+//           "nome": "Teste2",
+//           "matricula": "Matricula"
+//         }
+//       }
+//     ]
+//   }
