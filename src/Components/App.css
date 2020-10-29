@@ -25,11 +25,26 @@
   border-top: 1px solid #eeeef4 !important;
 }
 
-tr:hover{
+
+.table-bordered thead th{
+  border: 0;
+  border-top: 1px solid #eeeef4 !important;
+}
+
+table.table th, table th {
+  color: #72848c;
+  font-weight: 700;
+}
+
+tbody tr:hover{
   background-color: #f7f7fa;
   transition: .5s;
 }
 
+.header-container{
+  margin-bottom: 5px;
+  padding: 5px;
+}
 
 .App-header {
   background-color: #282c34;
