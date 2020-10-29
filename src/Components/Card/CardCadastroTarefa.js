@@ -19,7 +19,6 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
   useEffect(() => {
     if (tarefa !== undefined && tarefa !== null && tarefa !== "") {
       setIsUpdating(true);
-
     } else {
       setIsUpdating(false);
     }
@@ -30,11 +29,11 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
       .listarID(3)
       .then((response) => {
         response.data.dataConclusao = new Date(
-          response.data.dataConclusao.split("/").reverse().join("-"));
+          response.data.dataConclusao.split("/").reverse().join("-")
+        );
         setDataConclusao(response.data.dataConclusao);
 
         setTarefa(response.data);
-
       })
       .catch((error) => {
         toast.error("Erro ao acessar a lista de tarefas.");
@@ -51,7 +50,7 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
   };
 
   const onUpdateHandler = (data) => {
-    setTarefa(data)
+    setTarefa(data);
     data = { ...data, id: tarefa.id };
 
     atividadeService
@@ -78,8 +77,8 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
         id: 2,
       },
       dataConclusao: format(data.dataConclusao, "dd/MM/yyyy"),
-    }
-    console.log(data)
+    };
+    console.log(data);
 
     atividadeService
       .incluir(data)
@@ -94,7 +93,7 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
 
   return (
     <>
-      <Card >
+      <Card>
         <Formik
           enableReinitialize
           initialValues={{
@@ -116,12 +115,10 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
           onSubmit={(values) => {
             if (isUpdating) {
               return onUpdateHandler(values);
-            }
-            else {
+            } else {
               return onSubmitHandler(values);
             }
-          }
-          }
+          }}
         >
           {({
             values,
@@ -135,20 +132,24 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
           }) => {
             return (
               <>
-              <div className="spacer-div"/>
-                <div className="delete-button">
+                <div className="spacer-div" />
                 {isUpdating && (
-                  <IoIcons.IoMdTrash type="button"
-                  onClick={onDeleteHandler}
-                  />
-                      )}</div>
-                <div style={{ display: "flex", flexDirection: "row" }}>
-                
-                  <Card.Form method="post" autoComplete="off" onSubmit={handleSubmit} className="card-form"
-                    
+                  <div
+                    className="delete-button"
+                    type="button"
+                    onClick={onDeleteHandler}
                   >
-                    
-                    <Card.Form.Group >
+                    <IoIcons.IoMdTrash className="icone-deletar"/>
+                  </div>
+                )}
+                <div style={{ display: "flex", flexDirection: "row" }}>
+                  <Card.Form
+                    method="post"
+                    autoComplete="off"
+                    onSubmit={handleSubmit}
+                    className="card-form"
+                  >
+                    <Card.Form.Group>
                       <Card.Form.Title>Título</Card.Form.Title>
                       <Card.Form.InputText
                         name="titulo"
@@ -216,20 +217,13 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
 
                     <Card.Form.GroupButton className="group-button">
                       {!isUpdating && (
-                        <Card.Button type="submit">
-                          Salvar
-                        </Card.Button>
+                        <Card.Button type="submit">Salvar</Card.Button>
                       )}
                       {isUpdating && (
-                        <Card.Button
-                          type="button"
-                          onClick={onUpdateHandler}
-
-                        >
+                        <Card.Button type="button" onClick={onUpdateHandler}>
                           Atualizar
                         </Card.Button>
                       )}
-                     
                     </Card.Form.GroupButton>
                   </Card.Form>
                 </div>
