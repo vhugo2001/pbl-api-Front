@@ -92,7 +92,7 @@ function ListagemAtividades({ idPBL }) {
                 </div >
             ),
             headerStyle: (colum, colIndex) => {
-                return { width: '35px', textAlign: 'center' };
+                return { width: '35px', textAlign: 'center', backgroundColor: '#FFF', border: 'none' };
             }
         },
         {
@@ -103,7 +103,10 @@ function ListagemAtividades({ idPBL }) {
                     <label className="TituloTexto"><b>{row.titulo}</b></label><br />
                     <label className="DescHeader">{row.descricao}</label>
                 </div>
-            )
+            ),
+            headerStyle: {
+                display: 'none'
+            }
         },
         {
             dataField: 'dataConclusao',
@@ -112,7 +115,10 @@ function ListagemAtividades({ idPBL }) {
                 <div>
                     <label className="ConclusaoTexto">{row.dataConclusao}</label><br />
                 </div>
-            )
+            ),
+            headerStyle: {
+                display: 'none'
+            }
         },
     ];
 
@@ -121,7 +127,7 @@ function ListagemAtividades({ idPBL }) {
             dataField: 'atividadePbls',
             text: 'Aluno responsável',
             formatter: (cellContent, row) => (
-                <div>
+                <div className='valoresNoExpand'>
                     {cellContent.forEach((item) => {
                         if (item.aluno !== null && item.aluno !== undefined) {
                             alunoResp = item.aluno.nome
@@ -135,9 +141,9 @@ function ListagemAtividades({ idPBL }) {
             )
         }, {
             dataField: 'atividadePbls',
-            text: 'Entregue no dia',
+            text: 'Data da Entrega',
             formatter: (cellContent, row) => (
-                <div>
+                <div className='valoresNoExpand'>
                     {cellContent.forEach((item) => {
 
                         dataEntreg = item.dataEntrega
@@ -154,7 +160,7 @@ function ListagemAtividades({ idPBL }) {
             dataField: "icone",
             text: "Arquivo",
             formatter: (cellContent, row) => (
-                <div>
+                <div className='valoresNoExpand'>
                     <div className="icon-file-button">
                         <IoIcons.IoIosDocument />
                     </div>
@@ -166,7 +172,7 @@ function ListagemAtividades({ idPBL }) {
             dataField: 'atividadePbls',
             text: 'Nota',
             formatter: (cellContent, row) => (
-                <div>
+                <div className='valoresNoExpand'>
                     {cellContent.forEach((item) => {
 
                         notas = item.notas
