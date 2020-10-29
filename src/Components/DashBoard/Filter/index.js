@@ -29,10 +29,12 @@ const index = () => {
             timeout={200}
           >
             <NavbarDropdown.Item className="example1-dropdown-menu-item">
+              
               <div className="example1-dropdown-menu-item__spacer" />
               <div className="example1-dropdown-menu-item__text">
                 Meu Perfil
               </div>
+              
             </NavbarDropdown.Item>
             <NavbarDropdown.Item className="example1-dropdown-menu-item">
               <div className="example1-dropdown-menu-item__spacer" />
