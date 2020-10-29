@@ -201,4 +201,7 @@ input.form-control, label.search-label{
   
 }
 
+.TabelaListaPbl, .TabelaListaData{
+  cursor: pointer;
+}
 

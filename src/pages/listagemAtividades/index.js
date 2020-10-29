@@ -190,7 +190,7 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
         mode: 'radio',
         clickToSelect: true,
         hideSelectColumn: true,
-        bgColor: '#dee2e6',
+        bgColor: '#c7c7c7',
 
     };
 

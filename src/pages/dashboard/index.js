@@ -9,8 +9,6 @@ import CardCharts from "../../Components/Charts/Professor/Radial";
 import "./styles.css";
 
 function Dashboard() {
-  const [selectedPbl, setSelectedPbl] = useState("");
-
   const [selectedPbl, setSelectedPbl] = useState('')
   const [selectedAtividade, setSelectedAtividade] = useState(0)
 
@@ -24,7 +22,7 @@ function Dashboard() {
     <>
       <div>
         <Row>
-          <Col xl={12} lg={12}><Filter/></Col>
+          <Col xl={12} lg={12}><Filter /></Col>
           <Col
             xl={6}
             lg={6}

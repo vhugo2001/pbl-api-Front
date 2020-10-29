@@ -40,10 +40,12 @@ function CardListaPbl({ setSelectedPbl }) {
     {
       dataField: "",
       text: "Status",
+      style: { cursor: 'pointer' }
     },
     {
       dataField: "problema",
       text: "PBL",
+      style: { cursor: 'pointer' },
       headerStyle: (colum, colIndex) => {
         return { width: "50%" };
       },
@@ -57,6 +59,7 @@ function CardListaPbl({ setSelectedPbl }) {
       dataField: "dataConclusao",
       text: "Entrega",
       sort: true,
+      style: { cursor: 'pointer' },
 
       formatter: (cellContent, row) => (
         <div>
@@ -77,6 +80,13 @@ function CardListaPbl({ setSelectedPbl }) {
     prePageText: "<",
   });
 
+  const selectRow = {
+    mode: 'radio',
+    clickToSelect: true,
+    hideSelectColumn: true,
+    bgColor: '#c7c7c7',
+
+  };
   const tableRowEvents = {
     onClick: (e, row, rowIndex) => {
       setSelectedPbl(row.idPbl)
@@ -104,6 +114,7 @@ function CardListaPbl({ setSelectedPbl }) {
                 {...props.baseProps}
                 keyField="nome"
                 rowEvents={tableRowEvents}
+                selectRow={selectRow}
                 noDataIndication="Sem resultados"
                 pagination={options}
                 rowStyle={{
