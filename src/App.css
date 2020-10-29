@@ -21,6 +21,16 @@ html, body {
   justify-content: space-between;
 }
 
+.title-container h1{
+  text-transform: uppercase;
+  font-weight: 400!important;
+  color: #72848c;
+  line-height: 1.618 !important;
+  font-size: 1.6rem;
+  letter-spacing: .05em;
+  margin-bottom: -5px;
+}
+
 .title-card{
   display: flex;
   flex-direction: row;
