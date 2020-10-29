@@ -41,7 +41,7 @@ function CardListaPbl() {
       },
       formatter: (cellContent, row) => (
         <div>
-            <label className="TabelaLista">{row.problema}</label>
+            <label className="TabelaListaPbl">{row.problema}</label>
         </div>
     )
     },

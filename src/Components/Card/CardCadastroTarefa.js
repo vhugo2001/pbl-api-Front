@@ -27,7 +27,7 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
 
   useEffect(() => {
     atividadeService
-      .listarID(idTarefa)
+      .listarID(3)
       .then((response) => {
         response.data.dataConclusao = new Date(
           response.data.dataConclusao.split("/").reverse().join("-"));
@@ -143,14 +143,9 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
                   />
                       )}</div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
-<<<<<<< HEAD
                 
                   <Card.Form method="post" autoComplete="off" onSubmit={handleSubmit} className="card-form"
                     
-=======
-                  <Card.Form method="post" autoComplete="off" onSubmit={handleSubmit}
-
->>>>>>> main
                   >
                     
                     <Card.Form.Group >
