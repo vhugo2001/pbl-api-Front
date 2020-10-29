@@ -267,22 +267,28 @@ function ListagemAtividades({ idPBL }) {
                 >
                     {
                         props => (
-                            <div className="scrollExpandir">
-                                <SearchBar keyField='titulo'{...props.searchProps} placeholder='Buscar atividade...' />
-                                <div className="icon-button" style={{ marginTop: '10px', marginBottom: '15px' }}>
-                                    <IoIcons.IoMdRadioButtonOff style={{ color: 'green', marginLeft: '15px' }} /> <label className="StatusTexto">Entregue</label>
-                                    <IoIcons.IoMdRadioButtonOff style={{ color: '#C38A0E' }} /><label className="StatusTexto">Pendente</label>
-                                    <IoIcons.IoMdRadioButtonOff style={{ color: '#BB157C' }} /><label className="StatusTexto">Atrasado</label>
+                            <>
+                                <div className="table-searchAtividades">
+                                    <SearchBar keyField='titulo'{...props.searchProps} placeholder='Buscar atividade...' />
+                                    <div class="table-search-icon">
+                                        <IoIcons.IoMdSearch class="search-icon" />
+                                    </div>
                                 </div>
-                                <BootstrapTable
-                                    {...props.baseProps}
-                                    bordered={false}
-                                    condensed
-                                    expandRow={expandRow}
-                                    noDataIndication="Sem resultados"
-                                    rowStyle={rowStyle}
-                                />
-                            </div>
+                                <div className="scrollExpandir">
+                                    <div className="icon-button" style={{ marginTop: '10px', marginBottom: '15px' }}>
+                                        <IoIcons.IoMdRadioButtonOff style={{ color: 'green', marginLeft: '15px' }} /> <label className="StatusTexto">Entregue</label>
+                                        <IoIcons.IoMdRadioButtonOff style={{ color: '#C38A0E' }} /><label className="StatusTexto">Pendente</label>
+                                        <IoIcons.IoMdRadioButtonOff style={{ color: '#BB157C' }} /><label className="StatusTexto">Atrasado</label>
+                                    </div>
+                                    <BootstrapTable
+                                        {...props.baseProps}
+                                        bordered={false}
+                                        condensed
+                                        expandRow={expandRow}
+                                        noDataIndication="Sem resultados"
+                                        rowStyle={rowStyle} />
+                                </div>
+                            </>
                         )
                     }
                 </ToolkitProvider>
