@@ -31,7 +31,7 @@ function ListagemAtividades({ idPBL }) {
     let dataEntreg
     let alunoResp
 
-    idPBL = 17
+    idPBL = 10
     useEffect(() => {
         serviceAtividade
             .listarIdPbl(idPBL)

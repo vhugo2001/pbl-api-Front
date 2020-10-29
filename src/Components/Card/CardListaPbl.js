@@ -52,7 +52,7 @@ function CardListaPbl() {
       
       formatter: (cellContent, row) => (
         <div>
-            <label className="DataHeader">{row.dataConclusao}</label>
+            <label className="TabelaListaData">{row.dataConclusao}</label>
         </div>
     )
     },
