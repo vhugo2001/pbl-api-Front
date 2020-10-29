@@ -255,7 +255,7 @@ function ListagemAtividades({ idPBL }) {
         <>
             <Card>
                 <div className="title-container">
-                    <h3>Agenda de Atividades</h3>
+                    <h5 className="title-card">Agenda de Atividades</h5>
                 </div>
                 <ToolkitProvider
                     keyField='id'

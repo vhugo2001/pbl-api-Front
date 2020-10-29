@@ -10,6 +10,7 @@ export const Container = styled.div`
   border-radius: 0.4167rem;
   box-shadow: 0 9px 23px rgba(0, 0, 0, 0.09), 0 5px 5px rgba(0, 0, 0, 0.06) !important;
   overflow: hidden;
+  margin-top: 12px;
 `;
 
 export const Form = styled.form`
@@ -144,12 +145,15 @@ export const Delete = styled.button`
 export const Button = styled.button`
   background-color: #4caf50; /* Green */
   border: none;
+  border-radius: 5px;
   color: white;
-  padding: 15px 32px;
+  padding: 8px 20px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  width: 100%;
+  top: 0;
 `;
 
 

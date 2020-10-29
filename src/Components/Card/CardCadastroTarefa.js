@@ -135,11 +135,6 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
           }) => {
             return (
               <>
-                <div
-                  className="title-container"
-                >
-                  <h3>Incluir nova tarefa</h3>
-                </div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <Card.Form method="post" autoComplete="off" onSubmit={handleSubmit}
 
@@ -212,9 +207,9 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
 
                     <Card.Form.GroupButton>
                       {!isUpdating && (
-                        <Card.Form.Submit type="submit">
+                        <Card.Button type="submit">
                           Salvar
-                        </Card.Form.Submit>
+                        </Card.Button>
                       )}
                       {isUpdating && (
                         <Card.Form.Submit

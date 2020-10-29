@@ -59,7 +59,7 @@ function Navbar() {
           >
             <NavbarDropdown.Item className="example1-dropdown-menu-item">
               <Link to="/admin/perfil-usuario" className="link-menu">
-               
+                
                 <div className="example1-dropdown-menu-item__spacer" />
                 <div className="example1-dropdown-menu-item__text">
                   Meu Perfil
@@ -85,7 +85,7 @@ function Navbar() {
       <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
         <ul className="nav-menu-items" onClick={showSidebar}>
           <li className="navbar-toggle">
-            <Link to="/admin/#" className="menu-bars">
+            <Link to="#" className="menu-bars">
               <AiIcons.AiOutlineClose />
             </Link>
           </li>
