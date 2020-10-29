@@ -85,8 +85,6 @@ function CardListaPbl({ setSelectedPbl }) {
     mode: 'radio',
     clickToSelect: true,
     hideSelectColumn: true,
-    bgColor: '#c7c7c7',
-
   };
   const tableRowEvents = {
     onClick: (e, row, rowIndex) => {
@@ -125,8 +123,7 @@ function CardListaPbl({ setSelectedPbl }) {
                 noDataIndication="Sem resultados"
                 pagination={options}
                 rowStyle={{
-                  border: "2px solid #dee2e6",
-                  backgroundColor: "#f5fffd",
+                  borderTop: "1px solid #eeeef4",
                   height: "60px",
                 }}
               />
