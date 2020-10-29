@@ -5,6 +5,7 @@ import CardListaPbl from '../../Components/Card/CardListaPbl'
 import ListagemAtividades from "../../pages/listagemAtividades/index"
 import { Container, Row, Col } from 'react-bootstrap'
 import CardCharts from '../../Components/Charts/Professor/Radial';
+import "./styles.css"
 
 
 function Dashboard() {

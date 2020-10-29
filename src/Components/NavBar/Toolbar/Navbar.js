@@ -45,10 +45,14 @@ function Navbar() {
         <NavbarDropdown className="drop-perfil">
           <NavbarDropdown.Toggle className="menu__item">
             <NavbarDropdown.Open>
-              <CgIcons.CgProfile className="profile-button" />
+            
+              <CgIcons.CgProfile className="profile-button"/>
+              
             </NavbarDropdown.Open>
             <NavbarDropdown.Close>
-              <CgIcons.CgProfile className="profile-button" />
+             
+              <CgIcons.CgProfile  className="profile-button"/>
+           
             </NavbarDropdown.Close>
           </NavbarDropdown.Toggle>
 

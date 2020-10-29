@@ -9,6 +9,7 @@ import pt from "date-fns/locale/pt";
 import DatePickerField from "../DatePicker/DatePickerField";
 import { toast } from "react-toastify";
 import { id } from "date-fns/locale";
+import * as IoIcons from "react-icons/io";
 
 function CardCadastroTarefa({ idTarefa, idDisciplina }) {
   const [tarefa, setTarefa] = useState("");
@@ -50,8 +51,7 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
   };
 
   const onUpdateHandler = (data) => {
-    // console.log(data);
-    // console.log(tarefa)
+    setTarefa(data)
     data = { ...data, id: tarefa.id };
 
     atividadeService
@@ -94,7 +94,7 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
 
   return (
     <>
-      <Card>
+      <Card >
         <Formik
           enableReinitialize
           initialValues={{
@@ -135,11 +135,20 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
           }) => {
             return (
               <>
+              <div className="spacer-div"/>
+                <div className="delete-button">
+                {isUpdating && (
+                  <IoIcons.IoMdTrash type="button"
+                  onClick={onDeleteHandler}
+                  />
+                      )}</div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                  <Card.Form method="post" autoComplete="off" onSubmit={handleSubmit}
+                
+                  <Card.Form method="post" autoComplete="off" onSubmit={handleSubmit} className="card-form"
                     
                   >
-                    <Card.Form.Group>
+                    
+                    <Card.Form.Group >
                       <Card.Form.Title>Título</Card.Form.Title>
                       <Card.Form.InputText
                         name="titulo"
@@ -205,29 +214,22 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
 
                     <Card.Form.BreakRow />
 
-                    <Card.Form.GroupButton>
+                    <Card.Form.GroupButton className="group-button">
                       {!isUpdating && (
                         <Card.Button type="submit">
                           Salvar
                         </Card.Button>
                       )}
                       {isUpdating && (
-                        <Card.Form.Submit
+                        <Card.Button
                           type="button"
                           onClick={onUpdateHandler}
 
                         >
                           Atualizar
-                        </Card.Form.Submit>
+                        </Card.Button>
                       )}
-                      {isUpdating && (
-                        <Card.Form.Delete
-                          type="button"
-                          onClick={onDeleteHandler}
-                        >
-                          Excluir
-                        </Card.Form.Delete>
-                      )}
+                     
                     </Card.Form.GroupButton>
                   </Card.Form>
                 </div>
