@@ -1,6 +1,6 @@
 td{
     overflow-wrap: break-word;
-    font-size: 17px;
+    font-size: 16px;
     border: 0 !important;
     padding-top: 0 !important;
     padding-bottom: 0 !important;
@@ -19,7 +19,7 @@ td:nth-child(4){
 }
 
 th{
-  font-size: 18px;
+  font-size: 16px !important;
   border-top: none !important;
 }
 
@@ -104,7 +104,7 @@ span.order{
   float: none;
 }
 .scrollExpandir{
-  max-height: 500px ;
+  max-height: 275px ;
   overflow: auto;
 }
 div.row-expansion-style{
@@ -171,4 +171,34 @@ input.form-control, label.search-label{
   margin-top: 25px;
   padding-bottom: -10px ;
   margin-bottom: -10px;
+}
+
+
+.table-custom-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.table-searchAtividades {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.table-searchAtividades .search-label {
+  max-width: 60%;
+}
+
+.table-searchAtividades .table-search-icon {
+  cursor: pointer;
+  vertical-align: middle !important;
+  margin: 0 10px .5rem 15px;
+  font-size: 1.5rem;
+  color: white;
+  background-color: #6cb4ff;
+  text-align: center;
+  width: 38px;
+  height: 37.5px;
+  justify-content: center;
+  border-radius: 4px;
+  
 }
