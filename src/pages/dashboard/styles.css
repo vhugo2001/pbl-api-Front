@@ -1,0 +1,42 @@
+.card-form{
+  padding: 0px 10px 20px 10px !important;
+}
+
+.group-button{
+    margin-top: 15px !important;
+}
+
+.delete-button{
+   
+   margin-right: 10px;
+    font-size: 1.5rem;
+    background: none;
+    color: white;
+    float: right;
+    background-color: #007bff;
+    width: 38px;
+    height: 37.5px;
+    text-align: center;
+    border-radius: 4px;
+}
+.spacer-div{
+    flex: 1;
+}
+
+.TabelaListaPbl{
+    padding-top: 15px !important;
+    white-space: nowrap; 
+    width: 110%; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    font-size: 14px;
+  
+}
+
+.TabelaListaData{white-space: nowrap; 
+    width: 110%; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    font-size: 14px;
+    padding-right: 10px;
+    padding-top: 15px !important;}
