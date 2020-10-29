@@ -18,7 +18,7 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
   useEffect(() => {
     if (tarefa !== undefined && tarefa !== null && tarefa !== "") {
       setIsUpdating(true);
-     
+
     } else {
       setIsUpdating(false);
     }
@@ -33,7 +33,7 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
         setDataConclusao(response.data.dataConclusao);
 
         setTarefa(response.data);
-      
+
       })
       .catch((error) => {
         toast.error("Erro ao acessar a lista de tarefas.");
@@ -75,7 +75,7 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
         id: 1,
       },
       professor: {
-        id: 3,
+        id: 2,
       },
       dataConclusao: format(data.dataConclusao, "dd/MM/yyyy"),
     }
@@ -113,15 +113,15 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
               .required("* Campo Descrição é obrigatório")
               .nullable(),
           })}
-          onSubmit={(values) =>  {
-            if(isUpdating){
+          onSubmit={(values) => {
+            if (isUpdating) {
               return onUpdateHandler(values);
             }
-            else{
+            else {
               return onSubmitHandler(values);
             }
           }
-            }
+          }
         >
           {({
             values,
@@ -142,7 +142,7 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
                 </div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <Card.Form method="post" autoComplete="off" onSubmit={handleSubmit}
-                    
+
                   >
                     <Card.Form.Group>
                       <Card.Form.Title>Título</Card.Form.Title>

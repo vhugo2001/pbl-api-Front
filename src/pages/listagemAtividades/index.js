@@ -26,11 +26,12 @@ const { SearchBar } = Search;
 
 function ListagemAtividades({ idPBL }) {
     const [atividade, setAtividade] = useState([])
-    const [tarefas, setTarefas] = useState('')
+    const [alunoId, setAlunoId] = useState('')
     let notas
     let dataEntreg
     let alunoResp
-    idPBL = 13
+
+    idPBL = 17
     useEffect(() => {
         serviceAtividade
             .listarIdPbl(idPBL)
@@ -41,10 +42,6 @@ function ListagemAtividades({ idPBL }) {
             })
             .catch((error) => console.log(error));
     }, [idPBL]);
-
-
-
-
 
     // {
     //     "dataConclusao": "01/10/2021",
@@ -126,9 +123,11 @@ function ListagemAtividades({ idPBL }) {
             formatter: (cellContent, row) => (
                 <div>
                     {cellContent.forEach((item) => {
+                        if (item.aluno !== null && item.aluno !== undefined) {
+                            alunoResp = item.aluno.nome
 
-                        alunoResp = item.aluno.nome
-
+                        }
+                        setAlunoId(item.id)
                     })}
                     <label ><b>{alunoResp}</b></label><br />
 
@@ -140,7 +139,9 @@ function ListagemAtividades({ idPBL }) {
             formatter: (cellContent, row) => (
                 <div>
                     {cellContent.forEach((item) => {
+
                         dataEntreg = item.dataEntrega
+
 
                     })}
 
@@ -168,7 +169,8 @@ function ListagemAtividades({ idPBL }) {
                 <div>
                     {cellContent.forEach((item) => {
 
-                        notas = item.nota
+                        notas = item.notas
+
 
                     })}
                     <label ><b>{notas}</b></label><br />
@@ -207,10 +209,10 @@ function ListagemAtividades({ idPBL }) {
                         props => (
 
                             < div >
-                                {console.log(row.id)}
+                                {console.log(alunoId)}
                                 <BootstrapTable
                                     {...props.baseProps}
-                                    {...setTarefas(row.id)}
+
 
                                     bordered={false}
                                     condensed
