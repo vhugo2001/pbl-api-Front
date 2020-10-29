@@ -129,6 +129,16 @@ input.form-control, label.search-label{
   font-size: 14px;
 
 }
+
+.DataHeader{
+  white-space: nowrap; 
+  width: 110%; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+  font-size: 14px;
+  padding-right: 10px;
+
+}
 .BordaIconeTop, .BordaIconeBottom{
   margin-left: 9px;
   height: 40px; 
