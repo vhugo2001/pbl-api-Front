@@ -1,10 +1,10 @@
 
 
 $body-bg: #c1bdba;
-$form-bg: #13232f;
+$form-bg: #506c86;
 $white: #ffffff;
 
-$main: #1aa3b1;
+$main: #06BCC1;
 $main-light: lighten($main,5%);
 $main-dark: darken($main,5%);
 
@@ -29,6 +29,12 @@ body {
   font-family: 'Titillium Web', sans-serif;
  
 }
+
+::placeholder {
+  color:    #C5D8D1;
+  font-size: 15px;
+  opacity:  1;
+ }
 
 a {
   text-decoration:none;
@@ -226,11 +232,16 @@ textarea {
 }
 
 .forgot a{
-  color: #b1901a;
+  text-decoration: none;
+  color: #3D0814;
 }
 
 .error-message{
   color: #e8f0ff !important; 
   white-space: pre-line;
 }
+
+
+
+
 }
