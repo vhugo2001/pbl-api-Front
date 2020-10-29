@@ -128,15 +128,17 @@ width: 12rem !important;
 }
 
 .profile-button {
+ 
+  height: 100%;
   margin-left: 2%;
   margin-right: 2%;
-  font-size: 2.5rem;
+  font-size: 2rem;
   background: none;
   color: #7f89a2;
 }
 
-.profile-button :hover {
-  color: #002147;
+.menu__item :hover{
+  color: #506c86;
 }
 
 .nav-menu {

@@ -1,15 +1,12 @@
 import React from "react";
 import { Container, CardContainer, Breakrow } from "./styles";
+import building from '../../../Components/Images/building.gif'
 
 const dashboard = () => {
   return (
     <Container>
-      <CardContainer>aadasdasdasdaa</CardContainer>
-      <CardContainer><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p></CardContainer>
-      
-<CardContainer><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p></CardContainer>
-
-      <CardContainer>aaasdadsdaa</CardContainer>
+      <h2>Em construção...</h2>
+      <img src={building} alt='building' />
     </Container>
   );
 };
