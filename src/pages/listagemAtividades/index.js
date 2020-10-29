@@ -24,15 +24,16 @@ import { endOfDay } from "date-fns";
 
 const { SearchBar } = Search;
 
-function ListagemAtividades({ selectedPbl }) {
+function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
     const [atividade, setAtividade] = useState([])
-    const [alunoId, setAlunoId] = useState('')
+
+    const [alunoid, setAlunoid] = useState('')
     let notas
     let dataEntreg
     let alunoResp
 
     useEffect(() => {
-       
+
         serviceAtividade
             .listarIdPbl(selectedPbl)
             .then((response) => {
@@ -133,7 +134,8 @@ function ListagemAtividades({ selectedPbl }) {
                             alunoResp = item.aluno.nome
 
                         }
-                        setAlunoId(item.id)
+
+                        setAlunoid(item.id)
                     })}
                     <label ><b>{alunoResp}</b></label><br />
 
@@ -174,10 +176,7 @@ function ListagemAtividades({ selectedPbl }) {
             formatter: (cellContent, row) => (
                 <div className='valoresNoExpand'>
                     {cellContent.forEach((item) => {
-
                         notas = item.notas
-
-
                     })}
                     <label ><b>{notas}</b></label><br />
 
@@ -191,9 +190,17 @@ function ListagemAtividades({ selectedPbl }) {
         mode: 'radio',
         clickToSelect: true,
         hideSelectColumn: true,
-        bgColor: '#dee2e6',
+        bgColor: '#c7c7c7',
 
     };
+
+    const tableRowEvents = {
+        onClick: (e, row, rowIndex) => {
+
+            setSelectedAtividade(row.id)
+
+        },
+    }
 
     const rowStyle = (row, rowIndex) => {
         return { backgroundColor: 'rgba(153, 186, 194,0.3)' };
@@ -223,10 +230,11 @@ function ListagemAtividades({ selectedPbl }) {
                         props => (
 
                             < div >
-                                {console.log(alunoId)}
+
                                 <BootstrapTable
                                     {...props.baseProps}
                                     selectRow={selectRow}
+                                    rowEvents={tableRowEvents}
                                     bordered={false}
                                     condensed
                                 />

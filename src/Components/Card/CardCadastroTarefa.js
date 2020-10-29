@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import { id } from "date-fns/locale";
 import * as IoIcons from "react-icons/io";
 
-function CardCadastroTarefa({ idTarefa, idDisciplina }) {
+function CardCadastroTarefa({ selectedAtividade }) {
   const [tarefa, setTarefa] = useState("");
   const [dataConclusao, setDataConclusao] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
@@ -26,7 +26,7 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
 
   useEffect(() => {
     atividadeService
-      .listarID(3)
+      .listarID(selectedAtividade)
       .then((response) => {
         response.data.dataConclusao = new Date(
           response.data.dataConclusao.split("/").reverse().join("-")
@@ -38,7 +38,7 @@ function CardCadastroTarefa({ idTarefa, idDisciplina }) {
       .catch((error) => {
         toast.error("Erro ao acessar a lista de tarefas.");
       });
-  }, []);
+  }, [selectedAtividade]);
 
   const onDeleteHandler = (id) => {
     atividadeService
