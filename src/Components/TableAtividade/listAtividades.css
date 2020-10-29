@@ -47,14 +47,22 @@ th.expand-cell-header{
 td.selection-cell{
   text-align: center;
 }
+.expand-cell{
+  width: 5px !important;
+}
 
-.icon-button {
+.icon-button ,.icon-button-Indicativo{
   font-size: 1.7rem;
   background: none;
   color:#7f89a2;
   margin-top: -10px;
   height: 35px;
   margin-bottom: 0px !important;
+}
+
+.icon-button-Indicativo{
+  font-size: 1.5rem;
+  margin-top: 6px;
 }
 
 .icon-file-button {
@@ -99,7 +107,8 @@ span.order{
   float: none;
 }
 .scrollExpandir{
-  max-height: 250px ;
+  min-height: 215px ;
+  max-height: 216px ;
   overflow: auto;
 }
 div.row-expansion-style{
@@ -136,7 +145,7 @@ input.form-control, label.search-label{
 }
 .BordaIconeTop, .BordaIconeBottom{
   margin-left: 9px;
-  height: 31px; 
+  height: 22px; 
   width: 5px;
   border-right: 1px gray solid;
 } 
@@ -150,24 +159,24 @@ input.form-control, label.search-label{
 
 .SetasExpandir svg{
   margin-left: -10px;
-  margin-top: 25px;
+  margin-top: -10px;
   cursor: pointer;
   
 }
 .TituloTexto{
-  margin-top: 30px;
+  margin-top: 10px;
   padding-bottom: -10px ;
   margin-bottom: -10px;
 }
 .StatusTexto{
-  font-size: 18px;
+  font-size: 14px;
+  font-weight: bold;
   margin-left: 3px;
   margin-right: 20px;
   color: gray;
 }
 .ConclusaoTexto{
-  align-content: center;
-  margin-top: 25px;
+  align-content: end;
   padding-bottom: -10px ;
   margin-bottom: -10px;
 }
