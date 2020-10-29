@@ -11,7 +11,7 @@ import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css";
 import '../TableAtividade/listAtividades.css'
 
-function CardListaPbl({setSelectedPbl}) {
+function CardListaPbl({ setSelectedPbl }) {
   const [pblList, setPblList] = useState([]);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ function CardListaPbl({setSelectedPbl}) {
       dataFields: "idPbl",
       hidden: true,
       formatter: (cellContent, row) => (
-       row.idPbl
+        row.idPbl
       )
     },
     {
@@ -49,20 +49,20 @@ function CardListaPbl({setSelectedPbl}) {
       },
       formatter: (cellContent, row) => (
         <div>
-            <label className="TabelaListaPbl">{row.problema}</label>
+          <label className="TabelaListaPbl">{row.problema}</label>
         </div>
-    )
+      )
     },
     {
       dataField: "dataConclusao",
       text: "Entrega",
       sort: true,
-      
+
       formatter: (cellContent, row) => (
         <div>
-            <label className="TabelaListaData">{row.dataConclusao}</label>
+          <label className="TabelaListaData">{row.dataConclusao}</label>
         </div>
-    )
+      )
     },
   ];
 
@@ -81,7 +81,7 @@ function CardListaPbl({setSelectedPbl}) {
     onClick: (e, row, rowIndex) => {
       setSelectedPbl(row.idPbl)
     },
- }
+  }
 
   const { SearchBar } = Search;
 
@@ -110,7 +110,7 @@ function CardListaPbl({setSelectedPbl}) {
                   border: "2px solid #dee2e6",
                   backgroundColor: "#f5fffd",
                   height: "60px",
-              
+
                 }}
               />
             </div>

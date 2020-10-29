@@ -24,18 +24,16 @@ import { endOfDay } from "date-fns";
 
 const { SearchBar } = Search;
 
-function ListagemAtividades({ selectedPbl }) {
+function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
     const [atividade, setAtividade] = useState([])
-    const [alunoId, setAlunoId] = useState('')
-    const [notas, setNotas] = useState('')
-    const [dataEntreg, setDataEntreg] = useState('')
-    const [alunoResp, setAlunoResp] = useState('')
-    // let notas
-    // let dataEntreg
-    // let alunoResp
+
+    const [alunoid, setAlunoid] = useState('')
+    let notas
+    let dataEntreg
+    let alunoResp
 
     useEffect(() => {
-       
+
         serviceAtividade
             .listarIdPbl(selectedPbl)
             .then((response) => {
@@ -133,10 +131,11 @@ function ListagemAtividades({ selectedPbl }) {
                 <div className='valoresNoExpand'>
                     {cellContent.forEach((item) => {
                         if (item.aluno !== null && item.aluno !== undefined) {
-                            setAlunoResp(item.aluno.nome)
+                            alunoResp = item.aluno.nome
 
                         }
-                        setAlunoId(item.id)
+
+                        setAlunoid(item.id)
                     })}
                     <label ><b>{alunoResp}</b></label><br />
 
@@ -149,7 +148,7 @@ function ListagemAtividades({ selectedPbl }) {
                 <div className='valoresNoExpand'>
                     {cellContent.forEach((item) => {
 
-                        setDataEntreg(item.dataEntrega)
+                        dataEntreg = item.dataEntrega
 
 
                     })}
@@ -177,9 +176,7 @@ function ListagemAtividades({ selectedPbl }) {
             formatter: (cellContent, row) => (
                 <div className='valoresNoExpand'>
                     {cellContent.forEach((item) => {
-
-                        setNotas(item.notas)
-
+                        notas = item.notas
                     })}
                     <label ><b>{notas}</b></label><br />
 
@@ -196,6 +193,14 @@ function ListagemAtividades({ selectedPbl }) {
         bgColor: '#dee2e6',
 
     };
+
+    const tableRowEvents = {
+        onClick: (e, row, rowIndex) => {
+
+            setSelectedAtividade(row.id)
+
+        },
+    }
 
     const rowStyle = (row, rowIndex) => {
         return { backgroundColor: 'rgba(153, 186, 194,0.3)' };
@@ -229,6 +234,7 @@ function ListagemAtividades({ selectedPbl }) {
                                 <BootstrapTable
                                     {...props.baseProps}
                                     selectRow={selectRow}
+                                    rowEvents={tableRowEvents}
                                     bordered={false}
                                     condensed
                                 />
@@ -243,7 +249,6 @@ function ListagemAtividades({ selectedPbl }) {
         expandColumnPosition: 'right',
         expandByColumnOnly: true,
         showExpandColumn: true,
-        onlyOneExpanding: true,
         expandHeaderColumnRenderer: ({ isAnyExpands }) => {
             if (isAnyExpands) {
                 return <b ></b>;

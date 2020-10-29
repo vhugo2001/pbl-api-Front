@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Card } from "../../Components/Card/CardPrincipal";
 import CardCadastroTarefa from "../../Components/Card/CardCadastroTarefa";
 import CardListaPbl from "../../Components/Card/CardListaPbl";
@@ -10,10 +10,13 @@ import "./styles.css";
 function Dashboard() {
 
   const [selectedPbl, setSelectedPbl] = useState('')
+  const [selectedAtividade, setSelectedAtividade] = useState(0)
 
   useEffect(() => {
   }, [selectedPbl])
 
+  useEffect(() => {
+  }, [selectedAtividade])
 
   return (
     <>
@@ -26,7 +29,7 @@ function Dashboard() {
           >
             <CardListaPbl setSelectedPbl={setSelectedPbl} />
 
-            <ListagemAtividades selectedPbl={selectedPbl} />
+            <ListagemAtividades selectedPbl={selectedPbl} setSelectedAtividade={setSelectedAtividade} />
           </Col>
 
           <Col
@@ -34,7 +37,7 @@ function Dashboard() {
             lg={6}
             style={{ paddingLeft: "6px", paddingRight: "6px" }}
           >
-            <CardCadastroTarefa />
+            <CardCadastroTarefa selectedAtividade={selectedAtividade} />
 
             <Card>
               <CardCharts />
