@@ -7,7 +7,7 @@ export const Container = styled.div`
   justify-content: space-between;
   background-color: #fff;
   border: 0;
-  border-radius: 0.4167rem;
+  border-radius: 0.3167rem;
   box-shadow: 0 9px 23px rgba(0, 0, 0, 0.09), 0 5px 5px rgba(0, 0, 0, 0.06) !important;
   overflow: hidden;
   margin-top: 12px;
