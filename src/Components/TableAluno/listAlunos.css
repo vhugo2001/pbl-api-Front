@@ -1,10 +1,37 @@
-td{
-    overflow-wrap: break-word;
-    font-size: 17px;
+td {
+  overflow-wrap: break-word;
+  font-size: 17px;
 }
-th{
+
+th {
   font-size: 18px;
 }
+
+.list-alunos td:nth-child(2), td:nth-child(3), td:nth-child(4), td:nth-child(5),td:nth-child(6) {
+  text-align: start !important;
+}
+
+.list-alunos th:nth-child(2), th:nth-child(3), th:nth-child(4), th:nth-child(5),th:nth-child(6) {
+  text-align: start !important;
+}
+
+td.selection-cell{
+  padding: 5px  5px 5px !important;
+}
+
+.container-list {
+  padding: 5px;
+  border: 0 !important;
+}
+
+.order span {
+  margin: 0;
+}
+
+.react-bootstrap-table-sort-order {
+  margin: 0;
+}
+
 
 .container-header .header-actions {}
 
@@ -59,65 +86,72 @@ tbody tr {
 }
 
 .trash-button {
-    font-size: 1.7rem;
-    background: none;
-    color: #7f89a2;
-  }
- 
-  .trash-button:hover {
-    color:red;
-  }
-  .checkbox{
-    -ms-transform: scale(2); /* IE */
-    -moz-transform: scale(2); /* FF */
-    -webkit-transform: scale(2); /* Safari and Chrome */
-    -o-transform: scale(2); /* Opera */
-    transform: scale(2);
-    width: 30%;
-    padding-top: 5px;
-    text-align: center;
-  }
+  font-size: 1.7rem;
+  background: none;
+  color: #7f89a2;
+}
 
-  .cardPrincipal{
-    justify-content: center !important;
-    
-  }
+.trash-button:hover {
+  color: red;
+}
 
-  .cardListagem{
-    margin-left: 3%;
-    margin-right: 3%;
-    margin-top: 2%;
-  }
+.checkbox {
+  -ms-transform: scale(2);
+  /* IE */
+  -moz-transform: scale(2);
+  /* FF */
+  -webkit-transform: scale(2);
+  /* Safari and Chrome */
+  -o-transform: scale(2);
+  /* Opera */
+  transform: scale(2);
+  width: 30%;
+  padding-top: 5px;
+  text-align: center;
+}
 
-  table thead .caret {
-    display: inline-block;
-    width: 0;
-    height: 0;
-    vertical-align: middle;
-    border-top: 4px dashed;
-    border-top: 4px solid \9;
-    border-right: 4px solid transparent;
-    border-left: 4px solid transparent;
-    }
-    
-    table thead .dropup .caret, table thead .navbar-fixed-bottom .dropdown .caret {
-    border-top: 0;
-    border-bottom: 4px dashed;
-    border-bottom: 4px solid \9;
-    margin: 0;
-    content: "";
-    }
-    span.order{
-      margin: 0;
-      overflow-wrap: break-word ;
-    }
+.cardPrincipal {
+  justify-content: center !important;
+
+}
+
+.cardListagem {
+  margin-left: 3%;
+  margin-right: 3%;
+  margin-top: 2%;
+}
+
+table thead .caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  vertical-align: middle;
+  border-top: 4px dashed;
+  border-top: 4px solid \9;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+}
+
+table thead .dropup .caret,
+table thead .navbar-fixed-bottom .dropdown .caret {
+  border-top: 0;
+  border-bottom: 4px dashed;
+  border-bottom: 4px solid \9;
+  margin: 0;
+  content: "";
+}
+
+span.order {
+  margin: 0;
+  overflow-wrap: break-word;
+}
 
 
-    .react-bootstrap-table-pagination-list {
-      text-align: center;
-      transform: translateX(-15%);
-    }
-    
-    .react-bootstrap-table-page-btns-ul {
-      float: none;
-    }
+.react-bootstrap-table-pagination-list {
+  text-align: center;
+  transform: translateX(-15%);
+}
+
+.react-bootstrap-table-page-btns-ul {
+  float: none;
+}

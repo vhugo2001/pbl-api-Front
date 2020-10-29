@@ -191,7 +191,7 @@ export default function ListAluno2(props) {
 
   return (
 
-    <Container>
+    <Container className="container-list">
       <Title>Alunos cadastrados </Title>
 
       <ToolkitProvider keyField="nome" data={alunos} columns={colunas} search>
@@ -207,7 +207,7 @@ export default function ListAluno2(props) {
                   <IoIcons.IoMdSearch class="search-icon" />
                 </div>
               </div>
-              <BootstrapTable
+              <BootstrapTable className="list-alunos"
                 pagination={options}
                 {...props.baseProps}
                 bordered={false}

@@ -7,11 +7,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import * as ReactBootStrap from "react-bootstrap";
+import * as IoIcons from "react-icons/io";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css";
-import '../TableAtividade/listAtividades.css'
+import "../TableAtividade/listAtividades.css";
 
-function CardListaPbl() {
+function CardListaPbl({setSelectedPbl}) {
   const [pblList, setPblList] = useState([]);
 
   useEffect(() => {
@@ -24,11 +25,19 @@ function CardListaPbl() {
       .then((response) => {
         let data = response.data;
         setPblList(data);
+        console.log(data);
       })
       .catch((error) => console.log(error));
   };
 
   const colunas = [
+    {
+      dataFields: "idPbl",
+      hidden: true,
+      formatter: (cellContent, row) => (
+       row.idPbl
+      )
+    },
     {
       dataField: "",
       text: "Status",
@@ -41,20 +50,20 @@ function CardListaPbl() {
       },
       formatter: (cellContent, row) => (
         <div>
-            <label className="TabelaListaPbl">{row.problema}</label>
+          <label className="TabelaListaPbl">{row.problema}</label>
         </div>
-    )
+      ),
     },
     {
       dataField: "dataConclusao",
       text: "Entrega",
       sort: true,
-      
+
       formatter: (cellContent, row) => (
         <div>
-            <label className="TabelaListaData">{row.dataConclusao}</label>
+          <label className="TabelaListaData">{row.dataConclusao}</label>
         </div>
-    )
+      ),
     },
   ];
 
@@ -69,34 +78,45 @@ function CardListaPbl() {
     prePageText: "<",
   });
 
+  const tableRowEvents = {
+    onClick: (e, row, rowIndex) => {
+      setSelectedPbl(row.idPbl)
+    },
+ }
+
   const { SearchBar } = Search;
 
   return (
     <>
       <Card>
-        <div className="title-container ">
-          <h5 className="title-card">Lista de PBLs</h5>
-        </div>
-        <ToolkitProvider keyField="id" data={pblList} columns={colunas} search >
+        <ToolkitProvider keyField="id" data={pblList} columns={colunas} search>
           {(props) => (
             <div>
-              <SearchBar
-                keyField="nome"
-                {...props.searchProps}
-                placeholder="Buscar PBL..."
-              />
-
+              <div className="header-container">
+              <div className="title-container title-pbl-container">
+                <h5 className="title-card">Lista de PBLs</h5>
+              </div>
+              <div className="table-search-pbl">
+                <SearchBar
+                  keyField="nome"
+                  {...props.searchProps}
+                  placeholder="Buscar PBL..."
+                />
+                <div class="table-search-icon">
+                  <IoIcons.IoMdSearch class="search-icon" />
+                </div>
+              </div>
+              </div>
               <BootstrapTable
                 {...props.baseProps}
                 keyField="nome"
-              
+                rowEvents={tableRowEvents}
                 noDataIndication="Sem resultados"
                 pagination={options}
                 rowStyle={{
                   border: "2px solid #dee2e6",
                   backgroundColor: "#f5fffd",
                   height: "60px",
-              
                 }}
               />
             </div>
