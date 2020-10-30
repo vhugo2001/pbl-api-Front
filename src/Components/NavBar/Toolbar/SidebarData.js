@@ -30,8 +30,15 @@ export const SidebarData = [
     cName: "nav-text",
   },
   {
-    title: "Cadastrar Disciplina",
-    path: "/admin/cadastrar-disciplina",
+    title: "Manter Disciplina",
+    path: "/admin/manter-disciplina",
+    icon: <IoIcons.IoMdPeople />,
+    cName: "nav-text",
+  },
+
+  {
+    title: "Manter Tema",
+    path: "/admin/manter-tema",
     icon: <IoIcons.IoMdPeople />,
     cName: "nav-text",
   },
