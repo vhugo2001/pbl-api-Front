@@ -12,7 +12,7 @@ import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import { toast } from "react-toastify";
 import { Card } from "../../Components/Card/CardPrincipal";
 import serviceAtividade from '../../Services/AtividadeService'
-
+import cellEditFactory from 'react-bootstrap-table2-editor';
 import {
     Title,
     Group,
@@ -26,24 +26,41 @@ const { SearchBar } = Search;
 
 function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
     const [atividade, setAtividade] = useState([])
-
+    const [selectedAtividadeEditado, setSelectedAtividadeEditado] = useState({})
     const [alunoid, setAlunoid] = useState('')
     let notas
     let dataEntreg
     let alunoResp
 
     useEffect(() => {
+        console.log(selectedPbl)
+        if (selectedPbl !== null && selectedPbl !== undefined) {
+            serviceAtividade
+                .listarIdPbl(selectedPbl)
+                .then((response) => {
+                    let data = response.data;
+                    setAtividade(data);
 
-        serviceAtividade
-            .listarIdPbl(selectedPbl)
-            .then((response) => {
-                let data = response.data;
-                setAtividade(data);
+                })
+                .catch((error) => {
 
-                console.log(response.data)
-            })
-            .catch((error) => console.log(error));
+                    toast.error("Não foi possível selecionar o aluno.");
+                });
+        }
     }, [selectedPbl]);
+
+    useEffect(() => {
+        console.log(selectedAtividadeEditado.id)
+        if (selectedAtividadeEditado.id !== undefined) {
+            serviceAtividade
+                .atualizar(selectedAtividadeEditado.id, selectedAtividadeEditado)
+                .then((response) => {
+
+                    toast.success("Nota editada com sucesso.")
+                })
+                .catch((error) => { toast.danger("Não foi possível editar a nota.") });
+        }
+    }, [selectedAtividadeEditado])
 
     const tarefa = atividade
 
@@ -104,6 +121,7 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
         {
             dataField: 'atividadePbls',
             text: 'Aluno',
+            style: { cursor: 'pointer' },
             formatter: (cellContent, row) => (
                 <div className='valoresNoExpand'>
                     {cellContent.forEach((item) => {
@@ -117,10 +135,11 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
                     <label ><b>{alunoResp}</b></label><br />
 
                 </div>
-            )
+            ), editable: false
         }, {
             dataField: 'atividadePbls',
             text: 'Data Entrega',
+            style: { cursor: 'pointer' },
             formatter: (cellContent, row) => (
                 <div className='valoresNoExpand'>
                     {cellContent.forEach((item) => {
@@ -134,10 +153,11 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
                     <label ><b>{dataEntreg}</b></label><br />
 
                 </div>
-            )
+            ), editable: false
         }, {
             dataField: "icone",
             text: "Arquivo",
+            style: { cursor: 'pointer' },
             formatter: (cellContent, row) => (
                 <div className='valoresNoExpand'>
                     <div className="icon-file-button">
@@ -148,28 +168,19 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
             editable: false
         },
         {
-            dataField: 'atividadePbls',
+            dataField: 'atividadePbls[0].nota',
             text: 'Nota',
             formatter: (cellContent, row) => (
                 <div className='valoresNoExpand'>
-                    {cellContent.forEach((item) => {
-                        notas = item.notas
-                    })}
-                    <label ><b>{notas}</b></label><br />
+                    {console.log(row)}
+                    {console.log(cellContent)}
+                    <label ><b>{cellContent}</b></label><br />
 
                 </div>
             )
 
         }
     ];
-
-    const selectRow = {
-        mode: 'radio',
-        clickToSelect: true,
-        hideSelectColumn: true,
-        bgColor: '#c7c7c7',
-
-    };
 
     const tableRowEvents = {
         onClick: (e, row, rowIndex) => {
@@ -192,6 +203,14 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
         }
     }
 
+    const cellEdit = cellEditFactory({
+        mode: 'click',
+        blurToSave: true,
+        afterSaveCell: (oldValue, newValue, row, column) => {
+            setSelectedAtividadeEditado(row)
+        }
+    });
+
     const expandRow = {
 
         renderer: (row) => (
@@ -211,7 +230,7 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
 
                                 <BootstrapTable
                                     {...props.baseProps}
-                                    selectRow={selectRow}
+                                    cellEdit={cellEdit}
                                     rowEvents={tableRowEvents}
                                     bordered={false}
                                     condensed
