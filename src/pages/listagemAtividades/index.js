@@ -68,6 +68,7 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
         {
             dataField: "icone",
             text: "",
+
             formatter: (cellContent, row) => (
 
                 < div >
@@ -92,6 +93,7 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
         {
             dataField: 'titulo',
             text: '',
+
             formatter: (cellContent, row) => (
                 <div>
                     <label className="TituloTexto"><b>{row.titulo}</b></label><br />
@@ -105,6 +107,7 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
         {
             dataField: 'dataConclusao',
             text: '',
+
             formatter: (cellContent, row) => (
                 <div style={{ textAlign: 'end' }}>
                     <label className="ConclusaoTexto">{row.dataConclusao}</label><br />
@@ -121,9 +124,8 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
         {
             dataField: 'atividadePbls',
             text: 'Aluno',
-            style: { cursor: 'pointer' },
             formatter: (cellContent, row) => (
-                <div className='valoresNoExpand'>
+                <div >
                     {cellContent.forEach((item) => {
                         if (item.aluno !== null && item.aluno !== undefined) {
                             alunoResp = item.aluno.nome
@@ -139,9 +141,8 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
         }, {
             dataField: 'atividadePbls',
             text: 'Data Entrega',
-            style: { cursor: 'pointer' },
             formatter: (cellContent, row) => (
-                <div className='valoresNoExpand'>
+                <div >
                     {cellContent.forEach((item) => {
 
                         dataEntreg = item.dataEntrega
@@ -157,9 +158,8 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
         }, {
             dataField: "icone",
             text: "Arquivo",
-            style: { cursor: 'pointer' },
             formatter: (cellContent, row) => (
-                <div className='valoresNoExpand'>
+                <div>
                     <div className="icon-file-button">
                         <IoIcons.IoIosDocument />
                     </div>
@@ -171,7 +171,7 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
             dataField: 'atividadePbls[0].nota',
             text: 'Nota',
             formatter: (cellContent, row) => (
-                <div className='valoresNoExpand'>
+                <div>
                     {console.log(row)}
                     {console.log(cellContent)}
                     <label ><b>{cellContent}</b></label><br />
@@ -188,10 +188,18 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
             setSelectedAtividade(row.id)
 
         },
+
+
     }
 
+    const selectRow = {
+        mode: 'radio',
+        clickToSelect: true,
+        hideSelectColumn: true,
+    };
+
     const rowStyle = (row, rowIndex) => {
-        return { backgroundColor: 'rgba(153, 186, 194,0.3)' };
+        return { backgroundColor: '#fff', cursor: 'pointer' };
 
     };
     const verificaDesc = (row) => {
@@ -231,8 +239,8 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
                                 <BootstrapTable
                                     {...props.baseProps}
                                     cellEdit={cellEdit}
-                                    rowEvents={tableRowEvents}
-                                    bordered={false}
+
+                                    // bordered={false}
                                     condensed
                                 />
                             </div>
@@ -302,6 +310,7 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
                                     <BootstrapTable
                                         {...props.baseProps}
                                         bordered={false}
+                                        rowEvents={tableRowEvents}
                                         condensed
                                         expandRow={expandRow}
                                         noDataIndication="Sem resultados"
