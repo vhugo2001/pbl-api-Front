@@ -8,7 +8,7 @@ import PerfilUsuario from "../pages/perfilUsuario";
 import Cadastro from "../pages/cadastro";
 import Info from "../pages/info";
 
-import CadastrarDisciplina from "../pages/disciplina/cadastrar/Index";
+import ManterDisciplina from "../pages/disciplina/manter/Index";
 import IniciarPBL from "../pages/pbl/cadastrar/Index"
 import DashBoardProfessor from "../pages/professor/dashboard/dashboard"
 import Dashboard from "../pages/dashboard";
@@ -26,7 +26,7 @@ const Routes = () => (
     {/* <Route path="/cadastro" component={Cadastro} /> */}
     <PrivateRoute path="/admin/listagemAtividades" component={listagemAtividade} />
     <PrivateRoute path="/admin/cadastro" component={Cadastro} />
-    <PrivateRoute path="/admin/cadastrar-disciplina" component={CadastrarDisciplina} />
+    <PrivateRoute path="/admin/cadastrar-disciplina" component={ManterDisciplina} />
   </Switch>
 );
 

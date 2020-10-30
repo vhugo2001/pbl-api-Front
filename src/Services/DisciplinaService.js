@@ -7,7 +7,7 @@ const listarTodos = () => {
 };
 
 const listarID = (id) => {
-  return http.get(URL_DISCIPLINA`/${id}`);
+  return http.get(URL_DISCIPLINA + `/${id}`);
 };
 
 const incluir = (data) => {
@@ -15,11 +15,11 @@ const incluir = (data) => {
 };
 
 const atualizar = (id, data) => {
-  return http.put(URL_DISCIPLINA`/${id}`, data);
+  return http.put(URL_DISCIPLINA + `/${id}`, data);
 };
 
 const deletar = (id) => {
-  return http.delete(URL_DISCIPLINA`/${id}`);
+  return http.delete(URL_DISCIPLINA + `/${id}`);
 };
 
 export default {
