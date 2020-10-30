@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Formik, Form, ErrorMessage } from "formik";
-import * as Yup from "yup";
 import BootstrapTable from "react-bootstrap-table-next";
 import { Modal, Button } from "react-bootstrap";
 import { Card } from "../../../Components/Card/CardPrincipal";
+import serviceTema from "../../../Services/TemaPblService";
 import serviceDisciplina from "../../../Services/DisciplinaService";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import * as IoIcons from "react-icons/io";
@@ -15,34 +14,24 @@ import "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.c
 import "../../../Components/TableAtividade/style";
 import "./styles.css";
 import { toast } from "react-toastify";
-import DisciplinaService from "../../../Services/DisciplinaService";
 
-const Index = ({ setSelectedDisciplina, selectedDisciplina }) => {
-  const [disciplinaList, setDisciplinaList] = useState([]);
+const Index = ({ setSelectedTema, selectedTema, setSelectedDisciplina }) => {
+  const [TemaList, setTemaList] = useState([]);
+
   const [show, setShow] = useState(false);
-
-  const onSubmitHandler = (data) => {
-    console.log(data);
-    serviceDisciplina
-      .incluir(data)
-      .then((response) => {
-        toast.success("Disciplina cadastrada com sucesso.");
-      })
-      .catch((error) => {
-        toast.error(error.response.data);
-      });
-  };
+  const [showTabela, setShowTabela] = useState(false);
 
   useEffect(() => {
     listarTodos();
   }, []);
 
   const listarTodos = () => {
-    serviceDisciplina
+    serviceTema
       .listarTodos()
       .then((response) => {
         let data = response.data;
-        setDisciplinaList(data);
+        setTemaList(data);
+        setShowTabela(true);
       })
       .catch((error) => {
         toast.error(error.response.data);
@@ -51,10 +40,10 @@ const Index = ({ setSelectedDisciplina, selectedDisciplina }) => {
 
   const handleExcluir = () => {
     setShow(false);
-    serviceDisciplina
-      .deletar(selectedDisciplina.id)
+    serviceTema
+      .deletar(selectedTema.id)
       .then((response) => {
-        toast.success("Disciplina excluida com sucesso.");
+        toast.success("Tema excluido com sucesso.");
       })
       .catch((error) => {
         toast.error(error.response.data);
@@ -62,14 +51,16 @@ const Index = ({ setSelectedDisciplina, selectedDisciplina }) => {
   };
 
   const handleAlterar = (row) => {
-    setSelectedDisciplina({ id: row.id, nome: row.nome });
+    setSelectedTema({ id: row.id, nome: row.nome });
   };
 
   const handleClose = () => setShow(false);
   const handleShow = (row) => {
     setShow(true);
-    setSelectedDisciplina({ id: row.id, nome: row.nome });
+    setSelectedTema({ id: row.id, nome: row.nome });
   };
+
+  var data = "";
 
   const colunas = [
     {
@@ -82,11 +73,28 @@ const Index = ({ setSelectedDisciplina, selectedDisciplina }) => {
       text: "Nome",
       style: { cursor: "pointer" },
       headerStyle: (colum, colIndex) => {
-        return { width: "80%" };
+        return { width: "40%" };
       },
       formatter: (cellContent, row) => (
         <div>
           <label className="TabelaListaPbl">{row.nome}</label>
+        </div>
+      ),
+    },
+
+    {
+      dataField: "disciplinas",
+      text: "Disciplinas",
+      style: { cursor: "pointer" },
+      headerStyle: (colum, colIndex) => {
+        return { width: "40%" };
+      },
+      formatter: (cellContent, row) => (
+        <div>{row.disciplinas.forEach((element) => {
+            data += element.nome + " ";
+
+        })}
+         <label className="TabelaListaPbl">{data}</label>
         </div>
       ),
     },
@@ -125,61 +133,62 @@ const Index = ({ setSelectedDisciplina, selectedDisciplina }) => {
   };
   const tableRowEvents = {
     onClick: (e, row, rowIndex) => {
-      setSelectedDisciplina({ id: row.id, nome: row.nome });
+      setSelectedTema({ id: row.id, nome: row.nome });
+      setSelectedDisciplina(row.disciplinas);
     },
   };
 
   const { SearchBar } = Search;
 
+  const RenderizaTabela = () => {
+    console.log(TemaList);
+    return (
+      <ToolkitProvider keyField="id" data={TemaList} columns={colunas} search>
+        {(props) => (
+          <div>
+            <div className="header-container">
+              <div className="title-container title-pbl-container">
+                <h5 className="title-card">Lista de Temas</h5>
+              </div>
+              <div className="table-search-pbl">
+                <SearchBar
+                  keyField="nome"
+                  {...props.searchProps}
+                  placeholder="pesquisar..."
+                />
+                <div class="table-search-icon">
+                  <IoIcons.IoMdSearch class="search-icon" />
+                </div>
+              </div>
+            </div>
+            <BootstrapTable
+              {...props.baseProps}
+              keyField="nome"
+              rowEvents={tableRowEvents}
+              selectRow={selectRow}
+              noDataIndication="Sem resultados"
+              pagination={options}
+              rowStyle={{
+                borderTop: "1px solid #eeeef4",
+                height: "60px",
+              }}
+            />
+          </div>
+        )}
+      </ToolkitProvider>
+    );
+  };
+
   return (
     //Remover a div pai e atribur o padding 30px no componente Home!!!!!
     <>
-      <Card>
-        <ToolkitProvider
-          keyField="id"
-          data={disciplinaList}
-          columns={colunas}
-          search
-        >
-          {(props) => (
-            <div>
-              <div className="header-container">
-                <div className="title-container title-pbl-container">
-                  <h5 className="title-card">Lista de Disciplinas</h5>
-                </div>
-                <div className="table-search-pbl">
-                  <SearchBar
-                    keyField="nome"
-                    {...props.searchProps}
-                    placeholder="pesquisar..."
-                  />
-                  <div class="table-search-icon">
-                    <IoIcons.IoMdSearch class="search-icon" />
-                  </div>
-                </div>
-              </div>
-              <BootstrapTable
-                {...props.baseProps}
-                keyField="nome"
-                rowEvents={tableRowEvents}
-                selectRow={selectRow}
-                noDataIndication="Sem resultados"
-                pagination={options}
-                rowStyle={{
-                  borderTop: "1px solid #eeeef4",
-                  height: "60px",
-                }}
-              />
-            </div>
-          )}
-        </ToolkitProvider>
-      </Card>
+      <Card>{showTabela && TemaList.length > 0 ? (<RenderizaTabela />) : <></>}</Card>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Confirmar Exclusão</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Não é possivel excluir disciplinas que já possuem vinculo com PBL
+          Não é possivel excluir Temas que já estão vinculados com PBL
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
