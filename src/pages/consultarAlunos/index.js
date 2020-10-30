@@ -180,10 +180,12 @@ export default function ListAluno2(props) {
   });
 
   return (
+    <>
+    <div className="title-container">
+    <h1>Iniciar PBL</h1>
+  </div>
     <Container className="container-list">
-      <Title>Alunos cadastrados </Title>
-
-      <ToolkitProvider keyField="nome" data={alunos} columns={colunas} search>
+           <ToolkitProvider keyField="nome" data={alunos} columns={colunas} search>
         {(props) => (
           <div>
             <div class="table-custom-container">
@@ -216,5 +218,6 @@ export default function ListAluno2(props) {
         <Desativar onClick={handleDesativar}>Desativar</Desativar>
       </GroupButton>
     </Container>
+    </>
   );
 }

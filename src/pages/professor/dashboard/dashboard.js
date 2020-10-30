@@ -6,7 +6,7 @@ const dashboard = () => {
   return (
     <Container>
       <h2>Em construção...</h2>
-      <img src={building} alt='building' />
+     
     </Container>
   );
 };
