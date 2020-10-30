@@ -12,7 +12,7 @@ import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import { toast } from "react-toastify";
 import { Card } from "../../Components/Card/CardPrincipal";
 import serviceAtividade from '../../Services/AtividadeService'
-
+import cellEditFactory from 'react-bootstrap-table2-editor';
 import {
     Title,
     Group,
@@ -26,48 +26,41 @@ const { SearchBar } = Search;
 
 function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
     const [atividade, setAtividade] = useState([])
-
+    const [selectedAtividadeEditado, setSelectedAtividadeEditado] = useState({})
     const [alunoid, setAlunoid] = useState('')
     let notas
     let dataEntreg
     let alunoResp
 
     useEffect(() => {
+        console.log(selectedPbl)
+        if (selectedPbl !== null && selectedPbl !== undefined) {
+            serviceAtividade
+                .listarIdPbl(selectedPbl)
+                .then((response) => {
+                    let data = response.data;
+                    setAtividade(data);
 
-        serviceAtividade
-            .listarIdPbl(selectedPbl)
-            .then((response) => {
-                let data = response.data;
-                setAtividade(data);
-                console.log(response.data)
-            })
-            .catch((error) => console.log(error));
+                })
+                .catch((error) => {
+
+                    toast.error("Não foi possível selecionar o aluno.");
+                });
+        }
     }, [selectedPbl]);
 
-    // {
-    //     "dataConclusao": "01/10/2021",
-    //     "dataCriacao": "01/05/2020",
-    //     "descricao": "Descrição 2 testando atividade",
-    //     "disciplina": {
-    //       "id": 1
-    //     },
-    //     "professor": {
-    //       "id": 4
-    //     },
-    //     "titulo": "Titulo Testando atividadePbls"
-    // "atividadePbls": [
-    //     {
-    //       "aluno": {
-    //         "id": 2
-    //       },
-    //       "dataEntrega": "07/11/2020",
-    //       "id": 2,
-    //       "nota": 8
-    //     }
-    //   ],
-    //   }
+    useEffect(() => {
+        console.log(selectedAtividadeEditado.id)
+        if (selectedAtividadeEditado.id !== undefined) {
+            serviceAtividade
+                .atualizarAtivPbl(selectedAtividadeEditado.id, selectedAtividadeEditado)
+                .then((response) => {
 
-
+                    toast.success("Nota editada com sucesso.")
+                })
+                .catch((error) => { toast.danger("Não foi possível editar a nota.") });
+        }
+    }, [selectedAtividadeEditado])
 
     const tarefa = atividade
 
@@ -113,10 +106,11 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
             dataField: 'dataConclusao',
             text: '',
             formatter: (cellContent, row) => (
-                <div>
+                <div style={{ textAlign: 'end' }}>
                     <label className="ConclusaoTexto">{row.dataConclusao}</label><br />
                 </div>
             ),
+
             headerStyle: {
                 display: 'none'
             }
@@ -126,7 +120,8 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
     const subcolunas = [
         {
             dataField: 'atividadePbls',
-            text: 'Aluno responsável',
+            text: 'Aluno',
+            style: { cursor: 'pointer' },
             formatter: (cellContent, row) => (
                 <div className='valoresNoExpand'>
                     {cellContent.forEach((item) => {
@@ -140,10 +135,11 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
                     <label ><b>{alunoResp}</b></label><br />
 
                 </div>
-            )
+            ), editable: false
         }, {
             dataField: 'atividadePbls',
-            text: 'Data da Entrega',
+            text: 'Data Entrega',
+            style: { cursor: 'pointer' },
             formatter: (cellContent, row) => (
                 <div className='valoresNoExpand'>
                     {cellContent.forEach((item) => {
@@ -157,10 +153,11 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
                     <label ><b>{dataEntreg}</b></label><br />
 
                 </div>
-            )
+            ), editable: false
         }, {
             dataField: "icone",
             text: "Arquivo",
+            style: { cursor: 'pointer' },
             formatter: (cellContent, row) => (
                 <div className='valoresNoExpand'>
                     <div className="icon-file-button">
@@ -171,28 +168,19 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
             editable: false
         },
         {
-            dataField: 'atividadePbls',
+            dataField: 'atividadePbls[0].nota',
             text: 'Nota',
             formatter: (cellContent, row) => (
                 <div className='valoresNoExpand'>
-                    {cellContent.forEach((item) => {
-                        notas = item.notas
-                    })}
-                    <label ><b>{notas}</b></label><br />
+                    {console.log(row)}
+                    {console.log(cellContent)}
+                    <label ><b>{cellContent}</b></label><br />
 
                 </div>
             )
 
         }
     ];
-
-    const selectRow = {
-        mode: 'radio',
-        clickToSelect: true,
-        hideSelectColumn: true,
-        bgColor: '#c7c7c7',
-
-    };
 
     const tableRowEvents = {
         onClick: (e, row, rowIndex) => {
@@ -214,6 +202,15 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
             return [row]
         }
     }
+
+    const cellEdit = cellEditFactory({
+        mode: 'click',
+        blurToSave: true,
+        afterSaveCell: (oldValue, newValue, row, column) => {
+            setSelectedAtividadeEditado(row)
+        }
+    });
+
     const expandRow = {
 
         renderer: (row) => (
@@ -233,7 +230,7 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
 
                                 <BootstrapTable
                                     {...props.baseProps}
-                                    selectRow={selectRow}
+                                    cellEdit={cellEdit}
                                     rowEvents={tableRowEvents}
                                     bordered={false}
                                     condensed
@@ -248,6 +245,7 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
 
         expandColumnPosition: 'right',
         expandByColumnOnly: true,
+        onlyOneExpanding: true,
         showExpandColumn: true,
         expandHeaderColumnRenderer: ({ isAnyExpands }) => {
             if (isAnyExpands) {
@@ -274,7 +272,7 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
 
     return (
         <>
-            <Card>
+            <Card >
                 <div className="title-container">
                     <h5 className="title-card">Agenda de Atividades</h5>
                 </div>
@@ -296,7 +294,7 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
                                     </div>
                                 </div>
                                 <div className="scrollExpandir">
-                                    <div className="icon-button" style={{ marginTop: '10px', marginBottom: '15px' }}>
+                                    <div className="icon-button-Indicativo">
                                         <IoIcons.IoMdRadioButtonOff style={{ color: 'green', marginLeft: '15px' }} /> <label className="StatusTexto">Entregue</label>
                                         <IoIcons.IoMdRadioButtonOff style={{ color: '#C38A0E' }} /><label className="StatusTexto">Pendente</label>
                                         <IoIcons.IoMdRadioButtonOff style={{ color: '#BB157C' }} /><label className="StatusTexto">Atrasado</label>

@@ -25,19 +25,21 @@ function CardCadastroTarefa({ selectedAtividade }) {
   }, [tarefa]);
 
   useEffect(() => {
-    atividadeService
-      .listarID(selectedAtividade)
-      .then((response) => {
-        response.data.dataConclusao = new Date(
-          response.data.dataConclusao.split("/").reverse().join("-")
-        );
-        setDataConclusao(response.data.dataConclusao);
+    if (selectedAtividade !== null & selectedAtividade !== undefined) {
+      atividadeService
+        .listarID(selectedAtividade)
+        .then((response) => {
+          response.data.dataConclusao = new Date(
+            response.data.dataConclusao.split("/").reverse().join("-")
+          );
+          setDataConclusao(response.data.dataConclusao);
 
-        setTarefa(response.data);
-      })
-      .catch((error) => {
-        toast.error("Erro ao acessar a lista de tarefas.");
-      });
+          setTarefa(response.data);
+        })
+        .catch((error) => {
+          toast.error("Erro ao acessar a lista de tarefas.");
+        });
+    }
   }, [selectedAtividade]);
 
   const onDeleteHandler = (id) => {
@@ -47,6 +49,10 @@ function CardCadastroTarefa({ selectedAtividade }) {
       .catch((error) => {
         toast.error("Erro ao acessar a API.");
       });
+  };
+
+  const onAddHandler = () => {
+    setTarefa('')
   };
 
   const onUpdateHandler = (data) => {
@@ -134,13 +140,25 @@ function CardCadastroTarefa({ selectedAtividade }) {
               <>
                 <div className="spacer-div" />
                 {isUpdating && (
-                  <div
-                    className="delete-button"
-                    type="button"
-                    onClick={onDeleteHandler}
-                  >
-                    <IoIcons.IoMdTrash className="icone-deletar"/>
-                  </div>
+                  <>
+
+                    <div
+                      className="delete-button"
+                      type="button"
+                      onClick={onAddHandler}
+                    >
+                      <IoIcons.IoIosAdd className="icone-deletar" />
+                    </div>
+
+                    <div
+                      className="delete-button"
+                      type="button"
+                      onClick={onDeleteHandler}
+                    >
+                      <IoIcons.IoMdTrash className="icone-deletar" />
+                    </div>
+
+                  </>
                 )}
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <Card.Form
@@ -230,6 +248,7 @@ function CardCadastroTarefa({ selectedAtividade }) {
               </>
             );
           }}
+
         </Formik>
       </Card>
     </>
@@ -237,3 +256,5 @@ function CardCadastroTarefa({ selectedAtividade }) {
 }
 
 export default CardCadastroTarefa;
+
+
