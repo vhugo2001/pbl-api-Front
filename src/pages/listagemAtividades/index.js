@@ -53,7 +53,7 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
         console.log(selectedAtividadeEditado.id)
         if (selectedAtividadeEditado.id !== undefined) {
             serviceAtividade
-                .atualizar(selectedAtividadeEditado.id, selectedAtividadeEditado)
+                .atualizarAtivPbl(selectedAtividadeEditado.id, selectedAtividadeEditado)
                 .then((response) => {
 
                     toast.success("Nota editada com sucesso.")
