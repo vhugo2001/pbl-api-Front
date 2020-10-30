@@ -4,24 +4,25 @@ import Form from "../cadastrar/Index";
 import Listar from "../listar/index";
 
 const Index = () => {
+  const [selectedTema, setSelectedTema] = useState("");
   const [selectedDisciplina, setSelectedDisciplina] = useState("");
 
   useEffect(() => {
 
-  }, [selectedDisciplina]);
+  }, [selectedTema]);
 
   return (
     <>
       <div className="title-container">
-        <h1>Manter disciplina</h1>
+        <h1>Manter Tema</h1>
       </div>
 
       <Row>
         <Col xl={4} lg={4} style={{ paddingLeft: "6px", paddingRight: "6px" }}>
-          <Form  selected={selectedDisciplina}/>
+          <Form  selected={selectedTema} selectedDisciplina={selectedDisciplina}/>
         </Col>
         <Col xl={8} lg={8} style={{ paddingLeft: "6px", paddingRight: "6px" }}>
-          <Listar setSelectedDisciplina={setSelectedDisciplina} selectedDisciplina={selectedDisciplina} />
+          <Listar setSelectedTema={setSelectedTema} setSelectedDisciplina={setSelectedDisciplina} selectedTema={selectedTema} />
         </Col>
       </Row>
     </>

@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Formik, Form, ErrorMessage } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
-import BootstrapTable from "react-bootstrap-table-next";
-import { Modal, Button } from "react-bootstrap";
 import { Card } from "../../../Components/Card/CardPrincipal";
+import DropDownList from "../../../Components/DropDownList/Default/DropDownList";
+import serviceTema from "../../../Services/TemaPblService";
 import serviceDisciplina from "../../../Services/DisciplinaService";
-import paginationFactory from "react-bootstrap-table2-paginator";
 import * as IoIcons from "react-icons/io";
-import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -15,37 +13,53 @@ import "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.c
 import "../../../Components/TableAtividade/style";
 import "./styles.css";
 import { toast } from "react-toastify";
-import DisciplinaService from "../../../Services/DisciplinaService";
 
-const Index = ({ selected }) => {
-  const [disciplina, setDisciplina] = useState("");
+const Index = ({ selected, selectedDisciplina }) => {
+  const [Tema, setTema] = useState("");
+  const [listaDisciplina, setlistaDisciplina] = useState([]);
+  const [disciplinaSelecionada, setDisciplinaSelecionada] = useState({});
   const [isUpdating, setIsUpdating] = useState(false);
 
   useEffect(() => {
+    listarDisciplinas();
+  }, []);
+
+  useEffect(() => {
     if (selected !== null && selected !== undefined && selected !== "") {
-      setDisciplina(selected);
+      setTema(selected);
+      setDisciplinaSelecionada(selectedDisciplina[0].nome);
       setIsUpdating(true);
     }
   }, [selected]);
 
-  const onSubmitHandler = (data) => {
-    console.log(data);
+  useEffect(() => {
+    console.log(selectedDisciplina);
+  }, [selectedDisciplina]);
+
+  const listarDisciplinas = () => {
     serviceDisciplina
-      .incluir(data)
+      .listarTodos()
       .then((response) => {
-        toast.success("Disciplina cadastrada com sucesso.");
+        let data = response.data;
+        setlistaDisciplina(data);
       })
       .catch((error) => {
         toast.error(error.response.data);
       });
   };
 
+  const onSubmitHandler = (data) => {
+    console.log(data);
+  
+  };
+
   const onUpdateHandler = (data) => {
-    let _data = { ...data, id: disciplina.id };
-console.log(_data);
-    DisciplinaService.atualizar(_data.id, _data)
+    let _data = { ...data, id: Tema.id };
+    console.log(_data);
+    serviceTema
+      .atualizar(_data.id, _data)
       .then(() => {
-        toast.success("Disciplina atualizada com sucesso.");
+        toast.success("Tema atualizado com sucesso.");
       })
       .catch((error) => {
         toast.error(error.response.data);
@@ -53,7 +67,8 @@ console.log(_data);
   };
 
   const onClearHandler = () => {
-    setDisciplina({ ...disciplina, nome: "" });
+    setTema({ ...Tema, nome: "" });
+    setDisciplinaSelecionada("");
     setIsUpdating(false);
   };
   const onDeleteHandler = () => {};
@@ -65,11 +80,15 @@ console.log(_data);
         <Formik
           enableReinitialize
           initialValues={{
-            nome: disciplina.nome,
+            nome: Tema.nome,
+            disciplina: disciplinaSelecionada,
           }}
           validationSchema={Yup.object().shape({
             nome: Yup.string()
               .required("* Campo Nome é obrigatório")
+              .nullable(),
+            disciplina: Yup.string()
+              .required("* Campo Disciplina é obrigatório")
               .nullable(),
           })}
           onSubmit={(values) => {
@@ -134,6 +153,24 @@ console.log(_data);
                       </Card.Form.StyledInlineErrorMessage>
                     )}
                   </Card.Form.Group>
+                  <Card.Form.BreakRow />
+                  <Card.Form.Group style={{ flex: 4 }}>
+                    <Card.Form.Title>Disciplina</Card.Form.Title>
+                    <DropDownList
+                      name="disciplina"
+                      lista={listaDisciplina}
+                      onSelect={setDisciplinaSelecionada}
+                      selected={selectedDisciplina}
+                      valid={touched.disciplina && !errors.disciplina}
+                      error={touched.disciplina && errors.disciplina}
+                    ></DropDownList>
+                    {errors.disciplina && touched.disciplina && (
+                      <Card.Form.StyledInlineErrorMessage>
+                        {errors.disciplina}
+                      </Card.Form.StyledInlineErrorMessage>
+                    )}
+                  </Card.Form.Group>
+
                   <Card.Form.GroupButton className="group-button">
                     {!isUpdating && (
                       <Card.Button type="submit">Incluir</Card.Button>
