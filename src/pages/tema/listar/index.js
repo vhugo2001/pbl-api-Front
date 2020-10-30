@@ -17,7 +17,7 @@ import "./styles.css";
 import { toast } from "react-toastify";
 import DisciplinaService from "../../../Services/DisciplinaService";
 
-const Index = ({ setSelectedDisciplina, selectedDisciplina }) => {
+const Index = ({ setSelectedDisciplina , selectedDisciplina}) => {
   const [disciplinaList, setDisciplinaList] = useState([]);
   const [show, setShow] = useState(false);
 
@@ -49,6 +49,7 @@ const Index = ({ setSelectedDisciplina, selectedDisciplina }) => {
       });
   };
 
+
   const handleExcluir = () => {
     setShow(false);
     serviceDisciplina
@@ -60,6 +61,7 @@ const Index = ({ setSelectedDisciplina, selectedDisciplina }) => {
         toast.error(error.response.data);
       });
   };
+
 
   const handleAlterar = (row) => {
     setSelectedDisciplina({ id: row.id, nome: row.nome });

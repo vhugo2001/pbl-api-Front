@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import BootstrapTable from "react-bootstrap-table-next";
+import { Modal, Button } from "react-bootstrap";
 import { Card } from "../../../Components/Card/CardPrincipal";
 import serviceDisciplina from "../../../Services/DisciplinaService";
+import paginationFactory from "react-bootstrap-table2-paginator";
 import * as IoIcons from "react-icons/io";
+import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -38,7 +42,7 @@ const Index = ({ selected }) => {
 
   const onUpdateHandler = (data) => {
     let _data = { ...data, id: disciplina.id };
-    console.log(_data);
+console.log(_data);
     DisciplinaService.atualizar(_data.id, _data)
       .then(() => {
         toast.success("Disciplina atualizada com sucesso.");
@@ -97,6 +101,14 @@ const Index = ({ selected }) => {
                       onClick={onClearHandler}
                     >
                       <IoIcons.IoIosAdd className="icone-clear" />
+                    </div>
+
+                    <div
+                      className="actions-form-button delete-button"
+                      type="button"
+                      onClick={onDeleteHandler}
+                    >
+                      <IoIcons.IoMdTrash className="icone-deletar" />
                     </div>
                   </>
                 )}
