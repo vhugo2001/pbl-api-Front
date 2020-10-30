@@ -26,6 +26,10 @@ const atualizar = (id, data) => {
   return http.put(URL_ATV + `/${id}`, data);
 };
 
+const atualizarAtivPbl = (id, data) => {
+  return http.put(URL_ATV + `/atividade-pbl/${id}`, data);
+};
+
 const deletar = (id) => {
   return http.delete(URL_ATV + `/${id}`);
 };
@@ -37,5 +41,6 @@ export default {
   deletar,
   listarID,
   listarIdDisciplina,
-  listarIdPbl
+  listarIdPbl,
+  atualizarAtivPbl
 };
