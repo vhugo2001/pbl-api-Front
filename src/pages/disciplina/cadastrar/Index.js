@@ -13,7 +13,7 @@ import "./styles.css";
 import { toast } from "react-toastify";
 import DisciplinaService from "../../../Services/DisciplinaService";
 
-const Index = ({ selected }) => {
+const Index = ({ selected, setIsAtualizar }) => {
   const [disciplina, setDisciplina] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
 
@@ -30,6 +30,7 @@ const Index = ({ selected }) => {
       .incluir(data)
       .then((response) => {
         toast.success("Disciplina cadastrada com sucesso.");
+        setIsAtualizar(true);
       })
       .catch((error) => {
         toast.error(error.response.data);
@@ -42,6 +43,7 @@ const Index = ({ selected }) => {
     DisciplinaService.atualizar(_data.id, _data)
       .then(() => {
         toast.success("Disciplina atualizada com sucesso.");
+        setIsAtualizar(true);
       })
       .catch((error) => {
         toast.error(error.response.data);
@@ -70,10 +72,11 @@ const Index = ({ selected }) => {
           })}
           onSubmit={(values) => {
             if (isUpdating) {
-              return onUpdateHandler(values);
+              onUpdateHandler(values);
             } else {
-              return onSubmitHandler(values);
+              onSubmitHandler(values);
             }
+            setIsAtualizar(false);
           }}
         >
           {({

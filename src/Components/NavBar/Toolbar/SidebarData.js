@@ -24,6 +24,12 @@ export const SidebarData = [
   //   cName: "nav-text",
   // },
   {
+    title: "Professor",
+    path: "/admin/dashboard",
+    icon: <IoIcons.IoIosPaper />,
+    cName: "nav-text",
+  },
+  {
     title: "Consultar Alunos",
     path: "/admin/alunos",
     icon: <IoIcons.IoMdPeople />,

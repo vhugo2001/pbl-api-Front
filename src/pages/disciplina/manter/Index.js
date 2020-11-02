@@ -5,6 +5,7 @@ import Listar from "../listar/index";
 
 const Index = () => {
   const [selectedDisciplina, setSelectedDisciplina] = useState("");
+  const [isAtualizar, setIsAtualizar] = useState(false);
 
   useEffect(() => {}, [selectedDisciplina]);
 
@@ -16,12 +17,13 @@ const Index = () => {
 
       <Row>
         <Col xl={4} lg={4} style={{ paddingLeft: "6px", paddingRight: "6px" }}>
-          <Form selected={selectedDisciplina} />
+          <Form selected={selectedDisciplina} setIsAtualizar={setIsAtualizar} />
         </Col>
         <Col xl={8} lg={8} style={{ paddingLeft: "6px", paddingRight: "6px" }}>
           <Listar
             setSelectedDisciplina={setSelectedDisciplina}
             selectedDisciplina={selectedDisciplina}
+            isAtualizar={isAtualizar}
           />
         </Col>
       </Row>
