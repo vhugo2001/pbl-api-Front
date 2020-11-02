@@ -165,15 +165,15 @@ function CardCadastroTarefa({ selectedAtividade }) {
                   <>
 
                     <div
-                      className="delete-button"
+                      className="actions-form-button clear-button"
                       type="button"
                       onClick={onAddHandler}
                     >
-                      <IoIcons.IoIosAdd className="icone-deletar" />
+                      <IoIcons.IoIosAdd className="icone-clear" />
                     </div>
 
                     <div
-                      className="delete-button"
+                      className="actions-form-button delete-button"
                       type="button"
                       onClick={onDeleteHandler}
                     >

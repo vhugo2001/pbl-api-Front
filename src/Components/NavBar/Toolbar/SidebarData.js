@@ -18,8 +18,8 @@ export const SidebarData = [
     cName: "nav-text",
   },
   {
-    title: "Consultar PBL",
-    path: "/admin/listagemAtividades",
+    title: "Professor",
+    path: "/admin/dashboard",
     icon: <IoIcons.IoIosPaper />,
     cName: "nav-text",
   },
