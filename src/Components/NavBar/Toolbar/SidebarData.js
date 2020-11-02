@@ -17,12 +17,12 @@ export const SidebarData = [
     icon: <MdIcons.MdCreateNewFolder />,
     cName: "nav-text",
   },
-  {
-    title: "Consultar PBL",
-    path: "/admin/listagemAtividades",
-    icon: <IoIcons.IoIosPaper />,
-    cName: "nav-text",
-  },
+  // {
+  //   title: "Consultar PBL",
+  //   path: "/admin/listagemAtividades",
+  //   icon: <IoIcons.IoIosPaper />,
+  //   cName: "nav-text",
+  // },
   {
     title: "Consultar Alunos",
     path: "/admin/alunos",
@@ -42,5 +42,5 @@ export const SidebarData = [
     icon: <IoIcons.IoMdPeople />,
     cName: "nav-text",
   },
- 
+
 ];
