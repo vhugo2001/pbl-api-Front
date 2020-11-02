@@ -17,7 +17,7 @@ import "./styles.css";
 import { toast } from "react-toastify";
 import DisciplinaService from "../../../Services/DisciplinaService";
 
-const Index = ({ setSelectedDisciplina, selectedDisciplina }) => {
+const Index = ({ setSelectedDisciplina, selectedDisciplina, isAtualizar }) => {
   const [disciplinaList, setDisciplinaList] = useState([]);
   const [show, setShow] = useState(false);
 
@@ -37,6 +37,10 @@ const Index = ({ setSelectedDisciplina, selectedDisciplina }) => {
     listarTodos();
   }, []);
 
+  useEffect(() => {
+    if (isAtualizar) listarTodos();
+  }, [isAtualizar]);
+
   const listarTodos = () => {
     serviceDisciplina
       .listarTodos()
@@ -55,6 +59,7 @@ const Index = ({ setSelectedDisciplina, selectedDisciplina }) => {
       .deletar(selectedDisciplina.id)
       .then((response) => {
         toast.success("Disciplina excluida com sucesso.");
+        listarTodos();
       })
       .catch((error) => {
         toast.error(error.response.data);

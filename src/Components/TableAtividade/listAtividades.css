@@ -106,8 +106,8 @@ span.order{
   float: none;
 }
 .scrollExpandir{
-  min-height: 215px ;
-  max-height: 216px ;
+  min-height: 290px ;
+  max-height: 290px ;
   overflow: auto;
 }
 div.row-expansion-style{
