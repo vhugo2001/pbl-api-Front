@@ -1,0 +1,33 @@
+.container-acoes{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.container-acoes{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.container-acoes div{
+    margin-right: 10px;
+}
+
+.container-acoes div:nth-child(1):hover{
+    margin-right: 10px;
+    color:green;
+    cursor: pointer;
+}
+
+.container-acoes div:nth-child(2):hover{
+    margin-right: 10px;
+    color:red;
+    cursor: pointer;
+}
+
+.container-acoes svg{
+   font-size: 25px;
+}
+
+

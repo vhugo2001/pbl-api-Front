@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-import BootstrapTable from 'react-bootstrap-table-next';
-import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
-import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
+import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
+import BootstrapTable from "react-bootstrap-table-next";
+import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
+import "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css";
 import * as MdIcons from "react-icons/md";
 import * as IoIcons from "react-icons/io";
-import '../../Components/TableAluno/listAlunos.css'
+import "../../Components/TableAluno/listAlunos.css";
 import serviceUsuario from "../../Services/UsuarioService";
 import serviceAluno from "../../Services/AlunoService";
-import paginationFactory from 'react-bootstrap-table2-paginator';
-import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
+import paginationFactory from "react-bootstrap-table2-paginator";
+import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import { toast } from "react-toastify";
 import { Card } from "../../Components/Card/CardPrincipal";
 import {
@@ -18,10 +18,10 @@ import {
   Title,
   GroupButton,
   Ativar,
-  Desativar
-} from '../../Components/TableAluno/style'
-import '../../Components/TableAluno/listAlunos.css'
-import ListAluno from '../../Components/TableAluno/ListAlunos'
+  Desativar,
+} from "../../Components/TableAluno/style";
+import "../../Components/TableAluno/listAlunos.css";
+import ListAluno from "../../Components/TableAluno/ListAlunos";
 
 const { SearchBar } = Search;
 
@@ -53,22 +53,22 @@ export default function ListAluno2(props) {
     {
       dataField: "nome",
       text: "Nome",
-      sort: true
+      sort: true,
     },
     {
       dataField: "email",
       text: "Email",
-      sort: true
+      sort: true,
     },
     {
       dataField: "matricula",
       text: "Matrícula",
-      sort: true
+      sort: true,
     },
     {
       dataField: "ativo",
       text: "Ativo",
-      sort: true
+      sort: true,
     },
     {
       dataField: "excluir",
@@ -79,7 +79,7 @@ export default function ListAluno2(props) {
             <IoIcons.IoMdTrash />
           </Link>
         </div>
-      )
+      ),
     },
   ];
 
@@ -97,7 +97,6 @@ export default function ListAluno2(props) {
           return { ...r, isSelect };
         });
       });
-
     },
 
     onSelectAll: (isSelect, rows, e) => {
@@ -106,95 +105,87 @@ export default function ListAluno2(props) {
           return { ...row, isSelect };
         });
       });
-    }
+    },
   };
 
-  const [result, setResult] = useState([])
+  const [result, setResult] = useState([]);
 
   useEffect(() => {
-    setResult(alunos.filter((row) => row.isSelect === true).map(valor => valor.id));
-
-  }, [alunos])
+    setResult(
+      alunos.filter((row) => row.isSelect === true).map((valor) => valor.id)
+    );
+  }, [alunos]);
 
   const atualizarAluno = (dados, status) => {
     serviceUsuario
       .alterarStatusAtivo(dados, status)
       .then((response) => {
         let data = response.data;
-        setAluno(data)
-
+        setAluno(data);
       })
       .catch((error) => {
-        toast.error("Erro ao atualizar lista de alunos")
-      })
-  }
+        toast.error("Erro ao atualizar lista de alunos");
+      });
+  };
 
   const handleAtivar = () => {
-
     result.forEach((item) => {
-
-      atualizarAluno(item, { "ativo": true })
-    })
-    toast.success("Sucesso ao ativar os alunos.")
-  }
+      atualizarAluno(item, { ativo: true });
+    });
+    toast.success("Sucesso ao ativar os alunos.");
+  };
 
   const handleDesativar = () => {
     result.forEach((item) => {
-      atualizarAluno(item, { "ativo": false })
-    })
-    toast.success("Sucesso ao desativar os alunos.")
-  }
-
+      atualizarAluno(item, { ativo: false });
+    });
+    toast.success("Sucesso ao desativar os alunos.");
+  };
 
   const handleExcluir = (item) => {
-
-    excluirAluno(item.id, { "excluido": true })
-  }
+    excluirAluno(item.id, { excluido: true });
+  };
 
   const excluirAluno = (dados, status) => {
-
     serviceUsuario
       .alterarStatusExcluido(dados, status)
       .then((response) => {
         let data = response.data;
-        setAluno(data)
-        toast.success("Sucesso ao excluir os aluno.")
+        setAluno(data);
+        toast.success("Sucesso ao excluir os aluno.");
       })
       .catch((error) => {
-        toast.error("Erro ao excluir o aluno.")
-      })
-  }
+        toast.error("Erro ao excluir o aluno.");
+      });
+  };
 
   const rowStyle = (row, rowIndex) => {
-
     if (row.ativo === false) {
-      return { backgroundColor: '#c3b6b6' };
+      return { backgroundColor: "#c3b6b6" };
     } else {
       return {};
     }
-
   };
-
 
   const options = paginationFactory({
     page: 1,
     hideSizePerPage: true,
     hidePageListOnlyOnePage: true,
     sizePerPage: 5,
-    lastPageText: '>>',
-    firstPageText: '<<',
-    nextPageText: '>',
-    prePageText: '<',
+    lastPageText: ">>",
+    firstPageText: "<<",
+    nextPageText: ">",
+    prePageText: "<",
     showTotal: true,
-
   });
 
   return (
-
+    <>
+    <div className="title-container">
+    <h1>Iniciar PBL</h1>
+  </div>
     <Container className="container-list">
-      <Title>Alunos cadastrados </Title>
-
-      <ToolkitProvider keyField="nome" data={alunos} columns={colunas} search>
+           <ToolkitProvider keyField="nome" data={alunos} columns={colunas} search>
         {(props) => (
           <div>
             <div class="table-custom-container">
@@ -207,7 +198,8 @@ export default function ListAluno2(props) {
                   <IoIcons.IoMdSearch class="search-icon" />
                 </div>
               </div>
-              <BootstrapTable className="list-alunos"
+              <BootstrapTable
+                className="list-alunos"
                 pagination={options}
                 {...props.baseProps}
                 bordered={false}
@@ -226,6 +218,6 @@ export default function ListAluno2(props) {
         <Desativar onClick={handleDesativar}>Desativar</Desativar>
       </GroupButton>
     </Container>
-
+    </>
   );
 }

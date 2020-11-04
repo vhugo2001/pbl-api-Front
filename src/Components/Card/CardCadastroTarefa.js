@@ -10,11 +10,14 @@ import DatePickerField from "../DatePicker/DatePickerField";
 import { toast } from "react-toastify";
 import { id } from "date-fns/locale";
 import * as IoIcons from "react-icons/io";
+import moment from 'moment';
+import Moment from 'react-moment'
 
 function CardCadastroTarefa({ selectedAtividade }) {
   const [tarefa, setTarefa] = useState("");
   const [dataConclusao, setDataConclusao] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
+  const [selectedAtividadeEditado, setSelectedAtividadeEditado] = useState({})
 
   useEffect(() => {
     if (tarefa !== undefined && tarefa !== null && tarefa !== "") {
@@ -42,6 +45,21 @@ function CardCadastroTarefa({ selectedAtividade }) {
     }
   }, [selectedAtividade]);
 
+  useEffect(() => {
+    console.log(selectedAtividadeEditado.id)
+    console.log(selectedAtividadeEditado)
+    if (selectedAtividadeEditado.id !== undefined) {
+      atividadeService
+        .atualizar(selectedAtividadeEditado.id, selectedAtividadeEditado)
+        .then((response) => {
+
+          toast.success("Tarefa atualizado com sucesso.");
+        })
+        .catch((error) => { toast.error("Erro ao atualizar tarefa."); });
+    }
+  }, [selectedAtividadeEditado])
+
+
   const onDeleteHandler = (id) => {
     atividadeService
       .deletar(tarefa.id)
@@ -56,20 +74,23 @@ function CardCadastroTarefa({ selectedAtividade }) {
   };
 
   const onUpdateHandler = (data) => {
-    setTarefa(data);
-    data = { ...data, id: tarefa.id };
+    data = {
+      ...tarefa, titulo: data.titulo, dataConclusao: format(data.dataConclusao, 'dd/MM/yyyy'),
+      descricao: data.descricao
+    };
+    setSelectedAtividadeEditado(data);
 
-    atividadeService
-      .atualizar(data.id, data)
-      .then((response) => {
-        console.log(data);
-        toast.success("Tarefa atualizado com sucesso.");
-      })
-      .catch((error) => {
-        toast.error("Erro ao atualizar tarefa.");
-        console.log(data);
-        console.log(error);
-      });
+    // atividadeService
+    //   .atualizarAtivPbl(selectedAtividadeEditado.id, selectedAtividadeEditado)
+    //   .then((response) => {
+
+    //     toast.success("Tarefa atualizado com sucesso.");
+    //   })
+    //   .catch((error) => {
+    //     toast.error("Erro ao atualizar tarefa.");
+    //     console.log(data);
+    //     console.log(error);
+    //   });
   };
 
   const onSubmitHandler = (data) => {
@@ -119,6 +140,7 @@ function CardCadastroTarefa({ selectedAtividade }) {
               .nullable(),
           })}
           onSubmit={(values) => {
+
             if (isUpdating) {
               return onUpdateHandler(values);
             } else {
@@ -143,15 +165,15 @@ function CardCadastroTarefa({ selectedAtividade }) {
                   <>
 
                     <div
-                      className="delete-button"
+                      className="actions-form-button clear-button"
                       type="button"
                       onClick={onAddHandler}
                     >
-                      <IoIcons.IoIosAdd className="icone-deletar" />
+                      <IoIcons.IoIosAdd className="icone-clear" />
                     </div>
 
                     <div
-                      className="delete-button"
+                      className="actions-form-button delete-button"
                       type="button"
                       onClick={onDeleteHandler}
                     >
@@ -238,7 +260,7 @@ function CardCadastroTarefa({ selectedAtividade }) {
                         <Card.Button type="submit">Salvar</Card.Button>
                       )}
                       {isUpdating && (
-                        <Card.Button type="button" onClick={onUpdateHandler}>
+                        <Card.Button type="submit" >
                           Atualizar
                         </Card.Button>
                       )}

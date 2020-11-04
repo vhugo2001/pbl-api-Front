@@ -87,7 +87,7 @@ const Search = styled("input")`
   }
 `;
 
-const DefaultDropDownList = ({ lista, onSelect, ...props }) => {
+const DefaultDropDownList = ({ lista, onSelect, selected, ...props }) => {
   const { setFieldValue } = useFormikContext();
   const [field] = useField(props);
   const [isOpen, setIsOpen] = useState(false);
@@ -99,6 +99,20 @@ const DefaultDropDownList = ({ lista, onSelect, ...props }) => {
     searchInput.current.focus();
     setOptions(lista);
   }, [lista]);
+
+  useEffect(() => {
+    if(selected !== undefined && selected.length> 0 ){
+      setSelectedOption(selected[0].nome);
+      onSelect(selected[0]);
+     
+    }else
+    {
+      console.log("else: " + selected);
+      onSelect("")
+      setSelectedOption("");
+    }
+
+  }, [selected])
 
   const toggling = () => {
     setIsOpen(!isOpen);
