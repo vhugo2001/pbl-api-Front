@@ -14,26 +14,28 @@ import "../../../Components/TableAtividade/style";
 import "./styles.css";
 import { toast } from "react-toastify";
 
-const Index = ({ selected, selectedDisciplina }) => {
+const Index = ({ selectedTema, selectedDisciplina }) => {
   const [Tema, setTema] = useState("");
   const [listaDisciplina, setlistaDisciplina] = useState([]);
   const [disciplinaSelecionada, setDisciplinaSelecionada] = useState({});
   const [isUpdating, setIsUpdating] = useState(false);
+  const [itemDropDow, setItemDropDow] = useState(selectedDisciplina)
 
   useEffect(() => {
     listarDisciplinas();
   }, []);
 
   useEffect(() => {
-    if (selected !== null && selected !== undefined && selected !== "") {
-      setTema(selected);
-      setDisciplinaSelecionada(selectedDisciplina[0].nome);
+    if (selectedTema !== null && selectedTema !== undefined && selectedTema !== "") {
+      setTema(selectedTema);
+      setDisciplinaSelecionada(itemDropDow[0].nome);
       setIsUpdating(true);
     }
-  }, [selected]);
+  }, [selectedTema]);
 
   useEffect(() => {
-    console.log(selectedDisciplina);
+    console.log(selectedDisciplina)
+    setItemDropDow(selectedDisciplina);
   }, [selectedDisciplina]);
 
   const listarDisciplinas = () => {
@@ -160,7 +162,7 @@ const Index = ({ selected, selectedDisciplina }) => {
                       name="disciplina"
                       lista={listaDisciplina}
                       onSelect={setDisciplinaSelecionada}
-                      selected={selectedDisciplina}
+                      selected={itemDropDow}
                       valid={touched.disciplina && !errors.disciplina}
                       error={touched.disciplina && errors.disciplina}
                     ></DropDownList>
