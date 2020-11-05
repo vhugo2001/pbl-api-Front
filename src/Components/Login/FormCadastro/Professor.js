@@ -3,9 +3,6 @@ import React, { useState } from "react";
 const Professor = () => {
   const [senhaConfirmacao, setSenhaConfirmacao] = useState();
   const [dadosProfessor, setDadosProfessor] = useState({
-    disciplina: {
-      id: 0,
-    },
     email: "",
     nome: "",
     perfis: [
@@ -23,7 +20,7 @@ const Professor = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} /*action="/" method="post"*/>
+    <form onSubmit={handleSubmit}>
       <div className="top-row">
         <div className="field-wrap">
           <input
@@ -37,12 +34,7 @@ const Professor = () => {
           />
         </div>
         <div className="field-wrap">
-          <input
-            placeholder="Disciplina"
-            type="text"
-            required
-            autoComplete="off"
-          />
+          <input placeholder="Siape" type="text" required autoComplete="off" />
         </div>
       </div>
       <div className="field-wrap">
