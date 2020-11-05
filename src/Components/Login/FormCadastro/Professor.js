@@ -3,12 +3,10 @@ import React, { useState } from "react";
 const Professor = () => {
   const [senhaConfirmacao, setSenhaConfirmacao] = useState();
   const [dadosProfessor, setDadosProfessor] = useState({
-    ativo: true,
     disciplina: {
       id: 0,
     },
     email: "",
-    excluido: false,
     nome: "",
     perfis: [
       {
