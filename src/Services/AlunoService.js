@@ -1,4 +1,5 @@
 import http from "./httpCommon";
+import authHeader from './AuthHeader';
 
 const URL_PBL = "/aluno";
 
