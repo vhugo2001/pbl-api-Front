@@ -10,4 +10,8 @@ export default Yup.object().shape({
     .required("* Campo Senha é obrigatório")
     .min(6, "Mínimo de 6 caracteres.")
     .max(50, "Máximo de 50 caracteres."),
+  senhaC: Yup.string().oneOf(
+    [Yup.ref("senha"), null],
+    "Senhas precisam ser idênticas."
+  ),
 });
