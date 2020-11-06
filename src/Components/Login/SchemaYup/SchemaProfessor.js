@@ -2,18 +2,18 @@ import * as Yup from "yup";
 
 export default Yup.object().shape({
    nome: Yup.string()
-      .required("Preenchimento obrigatório.")
-      .min(2, 'Mínimo de 2 caracteres.')
-      .max(100, 'Máximo de 100 caracteres.'),
-   matricula: Yup.string()
-      .required("Preenchimento obrigatório.")
-      .min(7, "Mínimo de 7 caracteres.")
-      .max(7, "Máximo de 7 caracteres."),
+      .required("Preenchimento do nome obrigatório."),
    email: Yup.string()
+      .required("Preenchimento do e-mail obrigatório.")
       .email("Digite um e-mail válido.")
-      .required("Preenchimento obrigatório."),
+      .max(50, 'Máximo de 50 caracteres.'),
    senha: Yup.string()
-      .required("Preenchimento obrigatório."),
+      .required("Preenchimento da senha obrigatório.")
+      .min(6, 'Máximo de 6 caracteres.')
+      .max(50, 'Máximo de 50 caracteres.'),
    senhaConfirmacao: Yup.string()
-      .required("Preenchimento obrigatório."),
+      .required("Preenchimento da confirmação de senha obrigatório.")
+      .oneOf([Yup.ref('senha'), null], "Senhas incompatíveis.")
+      .min(6, 'Máximo de 6 caracteres.')
+      .max(50, 'Máximo de 50 caracteres.'),
 });
