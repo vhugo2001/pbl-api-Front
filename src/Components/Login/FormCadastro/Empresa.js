@@ -1,6 +1,5 @@
 import React from "react";
 import { Formik } from "formik";
-//import * as Yup from "yup";
 import { toast } from "react-toastify";
 import empresaService from "../../../Services/AuthService";
 import SchemaEmpresa from "./SchemaYup/SchemaEmpresa";
