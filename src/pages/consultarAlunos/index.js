@@ -4,7 +4,6 @@ import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css";
-import * as MdIcons from "react-icons/md";
 import * as IoIcons from "react-icons/io";
 import "../../Components/TableAluno/listAlunos.css";
 import serviceUsuario from "../../Services/UsuarioService";
@@ -12,16 +11,14 @@ import serviceAluno from "../../Services/AlunoService";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import { toast } from "react-toastify";
-import { Card } from "../../Components/Card/CardPrincipal";
+
 import {
   Container,
-  Title,
   GroupButton,
   Ativar,
   Desativar,
 } from "../../Components/TableAluno/style";
 import "../../Components/TableAluno/listAlunos.css";
-import ListAluno from "../../Components/TableAluno/ListAlunos";
 
 const { SearchBar } = Search;
 
