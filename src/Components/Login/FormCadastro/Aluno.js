@@ -7,7 +7,7 @@ import SchemaAluno from "./SchemaYup/SchemaAluno";
 const Aluno = () => {
   const onSubmitHandler = (data) => {
     alunoService
-      .registrarEmpresa(data)
+      .registrarAluno(data)
       .then((response) => {
         toast.success(response.data.message);
       })
@@ -22,7 +22,7 @@ const Aluno = () => {
         enableReinitialize
         initialValues={{
           nome: "",
-          cnpj: "",
+          matricula: "",
           email: "",
           senha: "",
           senhaC: "",
@@ -51,15 +51,15 @@ const Aluno = () => {
 
                   <div className="field-wrap">
                     <input
-                      name="cnpj"
+                      name="matricula"
                       type="text"
-                      valid={touched.cnpj && !errors.cnpj}
-                      error={touched.cnpj && errors.cnpj}
-                      placeholder="CNPJ"
+                      valid={touched.matricula && !errors.matricula}
+                      error={touched.matricula && errors.matricula}
+                      placeholder="Matrícula"
                       onChange={handleChange}
                     />
-                    {errors.cnpj && touched.cnpj && (
-                      <div className="error-message">{errors.cnpj}</div>
+                    {errors.matricula && touched.matricula && (
+                      <div className="error-message">{errors.matricula}</div>
                     )}
                   </div>
                 </div>
