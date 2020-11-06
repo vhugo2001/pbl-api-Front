@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import SchemaProfessor from "../SchemaYup/SchemaProfessor";
+import SchemaProfessor from "./SchemaYup/SchemaProfessor";
 import * as Yup from "yup";
 
 import AuthService from "../../../Services/AuthService";
