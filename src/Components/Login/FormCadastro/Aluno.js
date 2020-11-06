@@ -10,6 +10,9 @@ const Aluno = () => {
       .registrarAluno(data)
       .then((response) => {
         toast.success(response.data.message);
+        setTimeout(() => {
+          window.location.reload();
+        }, 5000);
       })
       .catch((error) => {
         toast.error(error.response.data);
@@ -24,6 +27,11 @@ const Aluno = () => {
           nome: "",
           matricula: "",
           email: "",
+          perfis: [
+            {
+              id: 1,
+            },
+          ],
           senha: "",
           senhaC: "",
         }}
@@ -115,4 +123,3 @@ const Aluno = () => {
 };
 
 export default Aluno;
-

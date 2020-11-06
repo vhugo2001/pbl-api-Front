@@ -10,6 +10,9 @@ const Empresa = () => {
       .registrarEmpresa(data)
       .then((response) => {
         toast.success(response.data.message);
+        setTimeout(() => {
+          window.location.reload();
+        }, 5000);
       })
       .catch((error) => {
         toast.error(error.response.data);
