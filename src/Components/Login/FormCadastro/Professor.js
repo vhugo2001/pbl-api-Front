@@ -18,41 +18,46 @@ const Professor = () => {
     senha: "",
   });
 
-  const handleSubmit = async (e) => {
+  const postProfessor = async (e) => {
     if (senhaConfirmacao === dadosProfessor.senha) {
       try {
-        console.log(dadosProfessor);
         await AuthService.registrarProfessor(dadosProfessor);
         toast.success("Professor cadastrado com sucesso.");
+        setTimeout(() => {
+          window.location.reload();
+        }, 5000);
       } catch (error) {
-        e.preventDefault();
         console.log(error);
       }
     } else {
       toast.error("Senhas diferentes.");
-      e.preventDefault();
     }
   };
 
-  const ValidaDados = async (e) => {
-    e.preventDefault();
+  const validaDados = async (e) => {
     try {
-      await SchemaProfessor.validate(dadosProfessor, { abortEarly: false })
-      handleSubmit();
+      await SchemaProfessor.validate(dadosProfessor, { abortEarly: false });
+      return true;
     } catch (erro) {
       if (erro instanceof Yup.ValidationError) {
-        const ErrorMessage = {}
+        const ErrorMessage = {};
         erro.inner.forEach((error) => {
           ErrorMessage[error.path] = error.message;
-          toast.error("Erro ao cadastrar Professor.");
-        })
+          toast.error(error.message);
+        });
       }
     }
+  };
 
-  }
+  const confereValidacao = (e) => {
+    e.preventDefault();
+    if (validaDados()) {
+      postProfessor();
+    }
+  };
 
   return (
-    <form onSubmit={ValidaDados}>
+    <form onSubmit={confereValidacao}>
       <div className="field-wrap">
         <input
           placeholder="Nome"
@@ -81,7 +86,9 @@ const Professor = () => {
           type="password"
           required
           autoComplete="off"
-          onChange={(event) => setSenhaConfirmacao(event.target.value)}
+          onChange={(event) =>
+            setDadosProfessor({ ...dadosProfessor, senha: event.target.value })
+          }
         />
       </div>
       <div className="field-wrap">
@@ -90,9 +97,7 @@ const Professor = () => {
           type="password"
           required
           autoComplete="off"
-          onChange={(event) =>
-            setDadosProfessor({ ...dadosProfessor, senha: event.target.value })
-          }
+          onChange={(event) => setSenhaConfirmacao(event.target.value)}
         />
       </div>
       <button type="submit" className="button button-block">
