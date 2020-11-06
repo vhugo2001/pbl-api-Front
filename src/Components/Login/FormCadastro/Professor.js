@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 
+import AuthService from "../../../Services/AuthService";
+
 const Professor = () => {
   const [senhaConfirmacao, setSenhaConfirmacao] = useState();
   const [dadosProfessor, setDadosProfessor] = useState({
-    disciplina: {
-      id: 0,
-    },
     email: "",
     nome: "",
     perfis: [
@@ -16,34 +15,34 @@ const Professor = () => {
     senha: "",
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    console.log("corpo da requisição: ", dadosProfessor);
+  const handleSubmit = async (e) => {
+    if (senhaConfirmacao === dadosProfessor.senha) {
+      try {
+        console.log(dadosProfessor);
+        await AuthService.registrarProfessor(dadosProfessor);
+        alert("Professor cadastrado com sucesso");
+      } catch (error) {
+        e.preventDefault();
+        console.log(error);
+      }
+    } else {
+      alert("Senhas diferentes");
+      e.preventDefault();
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} /*action="/" method="post"*/>
-      <div className="top-row">
-        <div className="field-wrap">
-          <input
-            placeholder="Nome"
-            type="text"
-            required
-            autoComplete="off"
-            onChange={(event) =>
-              setDadosProfessor({ ...dadosProfessor, nome: event.target.value })
-            }
-          />
-        </div>
-        <div className="field-wrap">
-          <input
-            placeholder="Disciplina"
-            type="text"
-            required
-            autoComplete="off"
-          />
-        </div>
+    <form onSubmit={handleSubmit}>
+      <div className="field-wrap">
+        <input
+          placeholder="Nome"
+          type="text"
+          required
+          autoComplete="off"
+          onChange={(event) =>
+            setDadosProfessor({ ...dadosProfessor, nome: event.target.value })
+          }
+        />
       </div>
       <div className="field-wrap">
         <input
