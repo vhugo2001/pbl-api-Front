@@ -8,6 +8,7 @@ import Cadastro from "../pages/cadastro";
 
 import ManterDisciplina from "../pages/disciplina/manter/Index";
 import ManterTema from "../pages/tema/manter/Index";
+import ListagemTarefas from "../pages/listagemTarefas/index";
 import IniciarPBL from "../pages/pbl/cadastrar/Index"
 import DashBoardProfessor from "../pages/professor/dashboard/dashboard"
 import Dashboard from "../pages/dashboard";
@@ -25,6 +26,7 @@ const Routes = () => (
     <PrivateRoute path="/admin/cadastro" component={Cadastro} />
     <PrivateRoute path="/admin/manter-disciplina" component={ManterDisciplina} />
     <PrivateRoute path="/admin/manter-tema" component={ManterTema} />
+    <PrivateRoute path="/admin/manter-tarefa" component={ListagemTarefas} />
   </Switch>
 );
 

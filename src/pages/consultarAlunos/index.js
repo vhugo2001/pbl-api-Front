@@ -181,43 +181,43 @@ export default function ListAluno2(props) {
 
   return (
     <>
-    <div className="title-container">
-    <h1>Iniciar PBL</h1>
-  </div>
-    <Container className="container-list">
-           <ToolkitProvider keyField="nome" data={alunos} columns={colunas} search>
-        {(props) => (
-          <div>
-            <div class="table-custom-container">
-              <div class="table-search">
-                <SearchBar
-                  {...props.searchProps}
-                  placeholder="Buscar aluno por nome..."
-                />
-                <div class="table-search-icon">
-                  <IoIcons.IoMdSearch class="search-icon" />
+      <div className="title-container">
+        <h1>Consultar Alunos</h1>
+      </div>
+      <Container className="container-list">
+        <ToolkitProvider keyField="nome" data={alunos} columns={colunas} search>
+          {(props) => (
+            <div>
+              <div class="table-custom-container">
+                <div class="table-search">
+                  <SearchBar
+                    {...props.searchProps}
+                    placeholder="Buscar aluno por nome..."
+                  />
+                  <div class="table-search-icon">
+                    <IoIcons.IoMdSearch class="search-icon" />
+                  </div>
                 </div>
+                <BootstrapTable
+                  className="list-alunos"
+                  pagination={options}
+                  {...props.baseProps}
+                  bordered={false}
+                  rowStyle={rowStyle}
+                  striped
+                  hover
+                  condensed
+                  selectRow={selectRow}
+                />
               </div>
-              <BootstrapTable
-                className="list-alunos"
-                pagination={options}
-                {...props.baseProps}
-                bordered={false}
-                rowStyle={rowStyle}
-                striped
-                hover
-                condensed
-                selectRow={selectRow}
-              />
             </div>
-          </div>
-        )}
-      </ToolkitProvider>
-      <GroupButton>
-        <Ativar onClick={handleAtivar}>Ativar</Ativar>
-        <Desativar onClick={handleDesativar}>Desativar</Desativar>
-      </GroupButton>
-    </Container>
+          )}
+        </ToolkitProvider>
+        <GroupButton>
+          <Ativar onClick={handleAtivar}>Ativar</Ativar>
+          <Desativar onClick={handleDesativar}>Desativar</Desativar>
+        </GroupButton>
+      </Container>
     </>
   );
 }
