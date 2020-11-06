@@ -23,19 +23,20 @@ th{
 th:focus{
   outline: none !important;
 }
-/* .scrollExpand .react-bootstrap-table table.table-condensed thead tr th.selection-cell-header{
+div.scrollExpand div.react-bootstrap-table table.table.table-condensed thead tr th.selection-cell-header{
   text-align: center;
   width: 14% !important;
-}  */
-.scrollExpand .react-bootstrap-table table.table-condensed thead tr  th.expand-cell-header{
+} 
+div.scrollExpand div.react-bootstrap-table table.table.table-condensed thead tr  th.expand-cell-header{
   border-color: transparent;
+  pointer-events: none;
 }
- /* .scrollExpand .react-bootstrap-table table.table-condensed thead tr  td.selection-cell{
+ div.scrollExpand div.react-bootstrap-table table.table.table-condensed tbody tr  td.selection-cell{
   text-align: center;
 }
-.scrollExpand .react-bootstrap-table table.table-condensed thead tr  .expand-cell{
+div.scrollExpand div.react-bootstrap-table table.table.table-condensed tbody tr  td.expand-cell{
   width: 5px !important;
-} */
+}
 
 .icone-button{
   font-size: 1.7rem;
@@ -45,6 +46,20 @@ th:focus{
   height: 35px;
   margin-bottom: 0px !important;
   cursor: pointer;
+}
+
+.adicionar-button{
+  font-size: 1.7rem;
+  background: none;
+  color:#7f89a2;
+  margin-top: -10px;
+  height: 35px;
+  margin-bottom: 0px !important;
+  cursor: pointer;
+}
+
+.adicionar-button:hover{
+  color:#3b62c5;
 }
 
 .checkbox{
@@ -81,8 +96,8 @@ span.order{
   float: none;
 }
 .scrollExpand{
-  min-height: 290px ;
-  max-height: 290px ;
+  min-height: 390px ;
+  max-height: 390px ;
   overflow: auto;
 }
 div.row-expansion-style{

@@ -63,31 +63,32 @@ function ListagemTarefas() {
         },
 
         {
-            dataField: 'descricao',
-            text: 'Descrição',
-            formatter: (cellContent, row) => (
-                <div>
-                    <label className="DescAtiv">{row.descricao}</label><br />
-
-                </div>
-            ), headerStyle: (colum, colIndex) => {
-                return { backgroundColor: 'transparent', border: 'none' };
-            }
-
-        },
-        {
             dataField: 'dataConclusao',
             text: 'Data de Conclusão',
 
             formatter: (cellContent, row) => (
-                <div style={{ textAlign: 'end' }}>
+                <div style={{ textAlign: 'center' }}>
                     <label className="ConclusaoAtiv">{row.dataConclusao}</label><br />
                 </div>
             ),
             headerStyle: (colum, colIndex) => {
-                return { textAlign: 'end', backgroundColor: 'transparent', border: 'none' };
+                return { textAlign: 'center', backgroundColor: 'transparent', border: 'none', paddingRight: '0px' };
             }
 
+        },
+
+        {
+            dataField: "icone",
+            text: "",
+
+            formatter: (cellContent, row) => (
+                <div className="adicionar-button" onClick={() => alert('bbb')}>
+                    <IoIcons.IoIosAddCircleOutline />
+                </div>
+            ),
+            headerStyle: (colum, colIndex) => {
+                return { width: '35px', height: '5px', backgroundColor: 'transparent', border: 'none', marginRight: '50px' };
+            }
         },
 
     ];
@@ -224,7 +225,7 @@ function ListagemTarefas() {
         ),
 
         expandColumnPosition: 'right',
-
+        expandByColumnOnly: true,
         onlyOneExpanding: true,
         showExpandColumn: true,
         expandHeaderColumnRenderer: ({ isAnyExpands }) => {
