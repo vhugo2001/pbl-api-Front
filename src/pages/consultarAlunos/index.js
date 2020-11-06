@@ -4,7 +4,6 @@ import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css";
-import * as MdIcons from "react-icons/md";
 import * as IoIcons from "react-icons/io";
 import "../../Components/TableAluno/listAlunos.css";
 import serviceUsuario from "../../Services/UsuarioService";
@@ -12,16 +11,14 @@ import serviceAluno from "../../Services/AlunoService";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import { toast } from "react-toastify";
-import { Card } from "../../Components/Card/CardPrincipal";
+
 import {
   Container,
-  Title,
   GroupButton,
   Ativar,
   Desativar,
 } from "../../Components/TableAluno/style";
 import "../../Components/TableAluno/listAlunos.css";
-import ListAluno from "../../Components/TableAluno/ListAlunos";
 
 const { SearchBar } = Search;
 
@@ -181,43 +178,43 @@ export default function ListAluno2(props) {
 
   return (
     <>
-    <div className="title-container">
-    <h1>Iniciar PBL</h1>
-  </div>
-    <Container className="container-list">
-           <ToolkitProvider keyField="nome" data={alunos} columns={colunas} search>
-        {(props) => (
-          <div>
-            <div class="table-custom-container">
-              <div class="table-search">
-                <SearchBar
-                  {...props.searchProps}
-                  placeholder="Buscar aluno por nome..."
-                />
-                <div class="table-search-icon">
-                  <IoIcons.IoMdSearch class="search-icon" />
+      <div className="title-container">
+        <h1>Iniciar PBL</h1>
+      </div>
+      <Container className="container-list">
+        <ToolkitProvider keyField="nome" data={alunos} columns={colunas} search>
+          {(props) => (
+            <div>
+              <div class="table-custom-container">
+                <div class="table-search">
+                  <SearchBar
+                    {...props.searchProps}
+                    placeholder="Buscar aluno por nome..."
+                  />
+                  <div class="table-search-icon">
+                    <IoIcons.IoMdSearch class="search-icon" />
+                  </div>
                 </div>
+                <BootstrapTable
+                  className="list-alunos"
+                  pagination={options}
+                  {...props.baseProps}
+                  bordered={false}
+                  rowStyle={rowStyle}
+                  striped
+                  hover
+                  condensed
+                  selectRow={selectRow}
+                />
               </div>
-              <BootstrapTable
-                className="list-alunos"
-                pagination={options}
-                {...props.baseProps}
-                bordered={false}
-                rowStyle={rowStyle}
-                striped
-                hover
-                condensed
-                selectRow={selectRow}
-              />
             </div>
-          </div>
-        )}
-      </ToolkitProvider>
-      <GroupButton>
-        <Ativar onClick={handleAtivar}>Ativar</Ativar>
-        <Desativar onClick={handleDesativar}>Desativar</Desativar>
-      </GroupButton>
-    </Container>
+          )}
+        </ToolkitProvider>
+        <GroupButton>
+          <Ativar onClick={handleAtivar}>Ativar</Ativar>
+          <Desativar onClick={handleDesativar}>Desativar</Desativar>
+        </GroupButton>
+      </Container>
     </>
   );
 }
