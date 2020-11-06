@@ -14,6 +14,10 @@ const registrarProfessor = (data) => {
   return http.post(URL_AUT + "/professor/registrar", data);
 };
 
+const registrarEmpresa = (data) => {
+  return http.post(URL_AUT + "/empresa/registrar", data);
+};
+
 const getCurrentUser = () => {
   return JSON.parse(localStorage.getItem("user"));
 };
@@ -24,6 +28,7 @@ const logout = () => {
 
 export default {
   registrarProfessor,
+  registrarEmpresa,
   registrarAluno,
   getCurrentUser,
   login,
