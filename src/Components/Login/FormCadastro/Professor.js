@@ -24,19 +24,18 @@ const Professor = () => {
         console.log(dadosProfessor);
         await AuthService.registrarProfessor(dadosProfessor);
         toast.success("Professor cadastrado com sucesso.");
-        //alert("Professor cadastrado com sucesso");
       } catch (error) {
         e.preventDefault();
         console.log(error);
       }
     } else {
       toast.error("Senhas diferentes.");
-      //alert("Senhas diferentes");
       e.preventDefault();
     }
   };
 
-  const ValidaDados = async () => {
+  const ValidaDados = async (e) => {
+    e.preventDefault();
     try {
       await SchemaProfessor.validate(dadosProfessor, { abortEarly: false })
       handleSubmit();
@@ -46,7 +45,6 @@ const Professor = () => {
         erro.inner.forEach((error) => {
           ErrorMessage[error.path] = error.message;
           toast.error("Erro ao cadastrar Professor.");
-         // alert(error.message)
         })
       }
     }
@@ -62,8 +60,7 @@ const Professor = () => {
           required
           autoComplete="off"
           onChange={(event) =>
-            // setDadosProfessor({ ...dadosProfessor, nome: event.target.value })
-            console.log(event.target.value)
+            setDadosProfessor({ ...dadosProfessor, nome: event.target.value })
           }
         />
       </div>
