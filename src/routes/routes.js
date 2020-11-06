@@ -3,7 +3,7 @@ import { Switch } from "react-router-dom";
 import PrivateRoute from "../Components/PrivatRouter/Router";
 
 import ConsultarAlunos from "../pages/consultarAlunos";
-import PerfilUsuario from "../pages/perfilUsuario";
+import PerfilUsuario from "../pages/perfilUsuario/FormPerfil";
 import Cadastro from "../pages/cadastro";
 import ManterDisciplina from "../pages/disciplina/manter/Index";
 import ManterTema from "../pages/tema/manter/Index";
