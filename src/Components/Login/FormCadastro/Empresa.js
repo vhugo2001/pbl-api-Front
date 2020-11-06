@@ -1,8 +1,9 @@
 import React from "react";
 import { Formik } from "formik";
-import * as Yup from "yup";
+//import * as Yup from "yup";
 import { toast } from "react-toastify";
 import empresaService from "../../../Services/AuthService";
+import SchemaEmpresa from "./SchemaYup/SchemaEmpresa";
 
 const Empresa = () => {
   const onSubmitHandler = (data) => {
@@ -27,26 +28,7 @@ const Empresa = () => {
           senha: "",
           senhaC: "",
         }}
-        validationSchema={Yup.object().shape({
-          nome: Yup.string().required("* Campo nome é obrigatório").nullable(),
-          cnpj: Yup.string()
-            .required("* Campo cnpj é obrigatório")
-            .matches(
-              /^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/,
-              "Digite um cnpj válido"
-            )
-            .nullable(),
-          email: Yup.string()
-            .required("* Campo email é obrigatório")
-            .nullable(),
-          senha: Yup.string()
-            .required("* Campo senha é obrigatório")
-            .min(6, "Senha muito curta - deve ter no minimo 6 caracteres"),
-          senhaC: Yup.string().oneOf(
-            [Yup.ref("senha"), null],
-            "Senhas precisam ser idênticas."
-          ),
-        })}
+        validationSchema={SchemaEmpresa}
         onSubmit={(values) => onSubmitHandler(values)}
       >
         {({ errors, touched, handleSubmit, handleChange }) => {
