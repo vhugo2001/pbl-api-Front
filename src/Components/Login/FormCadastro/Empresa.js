@@ -41,7 +41,7 @@ const Empresa = () => {
             .nullable(),
           senha: Yup.string()
             .required("* Campo senha é obrigatório")
-            .min(8, "Senha muito curta - deve ter no minimo 6 caracteres"),
+            .min(6, "Senha muito curta - deve ter no minimo 6 caracteres"),
           senhaC: Yup.string().oneOf(
             [Yup.ref("senha"), null],
             "Senhas precisam ser idênticas."

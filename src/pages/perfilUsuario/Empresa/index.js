@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Card } from "../../../Components/Card/CardPrincipal";
-import alunoService from "../../../Services/AlunoService";
+import empresaService from "../../../Services/EmpresaService";
 import authService from "../../../Services/AuthService";
 import { toast } from "react-toastify";
 
 import { Formik } from "formik";
 import * as Yup from "yup";
 
-function Index() {
-  const [empresa, setEmpresa] = useState(authService.getCurrentUser());
+function Index({ usuario }) {
+  const [empresa, setEmpresa] = useState(usuario);
 
   useEffect(() => {
-    alunoService
+    empresaService
       .listarID(empresa.id)
       .then((response) => {
         setEmpresa(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
         toast.error("Erro ao recuperar as informações da empresa.");
@@ -27,8 +28,7 @@ function Index() {
       id: empresa.id,
     };
 
-    console.log(data);
-    alunoService
+    empresaService
       .atualizar(data.id, data)
       .then((response) => {
         console.log(data);
@@ -51,7 +51,7 @@ function Index() {
             nome: empresa.nome,
             email: empresa.email,
             cnpj: empresa.cnpj,
-            endereco: empresa.endereco,
+            endereco: empresa.endereco
           }}
           validationSchema={Yup.object().shape({
             nome: Yup.string()
@@ -67,20 +67,12 @@ function Index() {
             email: Yup.string()
               .required("* Campo email é obrigatório")
               .nullable(),
-            endereco: Yup.string()
-            .required("* Campo endereço é obrigatório")
-            .nullable(),
-            
+            endereco: Yup.string().nullable(),
+            contato: Yup.string().nullable(),
           })}
           onSubmit={(values) => onSubmitHandler(values)}
         >
-          {({
-            values,
-            errors,
-            touched,
-            handleSubmit,
-            handleChange,
-          }) => {
+          {({ values, errors, touched, handleSubmit, handleChange }) => {
             return (
               <>
                 <div
