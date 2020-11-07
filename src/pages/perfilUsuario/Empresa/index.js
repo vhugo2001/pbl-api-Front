@@ -140,6 +140,7 @@ function Index({ usuario }) {
                         error={touched.email && errors.email}
                         value={values.email}
                         placeholder="Email"
+                        type="email"
                       />
                       {errors.email && touched.email && (
                         <Card.Form.StyledInlineErrorMessage>
