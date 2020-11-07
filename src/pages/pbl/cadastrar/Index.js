@@ -40,6 +40,7 @@ const Index = () => {
   const [formValues, setFormValues] = useState();
 
   useEffect(() => {
+   // ApiCalendar.handleSignoutClick();
     serviceAluno
       .listarTodos()
       .then((response) => {
@@ -78,6 +79,7 @@ const Index = () => {
 
   const onSubmitHandler = (data) => {
     console.log(data);
+    const finalDate= data.dataConclusao;
     data = {
       ...data,
       professor: { id: 2 },
@@ -91,21 +93,16 @@ const Index = () => {
           id: temaSelecionado.id,
         },
       },
-    };
-
-    console.log(data);
-
-    const finalDate= data.dataConclusao;
-    console.log(finalDate)
+    };   
     const eventFromNow = {
       summary: "Entrega do PBL da disciplina " + disciplinaSelecionada.nome,
       description: "Problema a ser solucionado: " + data.problema,
       start: {
-        date: format(new Date(`${finalDate}`),"yyyy-dd-MM"),
+        date: format(new Date(finalDate),"yyyy-MM-dd"),
         timeZone: "America/Sao_Paulo",
       },
       end: {
-        date: format(new Date(`${finalDate}`),"yyyy-dd-MM"),
+        date: format(new Date(finalDate),"yyyy-MM-dd"),
         timeZone: "America/Sao_Paulo",
       },
     };
@@ -116,7 +113,6 @@ const Index = () => {
         setListaPbl(data);
         console.log(listaPbl);
         toast.success("Pbl cadastrado com sucesso.");
-        //ApiCalendar.handleAuthClick();
         ApiCalendar.createEvent(eventFromNow)
           .then((result) => {
             console.log(result);
