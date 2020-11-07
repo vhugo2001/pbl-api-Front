@@ -6,17 +6,7 @@ import SchemaProfessor from "./SchemaYup/SchemaProfessor";
 
 const Professor = () => {
   const onSubmitHandler = (data) => {
-    professorService
-      .registrarProfessor(data)
-      .then((response) => {
-        toast.success(response.data.message);
-        setTimeout(() => {
-          window.location.reload();
-        }, 5000);
-      })
-      .catch((error) => {
-        toast.error(error.response.data);
-      });
+    console.log(data);
   };
 
   return (
@@ -26,11 +16,6 @@ const Professor = () => {
         initialValues={{
           nome: "",
           email: "",
-          perfis: [
-            {
-              id: 2,
-            },
-          ],
           senha: "",
           senhaC: "",
         }}
