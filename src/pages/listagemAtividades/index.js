@@ -74,13 +74,7 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
                 < div >
                     <div className="BordaIconeTop" />
                     <div className="icon-button">
-                        {/* {moment(row.dataConclusao, "DD[/]MM[/]YYYY").isSameOrBefore(moment().add(1, 'days').format("DD[/]MM[/]YYYY"), 'day') ? <IoIcons.IoMdRadioButtonOff style={{ color: '#BB157C' }} />
-                            : moment('10/10/2002', "DD[/]MM[/]YYYY").isSameOrBefore(moment(row.dataConclusao, "DD[/]MM[/]YYYY").format("DD[/]MM[/]YYYY"), 'day') ? <IoIcons.IoMdRadioButtonOff style={{ color: 'green' }} /> : <IoIcons.IoMdRadioButtonOff style={{ color: '#C38A0E' }} />}
 
-                        {moment().isAfter(moment(row.dataConclusao, "DD[/]MM[/]YYYY", 'day') ? <IoIcons.IoMdRadioButtonOff style={{ color: '#BB157C' }} />
-                            : 1 === 1 ? <IoIcons.IoMdRadioButtonOff style={{ color: 'green' }} /> : <IoIcons.IoMdRadioButtonOff style={{ color: '#C38A0E' }} />} */}
-
-                        {/*e adicionar isEmptyObject(dataEntrega) ==false ,substituir valor base por dataEntrega */}
                         <IoIcons.IoMdRadioButtonOff />
                     </div>
                     <div className="BordaIconeBottom" />
@@ -329,87 +323,3 @@ function ListagemAtividades({ selectedPbl, setSelectedAtividade }) {
 }
 
 export default ListagemAtividades;
-
-
-// {
-//     "id": 2,
-//     "titulo": "Tit",
-//     "descricao": "Desc",
-//     "dataCriacao": "01/04/2020",
-//     "dataConclusao": "11/12/2020",
-//     "disciplina": {
-//       "id": 1,
-//       "nome": "Finanças"
-//     },
-//     "professor": {
-//       "id": 4,
-//       "email": "prof1@gmail.com",
-//       "ativo": true,
-//       "excluido": false,
-//       "perfil": [],
-//       "nome": "Professor",
-//       "disciplina": {
-//         "id": 1,
-//         "nome": "Finanças"
-//       }
-//     },
-//     "atividadePbls": [
-//       {
-//         "id": 1,
-//         "dataEntrega": "10/08/2020",
-//         "nota": 8,
-//         "pbl": {
-//           "idPbl": 1,
-//           "problema": "Problema",
-//           "situacaoProblema": "sitProb",
-//           "resumo": "resumo",
-//           "dataInicio": "01/01/2020",
-//           "dataConclusao": "05/05/2021",
-//           "professor": {
-//             "id": 4,
-//             "email": "prof1@gmail.com",
-//             "ativo": true,
-//             "excluido": false,
-//             "perfil": [],
-//             "nome": "Professor",
-//             "disciplina": {
-//               "id": 1,
-//               "nome": "Finanças"
-//             }
-//           },
-//           "aluno": [],
-//           "pblTemaDisciplina": {
-//             "tema": {
-//               "id": 1,
-//               "nome": "Tema F1",
-//               "disciplinas": [
-//                 {
-//                   "id": 1,
-//                   "nome": "Finanças"
-//                 }
-//               ]
-//             },
-//             "disciplina": {
-//               "id": 1,
-//               "nome": "Finanças"
-//             },
-//             "id": 1
-//           }
-//         },
-//         "aluno": {
-//           "id": 3,
-//           "email": "usuario1@gmail.com",
-//           "ativo": true,
-//           "excluido": false,
-//           "perfil": [
-//             {
-//               "nome": "ROLE_ALUNO",
-//               "id": 1
-//             }
-//           ],
-//           "nome": "Teste2",
-//           "matricula": "Matricula"
-//         }
-//       }
-//     ]
-//   }
