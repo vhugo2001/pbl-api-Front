@@ -1,7 +1,6 @@
 import http from "./httpCommon";
-import authHeader from './AuthHeader';
 
-const URL_PBL = "/aluno";
+const URL_PBL = "/professor";
 
 const listarTodos = () => {
   return http.get(URL_PBL);

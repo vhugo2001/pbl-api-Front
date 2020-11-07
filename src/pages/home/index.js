@@ -2,7 +2,7 @@ import React from "react";
 import { Container,  Tabs, Tab } from "react-bootstrap";
 
 import FormLogin from "../../Components/Login/FormLogin/FormLogin";
-import FormCadastroAluno from "../../Components/Login/FormCadastro/FormCadastro";
+import FormCadastro from "../../Components/Login/FormCadastro/FormCadastro";
 
 function Login() {
   return (
@@ -13,7 +13,7 @@ function Login() {
             <FormLogin />
           </Tab>
           <Tab eventKey="aluno" title="Registrar">
-            <FormCadastroAluno />
+            <FormCadastro />
           </Tab>
         </Tabs>
       </div>

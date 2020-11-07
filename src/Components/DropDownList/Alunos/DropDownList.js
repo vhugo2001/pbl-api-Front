@@ -185,10 +185,10 @@ const DefaultDropDownList = ({ lista, onSelect, ...props }) => {
 
   const onRemoveClicked = (id) => (event) => {
     event.stopPropagation();
-
+    console.log(alunoSelecionado)
     setSelectedOption(selectedOption.filter((f) => f.id !== id));
-    onSelect(alunoSelecionado.filter((f) => f.aluno.id !== id));
-    setAlunoSelecionado(alunoSelecionado.filter((f) => f.aluno.id !== id));
+    onSelect(alunoSelecionado.filter((f) => f.id !== id));
+    setAlunoSelecionado(alunoSelecionado.filter((f) => f.id !== id));
   };
 
   const onOptionClicked = (option) => () => {
@@ -196,7 +196,7 @@ const DefaultDropDownList = ({ lista, onSelect, ...props }) => {
 
     setAlunoSelecionado((alunoSelecionado) => [
       ...alunoSelecionado,
-      {  id: option.id },
+      { id: option.id },
     ]);
     //console.log(alunoSelecionado);
     setSelectedOption([...selectedOption, option]);

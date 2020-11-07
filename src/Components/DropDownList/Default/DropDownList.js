@@ -106,7 +106,7 @@ const DefaultDropDownList = ({ lista, onSelect, selected, ...props }) => {
       onSelect(selected[0]);
      
     }else
-    {
+    { 
       console.log("else: " + selected);
       onSelect("")
       setSelectedOption("");

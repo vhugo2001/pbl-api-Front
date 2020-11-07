@@ -42,5 +42,11 @@ export const SidebarData = [
     icon: <IoIcons.IoMdPeople />,
     cName: "nav-text",
   },
- 
+  {
+    title: "Manter Tarefa",
+    path: "/admin/manter-tarefa",
+    icon: <IoIcons.IoIosPaper />,
+    cName: "nav-text",
+  },
+
 ];

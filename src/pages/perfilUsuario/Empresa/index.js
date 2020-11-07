@@ -1,42 +1,42 @@
 import React, { useState, useEffect } from "react";
-import { Card } from "../../Components/Card/CardPrincipal";
-import alunoService from "../../Services/AlunoService";
-import authService from "../../Services/AuthService";
+import { Card } from "../../../Components/Card/CardPrincipal";
+import empresaService from "../../../Services/EmpresaService";
+import authService from "../../../Services/AuthService";
 import { toast } from "react-toastify";
 
-import { Formik, Form, ErrorMessage } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
+import SchemaEmpresa from "../Schemas/SchemaEmpresa";
 
-function PerfilUsuario() {
-  const [aluno, setAluno] = useState(authService.getCurrentUser());
-
+function Index({ usuario }) {
+  const [empresa, setEmpresa] = useState(usuario);
 
   useEffect(() => {
-    alunoService
-      .listarID(aluno.id)
+    empresaService
+      .listarID(empresa.id)
       .then((response) => {
-        setAluno(response.data);
+        setEmpresa(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
-        toast.error("Erro ao acessar a lista de alunos.");
+        toast.error("Erro ao recuperar as informações da empresa.");
       });
   }, []);
 
   const onSubmitHandler = (data) => {
-
     data = {
-      ...data, id: aluno.id
-    }
+      ...data,
+      id: empresa.id,
+    };
 
-    console.log(data);
-    alunoService
+    empresaService
       .atualizar(data.id, data)
       .then((response) => {
         console.log(data);
         toast.success("Perfil atualizado com sucesso.");
       })
       .catch((error) => {
-          toast.error(error.response.data.mensage);
+        toast.error(error.response.data.mensage);
       });
   };
 
@@ -49,33 +49,15 @@ function PerfilUsuario() {
         <Formik
           enableReinitialize
           initialValues={{
-            nome: aluno.nome,
-            email: aluno.email,
-            matricula: aluno.matricula,
+            nome: empresa.nome,
+            email: empresa.email,
+            cnpj: empresa.cnpj,
+            endereco: empresa.endereco
           }}
-          validationSchema={Yup.object().shape({
-            nome: Yup.string()
-              .required("* Campo Nome é obrigatório")
-              .nullable(),
-            email: Yup.string()
-              .required("* Campo E-mail é obrigatório")
-              .nullable(),
-            matricula: Yup.string()
-              .required("* Campo Matricula é obrigatório")
-              .nullable(),
-          })}
+          validationSchema={SchemaEmpresa}
           onSubmit={(values) => onSubmitHandler(values)}
         >
-          {({
-            values,
-            errors,
-            touched,
-            handleSubmit,
-            handleChange,
-            isSubmitting,
-            validating,
-            valid,
-          }) => {
+          {({ values, errors, touched, handleSubmit, handleChange }) => {
             return (
               <>
                 <div
@@ -90,7 +72,7 @@ function PerfilUsuario() {
                 </div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <Card.Image
-                    src={require("../../Components/Images/default_profile.png")}
+                    src={require("../../../Components/Images/default_profile.png")} // incluir url vinda do usuario logado
                   />
 
                   <Card.Form
@@ -115,17 +97,35 @@ function PerfilUsuario() {
                       )}
                     </Card.Form.Group>
 
+                    <Card.Form.Group>
+                      <Card.Form.Title>CNPJ</Card.Form.Title>
+                      <Card.Form.InputText
+                        name="cnpj"
+                        value={values.cnpj}
+                        onChange={handleChange}
+                        valid={touched.cnpj && !errors.cnpj}
+                        error={touched.cnpj && errors.cnpj}
+                        placeholder="CNPJ"
+                      />
+                      {errors.cnpj && touched.cnpj && (
+                        <Card.Form.StyledInlineErrorMessage>
+                          {errors.cnpj}
+                        </Card.Form.StyledInlineErrorMessage>
+                      )}
+                    </Card.Form.Group>
+
                     <Card.Form.BreakRow />
 
                     <Card.Form.Group>
-                      <Card.Form.Title>E-mail</Card.Form.Title>
+                      <Card.Form.Title>Email</Card.Form.Title>
                       <Card.Form.InputText
                         name="email"
-                        value={values.email}
                         onChange={handleChange}
                         valid={touched.email && !errors.email}
                         error={touched.email && errors.email}
-                        placeholder="E-mail"
+                        value={values.email}
+                        placeholder="Email"
+                        type="email"
                       />
                       {errors.email && touched.email && (
                         <Card.Form.StyledInlineErrorMessage>
@@ -137,18 +137,18 @@ function PerfilUsuario() {
                     <Card.Form.BreakRow />
 
                     <Card.Form.Group>
-                      <Card.Form.Title>Matricula</Card.Form.Title>
+                      <Card.Form.Title>Endereço</Card.Form.Title>
                       <Card.Form.InputText
-                        name="matricula"
+                        name="endereco"
                         onChange={handleChange}
-                        valid={touched.matricula && !errors.matricula}
-                        error={touched.matricula && errors.matricula}
-                        value={values.matricula}
-                        placeholder="Matricula"
+                        valid={touched.endereco && !errors.endereco}
+                        error={touched.endereco && errors.endereco}
+                        value={values.endereco}
+                        placeholder="Endereço"
                       />
-                      {errors.matricula && touched.matricula && (
+                      {errors.endereco && touched.endereco && (
                         <Card.Form.StyledInlineErrorMessage>
-                          {errors.matricula}
+                          {errors.endereco}
                         </Card.Form.StyledInlineErrorMessage>
                       )}
                     </Card.Form.Group>
@@ -169,4 +169,4 @@ function PerfilUsuario() {
   );
 }
 
-export default PerfilUsuario;
+export default Index;

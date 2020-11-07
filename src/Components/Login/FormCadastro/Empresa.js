@@ -1,13 +1,13 @@
 import React from "react";
 import { Formik } from "formik";
 import { toast } from "react-toastify";
-import alunoService from "../../../Services/AuthService";
-import SchemaAluno from "./SchemaYup/SchemaAluno";
+import empresaService from "../../../Services/AuthService";
+import SchemaEmpresa from "./SchemaYup/SchemaEmpresa";
 
-const Aluno = () => {
+const Empresa = () => {
   const onSubmitHandler = (data) => {
-    alunoService
-      .registrarAluno(data)
+    empresaService
+      .registrarEmpresa(data)
       .then((response) => {
         toast.success(response.data.message);
         setTimeout(() => {
@@ -25,17 +25,12 @@ const Aluno = () => {
         enableReinitialize
         initialValues={{
           nome: "",
-          matricula: "",
+          cnpj: "",
           email: "",
-          perfis: [
-            {
-              id: 1,
-            },
-          ],
           senha: "",
           senhaC: "",
         }}
-        validationSchema={SchemaAluno}
+        validationSchema={SchemaEmpresa}
         onSubmit={(values) => onSubmitHandler(values)}
       >
         {({ errors, touched, handleSubmit, handleChange }) => {
@@ -59,15 +54,15 @@ const Aluno = () => {
 
                   <div className="field-wrap">
                     <input
-                      name="matricula"
+                      name="cnpj"
                       type="text"
-                      valid={touched.matricula && !errors.matricula}
-                      error={touched.matricula && errors.matricula}
-                      placeholder="Matrícula"
+                      valid={touched.cnpj && !errors.cnpj}
+                      error={touched.cnpj && errors.cnpj}
+                      placeholder="CNPJ"
                       onChange={handleChange}
                     />
-                    {errors.matricula && touched.matricula && (
-                      <div className="error-message">{errors.matricula}</div>
+                    {errors.cnpj && touched.cnpj && (
+                      <div className="error-message">{errors.cnpj}</div>
                     )}
                   </div>
                 </div>
@@ -122,4 +117,4 @@ const Aluno = () => {
   );
 };
 
-export default Aluno;
+export default Empresa;

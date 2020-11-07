@@ -1,6 +1,5 @@
 import http from "./httpCommon";
 
-
 const URL_AUT = "/pbl-api/auth";
 
 const login = (data) => {
@@ -8,20 +7,30 @@ const login = (data) => {
 };
 
 const registrarAluno = (data) => {
-    return http.post(URL_AUT + "/aluno/registrar", data);
+  return http.post(URL_AUT + "/aluno/registrar", data);
+};
+
+const registrarProfessor = (data) => {
+  return http.post(URL_AUT + "/professor/registrar", data);
+};
+
+const registrarEmpresa = (data) => {
+  return http.post(URL_AUT + "/empresa/registrar", data);
 };
 
 const getCurrentUser = () => {
   return JSON.parse(localStorage.getItem("user"));
-}
+};
 
 const logout = () => {
   localStorage.removeItem("user");
-}
+};
 
 export default {
+  registrarProfessor,
+  registrarEmpresa,
   registrarAluno,
   getCurrentUser,
   login,
-  logout
+  logout,
 };
