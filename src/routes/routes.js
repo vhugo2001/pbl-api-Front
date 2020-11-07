@@ -3,8 +3,6 @@ import { Switch } from "react-router-dom";
 import PrivateRoute from "../Components/PrivatRouter/Router";
 
 import  {Role} from '../helpers/role';
-import  {history} from '../helpers/history';
-
 import listagemAtividade from "../pages/listagemAtividades/index";
 import ConsultarAlunos from "../pages/consultarAlunos";
 import PerfilUsuario from "../pages/perfilUsuario/FormPerfil";

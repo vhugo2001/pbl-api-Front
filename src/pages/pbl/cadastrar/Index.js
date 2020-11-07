@@ -14,6 +14,7 @@ import serviceTema from "../../../Services/TemaPblService";
 import serviceDisciplina from "../../../Services/DisciplinaService";
 import servicePbl from "../../../Services/PblService";
 import { toast } from "react-toastify";
+import ApiCalendar from "react-google-calendar-api";
 
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -50,8 +51,11 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    if (disciplinaSelecionada.id !== undefined && disciplinaSelecionada.id !== "") {
-      console.log(disciplinaSelecionada.id)
+    if (
+      disciplinaSelecionada.id !== undefined &&
+      disciplinaSelecionada.id !== ""
+    ) {
+      console.log(disciplinaSelecionada.id);
       serviceTema
         .listarIDDisciplina(disciplinaSelecionada.id)
         .then((response) => {
@@ -73,7 +77,7 @@ const Index = () => {
   }, []);
 
   const onSubmitHandler = (data) => {
-    console.log(data)
+    console.log(data);
     data = {
       ...data,
       professor: { id: 2 },
@@ -91,6 +95,20 @@ const Index = () => {
 
     console.log(data);
 
+    const finalDate= data.dataConclusao;
+    console.log(finalDate)
+    const eventFromNow = {
+      summary: "Entrega do PBL da disciplina " + disciplinaSelecionada.nome,
+      description: "Problema a ser solucionado: " + data.problema,
+      start: {
+        date: format(new Date(`${finalDate}`),"yyyy-dd-MM"),
+        timeZone: "America/Sao_Paulo",
+      },
+      end: {
+        date: format(new Date(`${finalDate}`),"yyyy-dd-MM"),
+        timeZone: "America/Sao_Paulo",
+      },
+    };
     servicePbl
       .incluir(data)
       .then((response) => {
@@ -98,6 +116,14 @@ const Index = () => {
         setListaPbl(data);
         console.log(listaPbl);
         toast.success("Pbl cadastrado com sucesso.");
+        //ApiCalendar.handleAuthClick();
+        ApiCalendar.createEvent(eventFromNow)
+          .then((result) => {
+            console.log(result);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
       .catch((error) => {
         toast.error("Erro ao cadastrar o PBL.");
