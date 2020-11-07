@@ -212,5 +212,11 @@ input.form-control, label.search-label{
   border-radius: 4px;
   
 }
+.container-list {
+  padding: 5px;
+  border: 0 !important;
+}
 
-
+.div.react-datepicker,div .react-datepicker-popper {
+  z-index: 9999 !important;
+}
