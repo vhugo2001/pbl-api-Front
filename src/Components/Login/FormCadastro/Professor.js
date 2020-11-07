@@ -1,22 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik } from "formik";
 import { toast } from "react-toastify";
-import empresaService from "../../../Services/AuthService";
-import SchemaEmpresa from "./SchemaYup/SchemaEmpresa";
+import professorService from "../../../Services/AuthService";
+import SchemaProfessor from "./SchemaYup/SchemaProfessor";
 
-const Empresa = () => {
+const Professor = () => {
   const onSubmitHandler = (data) => {
-    empresaService
-      .registrarEmpresa(data)
-      .then((response) => {
-        toast.success(response.data.message);
-        setTimeout(() => {
-          window.location.reload();
-        }, 5000);
-      })
-      .catch((error) => {
-        toast.error(error.response.data);
-      });
+    console.log(data);
   };
 
   return (
@@ -25,46 +15,29 @@ const Empresa = () => {
         enableReinitialize
         initialValues={{
           nome: "",
-          cnpj: "",
           email: "",
           senha: "",
           senhaC: "",
         }}
-        validationSchema={SchemaEmpresa}
+        validationSchema={SchemaProfessor}
         onSubmit={(values) => onSubmitHandler(values)}
       >
         {({ errors, touched, handleSubmit, handleChange }) => {
           return (
             <>
               <form action="/" autoComplete="off" onSubmit={handleSubmit}>
-                <div className="top-row">
-                  <div className="field-wrap">
-                    <input
-                      name="nome"
-                      type="text"
-                      valid={touched.nome && !errors.nome}
-                      error={touched.nome && errors.nome}
-                      placeholder="Nome"
-                      onChange={handleChange}
-                    />
-                    {errors.nome && touched.nome && (
-                      <div className="error-message">{errors.nome}</div>
-                    )}
-                  </div>
-
-                  <div className="field-wrap">
-                    <input
-                      name="cnpj"
-                      type="text"
-                      valid={touched.cnpj && !errors.cnpj}
-                      error={touched.cnpj && errors.cnpj}
-                      placeholder="CNPJ"
-                      onChange={handleChange}
-                    />
-                    {errors.cnpj && touched.cnpj && (
-                      <div className="error-message">{errors.cnpj}</div>
-                    )}
-                  </div>
+                <div className="field-wrap">
+                  <input
+                    name="nome"
+                    type="text"
+                    valid={touched.nome && !errors.nome}
+                    error={touched.nome && errors.nome}
+                    placeholder="Nome"
+                    onChange={handleChange}
+                  />
+                  {errors.nome && touched.nome && (
+                    <div className="error-message">{errors.nome}</div>
+                  )}
                 </div>
                 <div className="field-wrap">
                   <input
@@ -117,4 +90,4 @@ const Empresa = () => {
   );
 };
 
-export default Empresa;
+export default Professor;
