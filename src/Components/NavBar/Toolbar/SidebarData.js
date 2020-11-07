@@ -4,7 +4,7 @@ import * as AiIcons from "react-icons/ai";
 import * as IoIcons from "react-icons/io";
 import * as MdIcons from "react-icons/md";
 
-export const SidebarData = [
+export const SidebarDataProfessor = [
   {
     title: "PBL",
     path: "/admin/pbl",
@@ -43,4 +43,14 @@ export const SidebarData = [
     cName: "nav-text",
   },
  
+];
+
+
+export const SidebarDataAluno = [
+  {
+    title: "Atividades",
+    path: "/aluno/atividade",
+    icon: <AiIcons.AiFillHome />,
+    cName: "nav-text",
+  },
 ];

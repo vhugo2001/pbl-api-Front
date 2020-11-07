@@ -21,7 +21,7 @@ const Routes = () => (
     <PrivateRoute path="/admin/dashboard" roles={[Role.Professor]}  component={Dashboard} />
     <PrivateRoute path="/admin/iniciar-pbl" roles={[Role.Professor]}  component={IniciarPBL} />
     <PrivateRoute path="/admin/alunos"  roles={[Role.Professor]} component={ConsultarAlunos} />
-    <PrivateRoute path="/admin/perfil-usuario" roles={[Role.Professor]} component={PerfilUsuario} />
+    <PrivateRoute path="/admin/perfil-usuario" component={PerfilUsuario} />
     {/* <Route path="/cadastro" component={Cadastro} /> */}
     <PrivateRoute path="/admin/listagemAtividades" roles={[Role.Professor]} component={listagemAtividade}/>
     <PrivateRoute path="/admin/cadastro" roles={[Role.Professor]}  component={Cadastro} />
