@@ -13,6 +13,7 @@ const Router = ({ component: Component, roles, ...rest }) => {
             <Redirect to={{ pathname: "/", state: { from: props.location } }} />
           );
         }
+        
         if (roles && roles.indexOf(currentUser.roles[0]) === -1) {
           return <Redirect to={{ pathname: "/admin" }} />;
         }
