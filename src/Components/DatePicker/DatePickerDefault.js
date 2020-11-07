@@ -7,10 +7,7 @@ import { format } from 'date-fns'
 
 export const DatePickerDefault = ({ value }) => {
 
-
     const [dataConclusao, setDataConclusao] = useState(new Date(value));
-    console.log(value)
-    console.log(dataConclusao)
     return (
         <DatePicker
 

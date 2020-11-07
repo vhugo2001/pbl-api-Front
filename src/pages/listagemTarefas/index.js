@@ -7,7 +7,6 @@ import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.c
 import * as MdIcons from "react-icons/md";
 import * as IoIcons from "react-icons/io";
 import '../../Components/TableTarefa/listagemTarefa.css'
-import paginationFactory from 'react-bootstrap-table2-paginator';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import { toast } from "react-toastify";
 import { Card } from "../../Components/Card/CardPrincipal";
@@ -162,7 +161,7 @@ function ListagemTarefas() {
                 display: 'none'
             },
             editorRenderer: (editorProps, value, row, column, rowIndex, columnIndex) => (
-                { ...console.log(editorProps) },
+
                 // <DatePickerDefault
                 //     name="dataConclusao"
                 //     locale={pt}
