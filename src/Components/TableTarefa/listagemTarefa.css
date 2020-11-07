@@ -28,7 +28,7 @@ div.scrollExpand div.react-bootstrap-table table.table.table-condensed thead tr 
   width: 14% !important;
 } 
 div.scrollExpand div.react-bootstrap-table table.table.table-condensed thead tr  th.expand-cell-header{
-  border-color: transparent;
+
   pointer-events: none;
 }
  div.scrollExpand div.react-bootstrap-table table.table.table-condensed tbody tr  td.selection-cell{
@@ -56,11 +56,32 @@ div.scrollExpand div.react-bootstrap-table table.table.table-condensed tbody tr 
   height: 35px;
   margin-bottom: 0px !important;
   cursor: pointer;
+  
 }
 
 .adicionar-button:hover{
   color:#3b62c5;
 }
+
+.action-button-adicionar{text-align: start;}
+
+
+.deletar-button{
+  font-size: 1.7rem;
+  background: none;
+  color:#7f89a2;
+  margin-top: -10px;
+  height: 35px;
+  margin-bottom: 0px !important;
+  cursor: pointer;
+  
+}
+
+.deletar-button:hover{
+  color:red;
+}
+
+.action-button-deletar{text-align: center;}
 
 .checkbox{
   -ms-transform: scale(2); /* IE */

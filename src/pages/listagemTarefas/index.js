@@ -12,7 +12,10 @@ import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import { toast } from "react-toastify";
 import { Card } from "../../Components/Card/CardPrincipal";
 import serviceAtividade from '../../Services/AtividadeService'
-import cellEditFactory from 'react-bootstrap-table2-editor';
+import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
+import subDays from "date-fns/subDays";
+import pt from "date-fns/locale/pt";
+import DatePickerField from '../../Components/DatePicker/DatePickerField'
 import {
     Title,
     Group,
@@ -24,14 +27,13 @@ const { SearchBar } = Search;
 function ListagemTarefas() {
     // { selectedPbl, setSelectedAtividade }
     const [atividade, setAtividade] = useState([])
-    let notas
-    let dataEntreg
-    let alunoResp
+    const [tarefaEditada, setTarefaEditada] = useState({})
+    const [dataConclusao, setDataConclusao] = useState("");
 
     useEffect(() => {
 
         serviceAtividade
-            .listarIdPbl(13)
+            .listarIdPbl(21)
             .then((response) => {
                 let data = response.data;
                 setAtividade(data);
@@ -43,6 +45,19 @@ function ListagemTarefas() {
             });
 
     }, []);
+
+
+    // useEffect(() => {
+    //     if (tarefaEditada.id !== undefined) {
+    //         serviceTarefa
+    //             .atualizarAtivPbl(tarefaEditada.id, tarefaEditada)
+    //             .then((response) => {
+
+    //                 toast.success("Nota editada com sucesso.")
+    //             })
+    //             .catch((error) => { toast.danger("Não foi possível editar a nota.") });
+    //     }
+    // }, [tarefaEditada])
 
     const tarefa = atividade
 
@@ -57,7 +72,7 @@ function ListagemTarefas() {
                     <label className="TituloAtiv"><b>{row.titulo}</b></label><br />
                 </div>
             ), headerStyle: (colum, colIndex) => {
-                return { backgroundColor: 'transparent', border: 'none' };
+                return { backgroundColor: 'transparent' };
             }
 
         },
@@ -72,7 +87,7 @@ function ListagemTarefas() {
                 </div>
             ),
             headerStyle: (colum, colIndex) => {
-                return { textAlign: 'center', backgroundColor: 'transparent', border: 'none', paddingRight: '0px' };
+                return { textAlign: 'center', backgroundColor: 'transparent' };
             }
 
         },
@@ -82,19 +97,16 @@ function ListagemTarefas() {
             text: "",
 
             formatter: (cellContent, row) => (
-                <div className="adicionar-button" onClick={() => alert('bbb')}>
-                    <IoIcons.IoIosAddCircleOutline />
+                <div className="action-button-adicionar">
+                    <IoIcons.IoIosAddCircleOutline className="adicionar-button" onClick={() => alert('Botao de Add')} />
                 </div>
             ),
             headerStyle: (colum, colIndex) => {
-                return { width: '35px', height: '5px', backgroundColor: 'transparent', border: 'none', marginRight: '50px' };
+                return { width: '105px', height: '5px', backgroundColor: 'transparent', marginRight: '50px' };
             }
         },
 
     ];
-
-
-
 
     const subcolunas = [
         {
@@ -104,14 +116,14 @@ function ListagemTarefas() {
             formatter: (cellContent, row) => (
 
                 < div >
-                    <div className="icone-button" onClick={() => alert('aaa')}>
+                    <div className="icone-button" onClick={() => alert('Botao de Check')}>
                         <IoIcons.IoIosCheckmarkCircleOutline />
                     </div>
 
                 </div >
             ),
             headerStyle: (colum, colIndex) => {
-                return { width: '35px', height: '5px', textAlign: 'center', backgroundColor: 'transparent', border: 'none' };
+                return { width: '35px', height: '1px', textAlign: 'center', backgroundColor: 'transparent', border: 'none', padding: '0' };
             }, editable: false
         },
         {
@@ -125,57 +137,81 @@ function ListagemTarefas() {
             ),
             headerStyle: {
                 display: 'none'
-            },
-            editable: false
+            }
         },
         {
-            dataField: 'atividadePbls',
-            text: 'Aluno',
+            dataField: 'atividadePbls[0].pbl.aluno[0].nome',
+            text: '',
             formatter: (cellContent, row) => (
-                <div >
-                    {cellContent.forEach((item) => {
-                        if (item.aluno !== null && item.aluno !== undefined) {
-                            alunoResp = item.aluno.nome
-
-                        }
-
-
-                    })}
-                    <label ><b>{alunoResp}</b></label><br />
-
+                <div style={{ textAlign: 'center' }}>
+                    <label >{cellContent}</label><br />
                 </div>
             ), headerStyle: {
                 display: 'none'
             },
-            editable: false
-        }, {
-            dataField: 'atividadePbls',
-            text: 'Data Entrega',
+            // editorRenderer: (editorProps, value, row, column, rowIndex, columnIndex) => (
+            //     <QualityRanger {...editorProps} value={value} />
+            // )
+        },
+        {
+            dataField: 'dataConclusao',
+            text: '',
             formatter: (cellContent, row) => (
-                <div >
-                    {cellContent.forEach((item) => {
-
-                        dataEntreg = item.dataEntrega
-
-
-                    })}
-
-
-                    <label ><b>{dataEntreg}</b></label><br />
-
+                <div style={{ textAlign: 'center' }}>
+                    <label >{cellContent}</label><br />
                 </div>
             ),
             headerStyle: {
                 display: 'none'
             },
-            editable: false
+            // editorRenderer: (editorProps, value, row, column, rowIndex, columnIndex) => (
+            //     <DatePickerField
+            //         name="dataInicio"
+            //         locale={pt}
+            //         minDate={subDays(new Date(), 0)}
+            //         useShortMonthInDropdown
+            //         dateFormat="dd/MM/yyyy"
+            //         selected={dataConclusao}
+            //         customInput={
+            //             <input value={dataConclusao} />
+            //         }
+            //     />
+            //     <QualityRanger {...editorProps} value={value} />
+            // )
+        },
+        {
+            dataField: "icone",
+            text: "",
+
+            formatter: (cellContent, row) => (
+                <div className="action-button-deletar">
+                    <IoIcons.IoMdTrash className="deletar-button" onClick={() => handleExcluir(row)} />
+                </div>
+            ),
+            headerStyle: {
+                display: 'none'
+            }, editable: false
         },
     ];
 
-    const rowStyle = (row, rowIndex) => {
-        return { backgroundColor: '#fff' };
-
+    const handleExcluir = (item) => {
+        // excluirTarefa(item.id);
     };
+
+    //   const excluirTarefa = (dados) => {
+    //     serviceTarefa
+    //       .deletar(dados)
+    //       .then((response) => {
+    //         let data = response.data;
+    //         setAluno(data);
+    //         toast.success("Sucesso ao excluir a tarefa.");
+    //       })
+    //       .catch((error) => {
+    //         toast.error("Erro ao excluir a tarefa.");
+    //       });
+    //   };
+
+
     const verificaDesc = (row) => {
         if (row.descricao === "" || row.descricao === null) {
             row.descricao = "Não há descrição para esta atividade"
@@ -189,7 +225,7 @@ function ListagemTarefas() {
         mode: 'click',
         blurToSave: true,
         afterSaveCell: (oldValue, newValue, row, column) => {
-
+            // setTarefaEditada(row)
         }
     });
 
@@ -261,7 +297,7 @@ function ListagemTarefas() {
                     keyField='id'
                     data={tarefa}
                     columns={colunas}
-
+                    {...console.log(tarefa)}
                     search
 
                 >
@@ -282,7 +318,7 @@ function ListagemTarefas() {
                                         condensed
                                         expandRow={expandRow}
                                         noDataIndication="Sem resultados"
-                                        rowStyle={rowStyle} />
+                                    />
                                 </div>
                             </>
                         )
