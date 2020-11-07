@@ -50,15 +50,49 @@ function Navbar() {
             <MdIcons.MdNotificationsNone />
           </Link>
 
+        
+
           <NavbarDropdown className="drop-perfil">
             <NavbarDropdown.Toggle className="menu__item">
               <NavbarDropdown.Open>
+
                 <CgIcons.CgProfile className="profile-button" />
+
               </NavbarDropdown.Open>
               <NavbarDropdown.Close>
+
                 <CgIcons.CgProfile className="profile-button" />
+
               </NavbarDropdown.Close>
             </NavbarDropdown.Toggle>
+
+            <NavbarDropdown.CSSTransitionMenu
+              className="example1-dropdown-menu"
+              classNames="example1-dropdown-menu"
+              timeout={200}
+            >
+              <NavbarDropdown.Item className="example1-dropdown-menu-item">
+                <Link to="/admin/perfil-usuario" className="link-menu">
+
+                  <div className="example1-dropdown-menu-item__spacer" />
+                  <div className="example1-dropdown-menu-item__text">
+                    Meu Perfil
+                </div>
+                </Link>
+              </NavbarDropdown.Item>
+              <NavbarDropdown.Item className="example1-dropdown-menu-item">
+                <a
+                  href="/admin/"
+                  className="link-menu"
+                  onClick={ServiceAuth.logout}
+                >
+
+                  <div className="example1-dropdown-menu-item__spacer" />
+                  <div className="example1-dropdown-menu-item__text">Sair</div>
+                </a>
+              </NavbarDropdown.Item>
+            </NavbarDropdown.CSSTransitionMenu>
+         
 
             <NavbarDropdown.CSSTransitionMenu
               className="example1-dropdown-menu"
