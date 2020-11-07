@@ -126,6 +126,7 @@ function PerfilUsuario() {
                         valid={touched.email && !errors.email}
                         error={touched.email && errors.email}
                         placeholder="E-mail"
+                        type="email"
                       />
                       {errors.email && touched.email && (
                         <Card.Form.StyledInlineErrorMessage>
