@@ -6,14 +6,14 @@ import Empresa from "./Empresa";
 
 const FormPerfil = () => {
   const Perfil = () => {
-    
-    switch (authService.getCurrentUser().roles[0]) {
+    let usuarioLogado =  authService.getCurrentUser();
+    switch (usuarioLogado.roles[0]) {
       case "ROLE_ALUNO":
-        return <Aluno />;
+        return <Aluno usuario={usuarioLogado} />;
       case "ROLE_PROFESSOR":
-        return <Professor />;
+        return <Professor usuario={usuarioLogado} />;
       default:
-        return <Empresa />;
+        return <Empresa usuario={usuarioLogado}/>;
     }
   };
   return <Perfil />;
