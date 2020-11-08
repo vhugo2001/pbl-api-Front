@@ -42,6 +42,15 @@ const Index = ({ setSelectedContato, selectedContato, isAtualizar }) => {
 
   const handleExcluir = () => {
     setShow(false);
+    empresaService
+      .deletarContato(selectedContato.id)
+      .then((response) => {
+        toast.success("Contato excluido com sucesso.");
+        listarTodos();
+      })
+      .catch((error) => {
+        toast.error(error.response.data);
+      });
   };
 
   const handleAlterar = (row) => {
@@ -154,7 +163,6 @@ const Index = ({ setSelectedContato, selectedContato, isAtualizar }) => {
   };
   const tableRowEvents = {
     onClick: (e, row, rowIndex) => {
-      console.log(row)
       setSelectedContato(row);
     },
   };

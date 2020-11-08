@@ -10,17 +10,7 @@ const listarID = (id) => {
   return http.get(URL_EMPRESA + `/${id}`);
 };
 
-const listarTodosContatos = () => {
-  return http.get(URL_EMPRESA + "/contato");
-};
 
-const listarContatoID = (id) => {
-  return http.get(URL_EMPRESA + "/contato"`/${id}`);
-};
-
-const incluirContato = (data) => {
-  return http.post(URL_EMPRESA + "/contato", data);
-};
 
 const incluir = (data) => {
   return http.post(URL_EMPRESA, data);
@@ -34,6 +24,26 @@ const deletar = (id) => {
   return http.delete(URL_EMPRESA + `/${id}`);
 };
 
+const listarTodosContatos = () => {
+  return http.get(URL_EMPRESA + "/contato");
+};
+
+const listarContatoID = (id) => {
+  return http.get(URL_EMPRESA + "/contato"`/${id}`);
+};
+
+const incluirContato = (data) => {
+  return http.post(URL_EMPRESA + "/contato", data);
+};
+
+const atualizarContato = (id, data) => {
+  return http.put(URL_EMPRESA + "/contato" + `/${id}`, data);
+};
+
+const deletarContato = (id) => {
+  return http.delete(URL_EMPRESA + "/contato" + `/${id}`);
+};
+
 export default {
   listarTodos,
   listarID,
@@ -43,4 +53,6 @@ export default {
   listarTodosContatos,
   listarContatoID,
   incluirContato,
+  atualizarContato,
+  deletarContato
 };
