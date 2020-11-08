@@ -49,6 +49,12 @@ export const SidebarData = [
     cName: "nav-text",
   },
   {
+    title: "Manter Contato",
+    path: "/admin/manter-contato",
+    icon: <IoIcons.IoMdPeople />,
+    cName: "nav-text",
+  },
+  {
     title: "Teste Calendario",
     path: "/admin/calendario",
     icon: <IoIcons.IoMdPeople />,

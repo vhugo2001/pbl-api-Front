@@ -5,57 +5,100 @@ import * as IoIcons from "react-icons/io";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
+import "react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css";
 import "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css";
 
 import "../../../Components/TableAtividade/style";
 import "./styles.css";
-import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
+import "react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css";
 import { toast } from "react-toastify";
-import problemaService from "../../../Services/ProblemaService";
-import SchemaCadastrar from "../Schema/SchemaCadastrar";
-import Checkbox from "../../../Components/Checkbox/index";
-import RangeSlider from "react-bootstrap-range-slider";
-import authService from "../../../Services/AuthService";
 
-const Index = ({ selected, setSelectedProblema, setIsAtualizar }) => {
-  let usuarioLogado =  authService.getCurrentUser();
-  const [problema, setProblema] = useState("");
+import SchemaCadastrar from "../Schema/SchemaCadastrar";
+import DropDownList from "../../../Components/DropDownList/Default/DropDownList";
+import authService from "../../../Services/AuthService";
+import tipoContatoService from "../../../Services/TipoContatoService";
+import empresaService from "../../../Services/EmpresaService";
+
+const Index = ({
+  selected,
+  selectedContato,
+  setSelectedContato,
+  setIsAtualizar,
+}) => {
+  let usuarioLogado = authService.getCurrentUser();
+  const [empresa, setEmpresa] = useState({});
+  const [contato, setContato] = useState("");
+  const [listaTipoContato, setListaTipoContato] = useState({});
+  const [tipoContatoSelecionado, setTipoContatoSelecionado] = useState({});
+  const [itemDropDow, setItemDropDow] = useState(selectedContato);
   const [isUpdating, setIsUpdating] = useState(false);
-  const [ range, setRange ] = useState("1");
+
+
+
+  useEffect(() => {
+    setItemDropDow(selectedContato);
+  }, [selectedContato]);
+
+  useEffect(() => {
+    empresaService
+      .listarID(usuarioLogado.id)
+      .then((response) => {
+        setEmpresa(response.data);
+      })
+      .catch((error) => {
+        toast.error("Erro ao recuperar o usuario logado");
+      });
+  }, []);
+
+  useEffect(() => {
+    tipoContatoService
+      .listarTodos()
+      .then((response) => {
+        setListaTipoContato(response.data);
+      })
+      .catch((error) => {
+        toast.error("Erro ao listar Tipo Contato");
+      });
+  }, []);
 
   useEffect(() => {
     if (selected !== null && selected !== undefined && selected !== "") {
-      setProblema(selected);
-      setRange(selected.prioridade);
-      console.log(selected)
+      setContato(selected);
+      console.log(selected);
       setIsUpdating(true);
     }
   }, [selected]);
 
   const onSubmitHandler = (data) => {
-    
-    let _data = { ...data, prioridade: range, idUsuario:usuarioLogado.id };
+    let _data = { ...data, idUsuario: usuarioLogado.id };
 
-    problemaService
-      .incluir(_data)
+    console.log(_data);
+
+    empresaService
+      .incluirContato(_data)
       .then(() => {
-        toast.success("Problema cadastrado com sucesso.");
+        toast.success("Contato cadastrado com sucesso.");
         setIsAtualizar(true);
       })
       .catch((error) => {
-        console.log(error)
         toast.error(error.response.data);
       });
+
+    console.log(_data);
   };
 
   const onUpdateHandler = (data) => {
-    let _data = { ...data, id: problema.id, prioridade: range, idUsuario:usuarioLogado.id };
+    let _data = {
+      ...empresa,
+      ...empresa.contato,
+      id: contato.id,
+      idUsuario: usuarioLogado.id,
+    };
     console.log(_data);
-    problemaService
+    empresaService
       .atualizar(_data.id, _data)
       .then(() => {
-        toast.success("Disciplina atualizada com sucesso.");
+        toast.success("Contato atualizada com sucesso.");
         setIsAtualizar(true);
       })
       .catch((error) => {
@@ -64,9 +107,8 @@ const Index = ({ selected, setSelectedProblema, setIsAtualizar }) => {
   };
 
   const onClearHandler = () => {
-    setProblema({ ...problema, id: 0, descricao: "", ativo: false });
-    setSelectedProblema({})
-    setRange(1);
+    setContato({ ...contato, id: 0, nome: "", email: "", contato: "" });
+    setSelectedContato({});
     setIsUpdating(false);
   };
 
@@ -77,8 +119,10 @@ const Index = ({ selected, setSelectedProblema, setIsAtualizar }) => {
         <Formik
           enableReinitialize
           initialValues={{
-            descricao: problema.descricao,
-            ativo: problema.ativo,
+            nomeContato: contato.nomeContato,
+            email: contato.email,
+            contato: contato.contato,
+            tipoContato: contato.tipoContato,
           }}
           validationSchema={SchemaCadastrar}
           onSubmit={(values) => {
@@ -121,18 +165,18 @@ const Index = ({ selected, setSelectedProblema, setIsAtualizar }) => {
                   onSubmit={handleSubmit}
                 >
                   <Card.Form.Group>
-                    <Card.Form.Title>Descrição</Card.Form.Title>
+                    <Card.Form.Title>Nome</Card.Form.Title>
                     <Card.Form.InputText
-                      name="descricao"
+                      name="nomeContato"
                       autocomplete="off"
                       onChange={handleChange}
-                      value={values.descricao}
-                      valid={touched.descricao && !errors.descricao}
-                      error={touched.descricao && errors.descricao}
+                      value={values.nomeContato}
+                      valid={touched.nomeContato && !errors.nomeContato}
+                      error={touched.nomeContato && errors.nomeContato}
                     />
-                    {errors.descricao && touched.descricao && (
+                    {errors.nomeContato && touched.nomeContato && (
                       <Card.Form.StyledInlineErrorMessage>
-                        {errors.descricao}
+                        {errors.nomeContato}
                       </Card.Form.StyledInlineErrorMessage>
                     )}
                   </Card.Form.Group>
@@ -140,26 +184,57 @@ const Index = ({ selected, setSelectedProblema, setIsAtualizar }) => {
                   <Card.Form.BreakRow />
 
                   <Card.Form.Group>
-                    <Card.Form.Title>Prioridade ({range})</Card.Form.Title>
-                    <RangeSlider
-
-                      value={range}
-                      onChange={e => setRange(e.target.value)}
-                      tooltip='off'
-                      min={1}
-                      max={10}
+                    <Card.Form.Title>Email</Card.Form.Title>
+                    <Card.Form.InputText
+                      name="email"
+                      autocomplete="off"
+                      onChange={handleChange}
+                      value={values.email}
+                      valid={touched.email && !errors.email}
+                      error={touched.email && errors.email}
                     />
+                    {errors.email && touched.email && (
+                      <Card.Form.StyledInlineErrorMessage>
+                        {errors.email}
+                      </Card.Form.StyledInlineErrorMessage>
+                    )}
                   </Card.Form.Group>
 
+                  <Card.Form.BreakRow />
+
                   <Card.Form.Group>
-                  <Card.Form.Title>Status</Card.Form.Title>
-                    <Checkbox
-                     name="ativo"
-                     autocomplete="off"
-                     value={values.ativo}
-                    >
-                      Ativo
-                    </Checkbox>
+                    <Card.Form.Title>Contato</Card.Form.Title>
+                    <Card.Form.InputText
+                      name="contato"
+                      autocomplete="off"
+                      onChange={handleChange}
+                      value={values.contato}
+                      valid={touched.contato && !errors.contato}
+                      error={touched.contato && errors.contato}
+                    />
+                    {errors.contato && touched.contato && (
+                      <Card.Form.StyledInlineErrorMessage>
+                        {errors.contato}
+                      </Card.Form.StyledInlineErrorMessage>
+                    )}
+                  </Card.Form.Group>
+
+                  <Card.Form.BreakRow />
+                  <Card.Form.Group style={{ flex: 4 }}>
+                    <Card.Form.Title>Tipo Contato</Card.Form.Title>
+                    <DropDownList
+                      name="tipoContato"
+                      lista={listaTipoContato}
+                      onSelect={setTipoContatoSelecionado}
+                      selected={itemDropDow}
+                      valid={touched.tipoContato && !errors.tipoContato}
+                      error={touched.tipoContato && errors.tipoContato}
+                    ></DropDownList>
+                    {errors.tipoContato && touched.tipoContato && (
+                      <Card.Form.StyledInlineErrorMessage>
+                        {errors.tipoContato}
+                      </Card.Form.StyledInlineErrorMessage>
+                    )}
                   </Card.Form.Group>
 
                   <Card.Form.GroupButton className="group-button">
