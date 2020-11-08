@@ -24,7 +24,10 @@ function ListagemTarefas() {
     // { selectedPbl, setSelectedAtividade }
     const [atividade, setAtividade] = useState([])
     const [tarefaEditada, setTarefaEditada] = useState({})
-    const [dataConclusao, setDataConclusao] = useState("");
+    const [dataConclusao, setDataConclusao] = useState();
+
+    useEffect(() => {
+    }, [dataConclusao])
 
     useEffect(() => {
 
@@ -161,7 +164,8 @@ function ListagemTarefas() {
                 display: 'none'
             },
             editorRenderer: (editorProps, value, row, column, rowIndex, columnIndex) => (
-
+                console.log(editorProps),
+                console.log(dataConclusao),
                 // <DatePickerDefault
                 //     name="dataConclusao"
                 //     locale={pt}
@@ -171,7 +175,8 @@ function ListagemTarefas() {
                 //     selected={row.dataConclusao}
                 //     value={row.dataConclusao} />
 
-                < DatePickerDefault {...editorProps} value={value} />
+                < DatePickerDefault {...editorProps} value={value} setDataConclusao={setDataConclusao} />
+
             )
         },
         {
