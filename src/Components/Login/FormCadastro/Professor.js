@@ -5,8 +5,18 @@ import professorService from "../../../Services/AuthService";
 import SchemaProfessor from "./SchemaYup/SchemaProfessor";
 
 const Professor = () => {
-  const onSubmitHandler = (data) => {
-    console.log(data);
+  const onSubmitHandler = async (data) => {
+    professorService
+      .registrarProfessor(data)
+      .then((response) => {
+        toast.success(response.data.message);
+        setTimeout(() => {
+          window.location.reload();
+        }, 5000);
+      })
+      .catch((error) => {
+        toast.error(error.response.data);
+      });
   };
 
   return (

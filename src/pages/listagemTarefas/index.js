@@ -33,7 +33,7 @@ function ListagemTarefas() {
     useEffect(() => {
 
         serviceAtividade
-            .listarIdPbl(21)
+            .listarIdPbl(46)
             .then((response) => {
                 let data = response.data;
                 setAtividade(data);
