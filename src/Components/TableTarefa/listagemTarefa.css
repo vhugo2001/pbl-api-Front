@@ -41,7 +41,7 @@ div.scrollExpand div.react-bootstrap-table table.table.table-condensed tbody tr 
 .icone-button{
   font-size: 1.7rem;
   background: none;
-  color:#7f89a2;
+  /* color:#7f89a2; */
   margin-top: -10px;
   height: 35px;
   margin-bottom: 0px !important;
