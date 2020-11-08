@@ -40,7 +40,7 @@ const Index = () => {
   const [formValues, setFormValues] = useState();
 
   useEffect(() => {
-   // ApiCalendar.handleSignoutClick();
+    // ApiCalendar.handleSignoutClick();
     serviceAluno
       .listarTodos()
       .then((response) => {
@@ -79,7 +79,7 @@ const Index = () => {
 
   const onSubmitHandler = (data) => {
     console.log(data);
-    const finalDate= data.dataConclusao;
+    const finalDate = data.dataConclusao;
     data = {
       ...data,
       professor: { id: 2 },
@@ -93,16 +93,16 @@ const Index = () => {
           id: temaSelecionado.id,
         },
       },
-    };   
+    };
     const eventFromNow = {
       summary: "Entrega do PBL da disciplina " + disciplinaSelecionada.nome,
       description: "Problema a ser solucionado: " + data.problema,
       start: {
-        date: format(new Date(finalDate),"yyyy-MM-dd"),
+        date: format(new Date(finalDate), "yyyy-MM-dd"),
         timeZone: "America/Sao_Paulo",
       },
       end: {
-        date: format(new Date(finalDate),"yyyy-MM-dd"),
+        date: format(new Date(finalDate), "yyyy-MM-dd"),
         timeZone: "America/Sao_Paulo",
       },
     };
@@ -113,13 +113,20 @@ const Index = () => {
         setListaPbl(data);
         console.log(listaPbl);
         toast.success("Pbl cadastrado com sucesso.");
-        ApiCalendar.createEvent(eventFromNow)
-          .then((result) => {
-            console.log(result);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+
+        ApiCalendar.onLoad(() => {
+          if (ApiCalendar.sign) {
+            ApiCalendar.createEvent(eventFromNow)
+              .then((result) => {
+                console.log(result);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          } else {
+            ApiCalendar.handleAuthClick();
+          }
+        });
       })
       .catch((error) => {
         toast.error("Erro ao cadastrar o PBL.");
