@@ -14,9 +14,9 @@ import "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.c
 import "../../../Components/TableAtividade/style";
 import "./styles.css";
 import { toast } from "react-toastify";
-import problemaService from "../../../Services/ProblemaService";
+import empresaService from "../../../Services/EmpresaService";
 
-const Index = ({ setSelectedProblema, selectedProblema, isAtualizar }) => {
+const Index = ({ setSelectedContato, selectedContato, isAtualizar }) => {
   const [problemaList, setProblemaList] = useState([]);
   const [show, setShow] = useState(false);
 
@@ -29,8 +29,8 @@ const Index = ({ setSelectedProblema, selectedProblema, isAtualizar }) => {
   }, [isAtualizar]);
 
   const listarTodos = () => {
-    problemaService
-      .listarTodos()
+    empresaService
+      .listarTodosContatos()
       .then((response) => {
         let data = response.data;
         setProblemaList(data);
@@ -42,25 +42,16 @@ const Index = ({ setSelectedProblema, selectedProblema, isAtualizar }) => {
 
   const handleExcluir = () => {
     setShow(false);
-    problemaService
-      .deletar(selectedProblema.id)
-      .then((response) => {
-        toast.success("Disciplina excluida com sucesso.");
-        listarTodos();
-      })
-      .catch((error) => {
-        toast.error(error.response.data);
-      });
   };
 
   const handleAlterar = (row) => {
-    setSelectedProblema({ id: row.id, nome: row.nome });
+    setSelectedContato({ id: row.id, nome: row.nome });
   };
 
   const handleClose = () => setShow(false);
   const handleShow = (row) => {
     setShow(true);
-    setSelectedProblema(row);
+    setSelectedContato(row);
   };
 
   const colunas = [
@@ -70,61 +61,61 @@ const Index = ({ setSelectedProblema, selectedProblema, isAtualizar }) => {
       formatter: (cellContent, row) => row.id,
     },
     {
-      dataField: "descricao",
-      text: "Descrição",
-      style: { cursor: "pointer" },
-      headerStyle: (colum, colIndex) => {
-        return { width: "30%" };
-      },
-      formatter: (cellContent, row) => (
-        <div>
-          <label className="TabelaListaPbl">{row.descricao}</label>
-        </div>
-      ),
-    },
-
-    {
-      dataField: "prioridade",
-      text: "Prioridade",
+      dataField: "nomeContato",
+      text: "Nome",
       style: { cursor: "pointer" },
       headerStyle: (colum, colIndex) => {
         return { width: "20%" };
       },
       formatter: (cellContent, row) => (
         <div>
-          <label className="TabelaListaPbl">{row.prioridade}</label>
+          <label className="TabelaListaPbl">{row.nomeContato}</label>
         </div>
       ),
     },
 
     {
-      dataField: "ativo",
-      text: "Status",
+      dataField: "email",
+      text: "Email",
       style: { cursor: "pointer" },
       headerStyle: (colum, colIndex) => {
         return { width: "20%" };
       },
       formatter: (cellContent, row) => (
         <div>
-          <label className="TabelaListaPbl">{row.ativo ? "Ativo" : "Inativo"}</label>
+          <label className="TabelaListaPbl">{row.email}</label>
         </div>
       ),
     },
 
     {
-      dataField: "dataRegistro",
-      text: "Registro",
+      dataField: "contato",
+      text: "Contato",
       style: { cursor: "pointer" },
       headerStyle: (colum, colIndex) => {
         return { width: "20%" };
       },
       formatter: (cellContent, row) => (
         <div>
-          <label className="TabelaListaPbl">{row.dataRegistro}</label>
+          <label className="TabelaListaPbl">{row.contato}</label>
         </div>
       ),
     },
-  
+
+
+    {
+      dataField: "tipoContato",
+      text: "Contato",
+      style: { cursor: "pointer" },
+      headerStyle: (colum, colIndex) => {
+        return { width: "20%" };
+      },
+      formatter: (cellContent, row) => (
+        <div>
+          <label className="TabelaListaPbl">{row.tipoContato.nome}</label>
+        </div>
+      ),
+    },
 
     {
       dataField: "acoes",
@@ -163,7 +154,8 @@ const Index = ({ setSelectedProblema, selectedProblema, isAtualizar }) => {
   };
   const tableRowEvents = {
     onClick: (e, row, rowIndex) => {
-      setSelectedProblema(row);
+      console.log(row)
+      setSelectedContato(row);
     },
   };
 
@@ -183,7 +175,7 @@ const Index = ({ setSelectedProblema, selectedProblema, isAtualizar }) => {
             <div>
               <div className="header-container">
                 <div className="title-container title-pbl-container">
-                  <h5 className="title-card">Lista de Problemas</h5>
+                  <h5 className="title-card">Lista de Contatos</h5>
                 </div>
                 <div className="table-search-pbl">
                   <SearchBar
@@ -217,7 +209,7 @@ const Index = ({ setSelectedProblema, selectedProblema, isAtualizar }) => {
           <Modal.Title>Confirmar Exclusão</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Não é possivel excluir problemas que já possuem vinculo com PBL
+         O registro sera excluido permanentemente. 
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

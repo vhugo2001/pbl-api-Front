@@ -14,6 +14,7 @@ import serviceTema from "../../../Services/TemaPblService";
 import serviceDisciplina from "../../../Services/DisciplinaService";
 import servicePbl from "../../../Services/PblService";
 import { toast } from "react-toastify";
+import ApiCalendar from "react-google-calendar-api";
 
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -39,6 +40,7 @@ const Index = () => {
   const [formValues, setFormValues] = useState();
 
   useEffect(() => {
+    // ApiCalendar.handleSignoutClick();
     serviceAluno
       .listarTodos()
       .then((response) => {
@@ -50,8 +52,11 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    if (disciplinaSelecionada.id !== undefined && disciplinaSelecionada.id !== "") {
-      console.log(disciplinaSelecionada.id)
+    if (
+      disciplinaSelecionada.id !== undefined &&
+      disciplinaSelecionada.id !== ""
+    ) {
+      console.log(disciplinaSelecionada.id);
       serviceTema
         .listarIDDisciplina(disciplinaSelecionada.id)
         .then((response) => {
@@ -73,7 +78,8 @@ const Index = () => {
   }, []);
 
   const onSubmitHandler = (data) => {
-    console.log(data)
+    console.log(data);
+    const finalDate = data.dataConclusao;
     data = {
       ...data,
       professor: { id: 2 },
@@ -88,9 +94,18 @@ const Index = () => {
         },
       },
     };
-
-    console.log(data);
-
+    const eventFromNow = {
+      summary: "Entrega do PBL da disciplina " + disciplinaSelecionada.nome,
+      description: "Problema a ser solucionado: " + data.problema,
+      start: {
+        date: format(new Date(finalDate), "yyyy-MM-dd"),
+        timeZone: "America/Sao_Paulo",
+      },
+      end: {
+        date: format(new Date(finalDate), "yyyy-MM-dd"),
+        timeZone: "America/Sao_Paulo",
+      },
+    };
     servicePbl
       .incluir(data)
       .then((response) => {
@@ -98,6 +113,20 @@ const Index = () => {
         setListaPbl(data);
         console.log(listaPbl);
         toast.success("Pbl cadastrado com sucesso.");
+
+        ApiCalendar.onLoad(() => {
+          if (ApiCalendar.sign) {
+            ApiCalendar.createEvent(eventFromNow)
+              .then((result) => {
+                console.log(result);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          } else {
+            ApiCalendar.handleAuthClick();
+          }
+        });
       })
       .catch((error) => {
         toast.error("Erro ao cadastrar o PBL.");
