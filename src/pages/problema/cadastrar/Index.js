@@ -1,46 +1,59 @@
 import React, { useEffect, useState } from "react";
-import { Formik } from "formik";
+import { Formik, Field } from "formik";
 import { Card } from "../../../Components/Card/CardPrincipal";
-import serviceDisciplina from "../../../Services/DisciplinaService";
 import * as IoIcons from "react-icons/io";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
 import "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css";
+
 import "../../../Components/TableAtividade/style";
 import "./styles.css";
+import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
 import { toast } from "react-toastify";
-import empresaService from "../../../Services/EmpresaService";
+import problemaService from "../../../Services/ProblemaService";
 import SchemaCadastrar from "../Schema/SchemaCadastrar";
+import Checkbox from "../../../Components/Checkbox/index";
+import RangeSlider from "react-bootstrap-range-slider";
+import authService from "../../../Services/AuthService";
 
-const Index = ({ selected, setIsAtualizar }) => {
-  const [disciplina, setDisciplina] = useState("");
+const Index = ({ selected, setSelectedProblema, setIsAtualizar }) => {
+  let usuarioLogado =  authService.getCurrentUser();
+  const [problema, setProblema] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
+  const [ range, setRange ] = useState("1");
 
   useEffect(() => {
     if (selected !== null && selected !== undefined && selected !== "") {
-      setDisciplina(selected);
+      setProblema(selected);
+      setRange(selected.prioridade);
+      console.log(selected)
       setIsUpdating(true);
     }
   }, [selected]);
 
   const onSubmitHandler = (data) => {
-    console.log(data);
-    serviceDisciplina
-      .incluir(data)
-      .then((response) => {
-        toast.success("Disciplina cadastrada com sucesso.");
+    
+    let _data = { ...data, prioridade: range, idUsuario:usuarioLogado.id };
+
+    problemaService
+      .incluir(_data)
+      .then(() => {
+        toast.success("Problema cadastrado com sucesso.");
         setIsAtualizar(true);
       })
       .catch((error) => {
+        console.log(error)
         toast.error(error.response.data);
       });
   };
 
   const onUpdateHandler = (data) => {
-    let _data = { ...data, id: disciplina.id };
+    let _data = { ...data, id: problema.id, prioridade: range, idUsuario:usuarioLogado.id };
     console.log(_data);
-    empresaService.atualizar(_data.id, _data)
+    problemaService
+      .atualizar(_data.id, _data)
       .then(() => {
         toast.success("Disciplina atualizada com sucesso.");
         setIsAtualizar(true);
@@ -51,10 +64,11 @@ const Index = ({ selected, setIsAtualizar }) => {
   };
 
   const onClearHandler = () => {
-    setDisciplina({ ...disciplina, nome: "" });
+    setProblema({ ...problema, id: 0, descricao: "", ativo: false });
+    setSelectedProblema({})
+    setRange(1);
     setIsUpdating(false);
   };
-  const onDeleteHandler = () => {};
 
   return (
     //Remover a div pai e atribur o padding 30px no componente Home!!!!!
@@ -63,7 +77,8 @@ const Index = ({ selected, setIsAtualizar }) => {
         <Formik
           enableReinitialize
           initialValues={{
-            nome: disciplina.nome,
+            descricao: problema.descricao,
+            ativo: problema.ativo,
           }}
           validationSchema={SchemaCadastrar}
           onSubmit={(values) => {
@@ -106,21 +121,47 @@ const Index = ({ selected, setIsAtualizar }) => {
                   onSubmit={handleSubmit}
                 >
                   <Card.Form.Group>
-                    <Card.Form.Title>Nome</Card.Form.Title>
+                    <Card.Form.Title>Descrição</Card.Form.Title>
                     <Card.Form.InputText
-                      name="nome"
+                      name="descricao"
                       autocomplete="off"
                       onChange={handleChange}
-                      value={values.nome}
-                      valid={touched.nome && !errors.nome}
-                      error={touched.nome && errors.nome}
+                      value={values.descricao}
+                      valid={touched.descricao && !errors.descricao}
+                      error={touched.descricao && errors.descricao}
                     />
-                    {errors.nome && touched.nome && (
+                    {errors.descricao && touched.descricao && (
                       <Card.Form.StyledInlineErrorMessage>
-                        {errors.nome}
+                        {errors.descricao}
                       </Card.Form.StyledInlineErrorMessage>
                     )}
                   </Card.Form.Group>
+
+                  <Card.Form.BreakRow />
+
+                  <Card.Form.Group>
+                    <Card.Form.Title>Prioridade ({range})</Card.Form.Title>
+                    <RangeSlider
+
+                      value={range}
+                      onChange={e => setRange(e.target.value)}
+                      tooltip='off'
+                      min={1}
+                      max={10}
+                    />
+                  </Card.Form.Group>
+
+                  <Card.Form.Group>
+                  <Card.Form.Title>Status</Card.Form.Title>
+                    <Checkbox
+                     name="ativo"
+                     autocomplete="off"
+                     value={values.ativo}
+                    >
+                      Ativo
+                    </Checkbox>
+                  </Card.Form.Group>
+
                   <Card.Form.GroupButton className="group-button">
                     {!isUpdating && (
                       <Card.Button type="submit">Incluir</Card.Button>

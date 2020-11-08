@@ -14,23 +14,11 @@ import "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.c
 import "../../../Components/TableAtividade/style";
 import "./styles.css";
 import { toast } from "react-toastify";
-import empresaService from "../../../Services/EmpresaService";
+import problemaService from "../../../Services/ProblemaService";
 
 const Index = ({ setSelectedProblema, selectedProblema, isAtualizar }) => {
   const [problemaList, setProblemaList] = useState([]);
   const [show, setShow] = useState(false);
-
-  const onSubmitHandler = (data) => {
-    console.log(data);
-    empresaService
-      .incluir(data)
-      .then((response) => {
-        toast.success("Disciplina cadastrada com sucesso.");
-      })
-      .catch((error) => {
-        toast.error(error.response.data);
-      });
-  };
 
   useEffect(() => {
     listarTodos();
@@ -41,7 +29,7 @@ const Index = ({ setSelectedProblema, selectedProblema, isAtualizar }) => {
   }, [isAtualizar]);
 
   const listarTodos = () => {
-    empresaService
+    problemaService
       .listarTodos()
       .then((response) => {
         let data = response.data;
@@ -54,8 +42,8 @@ const Index = ({ setSelectedProblema, selectedProblema, isAtualizar }) => {
 
   const handleExcluir = () => {
     setShow(false);
-    empresaService
-      .deletar(empresaService.id)
+    problemaService
+      .deletar(selectedProblema.id)
       .then((response) => {
         toast.success("Disciplina excluida com sucesso.");
         listarTodos();
@@ -72,7 +60,7 @@ const Index = ({ setSelectedProblema, selectedProblema, isAtualizar }) => {
   const handleClose = () => setShow(false);
   const handleShow = (row) => {
     setShow(true);
-    setSelectedProblema({ id: row.id, nome: row.nome });
+    setSelectedProblema(row);
   };
 
   const colunas = [
@@ -82,24 +70,68 @@ const Index = ({ setSelectedProblema, selectedProblema, isAtualizar }) => {
       formatter: (cellContent, row) => row.id,
     },
     {
-      dataField: "nome",
-      text: "Nome",
+      dataField: "descricao",
+      text: "Descrição",
       style: { cursor: "pointer" },
       headerStyle: (colum, colIndex) => {
-        return { width: "80%" };
+        return { width: "50%" };
       },
       formatter: (cellContent, row) => (
         <div>
-          <label className="TabelaListaPbl">{row.nome}</label>
+          <label className="TabelaListaPbl">{row.descricao}</label>
         </div>
       ),
     },
 
-    
+    {
+      dataField: "prioridade",
+      text: "Prioridade",
+      style: { cursor: "pointer" },
+      headerStyle: (colum, colIndex) => {
+        return { width: "20%" };
+      },
+      formatter: (cellContent, row) => (
+        <div>
+          <label className="TabelaListaPbl">{row.prioridade}</label>
+        </div>
+      ),
+    },
+
+    {
+      dataField: "ativo",
+      text: "Status",
+      style: { cursor: "pointer" },
+      headerStyle: (colum, colIndex) => {
+        return { width: "10%" };
+      },
+      formatter: (cellContent, row) => (
+        <div>
+          <label className="TabelaListaPbl">{row.ativo ? "Ativo" : "Inativo"}</label>
+        </div>
+      ),
+    },
+
+    {
+      dataField: "dataRegistro",
+      text: "Registro",
+      style: { cursor: "pointer" },
+      headerStyle: (colum, colIndex) => {
+        return { width: "10%" };
+      },
+      formatter: (cellContent, row) => (
+        <div>
+          <label className="TabelaListaPbl">{row.dataRegistro}</label>
+        </div>
+      ),
+    },
+  
 
     {
       dataField: "acoes",
       text: "Ações",
+      headerStyle: (colum, colIndex) => {
+        return { width: "20%" };
+      },
       formatter: (cellContent, row) => (
         <div class="container-acoes">
           <div onClick={() => handleAlterar(row)}>
@@ -131,7 +163,7 @@ const Index = ({ setSelectedProblema, selectedProblema, isAtualizar }) => {
   };
   const tableRowEvents = {
     onClick: (e, row, rowIndex) => {
-      setSelectedProblema({ id: row.id, nome: row.nome });
+      setSelectedProblema(row);
     },
   };
 

@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 
 export default Yup.object().shape({
-   nome: Yup.string()
-     .required("* Campo Nome é obrigatório")
+   descricao: Yup.string()
+     .required("* Campo Descrição é obrigatório")
      .nullable(),
  })
