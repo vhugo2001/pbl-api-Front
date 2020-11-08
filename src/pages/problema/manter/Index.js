@@ -16,7 +16,7 @@ const Index = () => {
 
       <Row>
         <Col xl={4} lg={4} style={{ paddingLeft: "6px", paddingRight: "6px" }}>
-          <Form selected={selectedProblema} setIsAtualizar={setIsAtualizar} />
+          <Form selected={selectedProblema} setSelectedProblema={setSelectedProblema} setIsAtualizar={setIsAtualizar} />
         </Col>
         <Col xl={8} lg={8} style={{ paddingLeft: "6px", paddingRight: "6px" }}>
           <Listar

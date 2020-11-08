@@ -18,7 +18,7 @@ import Checkbox from "../../../Components/Checkbox/index";
 import RangeSlider from "react-bootstrap-range-slider";
 import authService from "../../../Services/AuthService";
 
-const Index = ({ selected, setIsAtualizar }) => {
+const Index = ({ selected, setSelectedProblema, setIsAtualizar }) => {
   let usuarioLogado =  authService.getCurrentUser();
   const [problema, setProblema] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
@@ -65,6 +65,7 @@ const Index = ({ selected, setIsAtualizar }) => {
 
   const onClearHandler = () => {
     setProblema({ ...problema, id: 0, descricao: "", ativo: false });
+    setSelectedProblema({})
     setRange(1);
     setIsUpdating(false);
   };
