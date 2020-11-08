@@ -6,13 +6,17 @@ import * as MdIcons from "react-icons/md";
 import * as CgIcons from "react-icons/cg";
 import * as GrIcons from "react-icons/gr";
 import { Link } from "react-router-dom";
-import { SidebarDataProfessor, SidebarDataAluno } from "./SidebarData";
+import {
+  SidebarDataProfessor,
+  SidebarDataAluno,
+  SidebarDataEmpresa,
+} from "./SidebarData";
 import "./NavBar.css";
 import { IconContext } from "react-icons";
 import Routes from "../../../routes/routes";
 import NavbarDropdown from "react-navbar-dropdown";
 import ServiceAuth from "../../../Services/AuthService";
-import {Role} from "../../../helpers/role";
+import { Role } from "../../../helpers/role";
 
 function Navbar() {
   const [sidebar, setSidebar] = useState(false);
@@ -22,9 +26,17 @@ function Navbar() {
   const currentUser = ServiceAuth.getCurrentUser();
 
   useEffect(() => {
-    currentUser.roles[0] == Role.Professor
-      ? setData(SidebarDataProfessor)
-      : setData(SidebarDataAluno);
+    switch (currentUser.roles[0]) {
+      case "ROLE_ALUNO":
+        setData(SidebarDataAluno);
+        break;
+      case "ROLE_PROFESSOR":
+        setData(SidebarDataProfessor);
+        break;
+      case "ROLE_EMPRESA":
+        setData(SidebarDataEmpresa);
+        break
+    }
   });
   return (
     <>
@@ -50,19 +62,13 @@ function Navbar() {
             <MdIcons.MdNotificationsNone />
           </Link>
 
-        
-
           <NavbarDropdown className="drop-perfil">
             <NavbarDropdown.Toggle className="menu__item">
               <NavbarDropdown.Open>
-
                 <CgIcons.CgProfile className="profile-button" />
-
               </NavbarDropdown.Open>
               <NavbarDropdown.Close>
-
                 <CgIcons.CgProfile className="profile-button" />
-
               </NavbarDropdown.Close>
             </NavbarDropdown.Toggle>
 
@@ -73,11 +79,10 @@ function Navbar() {
             >
               <NavbarDropdown.Item className="example1-dropdown-menu-item">
                 <Link to="/admin/perfil-usuario" className="link-menu">
-
                   <div className="example1-dropdown-menu-item__spacer" />
                   <div className="example1-dropdown-menu-item__text">
                     Meu Perfil
-                </div>
+                  </div>
                 </Link>
               </NavbarDropdown.Item>
               <NavbarDropdown.Item className="example1-dropdown-menu-item">
@@ -86,13 +91,11 @@ function Navbar() {
                   className="link-menu"
                   onClick={ServiceAuth.logout}
                 >
-
                   <div className="example1-dropdown-menu-item__spacer" />
                   <div className="example1-dropdown-menu-item__text">Sair</div>
                 </a>
               </NavbarDropdown.Item>
             </NavbarDropdown.CSSTransitionMenu>
-         
 
             <NavbarDropdown.CSSTransitionMenu
               className="example1-dropdown-menu"
