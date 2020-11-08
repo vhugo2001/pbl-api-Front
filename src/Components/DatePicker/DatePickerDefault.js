@@ -18,13 +18,22 @@ export const DatePickerDefault = ({ value, setDataConclusao, ...props }) => {
         return dataCompleta // Note: months are 0-based
     }
 
-    const getValue = (dataConclusaoPicker) => {
-        setDataConclusao(dataConclusaoPicker)
-    }
+    // const getValue = (dataConclusaoPicker) => {
+    //     setDataConclusao(dataConclusaoPicker)
+    // }
     const [dataConclusaoPicker, setDataConclusaoPicker] = useState(new Date(parseDate(value)));
+    // console.log(dataConclusaoPicker)
+    const { onUpdate, onBlur, ...rest } = props;
+    // console.log(rest)
+
+    const handleUpdate = (e) => {
+        setTimeout(() => e.blur())
+        const date = new Date(value)
+        setDataConclusao(date)
+        // setDataConclusaoPicker(date)
+        console.log(date)
+    }
     console.log(dataConclusaoPicker)
-    const { onUpdate, ...rest } = props;
-    console.log(rest)
     return (
         <DatePicker
             {...rest}
@@ -33,9 +42,10 @@ export const DatePickerDefault = ({ value, setDataConclusao, ...props }) => {
             locale={pt}
             useShortMonthInDropdown
             selected={dataConclusaoPicker || null}
-            onChange={date => setDataConclusaoPicker(date)}
+            onChange={(date) => setDataConclusaoPicker(date)}
+            onClickOutside={() => { console.log('qwerty') }}
             minDate={new Date()}
-            onBlur={(dataConclusaoPicker) => onUpdate(getValue(dataConclusaoPicker))}
+            onBlur={handleUpdate}
         />
 
         //             const { setFieldValue } = useFormikContext(); 
