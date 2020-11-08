@@ -21,7 +21,6 @@ import empresaService from "../../../Services/EmpresaService";
 
 const Index = ({
   selected,
-  selectedContato,
   setSelectedContato,
   setIsAtualizar,
 }) => {
@@ -30,14 +29,14 @@ const Index = ({
   const [contato, setContato] = useState("");
   const [listaTipoContato, setListaTipoContato] = useState({});
   const [tipoContatoSelecionado, setTipoContatoSelecionado] = useState({});
-  const [itemDropDow, setItemDropDow] = useState(selectedContato);
+  const [itemDropDow, setItemDropDow] = useState(selected);
   const [isUpdating, setIsUpdating] = useState(false);
 
 
 
   useEffect(() => {
-    setItemDropDow(selectedContato);
-  }, [selectedContato]);
+    setItemDropDow(selected.tipoContato);
+  }, [selected]);
 
   useEffect(() => {
     empresaService
@@ -88,17 +87,13 @@ const Index = ({
   };
 
   const onUpdateHandler = (data) => {
-    let _data = {
-      ...empresa,
-      ...empresa.contato,
-      id: contato.id,
-      idUsuario: usuarioLogado.id,
-    };
+    let _data = { ...data, id: contato.id, idUsuario: usuarioLogado.id };
+
     console.log(_data);
     empresaService
-      .atualizar(_data.id, _data)
+      .atualizarContato(_data.id, _data)
       .then(() => {
-        toast.success("Contato atualizada com sucesso.");
+        toast.success("Contato atualizado com sucesso.");
         setIsAtualizar(true);
       })
       .catch((error) => {
@@ -107,7 +102,7 @@ const Index = ({
   };
 
   const onClearHandler = () => {
-    setContato({ ...contato, id: 0, nome: "", email: "", contato: "" });
+    setContato({ ...contato, id: 0, nomeContato: "", email: "", contato: "" });
     setSelectedContato({});
     setIsUpdating(false);
   };
