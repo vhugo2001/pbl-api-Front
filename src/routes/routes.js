@@ -29,10 +29,10 @@ const Routes = () => (
     <PrivateRoute path="/admin/manter-disciplina" roles={[Role.Professor]}  component={ManterDisciplina} />
     <PrivateRoute path="/admin/manter-tema" roles={[Role.Professor]}  component={ManterTema} />
     <PrivateRoute path="/admin/cadastro" component={Cadastro} />
-    <PrivateRoute path="/admin/manter-disciplina" component={ManterDisciplina} />
-    <PrivateRoute path="/admin/manter-tema" component={ManterTema} />
-    <PrivateRoute path="/admin/manter-problema" component={ManterProblema} />
-    <PrivateRoute path="/admin/manter-tarefa" component={ListagemTarefas} />
+    <PrivateRoute path="/admin/manter-disciplina" roles={[Role.Professor]} component={ManterDisciplina} />
+    <PrivateRoute path="/admin/manter-tema" roles={[Role.Professor]}  component={ManterTema} />
+    <PrivateRoute path="/admin/manter-problema"roles={[Role.Empresa]} component={ManterProblema} />
+    <PrivateRoute path="/admin/manter-tarefa"  component={ListagemTarefas} />
     <PrivateRoute path="/admin/calendario" component={Calendario} />
 
   </Switch>

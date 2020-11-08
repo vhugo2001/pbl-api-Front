@@ -12,6 +12,7 @@ const Calendario = ({ children }) => {
 
   function getEventos() {
     ApiCalendar.listUpcomingEvents(150).then(({ result }) => {
+      console.log(result.items)
       result.items.map((item) => {
         data.push({
           title: item.summary,
@@ -24,6 +25,7 @@ const Calendario = ({ children }) => {
           allDay: item.start.date == null ? false : true,
         });
       });
+      console.log(data)
       setEvents(data);
     });
   }

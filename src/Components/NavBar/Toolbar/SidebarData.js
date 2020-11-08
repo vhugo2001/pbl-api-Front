@@ -26,13 +26,13 @@ export const SidebarDataProfessor = [
   {
     title: "Consultar Alunos",
     path: "/admin/alunos",
-    icon: <MdIcons.MdViewList />,
+    icon: <MdIcons.MdPeople />,
     cName: "nav-text",
   },
   {
     title: "Manter Disciplina",
     path: "/admin/manter-disciplina",
-    icon: <MdIcons.MdGroupAdd />,
+    icon: <FaIcons.FaListUl  />,
     cName: "nav-text",
   },
 
