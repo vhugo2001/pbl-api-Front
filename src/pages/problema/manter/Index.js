@@ -20,8 +20,8 @@ const Index = () => {
         </Col>
         <Col xl={8} lg={8} style={{ paddingLeft: "6px", paddingRight: "6px" }}>
           <Listar
-            setSelectedDisciplina={setSelectedProblema}
-            selectedDisciplina={selectedProblema}
+            setSelectedProblema={setSelectedProblema}
+            selectedProblema={selectedProblema}
             isAtualizar={isAtualizar}
           />
         </Col>

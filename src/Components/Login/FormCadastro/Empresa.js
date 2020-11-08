@@ -27,6 +27,11 @@ const Empresa = () => {
           nome: "",
           cnpj: "",
           email: "",
+          perfis: [
+            {
+              id: 3,
+            },
+          ],
           senha: "",
           senhaC: "",
         }}
