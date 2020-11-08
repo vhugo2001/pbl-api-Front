@@ -10,10 +10,14 @@ import '../../Components/TableTarefa/listagemTarefa.css'
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import { toast } from "react-toastify";
 import { Card } from "../../Components/Card/CardPrincipal";
+import DatePicker from "react-datepicker";
 import serviceAtividade from '../../Services/AtividadeService'
 import serviceTarefa from '../../Services/TarefaService'
 import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
 import DatePickerDefault from '../../Components/DatePicker/DatePickerDefault'
+import pt from "date-fns/locale/pt";
+import moment from 'moment'
+import { format } from "date-fns";
 import {
     Container
 } from '../../Components/TableTarefa/style'
@@ -25,9 +29,6 @@ function ListagemTarefas() {
     const [atividade, setAtividade] = useState([])
     const [tarefaEditada, setTarefaEditada] = useState({})
     const [dataConclusao, setDataConclusao] = useState();
-
-    useEffect(() => {
-    }, [dataConclusao])
 
     useEffect(() => {
 
@@ -109,29 +110,41 @@ function ListagemTarefas() {
 
     const subcolunas = [
         {
-            dataField: "icone",
+            dataField: "concluido",
             text: "",
 
             formatter: (cellContent, row) => (
 
                 < div >
-                    <div className="icone-button" onClick={() => alert('Botao de Check')}>
-                        <IoIcons.IoIosCheckmarkCircleOutline />
+                    <div className="icone-button" onClick={() => () => handleConcluido(row)}>
+                        <IoIcons.IoIosCheckmarkCircle />
                     </div>
 
                 </div >
             ),
             headerStyle: (colum, colIndex) => {
                 return { width: '35px', height: '1px', textAlign: 'center', backgroundColor: 'transparent', border: 'none', padding: '0' };
-            }, editable: false
+            },
+            style: (cell, row, rowIndex, colIndex) => {
+                if (cell === true) {
+                    return {
+                        color: '#00bf9c'
+                    };
+                }
+                return {
+                    color: '#7f89a2'
+                };
+            },
+            editable: false
         },
         {
-            dataField: 'titulo',
+            dataField: 'descricao',
             text: '',
 
             formatter: (cellContent, row) => (
+                { ...console.log(row) },
                 <div>
-                    <label className="TituloAtiv"><b>{row.titulo}</b></label><br />
+                    <label className="TituloAtiv"><b>{cellContent}</b></label><br />
                 </div>
             ),
             headerStyle: {
@@ -139,7 +152,7 @@ function ListagemTarefas() {
             }
         },
         {
-            dataField: 'atividadePbls[0].pbl.aluno[0].nome',
+            dataField: 'alunos[0].nome',
             text: '',
             formatter: (cellContent, row) => (
                 <div style={{ textAlign: 'center' }}>
@@ -152,32 +165,51 @@ function ListagemTarefas() {
             //     <QualityRanger {...editorProps} value={value} />
             // )
         },
+        // {
+        //     dataField: 'dataConclusao',
+        //     text: '',
+        //     formatter: (cellContent, row) => (
+        //         <div style={{ textAlign: 'center' }}>
+        //             <label >{cellContent}</label><br />
+        //         </div>
+        //     ),
+        //     headerStyle: {
+        //         display: 'none'
+        //     },
+        //     editorRenderer: (editorProps, value, row, column, rowIndex, columnIndex, onBlur) => (
+        //         console.log(editorProps),
+        //         console.log(dataConclusao),
+        //         // <DatePickerDefault
+        //         //     name="dataConclusao"
+        //         //     locale={pt}
+        //         //     minDate={subDays(new Date(), 0)}
+        //         //     useShortMonthInDropdown
+        //         //     dateFormat="dd/MM/yyyy"
+        //         //     selected={row.dataConclusao}
+        //         //     value={row.dataConclusao} />
+
+        //         < DatePickerDefault {...editorProps} value={value} setDataConclusao={setDataConclusao} {...onBlur} />
+
+        //     )
+        // },
+
         {
             dataField: 'dataConclusao',
             text: '',
-            formatter: (cellContent, row) => (
-                <div style={{ textAlign: 'center' }}>
-                    <label >{cellContent}</label><br />
-                </div>
-            ),
+            formatter: (cell) => {
+                let dateObj = cell;
+                if (typeof cell !== 'object') {
+                    dateObj = new Date(cell);
+                }
+                return `${moment(cell).format("DD/MM/YYYY") ? moment(cell).format("DD/MM/YYYY") : moment(cell).format("DD/MM/YYYY")}`;
+            },
+            editor: {
+                type: Type.DATE
+            },
             headerStyle: {
                 display: 'none'
             },
-            editorRenderer: (editorProps, value, row, column, rowIndex, columnIndex) => (
-                console.log(editorProps),
-                console.log(dataConclusao),
-                // <DatePickerDefault
-                //     name="dataConclusao"
-                //     locale={pt}
-                //     minDate={subDays(new Date(), 0)}
-                //     useShortMonthInDropdown
-                //     dateFormat="dd/MM/yyyy"
-                //     selected={row.dataConclusao}
-                //     value={row.dataConclusao} />
 
-                < DatePickerDefault {...editorProps} value={value} setDataConclusao={setDataConclusao} />
-
-            )
         },
         {
             dataField: "icone",
@@ -203,7 +235,7 @@ function ListagemTarefas() {
     //       .deletar(dados)
     //       .then((response) => {
     //         let data = response.data;
-    //         setAluno(data);
+    //         setTarefa(data);
     //         toast.success("Sucesso ao excluir a tarefa.");
     //       })
     //       .catch((error) => {
@@ -211,15 +243,38 @@ function ListagemTarefas() {
     //       });
     //   };
 
-
-    const verificaDesc = (row) => {
-        if (row.descricao === "" || row.descricao === null) {
-            row.descricao = "Não há descrição para esta atividade"
-            return [row]
-        } else {
-            return [row]
-        }
+    const handleConcluido = (item) => {
+        // if(item.concluido === true){
+        //     let status = false
+        // }else{
+        //     status = true
+        // }
+        // statusTarefa(item.id,status);
     }
+
+    // const statusTarefa = (dados, status) => {
+    //     serviceTarefa
+    //       .atualizar(dados, status)
+    //       .then((response) => {
+    //         let data = response.data;
+    //         setTarefa(data);
+    //       })
+    //       .catch((error) => {
+    //         toast.error("Erro modificar status da Tarefa.");
+    //       });
+    //   };
+
+    const rowStyle = (row, rowIndex) => {
+        if (row !== undefined) {
+            if (row.concluido === true) {
+                return { backgroundColor: "rgba(0, 185, 0, 0.1)" };
+            } else {
+                return {};
+            }
+        } else {
+            return {}
+        }
+    };
 
     const cellEdit = cellEditFactory({
         mode: 'click',
@@ -236,8 +291,9 @@ function ListagemTarefas() {
             < div >
                 <ToolkitProvider
                     keyField='id'
-                    data={verificaDesc(row)}
-
+                    {...console.log(row)}
+                    {...console.log(row.tarefas)}
+                    data={[row.tarefas]}
                     columns={subcolunas}
                 >
 
@@ -251,6 +307,7 @@ function ListagemTarefas() {
                                     cellEdit={cellEdit}
                                     condensed
                                     bordered={false}
+                                    rowStyle={rowStyle}
                                 />
                             </div>
                         )
@@ -295,9 +352,9 @@ function ListagemTarefas() {
             <Container className="container-list">
                 <ToolkitProvider
                     keyField='id'
+                    {...console.log(tarefa)}
                     data={tarefa}
                     columns={colunas}
-                    {...console.log(tarefa)}
                     search
 
                 >
