@@ -16,6 +16,7 @@ import serviceTarefa from '../../Services/TarefaService'
 import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
 import DatePickerDefault from '../../Components/DatePicker/DatePickerDefault'
 import pt from "date-fns/locale/pt";
+import moment from 'moment'
 import { format } from "date-fns";
 import {
     Container
@@ -28,9 +29,6 @@ function ListagemTarefas() {
     const [atividade, setAtividade] = useState([])
     const [tarefaEditada, setTarefaEditada] = useState({})
     const [dataConclusao, setDataConclusao] = useState();
-
-    useEffect(() => {
-    }, [dataConclusao])
 
     useEffect(() => {
 
@@ -112,7 +110,7 @@ function ListagemTarefas() {
 
     const subcolunas = [
         {
-            dataField: "icone",
+            dataField: "concluido",
             text: "",
 
             formatter: (cellContent, row) => (
@@ -127,25 +125,26 @@ function ListagemTarefas() {
             headerStyle: (colum, colIndex) => {
                 return { width: '35px', height: '1px', textAlign: 'center', backgroundColor: 'transparent', border: 'none', padding: '0' };
             },
-            // style: (cell, row, rowIndex, colIndex) => {
-            //     if (row.concluido === true) {
-            //         return {
-            //             color: '#7f89a2'
-            //         };
-            //     }
-            //     return {
-            //         color: '#00bf9c'
-            //     };
-            // }, 
+            style: (cell, row, rowIndex, colIndex) => {
+                if (cell === true) {
+                    return {
+                        color: '#00bf9c'
+                    };
+                }
+                return {
+                    color: '#7f89a2'
+                };
+            },
             editable: false
         },
         {
-            dataField: 'titulo',
+            dataField: 'descricao',
             text: '',
 
             formatter: (cellContent, row) => (
+                { ...console.log(row) },
                 <div>
-                    <label className="TituloAtiv"><b>{row.titulo}</b></label><br />
+                    <label className="TituloAtiv"><b>{cellContent}</b></label><br />
                 </div>
             ),
             headerStyle: {
@@ -153,7 +152,7 @@ function ListagemTarefas() {
             }
         },
         {
-            dataField: 'atividadePbls[0].pbl.aluno[0].nome',
+            dataField: 'alunos[0].nome',
             text: '',
             formatter: (cellContent, row) => (
                 <div style={{ textAlign: 'center' }}>
@@ -198,13 +197,11 @@ function ListagemTarefas() {
             dataField: 'dataConclusao',
             text: '',
             formatter: (cell) => {
-                console.log(cell)
                 let dateObj = cell;
                 if (typeof cell !== 'object') {
                     dateObj = new Date(cell);
-                    console.log(dateObj)
                 }
-                return `${('0' + dateObj.getUTCDate()).slice(-2)}/${('0' + (dateObj.getUTCMonth() + 1)).slice(-2)}/${dateObj.getUTCFullYear()}`;
+                return `${moment(cell).format("DD/MM/YYYY") ? moment(cell).format("DD/MM/YYYY") : moment(cell).format("DD/MM/YYYY")}`;
             },
             editor: {
                 type: Type.DATE
@@ -267,22 +264,17 @@ function ListagemTarefas() {
     //       });
     //   };
 
-    // const rowStyle = (row, rowIndex) => {
-    //     if (row.concluido === true) {
-    //       return { backgroundColor: "rgba(0, 185, 0, 0.1)" };
-    //     } else {
-    //       return {};
-    //     }
-    //   };
-
-    const verificaDesc = (row) => {
-        if (row.descricao === "" || row.descricao === null) {
-            row.descricao = "Não há descrição para esta atividade"
-            return [row]
+    const rowStyle = (row, rowIndex) => {
+        if (row !== undefined) {
+            if (row.concluido === true) {
+                return { backgroundColor: "rgba(0, 185, 0, 0.1)" };
+            } else {
+                return {};
+            }
         } else {
-            return [row]
+            return {}
         }
-    }
+    };
 
     const cellEdit = cellEditFactory({
         mode: 'click',
@@ -299,8 +291,9 @@ function ListagemTarefas() {
             < div >
                 <ToolkitProvider
                     keyField='id'
-                    data={verificaDesc(row)}
-
+                    {...console.log(row)}
+                    {...console.log(row.tarefas)}
+                    data={[row.tarefas]}
                     columns={subcolunas}
                 >
 
@@ -314,7 +307,7 @@ function ListagemTarefas() {
                                     cellEdit={cellEdit}
                                     condensed
                                     bordered={false}
-                                // rowStyle={ rowStyle }
+                                    rowStyle={rowStyle}
                                 />
                             </div>
                         )
@@ -359,9 +352,9 @@ function ListagemTarefas() {
             <Container className="container-list">
                 <ToolkitProvider
                     keyField='id'
+                    {...console.log(tarefa)}
                     data={tarefa}
                     columns={colunas}
-                    {...console.log(tarefa)}
                     search
 
                 >
