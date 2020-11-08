@@ -41,7 +41,7 @@ div.scrollExpand div.react-bootstrap-table table.table.table-condensed tbody tr 
 .icone-button{
   font-size: 1.7rem;
   background: none;
-  color:#7f89a2;
+  /* color:#7f89a2; */
   margin-top: -10px;
   height: 35px;
   margin-bottom: 0px !important;
@@ -212,5 +212,11 @@ input.form-control, label.search-label{
   border-radius: 4px;
   
 }
+.container-list {
+  padding: 5px;
+  border: 0 !important;
+}
 
-
+.div.react-datepicker,div .react-datepicker-popper {
+  z-index: 9999 !important;
+}

@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import SchemaAluno from "../Schemas/SchemaAluno";
 
 function PerfilUsuario() {
   const [aluno, setAluno] = useState(authService.getCurrentUser());
@@ -53,17 +54,7 @@ function PerfilUsuario() {
             email: aluno.email,
             matricula: aluno.matricula,
           }}
-          validationSchema={Yup.object().shape({
-            nome: Yup.string()
-              .required("* Campo Nome é obrigatório")
-              .nullable(),
-            email: Yup.string()
-              .required("* Campo E-mail é obrigatório")
-              .nullable(),
-            matricula: Yup.string()
-              .required("* Campo Matricula é obrigatório")
-              .nullable(),
-          })}
+          validationSchema={SchemaAluno}
           onSubmit={(values) => onSubmitHandler(values)}
         >
           {({
@@ -126,6 +117,7 @@ function PerfilUsuario() {
                         valid={touched.email && !errors.email}
                         error={touched.email && errors.email}
                         placeholder="E-mail"
+                        type="email"
                       />
                       {errors.email && touched.email && (
                         <Card.Form.StyledInlineErrorMessage>
