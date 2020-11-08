@@ -49,11 +49,30 @@ export const SidebarDataProfessor = [
     cName: "nav-text",
   },
   {
-    title: "Manter Tarefa",
-    path: "/admin/manter-tarefa",
-    icon: <MdIcons.MdList />,
+    title: "Manter Contato",
+    path: "/admin/manter-contato",
+    icon: <IoIcons.IoMdPeople />,
     cName: "nav-text",
   },
+  {
+    title: "Teste Calendario",
+    path: "/admin/calendario",
+    icon: <IoIcons.IoMdPeople />,
+    cName: "nav-text",
+  },
+  {
+    title: "Manter Tarefa",
+    path: "/admin/manter-tarefa",
+    icon: <IoIcons.IoIosPaper />,
+    cName: "nav-text",
+  },
+  {
+    title: "Agenda",
+    path: "/admin/calendario",
+    icon: <IoIcons.IoMdPeople />,
+    cName: "nav-text",
+  },
+
 
 ];
 

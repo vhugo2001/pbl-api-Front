@@ -10,6 +10,7 @@ import Cadastro from "../pages/cadastro";
 import ManterDisciplina from "../pages/disciplina/manter/Index";
 import ManterTema from "../pages/tema/manter/Index";
 import ManterProblema from "../pages/problema/manter/Index";
+import ManterContato from "../pages/contato/manter/Index";
 import ListagemTarefas from "../pages/listagemTarefas/index";
 import IniciarPBL from "../pages/pbl/cadastrar/Index"
 import DashBoardProfessor from "../pages/professor/dashboard/dashboard"
@@ -29,10 +30,11 @@ const Routes = () => (
     <PrivateRoute path="/admin/manter-disciplina" roles={[Role.Professor]}  component={ManterDisciplina} />
     <PrivateRoute path="/admin/manter-tema" roles={[Role.Professor]}  component={ManterTema} />
     <PrivateRoute path="/admin/cadastro" component={Cadastro} />
-    <PrivateRoute path="/admin/manter-disciplina" roles={[Role.Professor]} component={ManterDisciplina} />
-    <PrivateRoute path="/admin/manter-tema" roles={[Role.Professor]}  component={ManterTema} />
-    <PrivateRoute path="/admin/manter-problema"roles={[Role.Empresa]} component={ManterProblema} />
-    <PrivateRoute path="/admin/manter-tarefa"  component={ListagemTarefas} />
+    <PrivateRoute path="/admin/manter-disciplina" component={ManterDisciplina} />
+    <PrivateRoute path="/admin/manter-tema" component={ManterTema} />
+    <PrivateRoute path="/admin/manter-problema" component={ManterProblema} />
+    <PrivateRoute path="/admin/manter-contato" component={ManterContato} />
+    <PrivateRoute path="/admin/manter-tarefa" component={ListagemTarefas} />
     <PrivateRoute path="/admin/calendario" component={Calendario} />
 
   </Switch>

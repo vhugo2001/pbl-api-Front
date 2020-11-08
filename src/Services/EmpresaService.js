@@ -10,6 +10,18 @@ const listarID = (id) => {
   return http.get(URL_EMPRESA + `/${id}`);
 };
 
+const listarTodosContatos = () => {
+  return http.get(URL_EMPRESA + "/contato");
+};
+
+const listarContatoID = (id) => {
+  return http.get(URL_EMPRESA + "/contato"`/${id}`);
+};
+
+const incluirContato = (data) => {
+  return http.post(URL_EMPRESA + "/contato", data);
+};
+
 const incluir = (data) => {
   return http.post(URL_EMPRESA, data);
 };
@@ -24,8 +36,11 @@ const deletar = (id) => {
 
 export default {
   listarTodos,
+  listarID,
   incluir,
   atualizar,
   deletar,
-  listarID,
+  listarTodosContatos,
+  listarContatoID,
+  incluirContato,
 };
