@@ -1,23 +1,42 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
-import subDays from "date-fns/subDays";
 import pt from "date-fns/locale/pt";
-import { format } from 'date-fns'
+import PropTypes from 'prop-types';
+
+export const DatePickerDefault = ({ value, setDataConclusao, ...props }) => {
+    const propTypes = {
+        onUpdate: PropTypes.func.isRequired
+    }
+
+    function parseDate(value) {
+
+        let parts = value.split('/');
 
 
-export const DatePickerDefault = ({ value }) => {
+        let dataCompleta = new Date(parts[2], parts[1] - 1, parts[0]);
+        // new Date(year, month [, day [, hours[, minutes[, seconds[, ms]]]]])
+        return dataCompleta // Note: months are 0-based
+    }
 
-    const [dataConclusao, setDataConclusao] = useState(new Date(value));
+    const getValue = (dataConclusaoPicker) => {
+        setDataConclusao(dataConclusaoPicker)
+    }
+    const [dataConclusaoPicker, setDataConclusaoPicker] = useState(new Date(parseDate(value)));
+    console.log(dataConclusaoPicker)
+    const { onUpdate, ...rest } = props;
+    console.log(rest)
     return (
         <DatePicker
-
+            {...rest}
             name="dataConclusao"
             dateFormat="dd/MM/yyyy"
-            minDate={subDays(new Date(), 0)}
             locale={pt}
             useShortMonthInDropdown
-            selected={dataConclusao || null}
-            onChange={date => setDataConclusao(date)} />
+            selected={dataConclusaoPicker || null}
+            onChange={date => setDataConclusaoPicker(date)}
+            minDate={new Date()}
+            onBlur={(dataConclusaoPicker) => onUpdate(getValue(dataConclusaoPicker))}
+        />
 
         //             const { setFieldValue } = useFormikContext(); 
         //   const [field] = useField(props);
