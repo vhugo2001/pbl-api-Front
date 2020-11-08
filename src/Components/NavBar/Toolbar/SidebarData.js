@@ -4,7 +4,7 @@ import * as AiIcons from "react-icons/ai";
 import * as IoIcons from "react-icons/io";
 import * as MdIcons from "react-icons/md";
 
-export const SidebarData = [
+export const SidebarDataProfessor = [
   {
     title: "PBL",
     path: "/admin/pbl",
@@ -18,34 +18,34 @@ export const SidebarData = [
     cName: "nav-text",
   },
   {
-    title: "Professor",
+    title: "Dashboard",
     path: "/admin/dashboard",
-    icon: <IoIcons.IoIosPaper />,
+    icon: <MdIcons.MdPieChart />,
     cName: "nav-text",
   },
   {
     title: "Consultar Alunos",
     path: "/admin/alunos",
-    icon: <IoIcons.IoMdPeople />,
+    icon: <MdIcons.MdPeople />,
     cName: "nav-text",
   },
   {
     title: "Manter Disciplina",
     path: "/admin/manter-disciplina",
-    icon: <IoIcons.IoMdPeople />,
+    icon: <FaIcons.FaListUl  />,
     cName: "nav-text",
   },
 
   {
     title: "Manter Tema",
     path: "/admin/manter-tema",
-    icon: <IoIcons.IoMdPeople />,
+    icon: <MdIcons.MdCreateNewFolder/>,
     cName: "nav-text",
   },
   {
-    title: "Manter Problema",
-    path: "/admin/manter-problema",
-    icon: <IoIcons.IoMdPeople />,
+    title: "Agenda",
+    path: "/admin/calendario",
+    icon: <MdIcons.MdPermContactCalendar />,
     cName: "nav-text",
   },
   {
@@ -55,9 +55,22 @@ export const SidebarData = [
     cName: "nav-text",
   },
   {
-    title: "Teste Calendario",
-    path: "/admin/calendario",
-    icon: <IoIcons.IoMdPeople />,
+    title: "Manter Tarefa",
+    path: "/admin/manter-tarefa",
+    icon: <IoIcons.IoIosPaper />,
+    cName: "nav-text",
+  },
+  
+
+
+];
+
+
+export const SidebarDataAluno = [
+  {
+    title: "Atividades",
+    path: "/aluno/atividade",
+    icon: <AiIcons.AiFillHome />,
     cName: "nav-text",
   },
   {
@@ -66,5 +79,27 @@ export const SidebarData = [
     icon: <IoIcons.IoIosPaper />,
     cName: "nav-text",
   },
+  {
+    title: "Agenda",
+    path: "/admin/calendario",
+    icon: <IoIcons.IoMdPeople />,
+    cName: "nav-text",
+  },
 
+
+];
+
+export const SidebarDataEmpresa = [
+  {
+    title: "Manter Problema",
+    path: "/admin/manter-problema",
+    icon: <IoIcons.IoMdPeople />,
+    cName: "nav-text",
+  },
+  {
+    title: "Agenda",
+    path: "/admin/calendario",
+    icon: <IoIcons.IoMdPeople />,
+    cName: "nav-text",
+  },
 ];
