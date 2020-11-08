@@ -10,39 +10,35 @@ const Calendario = ({ children }) => {
   const localizer = momentLocalizer(moment);
   let data = [];
   const [events, setEvents] = useState([]);
-  const [sign, setSign] = useState(false);
-
+  
   function getEventos() {
-   
-      
-        ApiCalendar.listUpcomingEvents(150).then(({ result }) => {
-          result.items.map((item) => {
-            data.push({
-              title: item.summary,
-              start: new Date(
-                item.start.date != null ? item.start.date : item.start.dateTime
-              ),
-              end: new Date(
-                item.end.date != null ? item.end.date : item.end.dateTime
-              ),
-              allDay: item.start.date == null ? false : true,
-            });
-          });
-          setEvents(data);
+    ApiCalendar.listUpcomingEvents(150).then(({ result }) => {
+      result.items.map((item) => {
+        data.push({
+          title: item.summary,
+          start: new Date(
+            item.start.date != null ? item.start.date : item.start.dateTime
+          ),
+          end: new Date(
+            item.end.date != null ? item.end.date : item.end.dateTime
+          ),
+          allDay: item.start.date == null ? false : true,
         });
-      }
-    
+      });
+      setEvents(data);
+    });
+  }
 
   useEffect(() => {
     ApiCalendar.onLoad(() => {
       if (ApiCalendar.sign) {
         getEventos();
-      }else{
+      } else {
         ApiCalendar.handleAuthClick();
         getEventos();
       }
-    }
-  )}, []);
+    });
+  }, []);
 
   return (
     <div>
