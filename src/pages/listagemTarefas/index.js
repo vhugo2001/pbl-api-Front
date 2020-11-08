@@ -10,10 +10,13 @@ import '../../Components/TableTarefa/listagemTarefa.css'
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import { toast } from "react-toastify";
 import { Card } from "../../Components/Card/CardPrincipal";
+import DatePicker from "react-datepicker";
 import serviceAtividade from '../../Services/AtividadeService'
 import serviceTarefa from '../../Services/TarefaService'
 import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
 import DatePickerDefault from '../../Components/DatePicker/DatePickerDefault'
+import pt from "date-fns/locale/pt";
+import { format } from "date-fns";
 import {
     Container
 } from '../../Components/TableTarefa/style'
@@ -115,15 +118,26 @@ function ListagemTarefas() {
             formatter: (cellContent, row) => (
 
                 < div >
-                    <div className="icone-button" onClick={() => alert('Botao de Check')}>
-                        <IoIcons.IoIosCheckmarkCircleOutline />
+                    <div className="icone-button" onClick={() => () => handleConcluido(row)}>
+                        <IoIcons.IoIosCheckmarkCircle />
                     </div>
 
                 </div >
             ),
             headerStyle: (colum, colIndex) => {
                 return { width: '35px', height: '1px', textAlign: 'center', backgroundColor: 'transparent', border: 'none', padding: '0' };
-            }, editable: false
+            },
+            // style: (cell, row, rowIndex, colIndex) => {
+            //     if (row.concluido === true) {
+            //         return {
+            //             color: '#7f89a2'
+            //         };
+            //     }
+            //     return {
+            //         color: '#00bf9c'
+            //     };
+            // }, 
+            editable: false
         },
         {
             dataField: 'titulo',
@@ -152,32 +166,53 @@ function ListagemTarefas() {
             //     <QualityRanger {...editorProps} value={value} />
             // )
         },
+        // {
+        //     dataField: 'dataConclusao',
+        //     text: '',
+        //     formatter: (cellContent, row) => (
+        //         <div style={{ textAlign: 'center' }}>
+        //             <label >{cellContent}</label><br />
+        //         </div>
+        //     ),
+        //     headerStyle: {
+        //         display: 'none'
+        //     },
+        //     editorRenderer: (editorProps, value, row, column, rowIndex, columnIndex, onBlur) => (
+        //         console.log(editorProps),
+        //         console.log(dataConclusao),
+        //         // <DatePickerDefault
+        //         //     name="dataConclusao"
+        //         //     locale={pt}
+        //         //     minDate={subDays(new Date(), 0)}
+        //         //     useShortMonthInDropdown
+        //         //     dateFormat="dd/MM/yyyy"
+        //         //     selected={row.dataConclusao}
+        //         //     value={row.dataConclusao} />
+
+        //         < DatePickerDefault {...editorProps} value={value} setDataConclusao={setDataConclusao} {...onBlur} />
+
+        //     )
+        // },
+
         {
             dataField: 'dataConclusao',
             text: '',
-            formatter: (cellContent, row) => (
-                <div style={{ textAlign: 'center' }}>
-                    <label >{cellContent}</label><br />
-                </div>
-            ),
+            formatter: (cell) => {
+                console.log(cell)
+                let dateObj = cell;
+                if (typeof cell !== 'object') {
+                    dateObj = new Date(cell);
+                    console.log(dateObj)
+                }
+                return `${('0' + dateObj.getUTCDate()).slice(-2)}/${('0' + (dateObj.getUTCMonth() + 1)).slice(-2)}/${dateObj.getUTCFullYear()}`;
+            },
+            editor: {
+                type: Type.DATE
+            },
             headerStyle: {
                 display: 'none'
             },
-            editorRenderer: (editorProps, value, row, column, rowIndex, columnIndex) => (
-                console.log(editorProps),
-                console.log(dataConclusao),
-                // <DatePickerDefault
-                //     name="dataConclusao"
-                //     locale={pt}
-                //     minDate={subDays(new Date(), 0)}
-                //     useShortMonthInDropdown
-                //     dateFormat="dd/MM/yyyy"
-                //     selected={row.dataConclusao}
-                //     value={row.dataConclusao} />
 
-                < DatePickerDefault {...editorProps} value={value} setDataConclusao={setDataConclusao} />
-
-            )
         },
         {
             dataField: "icone",
@@ -203,7 +238,7 @@ function ListagemTarefas() {
     //       .deletar(dados)
     //       .then((response) => {
     //         let data = response.data;
-    //         setAluno(data);
+    //         setTarefa(data);
     //         toast.success("Sucesso ao excluir a tarefa.");
     //       })
     //       .catch((error) => {
@@ -211,6 +246,34 @@ function ListagemTarefas() {
     //       });
     //   };
 
+    const handleConcluido = (item) => {
+        // if(item.concluido === true){
+        //     let status = false
+        // }else{
+        //     status = true
+        // }
+        // statusTarefa(item.id,status);
+    }
+
+    // const statusTarefa = (dados, status) => {
+    //     serviceTarefa
+    //       .atualizar(dados, status)
+    //       .then((response) => {
+    //         let data = response.data;
+    //         setTarefa(data);
+    //       })
+    //       .catch((error) => {
+    //         toast.error("Erro modificar status da Tarefa.");
+    //       });
+    //   };
+
+    // const rowStyle = (row, rowIndex) => {
+    //     if (row.concluido === true) {
+    //       return { backgroundColor: "rgba(0, 185, 0, 0.1)" };
+    //     } else {
+    //       return {};
+    //     }
+    //   };
 
     const verificaDesc = (row) => {
         if (row.descricao === "" || row.descricao === null) {
@@ -251,6 +314,7 @@ function ListagemTarefas() {
                                     cellEdit={cellEdit}
                                     condensed
                                     bordered={false}
+                                // rowStyle={ rowStyle }
                                 />
                             </div>
                         )
