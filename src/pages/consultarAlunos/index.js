@@ -179,7 +179,7 @@ export default function ListAluno2(props) {
   return (
     <>
       <div className="title-container">
-        <h1>Iniciar PBL</h1>
+        <h1>Consultar Alunos</h1>
       </div>
       <Container className="container-list">
         <ToolkitProvider keyField="nome" data={alunos} columns={colunas} search>

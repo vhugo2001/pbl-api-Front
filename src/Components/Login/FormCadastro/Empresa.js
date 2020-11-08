@@ -1,8 +1,8 @@
 import React from "react";
 import { Formik } from "formik";
-import * as Yup from "yup";
 import { toast } from "react-toastify";
 import empresaService from "../../../Services/AuthService";
+import SchemaEmpresa from "./SchemaYup/SchemaEmpresa";
 
 const Empresa = () => {
   const onSubmitHandler = (data) => {
@@ -10,6 +10,9 @@ const Empresa = () => {
       .registrarEmpresa(data)
       .then((response) => {
         toast.success(response.data.message);
+        setTimeout(() => {
+          window.location.reload();
+        }, 5000);
       })
       .catch((error) => {
         toast.error(error.response.data);
@@ -24,29 +27,15 @@ const Empresa = () => {
           nome: "",
           cnpj: "",
           email: "",
+          perfis: [
+            {
+              id: 3,
+            },
+          ],
           senha: "",
           senhaC: "",
         }}
-        validationSchema={Yup.object().shape({
-          nome: Yup.string().required("* Campo nome é obrigatório").nullable(),
-          cnpj: Yup.string()
-            .required("* Campo cnpj é obrigatório")
-            .matches(
-              /^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/,
-              "Digite um cnpj válido"
-            )
-            .nullable(),
-          email: Yup.string()
-            .required("* Campo email é obrigatório")
-            .nullable(),
-          senha: Yup.string()
-            .required("* Campo senha é obrigatório")
-            .min(8, "Senha muito curta - deve ter no minimo 6 caracteres"),
-          senhaC: Yup.string().oneOf(
-            [Yup.ref("senha"), null],
-            "Senhas precisam ser idênticas."
-          ),
-        })}
+        validationSchema={SchemaEmpresa}
         onSubmit={(values) => onSubmitHandler(values)}
       >
         {({ errors, touched, handleSubmit, handleChange }) => {

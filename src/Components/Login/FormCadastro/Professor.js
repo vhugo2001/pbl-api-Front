@@ -1,22 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik } from "formik";
 import { toast } from "react-toastify";
-import alunoService from "../../../Services/AuthService";
-import SchemaAluno from "./SchemaYup/SchemaAluno";
+import professorService from "../../../Services/AuthService";
+import SchemaProfessor from "./SchemaYup/SchemaProfessor";
 
-const Aluno = () => {
+const Professor = () => {
   const onSubmitHandler = (data) => {
-    alunoService
-      .registrarAluno(data)
-      .then((response) => {
-        toast.success(response.data.message);
-        setTimeout(() => {
-          window.location.reload();
-        }, 5000);
-      })
-      .catch((error) => {
-        toast.error(error.response.data);
-      });
+    console.log(data);
   };
 
   return (
@@ -25,51 +15,29 @@ const Aluno = () => {
         enableReinitialize
         initialValues={{
           nome: "",
-          matricula: "",
           email: "",
-          perfis: [
-            {
-              id: 1,
-            },
-          ],
           senha: "",
           senhaC: "",
         }}
-        validationSchema={SchemaAluno}
+        validationSchema={SchemaProfessor}
         onSubmit={(values) => onSubmitHandler(values)}
       >
         {({ errors, touched, handleSubmit, handleChange }) => {
           return (
             <>
               <form action="/" autoComplete="off" onSubmit={handleSubmit}>
-                <div className="top-row">
-                  <div className="field-wrap">
-                    <input
-                      name="nome"
-                      type="text"
-                      valid={touched.nome && !errors.nome}
-                      error={touched.nome && errors.nome}
-                      placeholder="Nome"
-                      onChange={handleChange}
-                    />
-                    {errors.nome && touched.nome && (
-                      <div className="error-message">{errors.nome}</div>
-                    )}
-                  </div>
-
-                  <div className="field-wrap">
-                    <input
-                      name="matricula"
-                      type="text"
-                      valid={touched.matricula && !errors.matricula}
-                      error={touched.matricula && errors.matricula}
-                      placeholder="Matrícula"
-                      onChange={handleChange}
-                    />
-                    {errors.matricula && touched.matricula && (
-                      <div className="error-message">{errors.matricula}</div>
-                    )}
-                  </div>
+                <div className="field-wrap">
+                  <input
+                    name="nome"
+                    type="text"
+                    valid={touched.nome && !errors.nome}
+                    error={touched.nome && errors.nome}
+                    placeholder="Nome"
+                    onChange={handleChange}
+                  />
+                  {errors.nome && touched.nome && (
+                    <div className="error-message">{errors.nome}</div>
+                  )}
                 </div>
                 <div className="field-wrap">
                   <input
@@ -122,4 +90,4 @@ const Aluno = () => {
   );
 };
 
-export default Aluno;
+export default Professor;

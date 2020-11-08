@@ -15,12 +15,6 @@ td.selection-cell{
   justify-content: center;
  height: 55px;
 }
-td:nth-child(3){
-  text-align: end!important;
-}
-td:nth-child(4){
-  text-align: end!important;
-}
 
 th{
   font-size: 14px !important;
@@ -29,64 +23,65 @@ th{
 th:focus{
   outline: none !important;
 }
-
-th:nth-child(3){
-  text-align: end!important;
-}
-th:nth-child(4){
-  text-align: end!important;
-}
-
-/* th.selection-cell-header{
-  text-align: center;
-  width: 14% !important;
-}
-th.expand-cell-header{
-  display: none;
-}
-td.selection-cell{
-  text-align: center;
-}
-.expand-cell{
-  width: 5px !important;
-} */
-
-
-div.scrollExpandir div.react-bootstrap-table table.table.table-condensed thead tr th.selection-cell-header{
+div.scrollExpand div.react-bootstrap-table table.table.table-condensed thead tr th.selection-cell-header{
   text-align: center;
   width: 14% !important;
 } 
-div.scrollExpandir div.react-bootstrap-table table.table.table-condensed thead tr  th.expand-cell-header{
-  display: none;
+div.scrollExpand div.react-bootstrap-table table.table.table-condensed thead tr  th.expand-cell-header{
+
+  pointer-events: none;
 }
- div.scrollExpandir div.react-bootstrap-table table.table.table-condensed tbody tr  td.selection-cell{
+ div.scrollExpand div.react-bootstrap-table table.table.table-condensed tbody tr  td.selection-cell{
   text-align: center;
 }
-div.scrollExpandir div.react-bootstrap-table table.table.table-condensed tbody tr  td.expand-cell{
+div.scrollExpand div.react-bootstrap-table table.table.table-condensed tbody tr  td.expand-cell{
   width: 5px !important;
 }
 
-.icon-button ,.icon-button-Indicativo{
+.icone-button{
   font-size: 1.7rem;
   background: none;
   color:#7f89a2;
   margin-top: -10px;
   height: 35px;
   margin-bottom: 0px !important;
+  cursor: pointer;
 }
 
-.icon-button-Indicativo{
-  font-size: 1.5rem;
-  margin-top: 6px;
-}
-
-.icon-file-button {
-  font-size: 2rem;
+.adicionar-button{
+  font-size: 1.7rem;
   background: none;
-  color: #7f89a2;
+  color:#7f89a2;
   margin-top: -10px;
   height: 35px;
+  margin-bottom: 0px !important;
+  cursor: pointer;
+  
 }
+
+.adicionar-button:hover{
+  color:#3b62c5;
+}
+
+.action-button-adicionar{text-align: start;}
+
+
+.deletar-button{
+  font-size: 1.7rem;
+  background: none;
+  color:#7f89a2;
+  margin-top: -10px;
+  height: 35px;
+  margin-bottom: 0px !important;
+  cursor: pointer;
+  
+}
+
+.deletar-button:hover{
+  color:red;
+}
+
+.action-button-deletar{text-align: center;}
 
 .checkbox{
   -ms-transform: scale(2); /* IE */
@@ -121,9 +116,9 @@ span.order{
 .react-bootstrap-table-page-btns-ul {
   float: none;
 }
-.scrollExpandir{
-  min-height: 290px ;
-  max-height: 290px ;
+.scrollExpand{
+  min-height: 390px ;
+  max-height: 390px ;
   overflow: auto;
 }
 div.row-expansion-style{
@@ -140,13 +135,12 @@ input.form-control, label.search-label{
   padding-bottom: 0 !important;
   margin-bottom: 0 !important;
 }
-.DescHeader{
+.DescAtiv{
   white-space: nowrap; 
   width: 110%; 
   overflow: hidden;
   text-overflow: ellipsis; 
   font-size: 14px;
-cursor: pointer;
 }
 
 .DataHeader{
@@ -158,64 +152,53 @@ cursor: pointer;
   padding-right: 10px;
 
 }
-.BordaIconeTop, .BordaIconeBottom{
-  margin-left: 9px;
-  height: 27px; 
-  width: 5px;
-  border-right: 1px gray solid;
-} 
-    
-.SetasExpandir{
+
+.SetasExpand{
+ 
   font-size: 1.7rem;
   background: none;
   text-align: end;
 }
 
 
-.SetasExpandir svg{
+.SetasExpand svg{
   margin-left: -10px;
   margin-top: -10px;
   cursor: pointer;
   
 }
-.TituloTexto{
+.TituloAtiv{
   font-size: 14px;
-  cursor: pointer;
+  
   padding-bottom: -10px ;
   margin-bottom: -10px;
 }
-.StatusTexto{
-  font-size: 14px;
-  font-weight: bold;
-  margin-left: 3px;
-  margin-right: 20px;
-  color: gray;
-}
-.ConclusaoTexto{
+
+.ConclusaoAtiv{
   font-size: 14px;
   align-content: end;
   padding-bottom: -10px ;
   margin-bottom: -10px;
-  cursor: pointer;
+  
 }
-
 
 .table-custom-container {
   display: flex;
   flex-direction: column;
 }
 
-.table-searchAtividades {
+.table-searchAtiv {
+  margin-top: 15px;
   display: flex;
   justify-content: flex-start;
 }
 
-.table-searchAtividades .search-label {
-  max-width: 60%;
+.table-searchAtiv .search-label {
+  max-width: 70%;
   margin-left: 10px;
 }
 
-.table-searchAtividades .table-search-icon {
+.table-searchAtiv .table-search-icon {
   cursor: pointer;
   vertical-align: middle !important;
   margin: 0 10px .5rem 15px;
@@ -229,9 +212,11 @@ cursor: pointer;
   border-radius: 4px;
   
 }
-
-.TabelaListaPbl, .TabelaListaData{
-  cursor: pointer;
+.container-list {
+  padding: 5px;
+  border: 0 !important;
 }
 
-
+.div.react-datepicker,div .react-datepicker-popper {
+  z-index: 9999 !important;
+}

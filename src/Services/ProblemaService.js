@@ -1,25 +1,25 @@
 import http from "./httpCommon";
 
-const URL_EMPRESA = "/empresa";
+const URL_PROBLEMA = "/problema";
 
 const listarTodos = () => {
-  return http.get(URL_EMPRESA);
+  return http.get(URL_PROBLEMA);
 };
 
 const listarID = (id) => {
-  return http.get(URL_EMPRESA + `/${id}`);
+  return http.get(URL_PROBLEMA + `/${id}`);
 };
 
 const incluir = (data) => {
-  return http.post(URL_EMPRESA, data);
+  return http.post(URL_PROBLEMA, data);
 };
 
 const atualizar = (id, data) => {
-  return http.put(URL_EMPRESA + `/${id}`, data);
+  return http.put(URL_PROBLEMA + `/${id}`, data);
 };
 
 const deletar = (id) => {
-  return http.delete(URL_EMPRESA + `/${id}`);
+  return http.delete(URL_PROBLEMA + `/${id}`);
 };
 
 export default {
