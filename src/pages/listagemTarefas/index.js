@@ -7,19 +7,15 @@ import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.c
 import * as MdIcons from "react-icons/md";
 import * as IoIcons from "react-icons/io";
 import '../../Components/TableTarefa/listagemTarefa.css'
-import paginationFactory from 'react-bootstrap-table2-paginator';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import { toast } from "react-toastify";
 import { Card } from "../../Components/Card/CardPrincipal";
 import serviceAtividade from '../../Services/AtividadeService'
+import serviceTarefa from '../../Services/TarefaService'
 import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
-import subDays from "date-fns/subDays";
-import pt from "date-fns/locale/pt";
-import DatePickerField from '../../Components/DatePicker/DatePickerField'
+import DatePickerDefault from '../../Components/DatePicker/DatePickerDefault'
 import {
-    Title,
-    Group,
-    LabelClick
+    Container
 } from '../../Components/TableTarefa/style'
 
 const { SearchBar } = Search;
@@ -28,7 +24,10 @@ function ListagemTarefas() {
     // { selectedPbl, setSelectedAtividade }
     const [atividade, setAtividade] = useState([])
     const [tarefaEditada, setTarefaEditada] = useState({})
-    const [dataConclusao, setDataConclusao] = useState("");
+    const [dataConclusao, setDataConclusao] = useState();
+
+    useEffect(() => {
+    }, [dataConclusao])
 
     useEffect(() => {
 
@@ -164,20 +163,21 @@ function ListagemTarefas() {
             headerStyle: {
                 display: 'none'
             },
-            // editorRenderer: (editorProps, value, row, column, rowIndex, columnIndex) => (
-            //     <DatePickerField
-            //         name="dataInicio"
-            //         locale={pt}
-            //         minDate={subDays(new Date(), 0)}
-            //         useShortMonthInDropdown
-            //         dateFormat="dd/MM/yyyy"
-            //         selected={dataConclusao}
-            //         customInput={
-            //             <input value={dataConclusao} />
-            //         }
-            //     />
-            //     <QualityRanger {...editorProps} value={value} />
-            // )
+            editorRenderer: (editorProps, value, row, column, rowIndex, columnIndex) => (
+                console.log(editorProps),
+                console.log(dataConclusao),
+                // <DatePickerDefault
+                //     name="dataConclusao"
+                //     locale={pt}
+                //     minDate={subDays(new Date(), 0)}
+                //     useShortMonthInDropdown
+                //     dateFormat="dd/MM/yyyy"
+                //     selected={row.dataConclusao}
+                //     value={row.dataConclusao} />
+
+                < DatePickerDefault {...editorProps} value={value} setDataConclusao={setDataConclusao} />
+
+            )
         },
         {
             dataField: "icone",
@@ -292,7 +292,7 @@ function ListagemTarefas() {
             <div className="title-container">
                 <h1>Consultar Tarefas</h1>
             </div>
-            <Card >
+            <Container className="container-list">
                 <ToolkitProvider
                     keyField='id'
                     data={tarefa}
@@ -324,7 +324,7 @@ function ListagemTarefas() {
                         )
                     }
                 </ToolkitProvider>
-            </Card>
+            </Container>
 
         </>
 

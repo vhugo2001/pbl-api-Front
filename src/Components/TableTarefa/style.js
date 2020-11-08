@@ -1,11 +1,16 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: space-between;
 background-color: #fff;
-border-radius: 0.4167rem;
-border: 1px solid gray;
-width:100%;
-overflow-x:hidden;
+border: 0;
+border-radius: 0.3167rem;
+box-shadow: 0 9px 23px rgba(0, 0, 0, 0.09), 0 5px 5px rgba(0, 0, 0, 0.06) !important;
+overflow: hidden;
+margin-top: 12px;
 `;
 export const Title = styled.label`
   font-family: Montserrat, sans-serif !important;
