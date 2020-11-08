@@ -101,9 +101,10 @@ const DefaultDropDownList = ({ lista, onSelect, selected, ...props }) => {
   }, [lista]);
 
   useEffect(() => {
-    if(selected !== undefined && selected.length> 0 ){
-      setSelectedOption(selected[0].nome);
-      onSelect(selected[0]);
+    if(selected !== undefined ){
+      setSelectedOption(selected.nome);
+      console.log(selected)
+      onSelect(selected);
      
     }else
     { 

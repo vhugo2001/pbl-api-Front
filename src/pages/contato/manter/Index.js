@@ -10,7 +10,7 @@ const Index = () => {
   return (
     <>
       <div className="title-container">
-        <h1>Manter Problema</h1>
+        <h1>Manter Contatos</h1>
       </div>
 
       <Row>
