@@ -9,6 +9,7 @@ import pt from "date-fns/locale/pt";
 import { format } from "date-fns";
 import DropDownList from "../../../Components/DropDownList/Default/DropDownList";
 import DropDownListAlunos from "../../../Components/DropDownList/Alunos/DropDownList";
+import serviceEmpresa from "../../../Services/EmpresaService"
 import serviceAluno from "../../../Services/AlunoService";
 import serviceTema from "../../../Services/TemaPblService";
 import serviceDisciplina from "../../../Services/DisciplinaService";
@@ -27,6 +28,8 @@ const Index = () => {
   const [listaAluno, setListaAluno] = useState([]);
   const [listaTemaPbl, setListaTemaPbl] = useState([]);
   const [listaDisciplina, setListaDisciplina] = useState([]);
+  const [listaEmpresa, setListaEmpresa] = useState([]);
+  const [empresaSelecionada, setEmpresaSelecionada] = useState([]);
   const [listaPbl, setListaPbl] = useState([]);
   const [temaSelecionado, setTemaSelecionado] = useState({});
   const [disciplinaSelecionada, setDisciplinaSelecionada] = useState({});
@@ -75,6 +78,16 @@ const Index = () => {
         setListaDisciplina(data);
       })
       .catch((error) => toast.error("Erro ao acessar a lista de disciplinas."));
+  }, []);
+
+  useEffect(() => {
+    serviceEmpresa
+      .listarTodos()
+      .then((response) => {
+        let data = response.data;
+        setListaEmpresa(data);
+      })
+      .catch((error) => toast.error("Erro ao acessar a lista de empresas."));
   }, []);
 
   const onSubmitHandler = (data) => {
@@ -283,7 +296,12 @@ const Index = () => {
 
                   <Card.Form.Group>
                     <Card.Form.Title>Empresa</Card.Form.Title>
-                    <Card.Form.InputText />
+                    <DropDownList
+                    
+                      lista={listaEmpresa}
+                      onSelect={setEmpresaSelecionada}
+                  
+                    ></DropDownList>
                   </Card.Form.Group>
 
                   <Card.Form.BreakRow />
