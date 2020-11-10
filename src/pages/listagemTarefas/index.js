@@ -33,15 +33,14 @@ function ListagemTarefas() {
     useEffect(() => {
 
         serviceAtividade
-            .listarIdPbl(46)
+            .listarIdPbl(16)
             .then((response) => {
                 let data = response.data;
                 setAtividade(data);
-
             })
             .catch((error) => {
-
-                toast.error("Não foi possível selecionar o aluno.");
+                console.log(error)
+                toast.error("Não foi possível buscar as tarefas.");
             });
 
     }, []);

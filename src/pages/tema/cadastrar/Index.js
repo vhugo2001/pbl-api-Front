@@ -51,7 +51,11 @@ const Index = ({ selectedTema, selectedDisciplina }) => {
   };
 
   const onSubmitHandler = (data) => {
-    console.log(data);
+    serviceTema.incluir(data).then((response) =>{
+      toast.success("Tema cadastrado com sucesso!")
+    }).catch((error) => {
+      toast.error(error.response.data)
+    })
   
   };
 
