@@ -3,6 +3,8 @@ import { Formik } from "formik";
 import { toast } from "react-toastify";
 import alunoService from "../../../Services/AuthService";
 import SchemaAluno from "./SchemaYup/SchemaAluno";
+import * as Constants from "../../../config/constants"
+import { mask } from 'remask'
 
 const Aluno = () => {
   const onSubmitHandler = async (data, {resetForm}) => {
@@ -25,16 +27,11 @@ const Aluno = () => {
           nome: "",
           matricula: "",
           email: "",
-          perfis: [
-            {
-              id: 1,
-            },
-          ],
           senha: "",
           senhaC: "",
         }}
         validationSchema={SchemaAluno}
-        onSubmit={(values) => onSubmitHandler(values)}
+        onSubmit={onSubmitHandler}
       >
         {({ errors, touched, handleSubmit, handleChange, isSubmitting, isValid, status, values }) => {
           return (
@@ -59,7 +56,7 @@ const Aluno = () => {
                   <div className="field-wrap">
                     <input
                       name="matricula"
-                      value = {values.matricula || ''}
+                      value = { mask(values.matricula, Constants.MASK_PATTERNS_MATRICULA) || ''}
                       type="text"
                       valid={touched.matricula && !errors.matricula}
                       error={touched.matricula && errors.matricula}

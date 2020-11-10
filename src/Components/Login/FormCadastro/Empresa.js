@@ -27,16 +27,11 @@ const Empresa = () => {
           nome: "",
           cnpj: "",
           email: "",
-          perfis: [
-            {
-              id: 3,
-            },
-          ],
           senha: "",
           senhaC: "",
         }}
         validationSchema={SchemaEmpresa}
-        onSubmit={(values) => onSubmitHandler(values)}
+        onSubmit={onSubmitHandler}
       >
         {({ errors, touched, handleSubmit, handleChange, isSubmitting, isValid, status, values  }) => {
           return (
@@ -61,7 +56,7 @@ const Empresa = () => {
                   <div className="field-wrap">
                     <input
                       name="cnpj"
-                      value = { mask(values.cnpj, Constants.MASK_PATTERNS) || ''}
+                      value = { mask(values.cnpj, Constants.MASK_PATTERNS_CNPJ) || ''}
                       type="text"
                       valid={touched.cnpj && !errors.cnpj}
                       error={touched.cnpj && errors.cnpj}

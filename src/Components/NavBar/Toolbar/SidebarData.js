@@ -32,14 +32,14 @@ export const SidebarDataProfessor = [
   {
     title: "Manter Disciplina",
     path: "/admin/manter-disciplina",
-    icon: <FaIcons.FaListUl  />,
+    icon: <FaIcons.FaListUl />,
     cName: "nav-text",
   },
 
   {
     title: "Manter Tema",
     path: "/admin/manter-tema",
-    icon: <MdIcons.MdCreateNewFolder/>,
+    icon: <MdIcons.MdCreateNewFolder />,
     cName: "nav-text",
   },
   {
@@ -48,23 +48,14 @@ export const SidebarDataProfessor = [
     icon: <MdIcons.MdPermContactCalendar />,
     cName: "nav-text",
   },
-  {
-    title: "Manter Contato",
-    path: "/admin/manter-contato",
-    icon: <IoIcons.IoMdPeople />,
-    cName: "nav-text",
-  },
+
   {
     title: "Manter Tarefa",
     path: "/admin/manter-tarefa",
     icon: <IoIcons.IoIosPaper />,
     cName: "nav-text",
   },
-  
-
-
 ];
-
 
 export const SidebarDataAluno = [
   {
@@ -85,14 +76,18 @@ export const SidebarDataAluno = [
     icon: <IoIcons.IoMdPeople />,
     cName: "nav-text",
   },
-
-
 ];
 
 export const SidebarDataEmpresa = [
   {
     title: "Manter Problema",
     path: "/admin/manter-problema",
+    icon: <IoIcons.IoMdPeople />,
+    cName: "nav-text",
+  },
+  {
+    title: "Manter Contato",
+    path: "/admin/manter-contato",
     icon: <IoIcons.IoMdPeople />,
     cName: "nav-text",
   },
