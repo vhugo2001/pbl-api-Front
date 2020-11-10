@@ -20,7 +20,7 @@ export const SidebarData = [
   {
     title: "Professor",
     path: "/admin/dashboard",
-    icon: <IoIcons.IoIosPaper />,
+    icon: <MdIcons.MdDashboard />,
     cName: "nav-text",
   },
   {
@@ -32,26 +32,26 @@ export const SidebarData = [
   {
     title: "Manter Disciplina",
     path: "/admin/manter-disciplina",
-    icon: <IoIcons.IoMdPeople />,
+    icon: <MdIcons.MdBook />,
     cName: "nav-text",
   },
 
   {
     title: "Manter Tema",
     path: "/admin/manter-tema",
-    icon: <IoIcons.IoMdPeople />,
+    icon: <MdIcons.MdBookmark />,
     cName: "nav-text",
   },
   {
     title: "Manter Problema",
     path: "/admin/manter-problema",
-    icon: <IoIcons.IoMdPeople />,
+    icon: <MdIcons.MdReportProblem />,
     cName: "nav-text",
   },
   {
     title: "Teste Calendario",
     path: "/admin/calendario",
-    icon: <IoIcons.IoMdPeople />,
+    icon: <IoIcons.IoIosCalendar />,
     cName: "nav-text",
   },
   {

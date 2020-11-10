@@ -101,7 +101,7 @@ function CardCadastroTarefa({ selectedAtividade }) {
         id: 1,
       },
       professor: {
-        id: 2,
+        id: 3,
       },
       dataConclusao: format(data.dataConclusao, "dd/MM/yyyy"),
     };

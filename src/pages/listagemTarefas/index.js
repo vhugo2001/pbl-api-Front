@@ -33,7 +33,7 @@ function ListagemTarefas() {
     useEffect(() => {
 
         serviceAtividade
-            .listarIdPbl(21)
+            .listarIdPbl(22)
             .then((response) => {
                 let data = response.data;
                 setAtividade(data);
@@ -41,7 +41,7 @@ function ListagemTarefas() {
             })
             .catch((error) => {
 
-                toast.error("Não foi possível selecionar o aluno.");
+                toast.error("Não foi possível selecionar o pbl.");
             });
 
     }, []);
