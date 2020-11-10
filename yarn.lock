@@ -1813,6 +1813,11 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.6.tgz#146d3da57b3c636cc0d1769396ce1cfa8991147f"
   integrity sha512-6QlRuqsQ/Ox/aJEQWBEJG7A9+u7oSYl3mem/K8IzxXG/kAGbV1YPD9Bg9Zw3vyxC/YP+zONKwy8hGkSt1jxFMw==
 
+"@types/node@^9.6.39":
+  version "9.6.61"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.61.tgz#29f124eddd41c4c74281bd0b455d689109fc2a2d"
+  integrity sha512-/aKAdg5c8n468cYLy2eQrcR5k6chlbNwZNGUj3TboyPa2hcO2QAJcfymlqPzMiRj8B6nYKXjzQz36minFE0RwQ==
+
 "@types/parse-json@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
@@ -4056,7 +4061,7 @@ date-arithmetic@^4.0.1:
   resolved "https://registry.yarnpkg.com/date-arithmetic/-/date-arithmetic-4.1.0.tgz#e5d6434e9deb71f79760a37b729e4a515e730ddf"
   integrity sha512-QWxYLR5P/6GStZcdem+V1xoto6DMadYWpMXU82ES3/RfR3Wdwr3D0+be7mgOJ+Ov0G9D5Dmb9T17sNLQYj9XOg==
 
-date-fns@^2.0.1, date-fns@^2.16.1:
+date-fns@^2.0.0-beta.5, date-fns@^2.0.1:
   version "2.16.1"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.16.1.tgz#05775792c3f3331da812af253e1a935851d3834b"
   integrity sha512-sAJVKx/FqrLYHAQeN7VpJrPhagZc9R4ImZIWYRFZaaohR3KzmuK88touwsSwSVT8Qcbd4zoDsnGfX4GFB4imyQ==
@@ -9888,6 +9893,13 @@ react-fit@^1.0.3:
     detect-element-overflow "^1.2.0"
     prop-types "^15.6.0"
 
+react-google-calendar-api@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-google-calendar-api/-/react-google-calendar-api-1.2.1.tgz#92595004c509fc725f9f7e524c6957fab0c62b8a"
+  integrity sha512-kqIgEPGTdLcUyRFMT2+SIj+iPxqQ5mcilS27XzPmgXBsvbB7PAIOsJYh9yPDOKxHIoCgqNERW/jOnXdG5MS/qA==
+  dependencies:
+    "@types/node" "^9.6.39"
+
 react-icon-base@2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/react-icon-base/-/react-icon-base-2.1.0.tgz#a196e33fdf1e7aaa1fda3aefbb68bdad9e82a79d"
@@ -10375,6 +10387,13 @@ relateurl@^0.2.7:
   version "0.2.7"
   resolved "https://registry.yarnpkg.com/relateurl/-/relateurl-0.2.7.tgz#54dbf377e51440aca90a4cd274600d3ff2d888a9"
   integrity sha1-VNvzd+UUQKypCkzSdGANP/LYiKk=
+
+remask@^0.1.0-alpha.5:
+  version "0.1.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/remask/-/remask-0.1.0-alpha.5.tgz#003d49b203210501a4e66b6e7c034e6a92b6e417"
+  integrity sha512-oRVGV7FWDvL6aOcATa/TPyNs78PUr9F1gn2495/J2A4G1B6mSGWKnZfyyc5hfoqLkpxmUdF2LR/pICR2Ox9Ovw==
+  dependencies:
+    vanilla-masker "^1.2.0"
 
 remove-trailing-separator@^1.0.1:
   version "1.1.0"
@@ -12085,6 +12104,11 @@ value-equal@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/value-equal/-/value-equal-1.0.1.tgz#1e0b794c734c5c0cade179c437d356d931a34d6c"
   integrity sha512-NOJ6JZCAWr0zlxZt+xqCHNTEKOsrks2HQd4MqhP1qy4z1SkbEP467eNx6TgDKXMvUOb+OENfJCZwM+16n7fRfw==
+
+vanilla-masker@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/vanilla-masker/-/vanilla-masker-1.2.0.tgz#c2830e9d994a5fecd2261506477c2707fe589756"
+  integrity sha1-woMOnZlKX+zSJhUGR3wnB/5Yl1Y=
 
 vary@~1.1.2:
   version "1.1.2"
