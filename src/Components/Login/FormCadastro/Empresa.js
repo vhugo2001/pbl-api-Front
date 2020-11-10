@@ -3,16 +3,16 @@ import { Formik } from "formik";
 import { toast } from "react-toastify";
 import empresaService from "../../../Services/AuthService";
 import SchemaEmpresa from "./SchemaYup/SchemaEmpresa";
+import * as Constants from "../../../config/constants"
+import { mask } from 'remask'
 
 const Empresa = () => {
-  const onSubmitHandler = (data) => {
+  const onSubmitHandler = async (data, {resetForm}) => {
     empresaService
       .registrarEmpresa(data)
       .then((response) => {
         toast.success(response.data.message);
-        setTimeout(() => {
-          window.location.reload();
-        }, 5000);
+        resetForm({});
       })
       .catch((error) => {
         toast.error(error.response.data);
@@ -27,18 +27,13 @@ const Empresa = () => {
           nome: "",
           cnpj: "",
           email: "",
-          perfis: [
-            {
-              id: 3,
-            },
-          ],
           senha: "",
           senhaC: "",
         }}
         validationSchema={SchemaEmpresa}
-        onSubmit={(values) => onSubmitHandler(values)}
+        onSubmit={onSubmitHandler}
       >
-        {({ errors, touched, handleSubmit, handleChange }) => {
+        {({ errors, touched, handleSubmit, handleChange, isSubmitting, isValid, status, values  }) => {
           return (
             <>
               <form action="/" autoComplete="off" onSubmit={handleSubmit}>
@@ -46,6 +41,7 @@ const Empresa = () => {
                   <div className="field-wrap">
                     <input
                       name="nome"
+                      value = {values.nome || ''}
                       type="text"
                       valid={touched.nome && !errors.nome}
                       error={touched.nome && errors.nome}
@@ -60,6 +56,7 @@ const Empresa = () => {
                   <div className="field-wrap">
                     <input
                       name="cnpj"
+                      value = { mask(values.cnpj, Constants.MASK_PATTERNS_CNPJ) || ''}
                       type="text"
                       valid={touched.cnpj && !errors.cnpj}
                       error={touched.cnpj && errors.cnpj}
@@ -74,6 +71,7 @@ const Empresa = () => {
                 <div className="field-wrap">
                   <input
                     name="email"
+                    value = {values.email || ''}
                     type="email"
                     valid={touched.email && !errors.email}
                     error={touched.email && errors.email}
@@ -87,6 +85,7 @@ const Empresa = () => {
                 <div className="field-wrap">
                   <input
                     name="senha"
+                    value = {values.senha || ''}
                     type="password"
                     valid={touched.senha && !errors.senha}
                     error={touched.senha && errors.senha}
@@ -100,6 +99,7 @@ const Empresa = () => {
                 <div className="field-wrap">
                   <input
                     name="senhaC"
+                    value = {values.senhaC || ''}
                     type="password"
                     valid={touched.senhaC && !errors.senhaC}
                     error={touched.senhaC && errors.senhaC}
