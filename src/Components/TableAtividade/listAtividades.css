@@ -36,7 +36,8 @@ th:nth-child(3){
 th:nth-child(4){
   text-align: end!important;
 }
-th.selection-cell-header{
+
+/* th.selection-cell-header{
   text-align: center;
   width: 14% !important;
 }
@@ -47,6 +48,21 @@ td.selection-cell{
   text-align: center;
 }
 .expand-cell{
+  width: 5px !important;
+} */
+
+
+div.scrollExpandir div.react-bootstrap-table table.table.table-condensed thead tr th.selection-cell-header{
+  text-align: center;
+  width: 14% !important;
+} 
+div.scrollExpandir div.react-bootstrap-table table.table.table-condensed thead tr  th.expand-cell-header{
+  display: none;
+}
+ div.scrollExpandir div.react-bootstrap-table table.table.table-condensed tbody tr  td.selection-cell{
+  text-align: center;
+}
+div.scrollExpandir div.react-bootstrap-table table.table.table-condensed tbody tr  td.expand-cell{
   width: 5px !important;
 }
 

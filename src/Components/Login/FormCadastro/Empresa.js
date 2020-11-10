@@ -1,15 +1,18 @@
 import React from "react";
 import { Formik } from "formik";
-import * as Yup from "yup";
 import { toast } from "react-toastify";
 import empresaService from "../../../Services/AuthService";
+import SchemaEmpresa from "./SchemaYup/SchemaEmpresa";
+import * as Constants from "../../../config/constants"
+import { mask } from 'remask'
 
 const Empresa = () => {
-  const onSubmitHandler = (data) => {
+  const onSubmitHandler = async (data, {resetForm}) => {
     empresaService
       .registrarEmpresa(data)
       .then((response) => {
         toast.success(response.data.message);
+        resetForm({});
       })
       .catch((error) => {
         toast.error(error.response.data);
@@ -27,29 +30,10 @@ const Empresa = () => {
           senha: "",
           senhaC: "",
         }}
-        validationSchema={Yup.object().shape({
-          nome: Yup.string().required("* Campo nome é obrigatório").nullable(),
-          cnpj: Yup.string()
-            .required("* Campo cnpj é obrigatório")
-            .matches(
-              /^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/,
-              "Digite um cnpj válido"
-            )
-            .nullable(),
-          email: Yup.string()
-            .required("* Campo email é obrigatório")
-            .nullable(),
-          senha: Yup.string()
-            .required("* Campo senha é obrigatório")
-            .min(6, "Senha muito curta - deve ter no minimo 6 caracteres"),
-          senhaC: Yup.string().oneOf(
-            [Yup.ref("senha"), null],
-            "Senhas precisam ser idênticas."
-          ),
-        })}
-        onSubmit={(values) => onSubmitHandler(values)}
+        validationSchema={SchemaEmpresa}
+        onSubmit={onSubmitHandler}
       >
-        {({ errors, touched, handleSubmit, handleChange }) => {
+        {({ errors, touched, handleSubmit, handleChange, isSubmitting, isValid, status, values  }) => {
           return (
             <>
               <form action="/" autoComplete="off" onSubmit={handleSubmit}>
@@ -57,6 +41,7 @@ const Empresa = () => {
                   <div className="field-wrap">
                     <input
                       name="nome"
+                      value = {values.nome || ''}
                       type="text"
                       valid={touched.nome && !errors.nome}
                       error={touched.nome && errors.nome}
@@ -71,6 +56,7 @@ const Empresa = () => {
                   <div className="field-wrap">
                     <input
                       name="cnpj"
+                      value = { mask(values.cnpj, Constants.MASK_PATTERNS_CNPJ) || ''}
                       type="text"
                       valid={touched.cnpj && !errors.cnpj}
                       error={touched.cnpj && errors.cnpj}
@@ -85,6 +71,7 @@ const Empresa = () => {
                 <div className="field-wrap">
                   <input
                     name="email"
+                    value = {values.email || ''}
                     type="email"
                     valid={touched.email && !errors.email}
                     error={touched.email && errors.email}
@@ -98,6 +85,7 @@ const Empresa = () => {
                 <div className="field-wrap">
                   <input
                     name="senha"
+                    value = {values.senha || ''}
                     type="password"
                     valid={touched.senha && !errors.senha}
                     error={touched.senha && errors.senha}
@@ -111,6 +99,7 @@ const Empresa = () => {
                 <div className="field-wrap">
                   <input
                     name="senhaC"
+                    value = {values.senhaC || ''}
                     type="password"
                     valid={touched.senhaC && !errors.senhaC}
                     error={touched.senhaC && errors.senhaC}

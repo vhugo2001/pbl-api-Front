@@ -12,6 +12,7 @@ import "../../../Components/TableAtividade/style";
 import "./styles.css";
 import { toast } from "react-toastify";
 import DisciplinaService from "../../../Services/DisciplinaService";
+import SchemaCadastrar from "../Schema/SchemaCadastrar";
 
 const Index = ({ selected, setIsAtualizar }) => {
   const [disciplina, setDisciplina] = useState("");
@@ -65,11 +66,7 @@ const Index = ({ selected, setIsAtualizar }) => {
           initialValues={{
             nome: disciplina.nome,
           }}
-          validationSchema={Yup.object().shape({
-            nome: Yup.string()
-              .required("* Campo Nome é obrigatório")
-              .nullable(),
-          })}
+          validationSchema={SchemaCadastrar}
           onSubmit={(values) => {
             if (isUpdating) {
               onUpdateHandler(values);

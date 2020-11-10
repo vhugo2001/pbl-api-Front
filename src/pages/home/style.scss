@@ -1,10 +1,10 @@
 
 
 $body-bg: #c1bdba;
-$form-bg: #506c86;
+$form-bg: #3e6585;
 $white: #ffffff;
 
-$main: #06BCC1;
+$main: #2e4c67;
 $main-light: lighten($main,5%);
 $main-dark: darken($main,5%);
 
@@ -59,6 +59,7 @@ a {
   list-style:none;
   padding:0;
   margin:0 0 40px 0;
+  border: 0;
   &:after {
     content: "";
     display: table;
@@ -68,7 +69,7 @@ a {
     display:block;
     text-decoration:none;
     padding:15px;
-    background:rgba($gray-light,.25);
+    background:#2f383740;
     color:$gray-light;
     font-size:20px;
     float:left;
@@ -105,7 +106,7 @@ a {
     display:block;
     text-decoration:none;
     padding:15px;
-    background:rgba($gray-light,.25);
+    background:#2f383740;
     color:$gray-light;
     font-size:20px;
     float:left;
@@ -233,15 +234,12 @@ textarea {
 
 .forgot a{
   text-decoration: none;
-  color: #3D0814;
+  color: #dbdbdb;
 }
 
 .error-message{
   color: #e8f0ff !important; 
   white-space: pre-line;
 }
-
-
-
 
 }
