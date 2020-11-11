@@ -13,6 +13,7 @@ import { Card } from "../../Components/Card/CardPrincipal";
 import DatePicker from "react-datepicker";
 import serviceAtividade from '../../Services/AtividadeService'
 import serviceTarefa from '../../Services/TarefaService'
+import authService from "../../Services/AuthService";
 import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
 import DatePickerDefault from '../../Components/DatePicker/DatePickerDefault'
 import pt from "date-fns/locale/pt";
@@ -25,22 +26,22 @@ import {
 const { SearchBar } = Search;
 
 function ListagemTarefas() {
-    // { selectedPbl, setSelectedAtividade }
+    let usuarioLogado = authService.getCurrentUser();
     const [atividade, setAtividade] = useState([])
     const [tarefaEditada, setTarefaEditada] = useState({})
     const [dataConclusao, setDataConclusao] = useState();
 
     useEffect(() => {
-
+console.log(usuarioLogado)
         serviceAtividade
-            .listarIdPbl(16)
+            .listarPorIdAluno(usuarioLogado.id)
             .then((response) => {
                 let data = response.data;
                 setAtividade(data);
             })
             .catch((error) => {
                 console.log(error)
-                toast.error("Não foi possível buscar as tarefas.");
+                toast.error(error.response.data);
             });
 
     }, []);
