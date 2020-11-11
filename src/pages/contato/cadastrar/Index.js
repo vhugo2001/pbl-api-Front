@@ -33,10 +33,14 @@ const Index = ({
   const [isUpdating, setIsUpdating] = useState(false);
 
 
-
   useEffect(() => {
-    setItemDropDow(selected.tipoContato);
+    if (selected !== null && selected !== undefined && selected !== "") {
+      setContato(selected);
+      setItemDropDow(selected.tipoContato);
+      setIsUpdating(true);
+    }
   }, [selected]);
+
 
   useEffect(() => {
     empresaService
@@ -60,13 +64,6 @@ const Index = ({
       });
   }, []);
 
-  useEffect(() => {
-    if (selected !== null && selected !== undefined && selected !== "") {
-      setContato(selected);
-      console.log(selected);
-      setIsUpdating(true);
-    }
-  }, [selected]);
 
   const onSubmitHandler = (data) => {
     let _data = { ...data, idUsuario: usuarioLogado.id };
