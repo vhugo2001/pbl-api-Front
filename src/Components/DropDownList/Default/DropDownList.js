@@ -101,19 +101,23 @@ const DefaultDropDownList = ({ lista, onSelect, selected, ...props }) => {
   }, [lista]);
 
   useEffect(() => {
-    if(selected !== undefined ){
-      setSelectedOption(selected.nome);
-      console.log(selected)
+    console.log(selected)
+    if (selected !== undefined && Array.isArray(selected)) {
+      setSelectedOption(selected[0]);
       onSelect(selected);
-     
-    }else
-    { 
+      console.log("1")
+      return
+    } else if (selected !== undefined) {
+      setSelectedOption(selected.nome);
+      onSelect(selected);
+      console.log("2")
+    } else {
       console.log("else: " + selected);
-      onSelect("")
+      onSelect("");
       setSelectedOption("");
+      console.log("3")
     }
-
-  }, [selected])
+  }, [selected]);
 
   const toggling = () => {
     setIsOpen(!isOpen);
