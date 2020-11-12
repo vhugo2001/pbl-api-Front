@@ -42,14 +42,26 @@ export const Span = styled.span`
 `;
 
 export const Button = styled.button`
-  background-color: #4caf50; /* Green */
+  background-color: #7f89a2; 
   border: none;
   color: white;
-  padding: 15px 32px;
+  padding: 5px 20px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  border-radius:5%
+`;
+export const ButtonSalvar = styled.button`
+  background-color: #4caf50;/* Green */
+  border: none;
+  color: white;
+  padding: 5px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius:5%
 `;
 
 export const Table = styled.table`

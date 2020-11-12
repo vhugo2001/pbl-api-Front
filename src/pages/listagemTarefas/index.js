@@ -17,34 +17,48 @@ import authService from "../../Services/AuthService";
 import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
 import DatePickerDefault from '../../Components/DatePicker/DatePickerDefault'
 import pt from "date-fns/locale/pt";
-import moment from 'moment'
+import subDays from "date-fns/subDays";
 import { format } from "date-fns";
+import { Formik, Form, ErrorMessage } from "formik";
+import DatePickerField from '../../Components/DatePicker/DatePickerField'
+
+
 import {
-    Container
+    Container,
+    Button,
+    ButtonSalvar
 } from '../../Components/TableTarefa/style'
+import { Modal } from "react-bootstrap";
 
 const { SearchBar } = Search;
 
 function ListagemTarefas() {
     let usuarioLogado = authService.getCurrentUser();
     const [atividade, setAtividade] = useState([])
-    const [tarefaEditada, setTarefaEditada] = useState({})
-    const [dataConclusao, setDataConclusao] = useState();
+    const [dataConclusao, setDataConclusao] = useState("");
 
-    useEffect(() => {
-console.log(usuarioLogado)
-        serviceAtividade
-            .listarPorIdAluno(usuarioLogado.id)
-            .then((response) => {
-                let data = response.data;
-                setAtividade(data);
-            })
-            .catch((error) => {
-                console.log(error)
-                toast.error(error.response.data);
-            });
+    const [showModal, setShowModal] = useState(false)
+    const [dadosModal, setDadosModal] = useState([])
+    const [show, setShow] = useState(false);
 
-    }, []);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+
+    // useEffect(() => {
+    //     console.log(usuarioLogado)
+    //     serviceAtividade
+    //         .listarPorIdAluno(usuarioLogado.id)
+    //         .then((response) => {
+    //             let data = response.data;
+    //             setAtividade(data);
+    //         })
+    //         .catch((error) => {
+    //             console.log(error)
+    //             // toast.error(error.response.data);
+    //         });
+
+    // }, []);
 
 
     // useEffect(() => {
@@ -59,7 +73,10 @@ console.log(usuarioLogado)
     //     }
     // }, [tarefaEditada])
 
-    const tarefa = atividade
+    const tarefa = [
+        { id: 1, titulo: 'Atividade', dataConclusao: '10/12/2020', tarefa: [{ id: 1, concluido: true, descricao: 'Desc 1A', dataConclusao: '10/11/2020' }, { id: 2, concluido: false, descricao: 'Desc 2A', dataConclusao: '10/11/2020' }, { id: 3, concluido: false, descricao: 'Desc 3A', dataConclusao: '10/11/2020' }] },
+        { id: 2, titulo: 'Atividade 2', dataConclusao: '06/03/2021', tarefa: [{ id: 1, concluido: true, descricao: 'Desc 1B', dataConclusao: '10/10/2020' }, { id: 2, concluido: false, descricao: 'Desc 2B', dataConclusao: '10/11/2020' }] }
+    ]
 
     const colunas = [
 
@@ -68,8 +85,8 @@ console.log(usuarioLogado)
             text: 'Atividade',
 
             formatter: (cellContent, row) => (
-                <div>
-                    <label className="TituloAtiv"><b>{row.titulo}</b></label><br />
+                <div >
+                    <label className="TituloAtiv" ><b >{row.titulo}</b></label><br />
                 </div>
             ), headerStyle: (colum, colIndex) => {
                 return { backgroundColor: 'transparent' };
@@ -142,7 +159,7 @@ console.log(usuarioLogado)
             text: '',
 
             formatter: (cellContent, row) => (
-                { ...console.log(row) },
+
                 <div>
                     <label className="TituloAtiv"><b>{cellContent}</b></label><br />
                 </div>
@@ -150,66 +167,6 @@ console.log(usuarioLogado)
             headerStyle: {
                 display: 'none'
             }
-        },
-        {
-            dataField: 'alunos[0].nome',
-            text: '',
-            formatter: (cellContent, row) => (
-                <div style={{ textAlign: 'center' }}>
-                    <label >{cellContent}</label><br />
-                </div>
-            ), headerStyle: {
-                display: 'none'
-            },
-            // editorRenderer: (editorProps, value, row, column, rowIndex, columnIndex) => (
-            //     <QualityRanger {...editorProps} value={value} />
-            // )
-        },
-        // {
-        //     dataField: 'dataConclusao',
-        //     text: '',
-        //     formatter: (cellContent, row) => (
-        //         <div style={{ textAlign: 'center' }}>
-        //             <label >{cellContent}</label><br />
-        //         </div>
-        //     ),
-        //     headerStyle: {
-        //         display: 'none'
-        //     },
-        //     editorRenderer: (editorProps, value, row, column, rowIndex, columnIndex, onBlur) => (
-        //         console.log(editorProps),
-        //         console.log(dataConclusao),
-        //         // <DatePickerDefault
-        //         //     name="dataConclusao"
-        //         //     locale={pt}
-        //         //     minDate={subDays(new Date(), 0)}
-        //         //     useShortMonthInDropdown
-        //         //     dateFormat="dd/MM/yyyy"
-        //         //     selected={row.dataConclusao}
-        //         //     value={row.dataConclusao} />
-
-        //         < DatePickerDefault {...editorProps} value={value} setDataConclusao={setDataConclusao} {...onBlur} />
-
-        //     )
-        // },
-
-        {
-            dataField: 'dataConclusao',
-            text: '',
-            formatter: (cell) => {
-                let dateObj = cell;
-                if (typeof cell !== 'object') {
-                    dateObj = new Date(cell);
-                }
-                return `${moment(cell).format("DD/MM/YYYY") ? moment(cell).format("DD/MM/YYYY") : moment(cell).format("DD/MM/YYYY")}`;
-            },
-            editor: {
-                type: Type.DATE
-            },
-            headerStyle: {
-                display: 'none'
-            },
-
         },
         {
             dataField: "icone",
@@ -264,25 +221,169 @@ console.log(usuarioLogado)
     //       });
     //   };
 
+    const rowEvents = {
+        onClick: (e, row) => {
+            setDadosModal(row)
+            abrirModal()
+        },
+
+    };
+
+    const abrirModal = () => {
+        setShowModal(handleShow)
+
+    }
+
+    const onSubmitHandler = (data) => {
+        // data = {
+        //   ...data,
+        //   dataCriacao: format(new Date(), "dd/MM/yyyy"),
+        //   disciplina: {
+        //     id: 1,
+        //   },
+        //   professor: {
+        //     id: 2,
+        //   },
+        //   dataConclusao: format(data.dataConclusao, "dd/MM/yyyy"),
+        // };
+        // console.log(data);
+
+        // atividadeService
+        //   .incluir(data)
+        //   .then((response) => {
+        //     let data = response.data;
+        //     toast.success("Tarefa cadastrada com sucesso.");
+        //   })
+        //   .catch((error) => {
+        //     toast.error("Erro ao cadastrar tarefa.");
+        //   });
+    };
+
+    const ModalCard = () => {
+
+        return (
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>
+                        {dadosModal.descricao}
+                    </Modal.Title>
+                </Modal.Header>
+
+                <Formik
+                    enableReinitialize
+                    initialValues={{
+                        titulo: dadosModal.titulo,
+                        dataConclusao: dadosModal.dataConclusao
+
+                    }}
+                    onSubmit={(values) => onSubmitHandler(values)}
+                >
+                    {({
+                        values,
+                        errors,
+                        touched,
+                        handleSubmit,
+                        handleChange,
+                        isSubmitting,
+                        validating,
+                        valid,
+                    }) => {
+                        return (
+                            <>
+                                <Modal.Body>
+                                    <Card.Form
+                                        method="post"
+                                        autoComplete="off"
+                                        onSubmit={handleSubmit}
+                                    >
+                                        <Card.Form.Group>
+                                            <Card.Form.Title>Título</Card.Form.Title>
+                                            <Card.Form.InputText
+                                                name="titulo"
+                                                onChange={handleChange}
+                                                value={values.titulo}
+                                                placeholder="Título da tarefa"
+                                            />
+                                        </Card.Form.Group>
+
+                                        {/* <Card.Form.Group style={{ flex: 5 }}>
+                                        <Card.Form.Title>Alunos</Card.Form.Title>
+                                        <DropDownListAlunos
+                                            name="aluno"
+                                            lista={listaAluno}
+                                            onSelect={setAlunosSelecionados}
+                                            valid={touched.aluno && !errors.aluno}
+                                            error={touched.aluno && errors.aluno}
+                                        ></DropDownListAlunos>
+                                        {errors.aluno && touched.aluno && (
+                                            <Card.Form.StyledInlineErrorMessage>
+                                                {errors.aluno}
+                                            </Card.Form.StyledInlineErrorMessage>
+                                        )}
+                                    </Card.Form.Group>
+
+                                    <Card.Form.BreakRow /> */}
+
+
+                                        <Card.Form.Group>
+                                            <Card.Form.Title>Data Conclusao</Card.Form.Title>
+                                            <DatePickerField
+                                                name="dataInicio"
+                                                locale={pt}
+                                                minDate={subDays(new Date(), 0)}
+                                                useShortMonthInDropdown
+                                                dateFormat="dd/MM/yyyy"
+                                                selected={dataConclusao}
+                                                customInput={
+                                                    <Card.Form.InputText
+                                                        onfocus="this.removeAttribute('readonly');"
+                                                        readonly
+                                                        value={dataConclusao}
+                                                    />
+                                                }
+                                            />
+                                            {errors.dataInicio && touched.dataInicio && (
+                                                <Card.Form.StyledInlineErrorMessage>
+                                                    {errors.dataInicio}
+                                                </Card.Form.StyledInlineErrorMessage>
+                                            )}
+                                        </Card.Form.Group>
+
+                                    </Card.Form>
+                                </Modal.Body>
+                                <Modal.Footer>
+                                    <Button onClick={handleClose}>fechar </Button>
+                                    <ButtonSalvar type="submit" onClick={handleClose}>Salvar </ButtonSalvar>
+                                </Modal.Footer>
+                            </>
+                        );
+                    }}
+                </Formik>
+            </Modal>
+        );
+    }
+
     const rowStyle = (row, rowIndex) => {
+
         if (row !== undefined) {
             if (row.concluido === true) {
-                return { backgroundColor: "rgba(0, 185, 0, 0.1)" };
+                return { backgroundColor: "rgba(0, 185, 0, 0.1)", cursor: 'pointer' };
             } else {
-                return {};
+                return { cursor: 'pointer' };
             }
         } else {
             return {}
         }
     };
 
-    const cellEdit = cellEditFactory({
-        mode: 'click',
-        blurToSave: true,
-        afterSaveCell: (oldValue, newValue, row, column) => {
-            // setTarefaEditada(row)
-        }
-    });
+    // const cellEdit = cellEditFactory({
+    //     mode: 'click',
+    //     blurToSave: true,
+    //     afterSaveCell: (oldValue, newValue, row, column) => {
+    //         // setTarefaEditada(row)
+    //     }
+    // });
 
     const expandRow = {
 
@@ -291,9 +392,8 @@ console.log(usuarioLogado)
             < div >
                 <ToolkitProvider
                     keyField='id'
-                    {...console.log(row)}
-                    {...console.log(row.tarefas)}
-                    data={[row.tarefas]}
+
+                    data={row.tarefa}
                     columns={subcolunas}
                 >
 
@@ -304,11 +404,13 @@ console.log(usuarioLogado)
 
                                 <BootstrapTable
                                     {...props.baseProps}
-                                    cellEdit={cellEdit}
+                                    // cellEdit={cellEdit}
                                     condensed
                                     bordered={false}
                                     rowStyle={rowStyle}
+                                    rowEvents={rowEvents}
                                 />
+                                {show ? <ModalCard /> : null}
                             </div>
                         )
 
@@ -352,7 +454,6 @@ console.log(usuarioLogado)
             <Container className="container-list">
                 <ToolkitProvider
                     keyField='id'
-                    {...console.log(tarefa)}
                     data={tarefa}
                     columns={colunas}
                     search
