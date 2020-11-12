@@ -297,10 +297,10 @@ const Index = () => {
                   <Card.Form.Group>
                     <Card.Form.Title>Empresa</Card.Form.Title>
                     <DropDownList
-                    
+
                       lista={listaEmpresa}
                       onSelect={setEmpresaSelecionada}
-                  
+
                     ></DropDownList>
                   </Card.Form.Group>
 
