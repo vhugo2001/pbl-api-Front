@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 
 import { Formik } from "formik";
 import * as Yup from "yup";
+import SchemaProfessor from "../Schemas/SchemaProfessor"
 
 function Index({ usuario }) {
   const [professor, setProfessor] = useState(usuario);
@@ -51,12 +52,7 @@ function Index({ usuario }) {
             nome: professor.nome,
             email: professor.email,
           }}
-          validationSchema={Yup.object().shape({
-            nome: Yup.string().required("* Campo nome é obrigatório"),
-            email: Yup.string()
-              .required("* Campo email é obrigatório")
-              .nullable(),
-          })}
+          validationSchema={SchemaProfessor}
           onSubmit={(values) => onSubmitHandler(values)}
         >
           {({ values, errors, touched, handleSubmit, handleChange }) => {
