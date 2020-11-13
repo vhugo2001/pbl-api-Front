@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { Formik, Form, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import { Formik } from "formik";
 import SchemaTarefa from './SchemaTarefas';
 import { toast } from "react-toastify";
+import pt from "date-fns/locale/pt";
+import subDays from "date-fns/subDays";
 import * as IoIcons from "react-icons/io";
 import { Modal, Button } from "react-bootstrap";
 import { Card } from "../../Card/CardPrincipal";
 import DatePickerField from "../../DatePicker/DatePickerField";
 import DropDownListAlunos from "../../DropDownList/Alunos/DropDownList";
-import pt from "date-fns/locale/pt";
-import subDays from "date-fns/subDays";
 
-const FormModal = ({ data, service }) => {
+import tarefaService from "../../../Services/TarefaService";
+
+
+const FormModal = ({ data }) => {
   const [show, setShow] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [dataConclusao, setDataConclusao] = useState("");
   const [alunosSelecionados, setAlunosSelecionados] = useState("");
   
-
   useEffect(() => {
     if ((data !== null) & (data !== undefined)) {
       setIsUpdating(true);
@@ -32,10 +33,10 @@ const FormModal = ({ data, service }) => {
 
   const onSubmitHandler = (data) => {
     let _data = { ...data, disciplinas: [data.disciplinas] };
-    service
+    tarefaService
       .incluir(_data)
       .then(() => {
-        toast.success("Tema cadastrado com sucesso.");
+        toast.success("Tarefa cadastrada com sucesso.");
       })
       .catch((error) => {
         toast.error(error.response.data);
@@ -43,10 +44,10 @@ const FormModal = ({ data, service }) => {
   };
 
   const onUpdateHandler = (values) => {
-    service
+    tarefaService
       .atualizar(values.id, values)
       .then(() => {
-        toast.success("Tema atualizado com sucesso.");
+        toast.success("Tarefa atualizada com sucesso.");
       })
       .catch((error) => {
         toast.error(error.response.data);
@@ -54,7 +55,7 @@ const FormModal = ({ data, service }) => {
   };
 
   const handleExcluir = () => {
-    
+
   }
 
   const onClearHandler = () => {};
@@ -63,7 +64,7 @@ const FormModal = ({ data, service }) => {
     <div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>{data.titulo}</Modal.Title>
+          <Modal.Title>Tarefa</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <>
@@ -71,6 +72,7 @@ const FormModal = ({ data, service }) => {
               <Formik
                 enableReinitialize
                 initialValues={{
+                  titulo: data.titulo,
                   descricao: data.descricao,
                   concluido: data.concluido,
                   dataConclusao: data.dataConclusao,
@@ -115,24 +117,23 @@ const FormModal = ({ data, service }) => {
                         autoComplete="off"
                         onSubmit={handleSubmit}
                       >
-                        <Card.Form.Group>
-                          <Card.Form.Title>Descrição</Card.Form.Title>
+                         <Card.Form.Group>
+                          <Card.Form.Title>Titulo</Card.Form.Title>
                           <Card.Form.InputText
-                            name="descricao"
+                            name="titulo"
                             autocomplete="off"
                             onChange={handleChange}
-                            value={values.descricao}
-                            valid={touched.descricao && !errors.descricao}
-                            error={touched.descricao && errors.descricao}
+                            value={values.titulo}
+                            valid={touched.titulo && !errors.titulo}
+                            error={touched.titulo && errors.titulo}
                           />
-                          {errors.descricao && touched.descricao && (
+                          {errors.titulo && touched.v && (
                             <Card.Form.StyledInlineErrorMessage>
-                              {errors.descricao}
+                              {errors.titulo}
                             </Card.Form.StyledInlineErrorMessage>
                           )}
                         </Card.Form.Group>
 
-                        <Card.Form.BreakRow />
                         <Card.Form.Group>
                           <Card.Form.Title>Data Conclusao</Card.Form.Title>
                           <DatePickerField
@@ -150,13 +151,18 @@ const FormModal = ({ data, service }) => {
                               />
                             }
                           />
-                          {errors.dataInicio && touched.dataInicio && (
-                            <Card.Form.StyledInlineErrorMessage>
-                              {errors.dataInicio}
-                            </Card.Form.StyledInlineErrorMessage>
-                          )}
                         </Card.Form.Group>
-
+                        <Card.Form.BreakRow />
+                        <Card.Form.Group>
+                          <Card.Form.Title>Descrição</Card.Form.Title>
+                          <Card.Form.InputText
+                            name="descricao"
+                            autocomplete="off"
+                            onChange={handleChange}
+                            value={values.descricao}
+                          />
+                        </Card.Form.Group>
+                        <Card.Form.BreakRow />
                         <Card.Form.Group style={{ flex: 5 }}>
                           <Card.Form.Title>Alunos</Card.Form.Title>
                           <DropDownListAlunos
@@ -166,11 +172,6 @@ const FormModal = ({ data, service }) => {
                             valid={touched.aluno && !errors.aluno}
                             error={touched.aluno && errors.aluno}
                           ></DropDownListAlunos>
-                          {errors.aluno && touched.aluno && (
-                            <Card.Form.StyledInlineErrorMessage>
-                              {errors.aluno}
-                            </Card.Form.StyledInlineErrorMessage>
-                          )}
                         </Card.Form.Group>
 
                         <Card.Form.GroupButton className="group-button">
