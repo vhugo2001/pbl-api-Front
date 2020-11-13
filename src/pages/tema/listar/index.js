@@ -15,7 +15,7 @@ import "../../../Components/TableAtividade/style";
 import "./styles.css";
 import { toast } from "react-toastify";
 
-const Index = ({ setSelectedTema, selectedTema, setSelectedDisciplina }) => {
+const Index = ({ setSelectedTema, selectedTema, isAtualizar }) => {
   const [TemaList, setTemaList] = useState([]);
 
   const [show, setShow] = useState(false);
@@ -25,11 +25,16 @@ const Index = ({ setSelectedTema, selectedTema, setSelectedDisciplina }) => {
     listarTodos();
   }, []);
 
+  useEffect(() => {
+    if (isAtualizar) listarTodos();
+  }, [isAtualizar]);
+
   const listarTodos = () => {
     serviceTema
       .listarTodos()
       .then((response) => {
         let data = response.data;
+        console.log(data);
         setTemaList(data);
         setShowTabela(true);
       })
@@ -90,11 +95,12 @@ const Index = ({ setSelectedTema, selectedTema, setSelectedDisciplina }) => {
         return { width: "40%" };
       },
       formatter: (cellContent, row) => (
-        <div>{row.disciplinas.forEach((element) => {
+        <div>
+          {row.disciplinas.forEach((element) => {
             data += element.nome + " ";
-
-        })}
-         <label className="TabelaListaPbl">{data}</label>
+          })}
+          <label className="TabelaListaPbl">{data}</label>
+          {(data = "")}
         </div>
       ),
     },
@@ -133,15 +139,13 @@ const Index = ({ setSelectedTema, selectedTema, setSelectedDisciplina }) => {
   };
   const tableRowEvents = {
     onClick: (e, row, rowIndex) => {
-      setSelectedTema({ id: row.id, nome: row.nome });
-      setSelectedDisciplina(row.disciplinas);
+      setSelectedTema(row);
     },
   };
 
   const { SearchBar } = Search;
 
   const RenderizaTabela = () => {
-    console.log(TemaList);
     return (
       <ToolkitProvider keyField="id" data={TemaList} columns={colunas} search>
         {(props) => (
@@ -182,7 +186,9 @@ const Index = ({ setSelectedTema, selectedTema, setSelectedDisciplina }) => {
   return (
     //Remover a div pai e atribur o padding 30px no componente Home!!!!!
     <>
-      <Card>{showTabela && TemaList.length > 0 ? (<RenderizaTabela />) : <></>}</Card>
+      <Card>
+        {showTabela && TemaList.length > 0 ? <RenderizaTabela /> : <></>}
+      </Card>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Confirmar Exclusão</Modal.Title>

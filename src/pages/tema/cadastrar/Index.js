@@ -14,29 +14,33 @@ import "../../../Components/TableAtividade/style";
 import "./styles.css";
 import { toast } from "react-toastify";
 
-const Index = ({ selectedTema, selectedDisciplina }) => {
-  const [Tema, setTema] = useState("");
+const Index = ({ selected, setSelectedTema, setIsAtualizar }) => {
+  const [tema, setTema] = useState("");
   const [listaDisciplina, setlistaDisciplina] = useState([]);
   const [disciplinaSelecionada, setDisciplinaSelecionada] = useState({});
+  const [itemDropDow, setItemDropDow] = useState(selected);
   const [isUpdating, setIsUpdating] = useState(false);
-  const [itemDropDow, setItemDropDow] = useState(selectedDisciplina)
 
   useEffect(() => {
     listarDisciplinas();
   }, []);
 
   useEffect(() => {
-    if (selectedTema !== null && selectedTema !== undefined && selectedTema !== "") {
-      setTema(selectedTema);
-      setDisciplinaSelecionada(itemDropDow[0].nome);
+    if (selected !== null && selected !== undefined && selected !== "") {
+      if (
+        selected.disciplinas !== undefined &&
+        selected.disciplinas.length > 0
+      ) {
+        setTema({ ...selected, disciplinas: selected.disciplinas[0] });
+        setItemDropDow(selected.disciplinas[0]);
+      } else {
+        setTema(selected);
+        setItemDropDow({});
+      }
       setIsUpdating(true);
+      setIsAtualizar(false);
     }
-  }, [selectedTema]);
-
-  useEffect(() => {
-    console.log(selectedDisciplina)
-    setItemDropDow(selectedDisciplina);
-  }, [selectedDisciplina]);
+  }, [selected]);
 
   const listarDisciplinas = () => {
     serviceDisciplina
@@ -51,17 +55,27 @@ const Index = ({ selectedTema, selectedDisciplina }) => {
   };
 
   const onSubmitHandler = (data) => {
-    console.log(data);
-  
+    console.log(data)
+    let _data = { ...data, disciplinas: [data.disciplinas] };
+    serviceTema
+      .incluir(_data)
+      .then(() => {
+        toast.success("Tema cadastrado com sucesso.");
+        setIsAtualizar(true);
+      })
+      .catch((error) => {
+        toast.error(error.response.data);
+      });
   };
 
   const onUpdateHandler = (data) => {
-    let _data = { ...data, id: Tema.id };
+    let _data = { ...data, id: tema.id, disciplinas: [data.disciplinas] };
     console.log(_data);
     serviceTema
       .atualizar(_data.id, _data)
       .then(() => {
         toast.success("Tema atualizado com sucesso.");
+        setIsAtualizar(true);
       })
       .catch((error) => {
         toast.error(error.response.data);
@@ -69,11 +83,10 @@ const Index = ({ selectedTema, selectedDisciplina }) => {
   };
 
   const onClearHandler = () => {
-    setTema({ ...Tema, nome: "" });
-    setDisciplinaSelecionada("");
+    setTema({ ...tema, nome: "" });
+    setSelectedTema({});
     setIsUpdating(false);
   };
-  const onDeleteHandler = () => {};
 
   return (
     //Remover a div pai e atribur o padding 30px no componente Home!!!!!
@@ -82,14 +95,14 @@ const Index = ({ selectedTema, selectedDisciplina }) => {
         <Formik
           enableReinitialize
           initialValues={{
-            nome: Tema.nome,
-            disciplina: disciplinaSelecionada,
+            nome: tema.nome,
+            disciplinas: tema.disciplinas,
           }}
           validationSchema={Yup.object().shape({
             nome: Yup.string()
               .required("* Campo Nome é obrigatório")
               .nullable(),
-            disciplina: Yup.string()
+            disciplinas: Yup.string()
               .required("* Campo Disciplina é obrigatório")
               .nullable(),
           })}
@@ -101,16 +114,7 @@ const Index = ({ selectedTema, selectedDisciplina }) => {
             }
           }}
         >
-          {({
-            values,
-            errors,
-            touched,
-            handleSubmit,
-            handleChange,
-            isSubmitting,
-            validating,
-            valid,
-          }) => {
+          {({ values, errors, touched, handleSubmit, handleChange }) => {
             return (
               <>
                 <div className="spacer-div" />
@@ -122,14 +126,6 @@ const Index = ({ selectedTema, selectedDisciplina }) => {
                       onClick={onClearHandler}
                     >
                       <IoIcons.IoIosAdd className="icone-clear" />
-                    </div>
-
-                    <div
-                      className="actions-form-button delete-button"
-                      type="button"
-                      onClick={onDeleteHandler}
-                    >
-                      <IoIcons.IoMdTrash className="icone-deletar" />
                     </div>
                   </>
                 )}
@@ -159,16 +155,16 @@ const Index = ({ selectedTema, selectedDisciplina }) => {
                   <Card.Form.Group style={{ flex: 4 }}>
                     <Card.Form.Title>Disciplina</Card.Form.Title>
                     <DropDownList
-                      name="disciplina"
+                      name="disciplinas"
                       lista={listaDisciplina}
                       onSelect={setDisciplinaSelecionada}
                       selected={itemDropDow}
-                      valid={touched.disciplina && !errors.disciplina}
-                      error={touched.disciplina && errors.disciplina}
+                      valid={touched.disciplinas && !errors.disciplinas}
+                      error={touched.disciplinas && errors.disciplinas}
                     ></DropDownList>
-                    {errors.disciplina && touched.disciplina && (
+                    {errors.disciplinas && touched.disciplinas && (
                       <Card.Form.StyledInlineErrorMessage>
-                        {errors.disciplina}
+                        {errors.disciplinas}
                       </Card.Form.StyledInlineErrorMessage>
                     )}
                   </Card.Form.Group>

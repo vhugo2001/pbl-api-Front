@@ -216,7 +216,3 @@ input.form-control, label.search-label{
   padding: 5px;
   border: 0 !important;
 }
-
-.div.react-datepicker,div .react-datepicker-popper {
-  z-index: 9999 !important;
-}
