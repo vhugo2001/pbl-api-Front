@@ -19,10 +19,10 @@ const InputPublicacao = () =>{
         initialValues: {
             titulo: '',
             texto: ''          
-        },                       
+        },                           
         onSubmit: values => {            
           alert(JSON.stringify(values, null, 2));
-          toast.success("Publicando Conteúdo...");          
+          toast.success("Publicando Conteúdo...");                 
         },
       });
 
