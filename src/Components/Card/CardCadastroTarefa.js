@@ -10,14 +10,14 @@ import DatePickerField from "../DatePicker/DatePickerField";
 import { toast } from "react-toastify";
 import { id } from "date-fns/locale";
 import * as IoIcons from "react-icons/io";
-import moment from 'moment';
-import Moment from 'react-moment'
+import moment from "moment";
+import Moment from "react-moment";
 
 function CardCadastroTarefa({ selectedAtividade }) {
   const [tarefa, setTarefa] = useState("");
   const [dataConclusao, setDataConclusao] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
-  const [selectedAtividadeEditado, setSelectedAtividadeEditado] = useState({})
+  const [selectedAtividadeEditado, setSelectedAtividadeEditado] = useState({});
 
   useEffect(() => {
     if (tarefa !== undefined && tarefa !== null && tarefa !== "") {
@@ -28,7 +28,7 @@ function CardCadastroTarefa({ selectedAtividade }) {
   }, [tarefa]);
 
   useEffect(() => {
-    if (selectedAtividade !== null & selectedAtividade !== undefined) {
+    if ((selectedAtividade !== null) & (selectedAtividade !== undefined)) {
       atividadeService
         .listarID(selectedAtividade)
         .then((response) => {
@@ -46,19 +46,19 @@ function CardCadastroTarefa({ selectedAtividade }) {
   }, [selectedAtividade]);
 
   useEffect(() => {
-    console.log(selectedAtividadeEditado.id)
-    console.log(selectedAtividadeEditado)
+    console.log(selectedAtividadeEditado.id);
+    console.log(selectedAtividadeEditado);
     if (selectedAtividadeEditado.id !== undefined) {
       atividadeService
         .atualizar(selectedAtividadeEditado.id, selectedAtividadeEditado)
         .then((response) => {
-
           toast.success("Tarefa atualizado com sucesso.");
         })
-        .catch((error) => { toast.error("Erro ao atualizar tarefa."); });
+        .catch((error) => {
+          toast.error("Erro ao atualizar tarefa.");
+        });
     }
-  }, [selectedAtividadeEditado])
-
+  }, [selectedAtividadeEditado]);
 
   const onDeleteHandler = (id) => {
     atividadeService
@@ -70,13 +70,15 @@ function CardCadastroTarefa({ selectedAtividade }) {
   };
 
   const onAddHandler = () => {
-    setTarefa('')
+    setTarefa("");
   };
 
   const onUpdateHandler = (data) => {
     data = {
-      ...tarefa, titulo: data.titulo, dataConclusao: format(data.dataConclusao, 'dd/MM/yyyy'),
-      descricao: data.descricao
+      ...tarefa,
+      titulo: data.titulo,
+      dataConclusao: format(data.dataConclusao, "dd/MM/yyyy"),
+      descricao: data.descricao,
     };
     setSelectedAtividadeEditado(data);
 
@@ -140,7 +142,6 @@ function CardCadastroTarefa({ selectedAtividade }) {
               .nullable(),
           })}
           onSubmit={(values) => {
-
             if (isUpdating) {
               return onUpdateHandler(values);
             } else {
@@ -163,7 +164,6 @@ function CardCadastroTarefa({ selectedAtividade }) {
                 <div className="spacer-div" />
                 {isUpdating && (
                   <>
-
                     <div
                       className="actions-form-button clear-button"
                       type="button"
@@ -179,7 +179,6 @@ function CardCadastroTarefa({ selectedAtividade }) {
                     >
                       <IoIcons.IoMdTrash className="icone-deletar" />
                     </div>
-
                   </>
                 )}
                 <div style={{ display: "flex", flexDirection: "row" }}>
@@ -260,9 +259,7 @@ function CardCadastroTarefa({ selectedAtividade }) {
                         <Card.Button type="submit">Salvar</Card.Button>
                       )}
                       {isUpdating && (
-                        <Card.Button type="submit" >
-                          Atualizar
-                        </Card.Button>
+                        <Card.Button type="submit">Atualizar</Card.Button>
                       )}
                     </Card.Form.GroupButton>
                   </Card.Form>
@@ -270,7 +267,6 @@ function CardCadastroTarefa({ selectedAtividade }) {
               </>
             );
           }}
-
         </Formik>
       </Card>
     </>
@@ -278,5 +274,3 @@ function CardCadastroTarefa({ selectedAtividade }) {
 }
 
 export default CardCadastroTarefa;
-
-
