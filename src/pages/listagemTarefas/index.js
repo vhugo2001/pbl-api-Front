@@ -10,7 +10,6 @@ import '../../Components/TableTarefa/listagemTarefa.css'
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import { toast } from "react-toastify";
 import { Card } from "../../Components/Card/CardPrincipal";
-import DatePicker from "react-datepicker";
 import serviceAtividade from '../../Services/AtividadeService'
 import serviceTarefa from '../../Services/TarefaService'
 import authService from "../../Services/AuthService";
@@ -18,9 +17,12 @@ import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
 import DatePickerDefault from '../../Components/DatePicker/DatePickerDefault'
 import pt from "date-fns/locale/pt";
 import subDays from "date-fns/subDays";
-import { format } from "date-fns";
+import { format, set } from "date-fns";
 import { Formik, Form, ErrorMessage } from "formik";
 import DatePickerField from '../../Components/DatePicker/DatePickerField'
+
+//Teste Modal Component
+import ModalTarefas from '../../Components/Modal/Form/Index'
 
 
 import {
@@ -33,6 +35,12 @@ import { Modal } from "react-bootstrap";
 const { SearchBar } = Search;
 
 function ListagemTarefas() {
+
+    const [dataConclusao, setDataConclusao] = useState("");
+    const [dadosModal, setDadosModal] = useState({});
+    const [show, setShow] = useState(false);
+
+
     let usuarioLogado = authService.getCurrentUser();
     let status = false
     const [tarefa, setTarefa] = useState([
@@ -95,11 +103,7 @@ function ListagemTarefas() {
 
     ])
 
-    const [dataConclusao, setDataConclusao] = useState("");
 
-    const [showModal, setShowModal] = useState(false)
-    const [dadosModal, setDadosModal] = useState([])
-    const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -347,7 +351,8 @@ function ListagemTarefas() {
     };
 
     const handleAdd = (item) => {
-
+     
+       
         // const novaTarefa = {
         //     "concluido": false,
         //     "dataConclusao": "",
@@ -355,6 +360,7 @@ function ListagemTarefas() {
         //     "descricao": ""
         // }
         const novaTarefa = {
+            titulo:"",
             id: 5,
             concluido: false,
             descricao: '',
@@ -365,6 +371,9 @@ function ListagemTarefas() {
             if (x.id !== item.id) return x;
             return { ...x, tarefa: [...x.tarefa, novaTarefa] };
         }));
+
+        setDadosModal(novaTarefa);
+        setShow(true);
 
         // setTarefa({ ...item, tarefa: [...item.tarefa, novaTarefa] });
 
@@ -384,15 +393,11 @@ function ListagemTarefas() {
     const rowEvents = {
         onClick: (e, row) => {
             setDadosModal(row)
-            abrirModal()
+            return <ModalTarefas data={row} show={true}/>
         },
 
     };
 
-    const abrirModal = () => {
-        setShowModal(handleShow)
-
-    }
 
     const onSubmitHandler = (data) => {
         // data = {
@@ -418,112 +423,6 @@ function ListagemTarefas() {
         //     toast.error("Erro ao cadastrar tarefa.");
         //   });
     };
-
-    const ModalCard = () => {
-
-        return (
-
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>
-                        {dadosModal.descricao}
-                    </Modal.Title>
-                </Modal.Header>
-
-                <Formik
-                    enableReinitialize
-                    initialValues={{
-                        titulo: dadosModal.titulo,
-                        dataConclusao: dadosModal.dataConclusao
-
-                    }}
-                    onSubmit={(values) => onSubmitHandler(values)}
-                >
-                    {({
-                        values,
-                        errors,
-                        touched,
-                        handleSubmit,
-                        handleChange,
-                        isSubmitting,
-                        validating,
-                        valid,
-                    }) => {
-                        return (
-                            <>
-                                <Modal.Body>
-                                    <Card.Form
-                                        method="post"
-                                        autoComplete="off"
-                                        onSubmit={handleSubmit}
-                                    >
-                                        <Card.Form.Group>
-                                            <Card.Form.Title>Título</Card.Form.Title>
-                                            <Card.Form.InputText
-                                                name="titulo"
-                                                onChange={handleChange}
-                                                value={values.titulo}
-                                                placeholder="Título da tarefa"
-                                            />
-                                        </Card.Form.Group>
-
-                                        {/* <Card.Form.Group style={{ flex: 5 }}>
-                                        <Card.Form.Title>Alunos</Card.Form.Title>
-                                        <DropDownListAlunos
-                                            name="aluno"
-                                            lista={listaAluno}
-                                            onSelect={setAlunosSelecionados}
-                                            valid={touched.aluno && !errors.aluno}
-                                            error={touched.aluno && errors.aluno}
-                                        ></DropDownListAlunos>
-                                        {errors.aluno && touched.aluno && (
-                                            <Card.Form.StyledInlineErrorMessage>
-                                                {errors.aluno}
-                                            </Card.Form.StyledInlineErrorMessage>
-                                        )}
-                                    </Card.Form.Group>
-
-                                    <Card.Form.BreakRow /> */}
-
-
-                                        <Card.Form.Group>
-                                            <Card.Form.Title>Data Conclusao</Card.Form.Title>
-                                            <DatePickerField
-                                                name="dataInicio"
-                                                locale={pt}
-                                                minDate={subDays(new Date(), 0)}
-                                                useShortMonthInDropdown
-                                                dateFormat="dd/MM/yyyy"
-                                                selected={dataConclusao}
-                                                customInput={
-                                                    <Card.Form.InputText
-                                                        onfocus="this.removeAttribute('readonly');"
-                                                        readonly
-                                                        value={dataConclusao}
-                                                    />
-                                                }
-                                            />
-                                            {errors.dataInicio && touched.dataInicio && (
-                                                <Card.Form.StyledInlineErrorMessage>
-                                                    {errors.dataInicio}
-                                                </Card.Form.StyledInlineErrorMessage>
-                                            )}
-                                        </Card.Form.Group>
-
-                                    </Card.Form>
-                                </Modal.Body>
-                                <Modal.Footer>
-                                    <Button onClick={handleClose}>fechar </Button>
-                                    <ButtonSalvar type="submit" onClick={handleClose}>Salvar </ButtonSalvar>
-                                </Modal.Footer>
-                            </>
-                        );
-                    }}
-                </Formik>
-            </Modal>
-        );
-    }
-
     const rowStyle = (row, rowIndex) => {
 
         if (row !== undefined) {
@@ -536,7 +435,6 @@ function ListagemTarefas() {
             return {}
         }
     };
-
     // const cellEdit = cellEditFactory({
     //     mode: 'click',
     //     blurToSave: true,
@@ -570,7 +468,7 @@ function ListagemTarefas() {
                                     rowStyle={rowStyle}
                                     rowEvents={rowEvents}
                                 />
-                                {show ? <ModalCard /> : null}
+                              
                             </div>
                         )
 
@@ -643,7 +541,7 @@ function ListagemTarefas() {
                     }
                 </ToolkitProvider>
             </Container>
-
+            <ModalTarefas data={dadosModal} show={show}/>
         </>
 
     );

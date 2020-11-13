@@ -13,14 +13,15 @@ import DropDownListAlunos from "../../DropDownList/Alunos/DropDownList";
 import tarefaService from "../../../Services/TarefaService";
 
 
-const FormModal = ({ data }) => {
-  const [show, setShow] = useState(false);
+const FormModal = ({ data , show }) => {
+  const [showModal, setShowModal] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [dataConclusao, setDataConclusao] = useState("");
   const [alunosSelecionados, setAlunosSelecionados] = useState("");
   
   useEffect(() => {
-    if ((data !== null) & (data !== undefined)) {
+    console.log(data);
+    if ((data !== null) && (data !== undefined) && show === true && Object.keys(data).length !== 0)  {
       setIsUpdating(true);
       if (data.dataConclusao !== "")
         setDataConclusao(data.dataConclusao.split("/").reverse().join("-"));
@@ -29,7 +30,12 @@ const FormModal = ({ data }) => {
     }
   }, [data]);
 
-  const handleClose = () => setShow(false);
+  useEffect(() => {
+    console.log(show);
+    setShowModal(show);
+  }, [show])
+
+ 
 
   const onSubmitHandler = (data) => {
     let _data = { ...data, disciplinas: [data.disciplinas] };
@@ -60,9 +66,11 @@ const FormModal = ({ data }) => {
 
   const onClearHandler = () => {};
 
+  const handleClose = () => setShowModal(false);
+
   return (
     <div>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Tarefa</Modal.Title>
         </Modal.Header>
@@ -167,7 +175,7 @@ const FormModal = ({ data }) => {
                           <Card.Form.Title>Alunos</Card.Form.Title>
                           <DropDownListAlunos
                             name="alunos"
-                            lista={values.alunos}
+                            lista={values.alunos || []}
                             onSelect={setAlunosSelecionados}
                             valid={touched.aluno && !errors.aluno}
                             error={touched.aluno && errors.aluno}
@@ -190,14 +198,6 @@ const FormModal = ({ data }) => {
             </Card>
           </>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Cancelar
-          </Button>
-          <Button variant="primary" onClick={handleExcluir}>
-            Confirmar
-          </Button>
-        </Modal.Footer>
       </Modal>
     </div>
   );
