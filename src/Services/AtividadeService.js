@@ -18,6 +18,10 @@ const listarIdPbl = (id) => {
   return http.get(URL_ATV + `/pbl/${id}`);
 };
 
+const listarPorIdAluno = (id) => {
+  return http.get(URL_ATV + `/atividade-aluno/${id}`);
+};
+
 const incluir = (data) => {
   return http.post(URL_ATV, data);
 };
@@ -42,5 +46,6 @@ export default {
   listarID,
   listarIdDisciplina,
   listarIdPbl,
+  listarPorIdAluno,
   atualizarAtivPbl
 };
