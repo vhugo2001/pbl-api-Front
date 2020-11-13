@@ -1,12 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import SchemaTarefa from './SchemaTarefas';
 import { toast } from "react-toastify";
+import * as IoIcons from "react-icons/io";
 import { Modal, Button } from "react-bootstrap";
 import { Card } from "../../Card/CardPrincipal";
+import DatePickerField from "../../DatePicker/DatePickerField";
+import DropDownListAlunos from "../../DropDownList/Alunos/DropDownList";
+import pt from "date-fns/locale/pt";
+import subDays from "date-fns/subDays";
 
 const FormModal = ({ data, service }) => {
   const [show, setShow] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [dataConclusao, setDataConclusao] = useState("");
+  const [alunosSelecionados, setAlunosSelecionados] = useState("");
+  
+
+  useEffect(() => {
+    if ((data !== null) & (data !== undefined)) {
+      setIsUpdating(true);
+      if (data.dataConclusao !== "")
+        setDataConclusao(data.dataConclusao.split("/").reverse().join("-"));
+    } else {
+      setIsUpdating(false);
+    }
+  }, [data]);
 
   const handleClose = () => setShow(false);
 
@@ -23,7 +43,6 @@ const FormModal = ({ data, service }) => {
   };
 
   const onUpdateHandler = (values) => {
-    
     service
       .atualizar(values.id, values)
       .then(() => {
@@ -34,9 +53,11 @@ const FormModal = ({ data, service }) => {
       });
   };
 
-  const onClearHandler = () => {
-  
-  };
+  const handleExcluir = () => {
+    
+  }
+
+  const onClearHandler = () => {};
 
   return (
     <div>
@@ -52,18 +73,16 @@ const FormModal = ({ data, service }) => {
                 initialValues={{
                   descricao: data.descricao,
                   concluido: data.concluido,
-                  dataCriacao: data.dataCriacao,
                   dataConclusao: data.dataConclusao,
                   alunos: data.alunos,
                 }}
-                validationSchema={SchemaCadastrar}
+                validationSchema={SchemaTarefa}
                 onSubmit={(values) => {
                   if (isUpdating) {
                     onUpdateHandler(values);
                   } else {
                     onSubmitHandler(values);
                   }
-                  setIsAtualizar(false);
                 }}
               >
                 {({
@@ -114,29 +133,44 @@ const FormModal = ({ data, service }) => {
                         </Card.Form.Group>
 
                         <Card.Form.BreakRow />
-
                         <Card.Form.Group>
-                          <Card.Form.Title>
-                            Prioridade ({range})
-                          </Card.Form.Title>
-                          <RangeSlider
-                            value={range}
-                            onChange={(e) => setRange(e.target.value)}
-                            tooltip="off"
-                            min={1}
-                            max={10}
+                          <Card.Form.Title>Data Conclusao</Card.Form.Title>
+                          <DatePickerField
+                            name="dataInicio"
+                            locale={pt}
+                            minDate={subDays(new Date(), 0)}
+                            useShortMonthInDropdown
+                            dateFormat="dd/MM/yyyy"
+                            selected={dataConclusao}
+                            customInput={
+                              <Card.Form.InputText
+                                onfocus="this.removeAttribute('readonly');"
+                                readonly
+                                value={dataConclusao}
+                              />
+                            }
                           />
+                          {errors.dataInicio && touched.dataInicio && (
+                            <Card.Form.StyledInlineErrorMessage>
+                              {errors.dataInicio}
+                            </Card.Form.StyledInlineErrorMessage>
+                          )}
                         </Card.Form.Group>
 
-                        <Card.Form.Group>
-                          <Card.Form.Title>Status</Card.Form.Title>
-                          <Checkbox
-                            name="ativo"
-                            autocomplete="off"
-                            value={values.ativo}
-                          >
-                            Ativo
-                          </Checkbox>
+                        <Card.Form.Group style={{ flex: 5 }}>
+                          <Card.Form.Title>Alunos</Card.Form.Title>
+                          <DropDownListAlunos
+                            name="alunos"
+                            lista={values.alunos}
+                            onSelect={setAlunosSelecionados}
+                            valid={touched.aluno && !errors.aluno}
+                            error={touched.aluno && errors.aluno}
+                          ></DropDownListAlunos>
+                          {errors.aluno && touched.aluno && (
+                            <Card.Form.StyledInlineErrorMessage>
+                              {errors.aluno}
+                            </Card.Form.StyledInlineErrorMessage>
+                          )}
                         </Card.Form.Group>
 
                         <Card.Form.GroupButton className="group-button">
