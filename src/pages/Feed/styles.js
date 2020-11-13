@@ -17,6 +17,8 @@ export const TopContainer = styled.div`
 export const CardsContainer = styled.div`
   display: flex;
   flex-direction: column;
+
+  margin-bottom: 20px;
 `;
 
 export const TopCardsContainer = styled.div`
@@ -24,7 +26,7 @@ export const TopCardsContainer = styled.div`
   flex-direction: row;
   justify-content: space-around;
 
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
 `;
 
 export const BottomCardsContainer = styled.div`

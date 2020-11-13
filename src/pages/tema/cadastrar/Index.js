@@ -40,8 +40,6 @@ const Index = ({ selected, setSelectedTema, setIsAtualizar }) => {
       setIsUpdating(true);
       setIsAtualizar(false);
     }
-
-
   }, [selected]);
 
   const listarDisciplinas = () => {
