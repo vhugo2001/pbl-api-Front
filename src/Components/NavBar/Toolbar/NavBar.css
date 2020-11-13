@@ -294,7 +294,6 @@ span {
 .link-menu,
 .link-menu:hover,
 .link-menu:active {
-  display: inline-block;
   margin: 0;
   padding: 0;
   text-decoration: none;
