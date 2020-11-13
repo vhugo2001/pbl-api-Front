@@ -34,7 +34,67 @@ const { SearchBar } = Search;
 
 function ListagemTarefas() {
     let usuarioLogado = authService.getCurrentUser();
-    const [atividade, setAtividade] = useState([])
+    let status = false
+    const [tarefa, setTarefa] = useState([
+        {
+            id: 1,
+            titulo: 'Atividade',
+            dataConclusao: '10/12/2020',
+            tarefa: [
+                {
+                    id: 1,
+                    concluido: true,
+                    descricao: 'Desc 1A',
+                    dataConclusao: '10/11/2020'
+                },
+                {
+                    id: 2,
+                    concluido: false,
+                    descricao: 'Desc 2A',
+                    dataConclusao: '10/11/2020'
+                },
+                {
+                    id: 3,
+                    concluido: false,
+                    descricao: 'Desc 3A',
+                    dataConclusao: '10/11/2020'
+                }
+            ]
+        },
+        {
+            id: 2,
+            titulo: 'Atividade 2',
+            dataConclusao: '06/03/2021',
+            tarefa: [
+                {
+                    id: 1,
+                    concluido: true,
+                    descricao: 'Desc 1B',
+                    dataConclusao: '10/10/2020'
+                },
+                {
+                    id: 2,
+                    concluido: false,
+                    descricao: 'Desc 2B',
+                    dataConclusao: '10/11/2020'
+                },
+                {
+                    id: 3,
+                    concluido: false,
+                    descricao: '',
+                    dataConclusao: ''
+                },
+            ]
+        },
+        {
+            id: 3,
+            titulo: 'Atividade 3',
+            dataConclusao: '03/03/2023',
+            tarefa: []
+        }
+
+    ])
+
     const [dataConclusao, setDataConclusao] = useState("");
 
     const [showModal, setShowModal] = useState(false)
@@ -43,6 +103,8 @@ function ListagemTarefas() {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+
 
 
     // useEffect(() => {
@@ -72,12 +134,6 @@ function ListagemTarefas() {
     //             .catch((error) => { toast.danger("Não foi possível editar a nota.") });
     //     }
     // }, [tarefaEditada])
-
-    const tarefa = [
-        { id: 1, titulo: 'Atividade', dataConclusao: '10/12/2020', tarefa: [{ id: 1, concluido: true, descricao: 'Desc 1A', dataConclusao: '10/11/2020' }, { id: 2, concluido: false, descricao: 'Desc 2A', dataConclusao: '10/11/2020' }, { id: 3, concluido: false, descricao: 'Desc 3A', dataConclusao: '10/11/2020' }] },
-        { id: 2, titulo: 'Atividade 2', dataConclusao: '06/03/2021', tarefa: [{ id: 1, concluido: true, descricao: 'Desc 1B', dataConclusao: '10/10/2020' }, { id: 2, concluido: false, descricao: 'Desc 2B', dataConclusao: '10/11/2020' }] }
-    ]
-
     const colunas = [
 
         {
@@ -115,7 +171,7 @@ function ListagemTarefas() {
 
             formatter: (cellContent, row) => (
                 <div className="action-button-adicionar">
-                    <IoIcons.IoIosAddCircleOutline className="adicionar-button" onClick={() => alert('Botao de Add')} />
+                    <IoIcons.IoIosAddCircleOutline className="adicionar-button" onClick={() => handleAdd(row)} />
                 </div>
             ),
             headerStyle: (colum, colIndex) => {
@@ -133,7 +189,7 @@ function ListagemTarefas() {
             formatter: (cellContent, row) => (
 
                 < div >
-                    <div className="icone-button" onClick={() => () => handleConcluido(row)}>
+                    <div className="icone-button" onClick={(e) => handleConcluido(e, row)}>
                         <IoIcons.IoIosCheckmarkCircle />
                     </div>
 
@@ -158,12 +214,67 @@ function ListagemTarefas() {
             dataField: 'descricao',
             text: '',
 
-            formatter: (cellContent, row) => (
+            formatter: (cellContent, row) => {
+                if (cellContent !== '') {
+                    return (
+                        <div>
+                            <label className="TituloAtiv"><b>{cellContent}</b></label><br />
+                        </div>
+                    )
+                } else {
+                    return (
+                        <div>
+                            <label className="TituloAtiv">Insira um título...</label><br />
+                        </div>
+                    )
+                }
+            },
+            headerStyle: {
+                display: 'none'
+            }
+        },
+        // {
+        //     dataField: 'alunos',
+        //     text: '',
 
-                <div>
-                    <label className="TituloAtiv"><b>{cellContent}</b></label><br />
-                </div>
-            ),
+        //     formatter: (cellContent, row) => {
+        //         if (cellContent !== '') {
+        //             return (
+        //                 <div>
+        //                     <label className="TituloAtiv"><b>{cellContent}</b></label><br />
+        //                 </div>
+        //             )
+        //         } else {
+        //             return (
+        //                 <div>
+        //                     <label className="TituloAtiv">Atribua algum aluno...</label><br />
+        //                 </div>
+        //             )
+        //         }
+        //     },
+        //     headerStyle: {
+        //         display: 'none'
+        //     }
+        // },
+        {
+            dataField: 'dataConclusao',
+            text: '',
+
+            formatter: (cellContent, row) => {
+                if (cellContent !== '') {
+                    return (
+                        <div>
+                            <label className="TituloAtiv"><b>{cellContent}</b></label><br />
+                        </div>
+                    )
+                } else {
+                    return (
+                        <div>
+                            <label className="TituloAtiv">Insira uma data...</label><br />
+                        </div>
+                    )
+                }
+            },
             headerStyle: {
                 display: 'none'
             }
@@ -173,8 +284,9 @@ function ListagemTarefas() {
             text: "",
 
             formatter: (cellContent, row) => (
+
                 <div className="action-button-deletar">
-                    <IoIcons.IoMdTrash className="deletar-button" onClick={() => handleExcluir(row)} />
+                    <IoIcons.IoMdTrash className="deletar-button" onClick={(e) => handleExcluir(e, row)} />
                 </div>
             ),
             headerStyle: {
@@ -183,7 +295,8 @@ function ListagemTarefas() {
         },
     ];
 
-    const handleExcluir = (item) => {
+    function handleExcluir(e, item) {
+        e.stopPropagation();
         // excluirTarefa(item.id);
     };
 
@@ -200,26 +313,73 @@ function ListagemTarefas() {
     //       });
     //   };
 
-    const handleConcluido = (item) => {
+    const handleConcluido = (e, item) => {
+        e.stopPropagation();
         // if(item.concluido === true){
         //     let status = false
         // }else{
         //     status = true
         // }
         // statusTarefa(item.id,status);
+
+        if (item.concluido === true) {
+            status = false
+        } else {
+            status = true
+
+        }
+        statusTarefa(item.id, status);
     }
 
-    // const statusTarefa = (dados, status) => {
-    //     serviceTarefa
-    //       .atualizar(dados, status)
-    //       .then((response) => {
-    //         let data = response.data;
-    //         setTarefa(data);
-    //       })
-    //       .catch((error) => {
-    //         toast.error("Erro modificar status da Tarefa.");
-    //       });
-    //   };
+    const statusTarefa = (dados, status) => {
+
+        // serviceTarefa
+        //   .atualizar(dados, status)
+        //   .then((response) => {
+        //     let data = response.data;
+        //     setTarefa(data);
+        //   })
+        //   .catch((error) => {
+        //     toast.error("Erro modificar status da Tarefa.");
+        //   });
+
+
+    };
+
+    const handleAdd = (item) => {
+
+        // const novaTarefa = {
+        //     "concluido": false,
+        //     "dataConclusao": "",
+        //     "dataCriacao": new Date(),
+        //     "descricao": ""
+        // }
+        const novaTarefa = {
+            id: 5,
+            concluido: false,
+            descricao: '',
+            dataConclusao: ''
+        }
+
+        setTarefa(tarefa.map((x) => {
+            if (x.id !== item.id) return x;
+            return { ...x, tarefa: [...x.tarefa, novaTarefa] };
+        }));
+
+        // setTarefa({ ...item, tarefa: [...item.tarefa, novaTarefa] });
+
+
+        // serviceTarefa
+        //     .incluirTarefaAtiv(novaTarefa, item.id)
+        //     .then((response) => {
+        //         let data = response.data;
+        //         setTarefa(data);
+        //     })
+        //     .catch((error) => {
+        //         toast.error("Erro adicionar uma tarefa.");
+        //     });
+
+    }
 
     const rowEvents = {
         onClick: (e, row) => {
