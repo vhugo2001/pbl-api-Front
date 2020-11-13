@@ -9,11 +9,12 @@ import pt from "date-fns/locale/pt";
 import { format } from "date-fns";
 import DropDownList from "../../../Components/DropDownList/Default/DropDownList";
 import DropDownListAlunos from "../../../Components/DropDownList/Alunos/DropDownList";
-import serviceEmpresa from "../../../Services/EmpresaService"
+import serviceEmpresa from "../../../Services/EmpresaService";
 import serviceAluno from "../../../Services/AlunoService";
 import serviceTema from "../../../Services/TemaPblService";
 import serviceDisciplina from "../../../Services/DisciplinaService";
 import servicePbl from "../../../Services/PblService";
+import authService from "../../../Services/AuthService";
 import { toast } from "react-toastify";
 import ApiCalendar from "react-google-calendar-api";
 
@@ -25,6 +26,7 @@ import { isEmptyObject } from "jquery";
 import "react-datepicker/dist/react-datepicker.css";
 
 const Index = () => {
+  let usuarioLogado = authService.getCurrentUser();
   const [listaAluno, setListaAluno] = useState([]);
   const [listaTemaPbl, setListaTemaPbl] = useState([]);
   const [listaDisciplina, setListaDisciplina] = useState([]);
@@ -95,7 +97,7 @@ const Index = () => {
     const finalDate = data.dataConclusao;
     data = {
       ...data,
-      professor: { id: 2 },
+      professor: { id: usuarioLogado.id },
       dataInicio: format(data.dataInicio, "dd/MM/yyyy"),
       dataConclusao: format(data.dataConclusao, "dd/MM/yyyy"),
       pblTemaDisciplina: {
@@ -297,10 +299,8 @@ const Index = () => {
                   <Card.Form.Group>
                     <Card.Form.Title>Empresa</Card.Form.Title>
                     <DropDownList
-
                       lista={listaEmpresa}
                       onSelect={setEmpresaSelecionada}
-
                     ></DropDownList>
                   </Card.Form.Group>
 
