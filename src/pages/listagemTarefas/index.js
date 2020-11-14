@@ -42,17 +42,6 @@ function ListagemTarefas() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  // useEffect(() => {
-  //     if (tarefaEditada.id !== undefined) {
-  //         serviceTarefa
-  //             .atualizarAtivPbl(tarefaEditada.id, tarefaEditada)
-  //             .then((response) => {
-
-  //                 toast.success("Nota editada com sucesso.")
-  //             })
-  //             .catch((error) => { toast.danger("Não foi possível editar a nota.") });
-  //     }
-  // }, [tarefaEditada])
   const colunas = [
     {
       dataField: "titulo",
@@ -371,7 +360,7 @@ function ListagemTarefas() {
   };
 
   const expandRow = {
-    renderer: (row) => (
+     renderer: (row) => (
       <div>
         <ToolkitProvider keyField="id" data={row.tarefas} columns={subcolunas}>
           {(props) => (
