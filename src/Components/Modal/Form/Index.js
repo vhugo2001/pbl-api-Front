@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Formik } from "formik";
-import SchemaTarefa from './SchemaTarefas';
+import SchemaTarefa from "./SchemaTarefas";
 import { toast } from "react-toastify";
 import pt from "date-fns/locale/pt";
 import subDays from "date-fns/subDays";
@@ -12,16 +12,20 @@ import DropDownListAlunos from "../../DropDownList/Alunos/DropDownList";
 
 import tarefaService from "../../../Services/TarefaService";
 
-
-const FormModal = ({ data , show }) => {
+const FormModal = ({ data, alunos, show, setShow }) => {
   const [showModal, setShowModal] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [dataConclusao, setDataConclusao] = useState("");
   const [alunosSelecionados, setAlunosSelecionados] = useState("");
-  
+
   useEffect(() => {
     console.log(data);
-    if ((data !== null) && (data !== undefined) && show === true && Object.keys(data).length !== 0)  {
+    if (
+      data !== null &&
+      data !== undefined &&
+      show === true &&
+      Object.keys(data).length !== 0
+    ) {
       setIsUpdating(true);
       if (data.dataConclusao !== "")
         setDataConclusao(data.dataConclusao.split("/").reverse().join("-"));
@@ -31,11 +35,13 @@ const FormModal = ({ data , show }) => {
   }, [data]);
 
   useEffect(() => {
-    console.log(show);
     setShowModal(show);
-  }, [show])
+  }, [show]);
 
- 
+  const handleClose = () => {
+    setShowModal(false);
+    setShow(false);
+  }
 
   const onSubmitHandler = (data) => {
     let _data = { ...data, disciplinas: [data.disciplinas] };
@@ -60,23 +66,21 @@ const FormModal = ({ data , show }) => {
       });
   };
 
-  const handleExcluir = () => {
-
-  }
+  const handleExcluir = () => {};
 
   const onClearHandler = () => {};
 
-  const handleClose = () => setShowModal(false);
+
 
   return (
     <div>
       <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Tarefa</Modal.Title>
+          <Modal.Title>{data.titulo}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <>
-            <Card>
+         
               <Formik
                 enableReinitialize
                 initialValues={{
@@ -125,7 +129,7 @@ const FormModal = ({ data , show }) => {
                         autoComplete="off"
                         onSubmit={handleSubmit}
                       >
-                         <Card.Form.Group>
+                        <Card.Form.Group>
                           <Card.Form.Title>Titulo</Card.Form.Title>
                           <Card.Form.InputText
                             name="titulo"
@@ -175,7 +179,7 @@ const FormModal = ({ data , show }) => {
                           <Card.Form.Title>Alunos</Card.Form.Title>
                           <DropDownListAlunos
                             name="alunos"
-                            lista={values.alunos || []}
+                            lista={alunos|| []}
                             onSelect={setAlunosSelecionados}
                             valid={touched.aluno && !errors.aluno}
                             error={touched.aluno && errors.aluno}
@@ -195,7 +199,7 @@ const FormModal = ({ data , show }) => {
                   );
                 }}
               </Formik>
-            </Card>
+      
           </>
         </Modal.Body>
       </Modal>
