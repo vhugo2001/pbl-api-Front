@@ -15,6 +15,7 @@ function Dashboard() {
   const [selectedPbl, setSelectedPbl] = useState();
   const [selectedAtividade, setSelectedAtividade] = useState();
   const [selectedDisciplinas, setSelectedDisciplinas] = useState();
+  const [ isAtualizar, setIsAtualizar] = useState(false);
 
   useEffect(() => {
     toast.info(
@@ -25,7 +26,9 @@ function Dashboard() {
 
   useEffect(() => {}, [selectedPbl]);
 
-  useEffect(() => {}, [selectedAtividade]);
+  useEffect(() => {
+    setIsAtualizar(true);
+  }, [selectedAtividade]);
 
   return (
     <>
@@ -50,6 +53,7 @@ function Dashboard() {
             <ListagemAtividades
               selectedPbl={selectedPbl}
               setSelectedAtividade={setSelectedAtividade}
+              isAtualizar={isAtualizar}
             />
           </Col>
 
@@ -61,6 +65,7 @@ function Dashboard() {
             <CardCadastroTarefa
               disciplina={selectedDisciplinas}
               selectedAtividade={selectedAtividade}
+              setIsAtualizar={setIsAtualizar}
             />
 
             <Card>
