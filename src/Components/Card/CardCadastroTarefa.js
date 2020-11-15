@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import atividadeService from "../../Services/AtividadeService";
+import authService from "../../Services/AuthService";
 import { Card } from "./CardPrincipal";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -14,6 +15,7 @@ import moment from "moment";
 import Moment from "react-moment";
 
 function CardCadastroTarefa({ selectedAtividade }) {
+  let usuarioLogado = authService.getCurrentUser();
   const [tarefa, setTarefa] = useState("");
   const [dataConclusao, setDataConclusao] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
@@ -103,7 +105,7 @@ function CardCadastroTarefa({ selectedAtividade }) {
         id: 1,
       },
       professor: {
-        id: 2,
+        id: usuarioLogado.id,
       },
       dataConclusao: format(data.dataConclusao, "dd/MM/yyyy"),
     };
