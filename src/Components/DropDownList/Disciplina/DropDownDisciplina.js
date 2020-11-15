@@ -12,18 +12,23 @@ const DropDownDisciplina = ({ value, ...props }) => {
 
   useEffect(() => {
     if (value !== undefined) {
-      console.log(value);
-      disciplinaService
-        .listarTodos()
-        .then((response) => {
-          setData(response.data);
-          setDisciplinasProfessor(value)
-        })
-        .catch((error) => {
-          toast.error("Erro ao listar as disciplinas");
-        });
+      selectAll();
     }
   }, [value]);
+
+  const selectAll = () => {
+    console.log(value);
+    disciplinaService
+      .listarTodos()
+      .then((response) => {
+        setData(response.data);
+        setDisciplinasProfessor(value)
+      })
+      .catch((error) => {
+        toast.error("Erro ao listar as disciplinas");
+      });
+  }
+  
 
   const handleChange = (v) => {
     console.log(v)

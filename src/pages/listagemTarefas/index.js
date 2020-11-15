@@ -17,7 +17,7 @@ import ModalTarefas from "../../Components/Modal/Form/Index";
 
 const { SearchBar } = Search;
 
-function ListagemTarefas() {
+const Index = () => {
   const [dadosModal, setDadosModal] = useState({});
   const [alunos, setAlunos] = useState({});
   const [show, setShow] = useState(false);
@@ -30,17 +30,14 @@ function ListagemTarefas() {
       .listarPorIdAluno(usuarioLogado.id)
       .then((response) => {
         let data = response.data;
-        console.log(data)
+        console.log(data);
         setTarefa(data.atividadeTarefaDTOs);
-        setAlunos(data.alunosPbl)
+        setAlunos(data.alunosPbl);
       })
       .catch((error) => {
         toast.error(error.response.data);
       });
   }, []);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   const colunas = [
     {
@@ -163,27 +160,31 @@ function ListagemTarefas() {
       },
     },
     {
-        dataField: 'alunos',
-        text: '',
+      dataField: "alunos",
+      text: "",
 
-        formatter: (cellContent, row) => {
-            if (cellContent !== '') {
-                return (
-                    <div>
-                        <label className="TituloAtiv"><b>{cellContent}</b></label><br />
-                    </div>
-                )
-            } else {
-                return (
-                    <div>
-                        <label className="TituloAtiv">Atribua algum aluno...</label><br />
-                    </div>
-                )
-            }
-        },
-        headerStyle: {
-            display: 'none'
+      formatter: (cellContent, row) => {
+        if (cellContent !== "") {
+          return (
+            <div>
+              <label className="TituloAtiv">
+                <b>{cellContent}</b>
+              </label>
+              <br />
+            </div>
+          );
+        } else {
+          return (
+            <div>
+              <label className="TituloAtiv">Atribua algum aluno...</label>
+              <br />
+            </div>
+          );
         }
+      },
+      headerStyle: {
+        display: "none",
+      },
     },
     {
       dataField: "dataConclusao",
@@ -279,43 +280,19 @@ function ListagemTarefas() {
   };
 
   const handleAdd = (item) => {
-    // const novaTarefa = {
-    //     "concluido": false,
-    //     "dataConclusao": "",
-    //     "dataCriacao": new Date(),
-    //     "descricao": ""
-    // }
+    console.log(item);
+
     const novaTarefa = {
+      tituloAtividade: item.titulo,
       titulo: "",
-      id: 5,
-      concluido: false,
+      idAtividade: item.id,
       descricao: "",
       dataConclusao: "",
     };
 
-    setTarefa(
-      tarefa.map((x) => {
-        if (x.id !== item.id) return x;
-        return { ...x, tarefas: [...x.tarefas, novaTarefa] };
-      })
-    );
-
     setDadosModal(novaTarefa);
     setShow(true);
-
-    // setTarefa({ ...item, tarefa: [...item.tarefa, novaTarefa] });
-
-    // serviceTarefa
-    //     .incluirTarefaAtiv(novaTarefa, item.id)
-    //     .then((response) => {
-    //         let data = response.data;
-    //         setTarefa(data);
-    //     })
-    //     .catch((error) => {
-    //         toast.error("Erro adicionar uma tarefa.");
-    //     });
   };
-
   const rowEvents = {
     onClick: (e, row) => {
       console.log(row);
@@ -324,29 +301,6 @@ function ListagemTarefas() {
     },
   };
 
-  const onSubmitHandler = (data) => {
-    // data = {
-    //   ...data,
-    //   dataCriacao: format(new Date(), "dd/MM/yyyy"),
-    //   disciplina: {
-    //     id: 1,
-    //   },
-    //   professor: {
-    //     id: 2,
-    //   },
-    //   dataConclusao: format(data.dataConclusao, "dd/MM/yyyy"),
-    // };
-    // console.log(data);
-    // atividadeService
-    //   .incluir(data)
-    //   .then((response) => {
-    //     let data = response.data;
-    //     toast.success("Tarefa cadastrada com sucesso.");
-    //   })
-    //   .catch((error) => {
-    //     toast.error("Erro ao cadastrar tarefa.");
-    //   });
-  };
   const rowStyle = (row, rowIndex) => {
     if (row !== undefined) {
       if (row.concluido === true) {
@@ -360,7 +314,7 @@ function ListagemTarefas() {
   };
 
   const expandRow = {
-     renderer: (row) => (
+    renderer: (row) => (
       <div>
         <ToolkitProvider keyField="id" data={row.tarefas} columns={subcolunas}>
           {(props) => (
@@ -436,9 +390,14 @@ function ListagemTarefas() {
           )}
         </ToolkitProvider>
       </Container>
-      <ModalTarefas data={dadosModal} alunos={alunos} show={show} setShow={setShow} />
+      <ModalTarefas
+        data={dadosModal}
+        alunos={alunos}
+        _show={show}
+        setShow={setShow}
+      />
     </>
   );
-}
+};
 
-export default ListagemTarefas;
+export default Index;
