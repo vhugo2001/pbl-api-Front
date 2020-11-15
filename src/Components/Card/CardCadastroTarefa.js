@@ -2,19 +2,17 @@ import React, { useState, useEffect } from "react";
 import atividadeService from "../../Services/AtividadeService";
 import authService from "../../Services/AuthService";
 import { Card } from "./CardPrincipal";
-import { Formik, Form, ErrorMessage } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 import { format } from "date-fns";
 import subDays from "date-fns/subDays";
 import pt from "date-fns/locale/pt";
 import DatePickerField from "../DatePicker/DatePickerField";
 import { toast } from "react-toastify";
-import { id } from "date-fns/locale";
-import * as IoIcons from "react-icons/io";
-import moment from "moment";
-import Moment from "react-moment";
 
-function CardCadastroTarefa({ selectedAtividade }) {
+import * as IoIcons from "react-icons/io";
+
+function CardCadastroTarefa({ disciplina, selectedAtividade }) {
   let usuarioLogado = authService.getCurrentUser();
   const [tarefa, setTarefa] = useState("");
   const [dataConclusao, setDataConclusao] = useState("");
@@ -102,7 +100,7 @@ function CardCadastroTarefa({ selectedAtividade }) {
       ...data,
       dataCriacao: format(new Date(), "dd/MM/yyyy"),
       disciplina: {
-        id: 1,
+        id: disciplina.id,
       },
       professor: {
         id: usuarioLogado.id,
@@ -144,6 +142,14 @@ function CardCadastroTarefa({ selectedAtividade }) {
               .nullable(),
           })}
           onSubmit={(values) => {
+            if (disciplina === undefined) {
+              toast.warn(
+                "É necessário selecionar uma disciplina para cadastrar atividades",
+                { autoClose: 6000 }
+              );
+              return;
+            }
+
             if (isUpdating) {
               return onUpdateHandler(values);
             } else {
@@ -158,6 +164,7 @@ function CardCadastroTarefa({ selectedAtividade }) {
             handleSubmit,
             handleChange,
             isSubmitting,
+            isValid,
             validating,
             valid,
           }) => {
