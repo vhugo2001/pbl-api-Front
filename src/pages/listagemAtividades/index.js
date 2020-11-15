@@ -14,6 +14,9 @@ import { Card } from "../../Components/Card/CardPrincipal";
 import serviceAtividade from "../../Services/AtividadeService";
 import cellEditFactory from "react-bootstrap-table2-editor";
 
+import { format, subDays, compareAsc } from "date-fns";
+
+
 const { SearchBar } = Search;
 
 function ListagemAtividades({
@@ -63,15 +66,45 @@ function ListagemAtividades({
       dataField: "icone",
       text: "",
 
-      formatter: (cellContent, row) => (
-        <div>
-          <div className="BordaIconeTop" />
-          <div className="icon-button">
-            <IoIcons.IoMdRadioButtonOff />
+      formatter: (cellContent, row) => {
+
+        console.log(row);
+        let statusColor;
+
+        if(row.atividadePbls.length > 0)
+        {
+
+          let dataHoje = new Date();
+          let dataConclusaoAtividade = new Date(row.dataConclusao.split("/").reverse().join("-"));
+          let dataEntrega = row.atividadePbls[0].dataEntrega !== null
+                           ? new Date(row.atividadePbls[0].dataEntrega.split("/").reverse().join("-"))
+                           : new Date('2000-01-01');
+
+
+          //ENTREGUE
+          if(dataEntrega != null)
+            statusColor = "green";
+
+          //ATRASADO
+          if(compareAsc(dataHoje, dataConclusaoAtividade) === 1 || compareAsc(dataEntrega, dataConclusaoAtividade ) === 1)
+              statusColor = "#BB157C";
+
+          //PENDETE
+          if(compareAsc(dataConclusaoAtividade, dataHoje))
+          statusColor = "#C38A0E";
+          
+        }
+
+        return (
+          <div>
+            <div className="BordaIconeTop" style={{ borderColor: statusColor }}/>
+            <div className="icon-button">
+              <IoIcons.IoMdRadioButtonOff style={{ color: statusColor }} />
+            </div>
+            <div className="BordaIconeBottom" style={{ borderColor: statusColor }}/>
           </div>
-          <div className="BordaIconeBottom" />
-        </div>
-      ),
+        );
+      },
       headerStyle: (colum, colIndex) => {
         return {
           width: "35px",
