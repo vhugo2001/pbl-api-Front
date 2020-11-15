@@ -6,7 +6,7 @@ import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import "bootstrap/dist/css/bootstrap.min.css";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
-import * as ReactBootStrap from "react-bootstrap";
+import { toast } from "react-toastify";
 import * as IoIcons from "react-icons/io";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css";
@@ -23,9 +23,8 @@ function CardListaPbl({ disciplina, setSelectedPbl }) {
     pblService
       .listarPorIdDisciplinas(disciplina.id)
       .then((response) => {
-        let data = response.data;
-        setPblList(data);
-        console.log(data);
+        if (response.data.length > 0) setPblList(response.data);
+        else toast.warn("Não existem PBL's vinculáros a essa disciplina!");
       })
       .catch((error) => console.log(error));
   };
