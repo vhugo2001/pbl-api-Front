@@ -4,6 +4,7 @@ import * as AiIcons from "react-icons/ai";
 import * as IoIcons from "react-icons/io";
 import * as MdIcons from "react-icons/md";
 import * as FiIcons from "react-icons/fi";
+import * as BiIcons from "react-icons/bi";
 
 export const SidebarDataProfessor = [
   {
@@ -60,7 +61,7 @@ export const SidebarDataProfessor = [
   {
     title: "Manter Tarefa",
     path: "/admin/manter-tarefa",
-    icon: <IoIcons.IoIosPaper />,
+    icon: <BiIcons.BiTask />,
     cName: "sidebar-nav-item",
     cLinkName: "sidebar-nav-link"
   },
@@ -84,7 +85,7 @@ export const SidebarDataAluno = [
   {
     title: "Agenda",
     path: "/admin/calendario",
-    icon: <IoIcons.IoMdPeople />,
+    icon: <FiIcons.FiCalendar />,
     cName: "sidebar-nav-item",
     cLinkName: "sidebar-nav-link"
   },
@@ -108,7 +109,7 @@ export const SidebarDataEmpresa = [
   {
     title: "Agenda",
     path: "/admin/calendario",
-    icon: <IoIcons.IoMdPeople />,
+    icon: <FiIcons.FiCalendar />,
     cName: "sidebar-nav-item",
     cLinkName: "sidebar-nav-link"
   },
