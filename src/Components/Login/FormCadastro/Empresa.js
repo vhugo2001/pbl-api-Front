@@ -61,7 +61,7 @@ const Empresa = () => {
                     type="text"
                     name="cnpj"
                     value={mask(values.cnpj, Constants.MASK_PATTERNS_CNPJ) || ''}
-                    placeholder="Nome"
+                    placeholder="CNPJ"
                     aria-label="CNPJ"
                     valid={touched.cnpj && !errors.cnpj}
                     error={touched.cnpj && errors.cnpj}
