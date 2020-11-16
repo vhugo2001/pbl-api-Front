@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Card } from "../../../Components/Card/CardPrincipal";
 import professorService from "../../../Services/ProfessorService";
-import authService from "../../../Services/AuthService";
+import DropDownDisciplina from "../../../Components/DropDownList/Disciplina/DropDownDisciplina";
 import { toast } from "react-toastify";
-
 import { Formik } from "formik";
-import * as Yup from "yup";
+import SchemaProfessor from "../Schemas/SchemaProfessor";
 
 function Index({ usuario }) {
   const [professor, setProfessor] = useState(usuario);
@@ -15,7 +14,6 @@ function Index({ usuario }) {
       .listarID(professor.id)
       .then((response) => {
         setProfessor(response.data);
-        console.log(response.data);
       })
       .catch((error) => {
         toast.error("Erro ao recuperar as informações do professor.");
@@ -23,9 +21,10 @@ function Index({ usuario }) {
   }, []);
 
   const onSubmitHandler = (data) => {
+    console.log(data);
     data = {
       ...data,
-      id: professor.id,
+      id: professor.id
     };
 
     professorService
@@ -50,13 +49,9 @@ function Index({ usuario }) {
           initialValues={{
             nome: professor.nome,
             email: professor.email,
+            disciplinas: professor.disciplinas
           }}
-          validationSchema={Yup.object().shape({
-            nome: Yup.string().required("* Campo nome é obrigatório"),
-            email: Yup.string()
-              .required("* Campo email é obrigatório")
-              .nullable(),
-          })}
+          validationSchema={SchemaProfessor}
           onSubmit={(values) => onSubmitHandler(values)}
         >
           {({ values, errors, touched, handleSubmit, handleChange }) => {
@@ -115,6 +110,15 @@ function Index({ usuario }) {
                           {errors.email}
                         </Card.Form.StyledInlineErrorMessage>
                       )}
+                    </Card.Form.Group>
+                    <Card.Form.BreakRow />
+                    <Card.Form.Group>
+                      <Card.Form.Title>Disciplinas</Card.Form.Title>
+                      <DropDownDisciplina
+                        name="disciplinas"
+                        value={professor.disciplinas}
+                        onChange={handleChange}
+                      />
                     </Card.Form.Group>
 
                     <Card.Form.BreakRow />
