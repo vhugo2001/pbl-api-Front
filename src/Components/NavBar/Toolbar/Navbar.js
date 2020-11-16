@@ -35,7 +35,7 @@ function Navbar() {
         break;
       case "ROLE_EMPRESA":
         setData(SidebarDataEmpresa);
-        break
+        break;
     }
   });
   return (
@@ -77,14 +77,14 @@ function Navbar() {
               classNames="example1-dropdown-menu"
               timeout={200}
             >
-              <NavbarDropdown.Item className="example1-dropdown-menu-item">
-                <Link to="/admin/perfil-usuario" className="link-menu">
+              <Link to="/admin/perfil-usuario" className="link-menu">
+                <NavbarDropdown.Item className="example1-dropdown-menu-item">
                   <div className="example1-dropdown-menu-item__spacer" />
                   <div className="example1-dropdown-menu-item__text">
                     Meu Perfil
                   </div>
-                </Link>
-              </NavbarDropdown.Item>
+                </NavbarDropdown.Item>
+              </Link>
               <NavbarDropdown.Item className="example1-dropdown-menu-item">
                 <a
                   href="/admin/"
@@ -102,24 +102,24 @@ function Navbar() {
               classNames="example1-dropdown-menu"
               timeout={200}
             >
-              <NavbarDropdown.Item className="example1-dropdown-menu-item">
-                <Link to="/admin/perfil-usuario" className="link-menu">
+              <Link to="/admin/perfil-usuario" className="link-menu">
+                <NavbarDropdown.Item className="example1-dropdown-menu-item">
                   <div className="example1-dropdown-menu-item__spacer" />
                   <div className="example1-dropdown-menu-item__text">
                     Meu Perfil
                   </div>
-                </Link>
-              </NavbarDropdown.Item>
-              <NavbarDropdown.Item className="example1-dropdown-menu-item">
-                <a
-                  href="/admin/"
-                  className="link-menu"
-                  onClick={ServiceAuth.logout}
-                >
+                </NavbarDropdown.Item>
+              </Link>
+              <a
+                href="/admin/"
+                className="link-menu"
+                onClick={ServiceAuth.logout}
+              >
+                <NavbarDropdown.Item className="example1-dropdown-menu-item">
                   <div className="example1-dropdown-menu-item__spacer" />
                   <div className="example1-dropdown-menu-item__text">Sair</div>
-                </a>
-              </NavbarDropdown.Item>
+                </NavbarDropdown.Item>
+              </a>
             </NavbarDropdown.CSSTransitionMenu>
           </NavbarDropdown>
         </div>

@@ -1,121 +1,128 @@
 import React, { useState, useEffect } from "react";
 import atividadeService from "../../Services/AtividadeService";
+import authService from "../../Services/AuthService";
 import { Card } from "./CardPrincipal";
-import { Formik, Form, ErrorMessage } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 import { format } from "date-fns";
 import subDays from "date-fns/subDays";
+
 import pt from "date-fns/locale/pt";
 import DatePickerField from "../DatePicker/DatePickerField";
 import { toast } from "react-toastify";
-import { id } from "date-fns/locale";
+
 import * as IoIcons from "react-icons/io";
-import moment from 'moment';
-import Moment from 'react-moment'
 
-function CardCadastroTarefa({ selectedAtividade }) {
-  const [tarefa, setTarefa] = useState("");
-  const [dataConclusao, setDataConclusao] = useState("");
+function CardCadastroatividade({
+  disciplina,
+  selectedAtividade,
+  setIsAtualizar,
+}) {
+  let usuarioLogado = authService.getCurrentUser();
+  const [atividade, setAtividade] = useState({});
   const [isUpdating, setIsUpdating] = useState(false);
-  const [selectedAtividadeEditado, setSelectedAtividadeEditado] = useState({})
+  const [selectedAtividadeEditado, setSelectedAtividadeEditado] = useState({});
 
   useEffect(() => {
-    if (tarefa !== undefined && tarefa !== null && tarefa !== "") {
-      setIsUpdating(true);
-    } else {
-      setIsUpdating(false);
-    }
-  }, [tarefa]);
-
-  useEffect(() => {
-    if (selectedAtividade !== null & selectedAtividade !== undefined) {
+    if ((selectedAtividade !== null) & (selectedAtividade !== undefined)) {
       atividadeService
         .listarID(selectedAtividade)
         .then((response) => {
           response.data.dataConclusao = new Date(
             response.data.dataConclusao.split("/").reverse().join("-")
           );
-          setDataConclusao(response.data.dataConclusao);
-
-          setTarefa(response.data);
+          setAtividade(response.data);
+          setIsUpdating(true);
         })
         .catch((error) => {
-          toast.error("Erro ao acessar a lista de tarefas.");
+          toast.error("Erro ao acessar a lista de atividades.");
         });
     }
   }, [selectedAtividade]);
 
   useEffect(() => {
-    console.log(selectedAtividadeEditado.id)
-    console.log(selectedAtividadeEditado)
+    console.log(selectedAtividadeEditado.id);
+    console.log(selectedAtividadeEditado);
     if (selectedAtividadeEditado.id !== undefined) {
       atividadeService
         .atualizar(selectedAtividadeEditado.id, selectedAtividadeEditado)
         .then((response) => {
-
-          toast.success("Tarefa atualizado com sucesso.");
+          toast.success("atividade atualizado com sucesso.");
+          setIsAtualizar(true);
         })
-        .catch((error) => { toast.error("Erro ao atualizar tarefa."); });
+        .catch((error) => {
+          toast.error("Erro ao atualizar atividade.");
+        });
     }
-  }, [selectedAtividadeEditado])
+  }, [selectedAtividadeEditado]);
 
-
-  const onDeleteHandler = (id) => {
-    atividadeService
-      .deletar(tarefa.id)
-      .then(toast.success("Tarefa deletada com sucesso."))
-      .catch((error) => {
-        toast.error("Erro ao acessar a API.");
-      });
-  };
-
-  const onAddHandler = () => {
-    setTarefa('')
-  };
-
-  const onUpdateHandler = (data) => {
-    data = {
-      ...tarefa, titulo: data.titulo, dataConclusao: format(data.dataConclusao, 'dd/MM/yyyy'),
-      descricao: data.descricao
-    };
-    setSelectedAtividadeEditado(data);
-
-    // atividadeService
-    //   .atualizarAtivPbl(selectedAtividadeEditado.id, selectedAtividadeEditado)
-    //   .then((response) => {
-
-    //     toast.success("Tarefa atualizado com sucesso.");
-    //   })
-    //   .catch((error) => {
-    //     toast.error("Erro ao atualizar tarefa.");
-    //     console.log(data);
-    //     console.log(error);
-    //   });
-  };
-
-  const onSubmitHandler = (data) => {
+  const onSubmitHandler = (data, resetForm) => {
     data = {
       ...data,
-      dataCriacao: format(new Date(), "dd/MM/yyyy"),
       disciplina: {
-        id: 1,
+        id: disciplina.id,
       },
       professor: {
-        id: 2,
+        id: usuarioLogado.id,
       },
+      dataCriacao: format(new Date(), "dd/MM/yyyy"),
       dataConclusao: format(data.dataConclusao, "dd/MM/yyyy"),
     };
-    console.log(data);
 
     atividadeService
       .incluir(data)
       .then((response) => {
-        let data = response.data;
-        toast.success("Tarefa cadastrada com sucesso.");
+        setIsAtualizar(true);
+        toast.success("Atividade cadastrada com sucesso.");
+        resetForm({});
       })
       .catch((error) => {
-        toast.error("Erro ao cadastrar tarefa.");
+        console.log(error);
+        toast.error("Erro ao cadastrar atividade.");
       });
+  };
+
+  const onUpdateHandler = (data) => {
+    data = {
+      ...atividade,
+      disciplina: {
+        id: disciplina.id,
+      },
+      professor: {
+        id: usuarioLogado.id,
+      },
+      titulo: data.titulo,
+      dataConclusao: format(data.dataConclusao, "dd/MM/yyyy"),
+      descricao: data.descricao,
+    };
+    setSelectedAtividadeEditado(data);
+  };
+
+  const onDeleteHandler = () => {
+    atividadeService
+      .deletar(atividade.id)
+      .then(() => {
+        toast.success("atividade deletada com sucesso.");
+        onClearHandler();
+        setIsAtualizar(true);
+      })
+      .catch((error) => {
+        toast.error("Erro ao acessar a API.");
+      });
+
+    setIsAtualizar(false);
+  };
+
+  const onClearHandler = () => {
+    setAtividade({
+      ...atividade,
+      titulo: "",
+      descricao: "",
+      dataConclusao: "",
+      dataCriacao: "",
+      id: null,
+    });
+    setIsUpdating(false);
   };
 
   return (
@@ -124,9 +131,9 @@ function CardCadastroTarefa({ selectedAtividade }) {
         <Formik
           enableReinitialize
           initialValues={{
-            titulo: tarefa.titulo,
-            dataConclusao: tarefa.dataConclusao,
-            descricao: tarefa.descricao,
+            titulo: atividade.titulo,
+            dataConclusao: atividade.dataConclusao,
+            descricao: atividade.descricao,
           }}
           validationSchema={Yup.object().shape({
             titulo: Yup.string()
@@ -139,13 +146,21 @@ function CardCadastroTarefa({ selectedAtividade }) {
               .required("* Campo Descrição é obrigatório")
               .nullable(),
           })}
-          onSubmit={(values) => {
+          onSubmit={(values,{resetForm}) => {
+            if (disciplina === undefined) {
+              toast.warn(
+                "É necessário selecionar uma disciplina para cadastrar atividades",
+                { autoClose: 6000 }
+              );
+              return;
+            }
 
             if (isUpdating) {
-              return onUpdateHandler(values);
+              onUpdateHandler(values);
             } else {
-              return onSubmitHandler(values);
+              onSubmitHandler(values, resetForm);
             }
+            setIsAtualizar(false);
           }}
         >
           {({
@@ -155,6 +170,7 @@ function CardCadastroTarefa({ selectedAtividade }) {
             handleSubmit,
             handleChange,
             isSubmitting,
+            isValid,
             validating,
             valid,
           }) => {
@@ -163,11 +179,10 @@ function CardCadastroTarefa({ selectedAtividade }) {
                 <div className="spacer-div" />
                 {isUpdating && (
                   <>
-
                     <div
                       className="actions-form-button clear-button"
                       type="button"
-                      onClick={onAddHandler}
+                      onClick={onClearHandler}
                     >
                       <IoIcons.IoIosAdd className="icone-clear" />
                     </div>
@@ -179,7 +194,6 @@ function CardCadastroTarefa({ selectedAtividade }) {
                     >
                       <IoIcons.IoMdTrash className="icone-deletar" />
                     </div>
-
                   </>
                 )}
                 <div style={{ display: "flex", flexDirection: "row" }}>
@@ -194,10 +208,10 @@ function CardCadastroTarefa({ selectedAtividade }) {
                       <Card.Form.InputText
                         name="titulo"
                         onChange={handleChange}
-                        value={values.titulo}
+                        value={values.titulo || ''}
                         valid={touched.titulo && !errors.titulo}
                         error={touched.titulo && errors.titulo}
-                        placeholder="Título da tarefa"
+                        placeholder="Título da atividade"
                       />
                       {errors.titulo && touched.titulo && (
                         <Card.Form.StyledInlineErrorMessage>
@@ -214,10 +228,10 @@ function CardCadastroTarefa({ selectedAtividade }) {
                         useShortMonthInDropdown
                         minDate={subDays(new Date(), 0)}
                         dateFormat="dd/MM/yyyy"
-                        selected={dataConclusao}
+                        selected={values.dataConclusao}
                         customInput={
                           <Card.Form.InputText
-                            value={dataConclusao}
+                            value={values.dataConclusao}
                             valid={
                               touched.dataConclusao && !errors.dataConclusao
                             }
@@ -243,8 +257,8 @@ function CardCadastroTarefa({ selectedAtividade }) {
                         onChange={handleChange}
                         valid={touched.descricao && !errors.descricao}
                         error={touched.descricao && errors.descricao}
-                        value={values.descricao}
-                        placeholder="Descrição da tarefa"
+                        value={values.descricao || ''}
+                        placeholder="Descrição da atividade"
                       />
                       {errors.descricao && touched.descricao && (
                         <Card.Form.StyledInlineErrorMessage>
@@ -257,12 +271,10 @@ function CardCadastroTarefa({ selectedAtividade }) {
 
                     <Card.Form.GroupButton className="group-button">
                       {!isUpdating && (
-                        <Card.Button type="submit">Salvar</Card.Button>
+                        <Card.Button type="submit">Cadastrar</Card.Button>
                       )}
                       {isUpdating && (
-                        <Card.Button type="submit" >
-                          Atualizar
-                        </Card.Button>
+                        <Card.Button type="submit">Atualizar</Card.Button>
                       )}
                     </Card.Form.GroupButton>
                   </Card.Form>
@@ -270,13 +282,10 @@ function CardCadastroTarefa({ selectedAtividade }) {
               </>
             );
           }}
-
         </Formik>
       </Card>
     </>
   );
 }
 
-export default CardCadastroTarefa;
-
-
+export default CardCadastroatividade;
