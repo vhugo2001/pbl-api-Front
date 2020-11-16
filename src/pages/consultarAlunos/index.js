@@ -40,6 +40,62 @@ export default function ListAluno2(props) {
       });
   }, [aluno]);
 
+
+  const [result, setResult] = useState([]);
+
+  useEffect(() => {
+    setResult(
+      alunos.filter((row) => row.isSelect === true).map((valor) => valor.id)
+    );
+  }, [alunos]);
+
+  const atualizarAluno = (dados, status) => {
+    serviceUsuario
+      .alterarStatusAtivo(dados, status)
+      .then((response) => {
+        let data = response.data;
+        setAluno(data);
+      })
+      .catch((error) => {
+        toast.error("Erro ao atualizar lista de alunos");
+      });
+  };
+
+  const handleAtivar = () => {
+    result.forEach((item) => {
+      atualizarAluno(item, { ativo: true });
+    });
+
+    if(result.length > 0)
+    toast.success("Sucesso ao ativar os alunos.");
+  };
+
+  const handleDesativar = () => {
+    result.forEach((item) => {
+      atualizarAluno(item, { ativo: false });
+    });
+
+    if(result.length > 0)
+    toast.success("Sucesso ao desativar os alunos.");
+  };
+
+  const handleExcluir = (item) => {
+    excluirAluno(item.id, { excluido: true });
+  };
+
+  const excluirAluno = (dados, status) => {
+    serviceUsuario
+      .alterarStatusExcluido(dados, status)
+      .then((response) => {
+        let data = response.data;
+        setAluno(data);
+        toast.success("Sucesso ao excluir os aluno.");
+      })
+      .catch((error) => {
+        toast.error("Erro ao excluir o aluno.");
+      });
+  };
+
   const colunas = [
     // {
     //     dataField: "id",
@@ -105,56 +161,7 @@ export default function ListAluno2(props) {
     },
   };
 
-  const [result, setResult] = useState([]);
-
-  useEffect(() => {
-    setResult(
-      alunos.filter((row) => row.isSelect === true).map((valor) => valor.id)
-    );
-  }, [alunos]);
-
-  const atualizarAluno = (dados, status) => {
-    serviceUsuario
-      .alterarStatusAtivo(dados, status)
-      .then((response) => {
-        let data = response.data;
-        setAluno(data);
-      })
-      .catch((error) => {
-        toast.error("Erro ao atualizar lista de alunos");
-      });
-  };
-
-  const handleAtivar = () => {
-    result.forEach((item) => {
-      atualizarAluno(item, { ativo: true });
-    });
-    toast.success("Sucesso ao ativar os alunos.");
-  };
-
-  const handleDesativar = () => {
-    result.forEach((item) => {
-      atualizarAluno(item, { ativo: false });
-    });
-    toast.success("Sucesso ao desativar os alunos.");
-  };
-
-  const handleExcluir = (item) => {
-    excluirAluno(item.id, { excluido: true });
-  };
-
-  const excluirAluno = (dados, status) => {
-    serviceUsuario
-      .alterarStatusExcluido(dados, status)
-      .then((response) => {
-        let data = response.data;
-        setAluno(data);
-        toast.success("Sucesso ao excluir os aluno.");
-      })
-      .catch((error) => {
-        toast.error("Erro ao excluir o aluno.");
-      });
-  };
+  
 
   const rowStyle = (row, rowIndex) => {
     if (row.ativo === false) {

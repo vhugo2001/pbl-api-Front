@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Card } from "../../../Components/Card/CardPrincipal";
 import empresaService from "../../../Services/EmpresaService";
-import authService from "../../../Services/AuthService";
 import { toast } from "react-toastify";
-
 import { Formik } from "formik";
-import * as Yup from "yup";
 import SchemaEmpresa from "../Schemas/SchemaEmpresa";
 
 function Index({ usuario }) {
@@ -52,7 +49,7 @@ function Index({ usuario }) {
             nome: empresa.nome,
             email: empresa.email,
             cnpj: empresa.cnpj,
-            endereco: empresa.endereco
+            endereco: empresa.endereco,
           }}
           validationSchema={SchemaEmpresa}
           onSubmit={(values) => onSubmitHandler(values)}
