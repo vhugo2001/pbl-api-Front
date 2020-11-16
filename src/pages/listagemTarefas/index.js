@@ -173,29 +173,29 @@ function ListagemTarefas() {
         display: "none",
       },
     },
-    {
-        dataField: 'alunos',
-        text: '',
+    // {
+    //     dataField: 'alunos',
+    //     text: '',
 
-        formatter: (cellContent, row) => {
-            if (cellContent !== '') {
-                return (
-                    <div>
-                        <label className="TituloAtiv"><b>{cellContent}</b></label><br />
-                    </div>
-                )
-            } else {
-                return (
-                    <div>
-                        <label className="TituloAtiv">Atribua algum aluno...</label><br />
-                    </div>
-                )
-            }
-        },
-        headerStyle: {
-            display: 'none'
-        }
-    },
+    //     formatter: (cellContent, row) => {
+    //         if (cellContent !== '') {
+    //             return (
+    //                 <div>
+    //                     <label className="TituloAtiv"><b>{cellContent}</b></label><br />
+    //                 </div>
+    //             )
+    //         } else {
+    //             return (
+    //                 <div>
+    //                     <label className="TituloAtiv">Atribua algum aluno...</label><br />
+    //                 </div>
+    //             )
+    //         }
+    //     },
+    //     headerStyle: {
+    //         display: 'none'
+    //     }
+    // },
     {
       dataField: "dataConclusao",
       text: "",
