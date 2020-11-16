@@ -12,8 +12,10 @@ import { id } from "date-fns/locale";
 import * as IoIcons from "react-icons/io";
 import moment from "moment";
 import Moment from "react-moment";
+import authService from "../../Services/AuthService";
 
-function CardCadastroTarefa({ selectedAtividade }) {
+function CardCadastroTarefa({ selectedAtividade, selectedPbl }) {
+  let usuarioLogado = authService.getCurrentUser();
   const [tarefa, setTarefa] = useState("");
   const [dataConclusao, setDataConclusao] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
@@ -46,8 +48,6 @@ function CardCadastroTarefa({ selectedAtividade }) {
   }, [selectedAtividade]);
 
   useEffect(() => {
-    console.log(selectedAtividadeEditado.id);
-    console.log(selectedAtividadeEditado);
     if (selectedAtividadeEditado.id !== undefined) {
       atividadeService
         .atualizar(selectedAtividadeEditado.id, selectedAtividadeEditado)
@@ -100,10 +100,10 @@ function CardCadastroTarefa({ selectedAtividade }) {
       ...data,
       dataCriacao: format(new Date(), "dd/MM/yyyy"),
       disciplina: {
-        id: 1,
+        id: selectedPbl.pblTemaDisciplina.disciplina.id,
       },
       professor: {
-        id: 2,
+        id: usuarioLogado.id,
       },
       dataConclusao: format(data.dataConclusao, "dd/MM/yyyy"),
     };

@@ -9,20 +9,20 @@ import CardCharts from "../../Components/Charts/Professor/Radial";
 import "./styles.css";
 
 function Dashboard() {
-  const [selectedPbl, setSelectedPbl] = useState()
-  const [selectedAtividade, setSelectedAtividade] = useState()
+  const [selectedPbl, setSelectedPbl] = useState();
+  const [selectedAtividade, setSelectedAtividade] = useState();
 
-  useEffect(() => {
-  }, [selectedPbl])
+  useEffect(() => {}, [selectedPbl]);
 
-  useEffect(() => {
-  }, [selectedAtividade])
+  useEffect(() => {}, [selectedAtividade]);
 
   return (
     <>
       <div>
         <Row>
-          <Col xl={12} lg={12}><Filter /></Col>
+          <Col xl={12} lg={12}>
+            <Filter />
+          </Col>
           <Col
             xl={6}
             lg={6}
@@ -30,7 +30,10 @@ function Dashboard() {
           >
             <CardListaPbl setSelectedPbl={setSelectedPbl} />
 
-            <ListagemAtividades selectedPbl={selectedPbl} setSelectedAtividade={setSelectedAtividade} />
+            <ListagemAtividades
+              selectedPbl={selectedPbl}
+              setSelectedAtividade={setSelectedAtividade}
+            />
           </Col>
 
           <Col
@@ -38,7 +41,10 @@ function Dashboard() {
             lg={6}
             style={{ paddingLeft: "6px", paddingRight: "6px" }}
           >
-            <CardCadastroTarefa selectedAtividade={selectedAtividade} />
+            <CardCadastroTarefa
+              selectedAtividade={selectedAtividade}
+              selectedPbl={selectedPbl}
+            />
 
             <Card>
               <CardCharts />
