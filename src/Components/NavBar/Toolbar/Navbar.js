@@ -46,11 +46,11 @@ function Navbar() {
             <FaIcons.FaBars onClick={showSidebar} />
           </Link>
         </div>
-        <div className="logo-spacer">
+        <div className="logo-spacer py-2">
           <img
             alt="Logo-UFF"
             className="logoUff2"
-            src={require("../../Images/Logo_UFF_2.png")}
+            src={require("../../../assets/images/logo-pbl.svg")}
           />
         </div>
         <div style={{ flex: 1 }}></div>
@@ -172,6 +172,13 @@ function Navbar() {
         </div>
         <div className="page-container">
           <Routes />
+          <div className="footer mt-auto text-right">
+          <img
+              className="logo-uff"
+              alt="Universidade Federal Fluminense"
+              src={require("../../../assets/images/logo-uff.svg")}
+            />
+          </div>
         </div>
       </div>
     </>

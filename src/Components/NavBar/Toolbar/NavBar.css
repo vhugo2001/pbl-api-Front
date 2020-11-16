@@ -1,7 +1,4 @@
-html,
-body {
-  height: 100%;
-}
+html, body { height: 100%; }
 
 .navbars {
   height: 10vh;
@@ -241,6 +238,10 @@ span {
   height: 90vh;
   z-index: 1;
 }
+
+
+.footer { position: relative; bottom: 0; }
+.footer img { height: 22px; }
 
 @media (max-width: 768px) {
   .navbars {
