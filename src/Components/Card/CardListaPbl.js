@@ -6,26 +6,25 @@ import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import "bootstrap/dist/css/bootstrap.min.css";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
-import * as ReactBootStrap from "react-bootstrap";
+import { toast } from "react-toastify";
 import * as IoIcons from "react-icons/io";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css";
 import "../TableAtividade/listAtividades.css";
 
-function CardListaPbl({ setSelectedPbl }) {
+function CardListaPbl({ disciplina, setSelectedPbl }) {
   const [pblList, setPblList] = useState([]);
 
   useEffect(() => {
-    listarTodos();
-  }, []);
+    if (disciplina !== undefined) listarTodos();
+  }, [disciplina]);
 
   const listarTodos = () => {
     pblService
-      .listarTodos()
+      .listarPorIdDisciplinas(disciplina.id)
       .then((response) => {
-        let data = response.data;
-        setPblList(data);
-        console.log(data);
+        if (response.data.length > 0) setPblList(response.data);
+        else toast.warn("Não existem PBL's vinculáros a essa disciplina!");
       })
       .catch((error) => console.log(error));
   };
@@ -34,19 +33,17 @@ function CardListaPbl({ setSelectedPbl }) {
     {
       dataFields: "idPbl",
       hidden: true,
-      formatter: (cellContent, row) => (
-        row.idPbl
-      )
+      formatter: (cellContent, row) => row.idPbl,
     },
     {
       dataField: "",
       text: "Status",
-      style: { cursor: 'pointer' }
+      style: { cursor: "pointer" },
     },
     {
       dataField: "problema",
       text: "PBL",
-      style: { cursor: 'pointer' },
+      style: { cursor: "pointer" },
       headerStyle: (colum, colIndex) => {
         return { width: "50%" };
       },
@@ -60,7 +57,7 @@ function CardListaPbl({ setSelectedPbl }) {
       dataField: "dataConclusao",
       text: "Entrega",
       sort: true,
-      style: { cursor: 'pointer' },
+      style: { cursor: "pointer" },
 
       formatter: (cellContent, row) => (
         <div>
@@ -82,15 +79,15 @@ function CardListaPbl({ setSelectedPbl }) {
   });
 
   const selectRow = {
-    mode: 'radio',
+    mode: "radio",
     clickToSelect: true,
     hideSelectColumn: true,
   };
   const tableRowEvents = {
     onClick: (e, row, rowIndex) => {
-      setSelectedPbl(row.idPbl)
+      setSelectedPbl(row.idPbl);
     },
-  }
+  };
 
   const { SearchBar } = Search;
 
@@ -101,19 +98,19 @@ function CardListaPbl({ setSelectedPbl }) {
           {(props) => (
             <div>
               <div className="header-container">
-              <div className="title-container title-pbl-container">
-                <h5 className="title-card">Lista de PBLs</h5>
-              </div>
-              <div className="table-search-pbl">
-                <SearchBar
-                  keyField="nome"
-                  {...props.searchProps}
-                  placeholder="Buscar PBL..."
-                />
-                <div class="table-search-icon">
-                  <IoIcons.IoMdSearch class="search-icon" />
+                <div className="title-container title-pbl-container">
+                  <h5 className="title-card">Lista de PBLs</h5>
                 </div>
-              </div>
+                <div className="table-search-pbl">
+                  <SearchBar
+                    keyField="nome"
+                    {...props.searchProps}
+                    placeholder="Buscar PBL..."
+                  />
+                  <div class="table-search-icon">
+                    <IoIcons.IoMdSearch class="search-icon" />
+                  </div>
+                </div>
               </div>
               <BootstrapTable
                 {...props.baseProps}
