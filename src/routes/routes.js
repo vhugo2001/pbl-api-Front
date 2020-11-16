@@ -11,7 +11,7 @@ import ManterDisciplina from "../pages/disciplina/manter/Index";
 import ManterTema from "../pages/tema/manter/Index";
 import ManterProblema from "../pages/problema/manter/Index";
 import ManterContato from "../pages/contato/manter/Index";
-import ListagemTarefas from "../pages/listagemTarefas/index";
+import ListagemTarefas from "../pages/listagemTarefas/Index";
 import IniciarPBL from "../pages/pbl/cadastrar/Index";
 import DashBoardProfessor from "../pages/professor/dashboard/dashboard";
 import Dashboard from "../pages/dashboard";

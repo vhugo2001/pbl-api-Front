@@ -13,6 +13,7 @@ import "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.c
 import "../../../Components/TableAtividade/style";
 import "./styles.css";
 import { toast } from "react-toastify";
+import SchemaCadastrarTema from '../Schema/SchemaCadastrarTema'
 
 const Index = ({ selected, setSelectedTema, setIsAtualizar }) => {
   const [tema, setTema] = useState("");
@@ -98,14 +99,7 @@ const Index = ({ selected, setSelectedTema, setIsAtualizar }) => {
             nome: tema.nome,
             disciplinas: tema.disciplinas,
           }}
-          validationSchema={Yup.object().shape({
-            nome: Yup.string()
-              .required("* Campo Nome é obrigatório")
-              .nullable(),
-            disciplinas: Yup.string()
-              .required("* Campo Disciplina é obrigatório")
-              .nullable(),
-          })}
+          validationSchema={SchemaCadastrarTema}
           onSubmit={(values) => {
             if (isUpdating) {
               return onUpdateHandler(values);

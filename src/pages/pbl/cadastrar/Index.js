@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card } from "../../../Components/Card/CardPrincipal";
 import DatePickerField from "../../../Components/DatePicker/DatePickerField";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
-import DatePicker from "react-datepicker";
 import subDays from "date-fns/subDays";
 import pt from "date-fns/locale/pt";
 import { format } from "date-fns";
@@ -17,13 +14,11 @@ import servicePbl from "../../../Services/PblService";
 import authService from "../../../Services/AuthService";
 import { toast } from "react-toastify";
 import ApiCalendar from "react-google-calendar-api";
-
-import { Formik, Form, ErrorMessage } from "formik";
-import * as Yup from "yup";
-
-import { isEmptyObject } from "jquery";
+import authService from "../../../Services/AuthService";
+import { Formik} from "formik";
 
 import "react-datepicker/dist/react-datepicker.css";
+import SchemaCadastrarPbl from "../Schema/SchemaCadastrarPbl";
 
 const Index = () => {
   let usuarioLogado = authService.getCurrentUser();
@@ -163,28 +158,7 @@ const Index = () => {
             aluno: "",
             problema: "",
           }}
-          validationSchema={Yup.object().shape({
-            temaPbl: Yup.string()
-              .required("* Campo Tema PBL é obrigatório")
-              .nullable(),
-            dataInicio: Yup.date()
-              .required("* Campo Data Início é obrigatório")
-              .nullable(),
-            dataConclusao: Yup.date()
-              .required("* Campo Data Conclusão é obrigatório")
-              .nullable()
-              .when(
-                "dataInicio",
-                (started, yup) =>
-                  started &&
-                  yup.min(
-                    started,
-                    "* Data Conclusão não pode ser anterior à Data Inicio"
-                  )
-              ),
-            aluno: Yup.string().required("* Campo Aluno é obrigatório"),
-            problema: Yup.string().required("* Campo problema é obrigatório"),
-          })}
+          validationSchema={SchemaCadastrarPbl}
           onSubmit={(values) => onSubmitHandler(values)}
         >
           {({
