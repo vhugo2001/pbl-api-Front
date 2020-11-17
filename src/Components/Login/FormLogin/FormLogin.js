@@ -4,6 +4,10 @@ import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import AuthService from "../../../Services/AuthService";
+import { InputGroup, FormControl } from "react-bootstrap";
+import * as MdIcons from "react-icons/md";
+import * as GoIcons from "react-icons/go";
+import * as FaIcons from "react-icons/fa";
 
 const Login = () => {
   const history = useHistory();
@@ -13,7 +17,7 @@ const Login = () => {
       .then((response) => {
         localStorage.setItem("user", JSON.stringify(response.data));
         console.log("entrou")
-         history.push("/admin");
+        history.push("/admin");
       })
       .catch((error) => {
         toast.error("Usuario ou senha inválido");
@@ -41,43 +45,53 @@ const Login = () => {
         {({ errors, touched, handleSubmit, handleChange }) => {
           return (
             <>
-              <h1>FEST - PROJETO PBL</h1>
               <form method="post" autoComplete="off" onSubmit={handleSubmit}>
-                <div className="field-wrap">
-                  <input
-                    name="email"
+                <InputGroup className="mb-3">
+                  <InputGroup.Prepend>
+                    <InputGroup.Text id="basic-addon1">
+                      <MdIcons.MdEmail />
+                    </InputGroup.Text>
+                  </InputGroup.Prepend>
+                  <FormControl
                     type="email"
+                    name="email"
+                    placeholder="E-mail"
+                    aria-label="email"
+                    aria-describedby="basic-addon1"
                     valid={touched.email && !errors.email}
                     error={touched.email && errors.email}
-                    placeholder="Email"
                     onChange={handleChange}
                   />
-                  {errors.email && touched.email && (
-                    <div className="error-message">{errors.email}</div>
-                  )}
-                </div>
+                </InputGroup>
+                {errors.email && touched.email && (
+                  <div className="error-message">{errors.email}</div>
+                )}
 
-                <div className="field-wrap">
-                  <input
-                    name="senha"
+                <InputGroup className="mb-3">
+                  <InputGroup.Prepend>
+                    <InputGroup.Text id="basic-addon1">
+                      <GoIcons.GoKey />
+                    </InputGroup.Text>
+                  </InputGroup.Prepend>
+                  <FormControl
                     type="password"
+                    name="senha"
+                    placeholder="Senha"
+                    aria-label="senha"
+                    aria-describedby="basic-addon1"
                     valid={touched.senha && !errors.senha}
                     error={touched.senha && errors.senha}
-                    placeholder="Senha"
                     onChange={handleChange}
                   />
-                  {errors.senha && touched.senha && (
-                    <div className="error-message">{errors.senha}</div>
-                  )}
+                </InputGroup>
+                {errors.senha && touched.senha && (
+                  <div className="error-message">{errors.senha}</div>
+                )}
+
+                <div className="form-group d-flex justify-content-between align-items-center">
+                  <div className="text-right mb-3"><a href="" className="card-link">Recuperar senha</a></div>
+                  <button type="submit" className="btn float-right btn-inline btn-login"><FaIcons.FaSignInAlt /> Login</button>
                 </div>
-
-                <p className="forgot">
-                  <a href="/">Recuperar Senha?</a>
-                </p>
-
-                <button type="submit" className="button button-block">
-                  Login
-                </button>
               </form>
             </>
           );
