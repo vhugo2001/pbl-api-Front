@@ -71,14 +71,14 @@ export const SidebarDataAluno = [
   {
     title: "Atividades",
     path: "/aluno/atividade",
-    icon: <AiIcons.AiFillHome />,
+    icon: <FiIcons.FiHome />,
     cName: "sidebar-nav-item",
     cLinkName: "sidebar-nav-link"
   },
   {
     title: "Manter Tarefa",
     path: "/admin/manter-tarefa",
-    icon: <IoIcons.IoIosPaper />,
+    icon: <BiIcons.BiTask />,
     cName: "sidebar-nav-item",
     cLinkName: "sidebar-nav-link"
   },
@@ -95,14 +95,14 @@ export const SidebarDataEmpresa = [
   {
     title: "Manter Problema",
     path: "/admin/manter-problema",
-    icon: <IoIcons.IoMdPeople />,
+    icon: <FiIcons.FiAlertOctagon />,
     cName: "sidebar-nav-item",
     cLinkName: "sidebar-nav-link"
   },
   {
     title: "Manter Contato",
     path: "/admin/manter-contato",
-    icon: <IoIcons.IoMdPeople />,
+    icon: <FaIcons.FaRegAddressBook />,
     cName: "sidebar-nav-item",
     cLinkName: "sidebar-nav-link"
   },

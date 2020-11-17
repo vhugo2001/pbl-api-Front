@@ -89,9 +89,9 @@ const Login = () => {
                 )}
 
                 <div className="form-group d-flex justify-content-between align-items-center">
-                  <div className="text-right mb-3"><a href="" className="card-link">Recuperar senha</a></div>
-                  <button type="submit" className="btn float-right btn-inline btn-login"><FaIcons.FaSignInAlt /> Login</button>
+                  <button type="submit" className="btn btn-block float-right btn-inline btn-login"><FaIcons.FaSignInAlt /> Login</button>
                 </div>
+                <div className="text-right mb-3"><a href="" className="card-link">Recuperar senha</a></div>
               </form>
             </>
           );
