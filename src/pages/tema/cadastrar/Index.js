@@ -34,12 +34,11 @@ const Index = ({ selected, setSelectedTema, setIsAtualizar }) => {
       ) {
         setTema({ ...selected, disciplinas: selected.disciplinas[0] });
         setItemDropDow(selected.disciplinas[0]);
+        setIsUpdating(true);
       } else {
         setTema(selected);
         setItemDropDow({});
       }
-      setIsUpdating(true);
-      setIsAtualizar(false);
     }
   }, [selected]);
 
@@ -83,10 +82,11 @@ const Index = ({ selected, setSelectedTema, setIsAtualizar }) => {
       });
   };
 
+  console.log(isUpdating);
   const onClearHandler = () => {
     setTema({ ...tema, nome: "" });
     setSelectedTema({});
-    setIsUpdating(true);
+    setIsUpdating(false);
   };
 
   return (
@@ -102,10 +102,11 @@ const Index = ({ selected, setSelectedTema, setIsAtualizar }) => {
           validationSchema={SchemaCadastrarTema}
           onSubmit={(values) => {
             if (isUpdating) {
-              return onUpdateHandler(values);
+              onUpdateHandler(values);
             } else {
-              return onSubmitHandler(values);
+              onSubmitHandler(values);
             }
+            setIsAtualizar(false);
           }}
         >
           {({ values, errors, touched, handleSubmit, handleChange }) => {
