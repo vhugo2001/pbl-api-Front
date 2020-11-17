@@ -1,31 +1,29 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import styled from "styled-components";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
-
-import { useField, useFormikContext } from "formik";
-
-import { BsFillCaretDownFill } from "react-icons/bs";
-
-// flex: 1;
-// margin: 0;
-// cursor: pointer;
-
-const Icons = styled("div")`
+const Container = styled("div")`
   padding: 0;
- 
-   display: flex;
+  display: flex;
   flex-wrap: wrap;
 `;
 
+const Initials = styled("span")`
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  height: 32px;
+  left: 0;
+  line-height: 32px;
+  overflow: hidden;
+  text-align: center;
+  top: 0;
+  width: 100%;
+`;
 
-const Image = styled("div")`
+const RoundedContainer = styled("div")`
   border-radius: 50%;
-
   margin-right: 2px;
   margin-left: 2px;
-
   width: 1.5rem;
   height: 1.5rem;
   text-transform: uppercase;
@@ -37,11 +35,8 @@ const Image = styled("div")`
   justify-content: center;
 `;
 
-
-
 const IconList = ({ lista }) => {
-  console.log(lista)
-  const [options, setOptions] = useState();
+  console.log(lista);
 
   const getIniciais = (i) => {
     var fields = i.split(" ");
@@ -50,7 +45,6 @@ const IconList = ({ lista }) => {
     if (fields.length > 1) {
       value = fields[0].substring(0, 1);
       value += fields[1].substring(0, 1);
-
     } else {
       value = fields[0].substring(0, 1);
       value += fields[0].substring(1, 2);
@@ -59,14 +53,16 @@ const IconList = ({ lista }) => {
     return value;
   };
   return (
-    <Icons>
+    <Container>
       {lista.map((option) => (
-        <Image key={option.id} style={{ backgroundColor: '#c7c7c7', cursor: 'pointer' }}>
-          {getIniciais(option.nome)}
-        </Image>
+        <RoundedContainer
+          key={option.id}
+          style={{ backgroundColor: "#c7c7c7", cursor: "pointer" }}
+        >
+          <Initials title={option.nome}>{getIniciais(option.nome)}</Initials>
+        </RoundedContainer>
       ))}
-    </Icons>
-
+    </Container>
   );
 };
 
