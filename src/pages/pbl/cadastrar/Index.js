@@ -6,7 +6,7 @@ import pt from "date-fns/locale/pt";
 import { format } from "date-fns";
 import DropDownList from "../../../Components/DropDownList/Default/DropDownList";
 import DropDownListAlunos from "../../../Components/DropDownList/Alunos/DropDownList";
-import serviceEmpresa from "../../../Services/EmpresaService"
+import serviceEmpresa from "../../../Services/EmpresaService";
 import serviceAluno from "../../../Services/AlunoService";
 import serviceTema from "../../../Services/TemaPblService";
 import serviceDisciplina from "../../../Services/DisciplinaService";
@@ -14,7 +14,7 @@ import servicePbl from "../../../Services/PblService";
 import { toast } from "react-toastify";
 import ApiCalendar from "react-google-calendar-api";
 import authService from "../../../Services/AuthService";
-import { Formik} from "formik";
+import { Formik } from "formik";
 
 import "react-datepicker/dist/react-datepicker.css";
 import SchemaCadastrarPbl from "../Schema/SchemaCadastrarPbl";
@@ -272,10 +272,8 @@ const Index = () => {
                   <Card.Form.Group>
                     <Card.Form.Title>Empresa</Card.Form.Title>
                     <DropDownList
-
                       lista={listaEmpresa}
                       onSelect={setEmpresaSelecionada}
-
                     ></DropDownList>
                   </Card.Form.Group>
 

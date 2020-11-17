@@ -121,7 +121,7 @@ const Empresa = () => {
                 )}
 
                 <div className="form-group d-flex justify-content-end align-items-center">
-                  <button type="submit" className="btn float-right btn-inline btn-login"><FaIcons.FaSave /> Enviar</button>
+                  <button type="submit" className="btn btn-block float-right btn-inline btn-login"><FaIcons.FaSave /> Enviar</button>
                 </div>
               </form>
             </>

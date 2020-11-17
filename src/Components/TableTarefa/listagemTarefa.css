@@ -137,10 +137,11 @@ input.form-control, label.search-label{
 }
 .DescAtiv{
   white-space: nowrap; 
-  width: 110%; 
+  width:110%; 
   overflow: hidden;
   text-overflow: ellipsis; 
   font-size: 14px;
+  margin-bottom: -2px;
 }
 
 .DataHeader{
