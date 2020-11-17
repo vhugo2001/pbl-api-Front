@@ -1,12 +1,12 @@
 html, body { height: 100%; }
 
 .navbars {
-  height: 10vh;
+  height: 9vh;
   display: flex;
   align-items: center;
   background-color: #fff;
   border-bottom: 10px;
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1); */
   width: 100%;
   position: relative;
   z-index: 1;
@@ -214,6 +214,8 @@ html, body { height: 100%; }
   color: #bccee4;
   text-decoration: none;
 }
+
+.sidebar-menu .is-active { color: #fff !important; }
 
 .sidebar-menu .sidebar-nav-link svg {
   display: inline-block;
