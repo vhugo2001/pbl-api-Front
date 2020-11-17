@@ -265,43 +265,44 @@ const Index = () => {
 
   function handleExcluir(e, item) {
     e.stopPropagation();
-    // excluirTarefa(item.id);
+    excluirTarefa(item.id);
   }
 
-  //   const excluirTarefa = (dados) => {
-  //     serviceTarefa
-  //       .deletar(dados)
-  //       .then((response) => {
-  //         let data = response.data;
-  //         setTarefa(data);
-  //         toast.success("Sucesso ao excluir a tarefa.");
-  //       })
-  //       .catch((error) => {
-  //         toast.error("Erro ao excluir a tarefa.");
-  //       });
-  //   };
+  const excluirTarefa = (dados) => {
+    serviceTarefa
+      .deletar(dados)
+      .then((response) => {
+        let data = response.data;
+        setTarefa(data);
+        toast.success("Sucesso ao excluir a tarefa.");
+      })
+      .catch((error) => {
+        toast.error("Erro ao excluir a tarefa.");
+      });
+  };
 
   const handleConcluido = (e, item) => {
     e.stopPropagation();
-    // if(item.concluido === true){
-    //     let status = false
-    // }else{
-    //     status = true
-    // }
-    // statusTarefa(item.id,status);
+    let status
+    if (item.concluido === true) {
+      status = { concluido: false }
+    } else {
+      status = { concluido: true }
+    }
+    statusTarefa(item.id, status);
 
   };
 
   const statusTarefa = (dados, status) => {
-    // serviceTarefa
-    //   .atualizar(dados, status)
-    //   .then((response) => {
-    //     let data = response.data;
-    //     setTarefa(data);
-    //   })
-    //   .catch((error) => {
-    //     toast.error("Erro modificar status da Tarefa.");
-    //   });
+    serviceTarefa
+      .atualizar(dados, status)
+      .then((response) => {
+        let data = response.data;
+        setTarefa(data);
+      })
+      .catch((error) => {
+        toast.error("Erro modificar status da Tarefa.");
+      });
   };
 
   const handleAdd = (item) => {
