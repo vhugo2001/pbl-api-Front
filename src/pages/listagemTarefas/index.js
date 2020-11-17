@@ -12,6 +12,8 @@ import serviceAtividade from "../../Services/AtividadeService";
 import serviceTarefa from "../../Services/TarefaService";
 import authService from "../../Services/AuthService";
 
+import IconList from '../../Components/IconList/IconList'
+
 //Teste Modal Component
 import ModalTarefas from "../../Components/Modal/Form/Index";
 
@@ -160,14 +162,14 @@ const Index = () => {
       },
     },
     {
-      dataField: "alunos",
+      dataField: "descricao",
       text: "",
 
       formatter: (cellContent, row) => {
         if (cellContent !== "") {
           return (
             <div>
-              <label className="TituloAtiv">
+              <label className="DescAtiv">
                 <b>{cellContent}</b>
               </label>
               <br />
@@ -176,6 +178,35 @@ const Index = () => {
         } else {
           return (
             <div>
+              <label className="TituloAtiv">Insira uma descrição...</label>
+              <br />
+            </div>
+          );
+        }
+      },
+      headerStyle: {
+        display: "none",
+      },
+    },
+    {
+      dataField: "alunos",
+      text: "",
+
+      formatter: (cellContent, row) => {
+        console.log(cellContent)
+
+        if (cellContent !== undefined) {
+          return (
+            <div style={{ textAlign: 'center' }}>
+              <label className="TituloAtiv">
+                <IconList lista={cellContent} />
+              </label>
+              <br />
+            </div>
+          );
+        } else {
+          return (
+            <div style={{ textAlign: 'center' }}>
               <label className="TituloAtiv">Atribua algum aluno...</label>
               <br />
             </div>
@@ -193,7 +224,7 @@ const Index = () => {
       formatter: (cellContent, row) => {
         if (cellContent !== "") {
           return (
-            <div>
+            <div style={{ textAlign: 'start' }}>
               <label className="TituloAtiv">
                 <b>{cellContent}</b>
               </label>
@@ -202,7 +233,7 @@ const Index = () => {
           );
         } else {
           return (
-            <div>
+            <div style={{ textAlign: 'start' }}>
               <label className="TituloAtiv">Insira uma data...</label>
               <br />
             </div>
@@ -259,12 +290,6 @@ const Index = () => {
     // }
     // statusTarefa(item.id,status);
 
-    /*     if (item.concluido === true) {
-      status = false;
-    } else {
-      status = true;
-    } */
-    /*  statusTarefa(item.id, status); */
   };
 
   const statusTarefa = (dados, status) => {
