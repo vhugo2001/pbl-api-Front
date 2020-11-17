@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
@@ -15,7 +14,6 @@ import serviceAtividade from "../../Services/AtividadeService";
 import cellEditFactory from "react-bootstrap-table2-editor";
 
 import { format, subDays, compareAsc } from "date-fns";
-
 
 const { SearchBar } = Search;
 
@@ -67,41 +65,52 @@ function ListagemAtividades({
       text: "",
 
       formatter: (cellContent, row) => {
-
         console.log(row);
         let statusColor;
 
-        if(row.atividadePbls.length > 0)
-        {
-
+        if (row.atividadePbls.length > 0) {
           let dataHoje = new Date();
-          let dataConclusaoAtividade = new Date(row.dataConclusao.split("/").reverse().join("-"));
-          let dataEntrega = row.atividadePbls[0].dataEntrega !== null
-                           ? new Date(row.atividadePbls[0].dataEntrega.split("/").reverse().join("-"))
-                           : new Date('2000-01-01');
-
+          let dataConclusaoAtividade = new Date(
+            row.dataConclusao.split("/").reverse().join("-")
+          );
+          let dataEntrega =
+            row.atividadePbls[0].dataEntrega !== null
+              ? new Date(
+                  row.atividadePbls[0].dataEntrega
+                    .split("/")
+                    .reverse()
+                    .join("-")
+                )
+              : new Date("2000-01-01");
 
           //ENTREGUE
-          if(dataEntrega != null)
-            statusColor = "green";
+          if (dataEntrega != null) statusColor = "green";
 
           //ATRASADO
-          if(compareAsc(dataHoje, dataConclusaoAtividade) === 1 || compareAsc(dataEntrega, dataConclusaoAtividade ) === 1)
-              statusColor = "#BB157C";
+          if (
+            compareAsc(dataHoje, dataConclusaoAtividade) === 1 ||
+            compareAsc(dataEntrega, dataConclusaoAtividade) === 1
+          )
+            statusColor = "#BB157C";
 
           //PENDETE
-          if(compareAsc(dataConclusaoAtividade, dataHoje))
-          statusColor = "#C38A0E";
-          
+          if (compareAsc(dataConclusaoAtividade, dataHoje))
+            statusColor = "#C38A0E";
         }
 
         return (
           <div>
-            <div className="BordaIconeTop" style={{ borderColor: statusColor }}/>
+            <div
+              className="BordaIconeTop"
+              style={{ borderColor: statusColor }}
+            />
             <div className="icon-button">
               <IoIcons.IoMdRadioButtonOff style={{ color: statusColor }} />
             </div>
-            <div className="BordaIconeBottom" style={{ borderColor: statusColor }}/>
+            <div
+              className="BordaIconeBottom"
+              style={{ borderColor: statusColor }}
+            />
           </div>
         );
       },

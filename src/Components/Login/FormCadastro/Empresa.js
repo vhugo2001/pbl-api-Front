@@ -1,13 +1,16 @@
 import React from "react";
 import { Formik } from "formik";
 import { toast } from "react-toastify";
+import { InputGroup, FormControl } from "react-bootstrap";
+import * as FaIcons from "react-icons/fa";
+
 import empresaService from "../../../Services/AuthService";
 import SchemaEmpresa from "./SchemaYup/SchemaEmpresa";
 import * as Constants from "../../../config/constants"
 import { mask } from 'remask'
 
 const Empresa = () => {
-  const onSubmitHandler = async (data, {resetForm}) => {
+  const onSubmitHandler = async (data, { resetForm }) => {
     empresaService
       .registrarEmpresa(data)
       .then((response) => {
@@ -33,86 +36,93 @@ const Empresa = () => {
         validationSchema={SchemaEmpresa}
         onSubmit={onSubmitHandler}
       >
-        {({ errors, touched, handleSubmit, handleChange, isSubmitting, isValid, status, values  }) => {
+        {({ errors, touched, handleSubmit, handleChange, isSubmitting, isValid, status, values }) => {
           return (
             <>
               <form action="/" autoComplete="off" onSubmit={handleSubmit}>
-                <div className="top-row">
-                  <div className="field-wrap">
-                    <input
-                      name="nome"
-                      value = {values.nome || ''}
-                      type="text"
-                      valid={touched.nome && !errors.nome}
-                      error={touched.nome && errors.nome}
-                      placeholder="Nome"
-                      onChange={handleChange}
-                    />
-                    {errors.nome && touched.nome && (
-                      <div className="error-message">{errors.nome}</div>
-                    )}
-                  </div>
+                <InputGroup className="mb-3">
+                  <FormControl
+                    type="text"
+                    name="nome"
+                    value={values.nome || ''}
+                    placeholder="Nome"
+                    aria-label="nome"
+                    valid={touched.nome && !errors.nome}
+                    error={touched.nome && errors.nome}
+                    onChange={handleChange}
+                  />
+                </InputGroup>
+                {errors.nome && touched.nome && (
+                  <div className="error-message">{errors.nome}</div>
+                )}
 
-                  <div className="field-wrap">
-                    <input
-                      name="cnpj"
-                      value = { mask(values.cnpj, Constants.MASK_PATTERNS_CNPJ) || ''}
-                      type="text"
-                      valid={touched.cnpj && !errors.cnpj}
-                      error={touched.cnpj && errors.cnpj}
-                      placeholder="CNPJ"
-                      onChange={handleChange}
-                    />
-                    {errors.cnpj && touched.cnpj && (
-                      <div className="error-message">{errors.cnpj}</div>
-                    )}
-                  </div>
-                </div>
-                <div className="field-wrap">
-                  <input
-                    name="email"
-                    value = {values.email || ''}
+                <InputGroup className="mb-3">
+                  <FormControl
+                    type="text"
+                    name="cnpj"
+                    value={mask(values.cnpj, Constants.MASK_PATTERNS_CNPJ) || ''}
+                    placeholder="CNPJ"
+                    aria-label="CNPJ"
+                    valid={touched.cnpj && !errors.cnpj}
+                    error={touched.cnpj && errors.cnpj}
+                    onChange={handleChange}
+                  />
+                </InputGroup>
+                {errors.cnpj && touched.cnpj && (
+                  <div className="error-message">{errors.cnpj}</div>
+                )}
+
+                <InputGroup className="mb-3">
+                  <FormControl
                     type="email"
+                    name="email"
+                    value={values.email || ''}
+                    placeholder="E-mail"
+                    aria-label="email"
                     valid={touched.email && !errors.email}
                     error={touched.email && errors.email}
-                    placeholder="Email"
                     onChange={handleChange}
                   />
-                  {errors.email && touched.email && (
-                    <div className="error-message">{errors.email}</div>
-                  )}
-                </div>
-                <div className="field-wrap">
-                  <input
-                    name="senha"
-                    value = {values.senha || ''}
+                </InputGroup>
+                {errors.email && touched.email && (
+                  <div className="error-message">{errors.email}</div>
+                )}
+
+                <InputGroup className="mb-3">
+                  <FormControl
                     type="password"
+                    name="senha"
+                    value={values.senha || ''}
+                    placeholder="Senha"
+                    aria-label="senha"
                     valid={touched.senha && !errors.senha}
                     error={touched.senha && errors.senha}
-                    placeholder="Senha"
                     onChange={handleChange}
                   />
-                  {errors.senha && touched.senha && (
-                    <div className="error-message">{errors.senha}</div>
-                  )}
-                </div>
-                <div className="field-wrap">
-                  <input
-                    name="senhaC"
-                    value = {values.senhaC || ''}
+                </InputGroup>
+                {errors.senha && touched.senha && (
+                  <div className="error-message">{errors.senha}</div>
+                )}
+
+                <InputGroup className="mb-3">
+                  <FormControl
                     type="password"
+                    name="senhaC"
+                    value={values.senhaC || ''}
+                    placeholder="Confirmar Senha"
+                    aria-label="Confirmar Senha"
                     valid={touched.senhaC && !errors.senhaC}
                     error={touched.senhaC && errors.senhaC}
-                    placeholder="Confirmar Senha"
                     onChange={handleChange}
                   />
-                  {errors.senhaC && touched.senhaC && (
-                    <div className="error-message">{errors.senhaC}</div>
-                  )}
+                </InputGroup>
+                {errors.senhaC && touched.senhaC && (
+                  <div className="error-message">{errors.senhaC}</div>
+                )}
+
+                <div className="form-group d-flex justify-content-end align-items-center">
+                  <button type="submit" className="btn btn-block float-right btn-inline btn-login"><FaIcons.FaSave /> Enviar</button>
                 </div>
-                <button type="submit" className="button button-block">
-                  enviar registro
-                </button>
               </form>
             </>
           );

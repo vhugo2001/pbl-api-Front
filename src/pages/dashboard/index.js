@@ -15,9 +15,10 @@ function Dashboard() {
   const [selectedPbl, setSelectedPbl] = useState();
   const [selectedAtividade, setSelectedAtividade] = useState();
   const [selectedDisciplinas, setSelectedDisciplinas] = useState();
-  const [ isAtualizar, setIsAtualizar] = useState(false);
+  const [isAtualizar, setIsAtualizar] = useState(false);
 
   useEffect(() => {
+    console.log(usuarioLogado)
     toast.info(
       "É necessário selecionar uma disciplina para usar o dashboard de atividades!",
       { autoClose: 8000 }

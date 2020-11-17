@@ -19,11 +19,7 @@ import authService from "../../../Services/AuthService";
 import tipoContatoService from "../../../Services/TipoContatoService";
 import empresaService from "../../../Services/EmpresaService";
 
-const Index = ({
-  selected,
-  setSelectedContato,
-  setIsAtualizar,
-}) => {
+const Index = ({ selected, setSelectedContato, setIsAtualizar }) => {
   let usuarioLogado = authService.getCurrentUser();
   const [empresa, setEmpresa] = useState({});
   const [contato, setContato] = useState("");
@@ -32,7 +28,6 @@ const Index = ({
   const [itemDropDow, setItemDropDow] = useState(selected);
   const [isUpdating, setIsUpdating] = useState(false);
 
-
   useEffect(() => {
     if (selected !== null && selected !== undefined && selected !== "") {
       setContato(selected);
@@ -40,7 +35,6 @@ const Index = ({
       setIsUpdating(true);
     }
   }, [selected]);
-
 
   useEffect(() => {
     empresaService
@@ -63,7 +57,6 @@ const Index = ({
         toast.error("Erro ao listar Tipo Contato");
       });
   }, []);
-
 
   const onSubmitHandler = (data) => {
     let _data = { ...data, idUsuario: usuarioLogado.id };
