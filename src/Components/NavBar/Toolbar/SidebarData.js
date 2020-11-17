@@ -8,6 +8,13 @@ import * as BiIcons from "react-icons/bi";
 
 export const SidebarDataProfessor = [
   {
+    title: "Dashboard",
+    path: "/admin/dashboard",
+    icon: <FiIcons.FiPieChart />,
+    cName: "sidebar-nav-item",
+    cLinkName: "sidebar-nav-link"
+  },
+  {
     title: "PBL",
     path: "/admin/pbl",
     icon: <FiIcons.FiHexagon />,
@@ -18,13 +25,6 @@ export const SidebarDataProfessor = [
     title: "Iniciar PBL",
     path: "/admin/iniciar-pbl",
     icon: <MdIcons.MdCreateNewFolder />,
-    cName: "sidebar-nav-item",
-    cLinkName: "sidebar-nav-link"
-  },
-  {
-    title: "Dashboard",
-    path: "/admin/dashboard",
-    icon: <FiIcons.FiPieChart />,
     cName: "sidebar-nav-item",
     cLinkName: "sidebar-nav-link"
   },
