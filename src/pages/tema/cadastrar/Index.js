@@ -13,7 +13,7 @@ import "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.c
 import "../../../Components/TableAtividade/style";
 import "./styles.css";
 import { toast } from "react-toastify";
-import SchemaCadastrarTema from '../Schema/SchemaCadastrarTema'
+import SchemaCadastrarTema from "../Schema/SchemaCadastrarTema";
 
 const Index = ({ selected, setSelectedTema, setIsAtualizar }) => {
   const [tema, setTema] = useState("");
@@ -56,7 +56,7 @@ const Index = ({ selected, setSelectedTema, setIsAtualizar }) => {
   };
 
   const onSubmitHandler = (data) => {
-    console.log(data)
+    console.log(data);
     let _data = { ...data, disciplinas: [data.disciplinas] };
     serviceTema
       .incluir(_data)
@@ -86,7 +86,7 @@ const Index = ({ selected, setSelectedTema, setIsAtualizar }) => {
   const onClearHandler = () => {
     setTema({ ...tema, nome: "" });
     setSelectedTema({});
-    setIsUpdating(false);
+    setIsUpdating(true);
   };
 
   return (
