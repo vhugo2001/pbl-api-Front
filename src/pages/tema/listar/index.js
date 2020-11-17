@@ -49,6 +49,7 @@ const Index = ({ setSelectedTema, selectedTema, isAtualizar }) => {
       .deletar(selectedTema.id)
       .then((response) => {
         toast.success("Tema excluido com sucesso.");
+        listarTodos();
       })
       .catch((error) => {
         toast.error(error.response.data);
