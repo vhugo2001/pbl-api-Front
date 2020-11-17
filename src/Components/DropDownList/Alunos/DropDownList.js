@@ -170,7 +170,7 @@ const DefaultDropDownList = ({ lista, onSelect, ...props }) => {
   const [options, setOptions] = useState();
   const searchInput = useRef(null);
 
-  const nLista = lista.map((i) => {
+  var nLista = lista.map((i) => {
     return { ...i, color: RandomColor() };
   });
 
