@@ -146,7 +146,7 @@ function CardCadastroatividade({
               .required("* Campo Descrição é obrigatório")
               .nullable(),
           })}
-          onSubmit={(values,{resetForm}) => {
+          onSubmit={(values, { resetForm }) => {
             if (disciplina === undefined) {
               toast.warn(
                 "É necessário selecionar uma disciplina para cadastrar atividades",
@@ -208,7 +208,7 @@ function CardCadastroatividade({
                       <Card.Form.InputText
                         name="titulo"
                         onChange={handleChange}
-                        value={values.titulo || ''}
+                        value={values.titulo || ""}
                         valid={touched.titulo && !errors.titulo}
                         error={touched.titulo && errors.titulo}
                         placeholder="Título da atividade"
@@ -257,7 +257,7 @@ function CardCadastroatividade({
                         onChange={handleChange}
                         valid={touched.descricao && !errors.descricao}
                         error={touched.descricao && errors.descricao}
-                        value={values.descricao || ''}
+                        value={values.descricao || ""}
                         placeholder="Descrição da atividade"
                       />
                       {errors.descricao && touched.descricao && (
