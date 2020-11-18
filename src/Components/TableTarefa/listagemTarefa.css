@@ -79,9 +79,27 @@ div.scrollExpand div.react-bootstrap-table table.table.table-condensed tbody tr 
 
 .deletar-button:hover{
   color:red;
+  
 }
 
 .action-button-deletar{text-align: center;}
+
+.desc-button{
+  font-size: 1.7rem;
+  background: none;
+  color:#3a61c2;
+  margin-top: -10px;
+  height: 35px;
+  margin-bottom: 0px !important;
+  cursor: pointer;
+}
+
+.desc-button:hover{
+  color:#3a61c291;
+  
+}
+
+.action-button-desc{text-align: center;}
 
 .checkbox{
   -ms-transform: scale(2); /* IE */
