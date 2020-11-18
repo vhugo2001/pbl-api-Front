@@ -14,8 +14,8 @@ const incluir = (data) => {
     return http.post(URL_TAREFA, data);
 };
 
-const atualizar = (id, data) => {
-    return http.put(URL_TAREFA + `/${id}`, data);
+const atualizar = (idAtividade, idTarefa, data) => {
+    return http.put(URL_TAREFA + `/${idAtividade}/${idTarefa}`, data);
 };
 
 const deletar = (id) => {
@@ -34,6 +34,10 @@ const deletarTarefaAtiv = (id, id2) => {
     return http.delete(`/atividade/${id}` + URL_TAREFA + `/${id2}`);
 };
 
+const alterarConcluidoTarefa = (data) => {
+    return http.post(URL_TAREFA + `/alterar-concluido`, data);
+};
+
 export default {
     listarTodos,
     incluir,
@@ -42,6 +46,7 @@ export default {
     listarID,
     incluirTarefaAtiv,
     atualizarTarefaAtiv,
-    deletarTarefaAtiv
+    deletarTarefaAtiv,
+    alterarConcluidoTarefa
 
 };

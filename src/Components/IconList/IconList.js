@@ -39,18 +39,22 @@ const IconList = ({ lista }) => {
   console.log(lista);
 
   const getIniciais = (i) => {
-    var fields = i.split(" ");
-    var value = "";
+    console.log(i)
+    if (i !== null && i !== undefined && i !== "") {
+      var fields = i.split(" ");
+      var value = "";
 
-    if (fields.length > 1) {
-      value = fields[0].substring(0, 1);
-      value += fields[1].substring(0, 1);
-    } else {
-      value = fields[0].substring(0, 1);
-      value += fields[0].substring(1, 2);
+      if (fields.length > 1) {
+        value = fields[0].substring(0, 1);
+        value += fields[1].substring(0, 1);
+      } else {
+        value = fields[0].substring(0, 1);
+        value += fields[0].substring(1, 2);
+      }
+
+      return value;
     }
 
-    return value;
   };
   return (
     <Container>
