@@ -44,6 +44,13 @@ const Index = () => {
   let usuarioLogado = authService.getCurrentUser();
 
   useEffect(() => {
+    listarTarefas()
+  }, []);
+
+  useEffect(() => { }, [show]);
+
+  const listarTarefas = () => {
+
     serviceAtividade
       .listarPorIdAluno(usuarioLogado.id)
       .then((response) => {
@@ -52,14 +59,12 @@ const Index = () => {
         setTarefa(data.atividadeTarefaDTOs);
         setAlunos(data.alunosPbl);
 
-        
+
       })
       .catch((error) => {
         toast.error(error.response.data);
       });
-  }, []);
-
-  useEffect(() => {}, [show]);
+  }
 
   const colunas = [
     {
@@ -159,6 +164,7 @@ const Index = () => {
       text: "",
 
       formatter: (cellContent, row) => {
+        console.log(row)
         if (cellContent !== "") {
           return (
             <div>
@@ -213,7 +219,6 @@ const Index = () => {
       text: "",
 
       formatter: (cellContent, row) => {
-        console.log(cellContent)
 
         if (cellContent !== undefined) {
           return (
@@ -292,8 +297,8 @@ const Index = () => {
     serviceTarefa
       .deletar(dados)
       .then((response) => {
-        let data = response.data;
-        setTarefa(data);
+        // let data = response.data;
+        // setTarefa(data);
         toast.success("Sucesso ao excluir a tarefa.");
       })
       .catch((error) => {
@@ -303,13 +308,9 @@ const Index = () => {
 
   const handleConcluido = (e, item) => {
     e.stopPropagation();
-    let status
-    if (item.concluido === true) {
-      status = { concluido: false }
-    } else {
-      status = { concluido: true }
-    }
-    statusTarefa(item.id, status);
+    console.log(item)
+
+    alterarConcluidoTarefa(item);
 
   };
 
@@ -339,21 +340,25 @@ const Index = () => {
       });
   };
 
-  const statusTarefa = (dados, status) => {
+  const alterarConcluidoTarefa = (dados) => {
+    console.log(dados)
+    dados.concluido = !dados.concluido
+    dados.dataConclusao = format(new Date(), 'dd/MM/yyyy')
     serviceTarefa
-      .atualizar(dados, status)
+      .alterarConcluidoTarefa(dados)
       .then((response) => {
-        let data = response.data;
-        setTarefa(data);
+        // let data = response.data;
+        // setTarefa(data);
+        listarTarefas()
       })
       .catch((error) => {
         toast.error("Erro modificar status da Tarefa.");
       });
   };
 
-  const onClearHandler = () => {};
+  const onClearHandler = () => { };
 
-  const handleClose = () => {};
+  const handleClose = () => { };
 
   const handleAdd = (item) => {
     console.log(item);
@@ -394,7 +399,8 @@ const Index = () => {
 
   const expandRow = {
     renderer: (row) => (
-      <div>
+
+      < div >
         <ToolkitProvider keyField="id" data={row.tarefas} columns={subcolunas}>
           {(props) => (
             <div>
@@ -409,7 +415,7 @@ const Index = () => {
             </div>
           )}
         </ToolkitProvider>
-      </div>
+      </div >
     ),
 
     expandColumnPosition: "right",
@@ -439,7 +445,7 @@ const Index = () => {
 
   return (
     <>
-      {console.log("Entrou")}
+
       <div className="title-container">
         <h1>Consultar Tarefas</h1>
       </div>
