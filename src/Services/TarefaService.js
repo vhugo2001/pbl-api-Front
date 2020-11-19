@@ -18,8 +18,8 @@ const atualizar = (idAtividade, idTarefa, data) => {
     return http.put(URL_TAREFA + `/${idAtividade}/${idTarefa}`, data);
 };
 
-const deletar = (id) => {
-    return http.delete(URL_TAREFA + `/${id}`);
+const deletar = (idAtividade, idTarefa) => {
+    return http.delete(URL_TAREFA + `/${idAtividade}/${idTarefa}`);
 };
 
 const incluirTarefaAtiv = (id, data) => {
@@ -28,10 +28,6 @@ const incluirTarefaAtiv = (id, data) => {
 
 const atualizarTarefaAtiv = (id, data) => {
     return http.put(`/atividade/${id}` + URL_TAREFA, data);
-};
-
-const deletarTarefaAtiv = (id, id2) => {
-    return http.delete(`/atividade/${id}` + URL_TAREFA + `/${id2}`);
 };
 
 const alterarConcluidoTarefa = (data) => {
@@ -46,7 +42,6 @@ export default {
     listarID,
     incluirTarefaAtiv,
     atualizarTarefaAtiv,
-    deletarTarefaAtiv,
     alterarConcluidoTarefa
 
 };

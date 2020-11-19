@@ -4,6 +4,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css";
 import * as IoIcons from "react-icons/io";
+import * as BiIcons from "react-icons/bi";
 import "../../Components/TableTarefa/listagemTarefa.css";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import { Container } from "../../Components/TableTarefa/style";
@@ -164,7 +165,7 @@ const Index = () => {
       text: "",
 
       formatter: (cellContent, row) => {
-        console.log(row)
+
         if (cellContent !== "") {
           return (
             <div>
@@ -194,12 +195,13 @@ const Index = () => {
       formatter: (cellContent, row) => {
         if (cellContent !== "") {
           return (
-            <div>
-              <label className="DescAtiv">
-                <b>{cellContent}</b>
-              </label>
-              <br />
+
+            <div className='action-button-desc'>
+              <div className="desc-button">
+                <BiIcons.BiMessageAltDetail />
+              </div>
             </div>
+
           );
         } else {
           return (
@@ -222,7 +224,7 @@ const Index = () => {
 
         if (cellContent !== undefined) {
           return (
-            <div style={{ textAlign: 'center' }}>
+            <div >
               <label className="TituloAtiv">
                 <IconList lista={cellContent} />
               </label>
@@ -290,15 +292,17 @@ const Index = () => {
 
   function handleExcluir(e, item) {
     e.stopPropagation();
-    excluirTarefa(item.id);
+    console.log(item)
+    excluirTarefa(item);
   }
 
   const excluirTarefa = (dados) => {
     serviceTarefa
-      .deletar(dados)
+      .deletar(dados.id, dados.idAtividade)
       .then((response) => {
         // let data = response.data;
         // setTarefa(data);
+        listarTarefas()
         toast.success("Sucesso ao excluir a tarefa.");
       })
       .catch((error) => {
@@ -308,8 +312,6 @@ const Index = () => {
 
   const handleConcluido = (e, item) => {
     e.stopPropagation();
-    console.log(item)
-
     alterarConcluidoTarefa(item);
 
   };
@@ -358,10 +360,10 @@ const Index = () => {
 
   const onClearHandler = () => { };
 
-  const handleClose = () => { };
+  const handleClose = () => { setShow(false) };
 
   const handleAdd = (item) => {
-    console.log(item);
+
     setDtConclusao("");
     const novaTarefa = {
       tituloAtividade: item.titulo,
@@ -375,11 +377,15 @@ const Index = () => {
   };
   const rowEvents = {
     onClick: (e, row) => {
-      console.log(row);
-      setDtConclusao(
-        dateUtil.DateFormater(row.dataConclusao)
-      );
-      console.log(row.dataConclusao);
+
+      if (row.dataConclusao !== null && row.dataConclusao !== undefined) {
+        setDtConclusao(
+          dateUtil.DateFormater(row.dataConclusao)
+        );
+      } else {
+        setDtConclusao("")
+      }
+
       setDadosModal(row);
       setShow(true);
     },
@@ -443,6 +449,7 @@ const Index = () => {
     },
   };
 
+  console.log(tarefa)
   return (
     <>
 
