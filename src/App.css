@@ -2,7 +2,9 @@ html, body {
   height: 90vh;
   overflow-y: hidden;
   background-color: white;
-  background-image: url("https://wallpaperaccess.com/full/486695.jpg");
+  /* background-image: url("https://wallpaperaccess.com/full/486695.jpg"); */
+  background-image: url("assets/images/bg-pbl.png");
+  background-position: center bottom;
   background-repeat: no-repeat;
   background-size: cover;
   z-index: 1;
