@@ -4,7 +4,9 @@ import * as AiIcons from "react-icons/ai";
 import * as IoIcons from "react-icons/io";
 import * as MdIcons from "react-icons/md";
 import * as CgIcons from "react-icons/cg";
-import { Link } from "react-router-dom";
+import * as FiIcons from "react-icons/fi";
+import * as BiIcons from "react-icons/bi";
+import { NavLink } from "react-router-dom";
 import {
   SidebarDataProfessor,
   SidebarDataAluno,
@@ -39,11 +41,11 @@ function Navbar() {
   });
   return (
     <>
-      <div className="navbars">
+      <div className="shadow-sm navbars">
         <div className="toggle-holder">
-          <Link to="#" className="menu-bars">
+          <NavLink to="#" className="menu-bars">
             <FaIcons.FaBars onClick={showSidebar} />
-          </Link>
+          </NavLink>
         </div>
         <div className="logo-spacer py-2">
           <img
@@ -54,14 +56,17 @@ function Navbar() {
         </div>
         <div style={{ flex: 1 }}></div>
         <div className="container-right">
-          <Link to="/admin/dashboard" className="calendar-button">
-            <IoIcons.IoMdCalendar />
-          </Link>
-          <Link to="/admin/" className="notification-button">
-            <MdIcons.MdNotificationsNone />
-          </Link>
+          <NavLink to="/admin/dashboard" className="calendar-button">
+            <BiIcons.BiBell />
+          </NavLink>
+          <NavLink to="/admin" className="calendar-button">
+            <BiIcons.BiNews />
+          </NavLink>
+          <NavLink to="/admin/calendario" className="calendar-button">
+            <FiIcons.FiCalendar />
+          </NavLink>
 
-          <NavbarDropdown className="drop-perfil">
+          <NavbarDropdown className="ml-3 drop-perfil">
             <NavbarDropdown.Toggle className="menu__item">
               <NavbarDropdown.Open>
                 <CgIcons.CgProfile className="profile-button" />
@@ -76,12 +81,12 @@ function Navbar() {
               classNames="example1-dropdown-menu"
               timeout={200}
             >
-              <Link to="/admin/perfil-usuario" className="link-menu">
+              <NavLink to="/admin/perfil-usuario" className="link-menu">
                 <NavbarDropdown.Item className="example1-dropdown-menu-item">
                   <div className="example1-dropdown-menu-item__spacer" />
                   <div className="example1-dropdown-menu-item__text"><FaIcons.FaUserCircle /> Meu Perfil</div>
                 </NavbarDropdown.Item>
-              </Link>
+              </NavLink>
               <NavbarDropdown.Item className="example1-dropdown-menu-item">
                 <a
                   href="/admin/"
@@ -99,12 +104,12 @@ function Navbar() {
               classNames="example1-dropdown-menu"
               timeout={200}
             >
-              <Link to="/admin/perfil-usuario" className="link-menu">
+              <NavLink to="/admin/perfil-usuario" className="link-menu">
                 <NavbarDropdown.Item className="example1-dropdown-menu-item">
                   <div className="example1-dropdown-menu-item__spacer" />
                   <div className="example1-dropdown-menu-item__text"><FaIcons.FaUserCircle /> Meu Perfil</div>
                 </NavbarDropdown.Item>
-              </Link>
+              </NavLink>
               <a
                 href="/admin/"
                 className="link-menu"
@@ -122,9 +127,9 @@ function Navbar() {
       <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
         <ul className="nav-menu-items" onClick={showSidebar}>
           <li className="navbar-toggle">
-            <Link to="#" className="menu-bars">
+            <NavLink to="#" className="menu-bars">
               <AiIcons.AiOutlineClose />
-            </Link>
+            </NavLink>
           </li>
           <li className="navbar-logo">
             <img
@@ -138,10 +143,10 @@ function Navbar() {
             {SidebarDataProfessor.map((item, index) => {
               return (
                 <li key={index} className={item.cName}>
-                  <Link to={item.path}>
+                  <NavLink to={item.path}>
                     {item.icon}
                     <span>{item.title}</span>
-                  </Link>
+                  </NavLink>
                 </li>
               );
             })}
@@ -155,10 +160,10 @@ function Navbar() {
             {data.map((item, index) => {
               return (
                 <li key={index} className={item.cName}>
-                  <Link className={item.cLinkName} to={item.path}>
+                  <NavLink activeClassName="is-active" className={item.cLinkName} to={item.path}>
                     {item.icon}
                     <span>{item.title}</span>
-                  </Link>
+                  </NavLink>
                 </li>
               );
             })}
@@ -171,11 +176,11 @@ function Navbar() {
               </g>
             </svg>
           </div>
+        </div>
+        <div className="page-container">
+          <Routes />
+        </div>
       </div>
-      <div className="page-container">
-        <Routes />
-      </div>
-    </div>
     </>
   );
 }

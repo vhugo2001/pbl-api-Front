@@ -4,6 +4,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css";
 import * as IoIcons from "react-icons/io";
+import * as BiIcons from "react-icons/bi";
 import "../../Components/TableTarefa/listagemTarefa.css";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import { Container } from "../../Components/TableTarefa/style";
@@ -15,19 +16,43 @@ import authService from "../../Services/AuthService";
 import IconList from '../../Components/IconList/IconList'
 
 //Teste Modal Component
+import DatePicker from "react-datepicker";
 import ModalTarefas from "../../Components/Modal/Form/Index";
+import { Modal } from "react-bootstrap";
+import { Formik } from "formik";
+import SchemaTarefa from "../../Components/Modal/Form/SchemaTarefas";
+import { Card } from "../../Components/Card/CardPrincipal";
+import DatePickerField from "../../Components/DatePicker/DatePickerField";
+import DropDownListAlunos from "../../Components/DropDownList/Alunos/DropDownList";
+import pt from "date-fns/locale/pt-BR";
+import { format } from "date-fns";
+import subDays from "date-fns/subDays";
+import tarefaService from "../../Services/TarefaService";
+
+import dateUtil from "../../helpers/date";
 
 const { SearchBar } = Search;
 
 const Index = () => {
   const [dadosModal, setDadosModal] = useState({});
   const [alunos, setAlunos] = useState({});
+  const [selectedAlunos, setSelectedAlunos] = useState();
   const [show, setShow] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [tarefa, setTarefa] = useState([]);
+  const [dtConclusao, setDtConclusao] = useState("");
+  const [idTarefa, setIdTarefa] = useState("");
 
   let usuarioLogado = authService.getCurrentUser();
 
   useEffect(() => {
+    listarTarefas()
+  }, []);
+
+  useEffect(() => { }, [show]);
+
+  const listarTarefas = () => {
+
     serviceAtividade
       .listarPorIdAluno(usuarioLogado.id)
       .then((response) => {
@@ -35,11 +60,13 @@ const Index = () => {
         console.log(data);
         setTarefa(data.atividadeTarefaDTOs);
         setAlunos(data.alunosPbl);
+
+
       })
       .catch((error) => {
         toast.error(error.response.data);
       });
-  }, []);
+  }
 
   const colunas = [
     {
@@ -139,6 +166,7 @@ const Index = () => {
       text: "",
 
       formatter: (cellContent, row) => {
+
         if (cellContent !== "") {
           return (
             <div>
@@ -168,12 +196,13 @@ const Index = () => {
       formatter: (cellContent, row) => {
         if (cellContent !== "") {
           return (
-            <div>
-              <label className="DescAtiv">
-                <b>{cellContent}</b>
-              </label>
-              <br />
+
+            <div className='action-button-desc'>
+              <div className="desc-button">
+                <BiIcons.BiMessageAltDetail />
+              </div>
             </div>
+
           );
         } else {
           return (
@@ -193,11 +222,10 @@ const Index = () => {
       text: "",
 
       formatter: (cellContent, row) => {
-        console.log(cellContent)
 
         if (cellContent !== undefined) {
           return (
-            <div style={{ textAlign: 'center' }}>
+            <div >
               <label className="TituloAtiv">
                 <IconList lista={cellContent} />
               </label>
@@ -265,63 +293,119 @@ const Index = () => {
 
   function handleExcluir(e, item) {
     e.stopPropagation();
-    // excluirTarefa(item.id);
+    console.log(item)
+    excluirTarefa(item);
   }
 
-  //   const excluirTarefa = (dados) => {
-  //     serviceTarefa
-  //       .deletar(dados)
-  //       .then((response) => {
-  //         let data = response.data;
-  //         setTarefa(data);
-  //         toast.success("Sucesso ao excluir a tarefa.");
-  //       })
-  //       .catch((error) => {
-  //         toast.error("Erro ao excluir a tarefa.");
-  //       });
-  //   };
+  const excluirTarefa = (dados) => {
+    console.log(dados)
+    serviceTarefa
+      .deletar(dados.idAtividade, dados.id)
+      .then((response) => {
+        // let data = response.data;
+        // setTarefa(data);
+        listarTarefas()
+        toast.success("Sucesso ao excluir a tarefa.");
+      })
+      .catch((error) => {
+        toast.error("Erro ao excluir a tarefa.");
+      });
+  };
 
   const handleConcluido = (e, item) => {
     e.stopPropagation();
-    // if(item.concluido === true){
-    //     let status = false
-    // }else{
-    //     status = true
-    // }
-    // statusTarefa(item.id,status);
+    alterarConcluidoTarefa(item);
 
   };
 
-  const statusTarefa = (dados, status) => {
-    // serviceTarefa
-    //   .atualizar(dados, status)
-    //   .then((response) => {
-    //     let data = response.data;
-    //     setTarefa(data);
-    //   })
-    //   .catch((error) => {
-    //     toast.error("Erro modificar status da Tarefa.");
-    //   });
+  const onSubmitHandler = (data) => {
+    data.dataConclusao = dtConclusao
+    let _data = {
+      ...data,
+      dataConclusao: format(data.dataConclusao, "dd/MM/yyyy"),
+    };
+
+    tarefaService
+      .incluir(_data)
+      .then(() => {
+        toast.success("Tarefa cadastrada com sucesso.");
+        listarTarefas()
+      })
+      .catch((error) => {
+        toast.error(error.response.data);
+      });
   };
+
+  const onUpdateHandler = (values) => {
+
+    values.dataConclusao = dtConclusao
+    let _data = {
+      ...values,
+      dataConclusao: format(values.dataConclusao, "dd/MM/yyyy"),
+    };
+
+    console.log(_data)
+
+    tarefaService
+      .atualizar(_data.idAtividade, idTarefa, _data)
+      .then(() => {
+        toast.success("Tarefa atualizada com sucesso.");
+        listarTarefas()
+      })
+      .catch((error) => {
+        toast.error(error.response.data);
+      });
+  };
+
+  const alterarConcluidoTarefa = (dados) => {
+    console.log(dados)
+    dados.concluido = !dados.concluido
+    dados.dataConclusao = format(new Date(), 'dd/MM/yyyy')
+    serviceTarefa
+      .alterarConcluidoTarefa(dados)
+      .then((response) => {
+        // let data = response.data;
+        // setTarefa(data);
+        listarTarefas()
+      })
+      .catch((error) => {
+        toast.error("Erro modificar status da Tarefa.");
+      });
+  };
+
+  const onClearHandler = () => { };
+
+  const handleClose = () => { setShow(false) };
 
   const handleAdd = (item) => {
-    console.log(item);
 
+    setDtConclusao("");
     const novaTarefa = {
       tituloAtividade: item.titulo,
       titulo: "",
       idAtividade: item.id,
       descricao: "",
-      dataConclusao: "",
+      concluido: false
     };
 
     setDadosModal(novaTarefa);
+    setIsUpdating(false)
     setShow(true);
   };
   const rowEvents = {
     onClick: (e, row) => {
-      console.log(row);
+
+      if (row.dataConclusao !== null && row.dataConclusao !== undefined) {
+        setDtConclusao(
+          dateUtil.DateFormater(row.dataConclusao)
+        );
+      } else {
+        setDtConclusao("")
+      }
+
+      setIdTarefa(row.id)
       setDadosModal(row);
+      setIsUpdating(true)
       setShow(true);
     },
   };
@@ -340,7 +424,8 @@ const Index = () => {
 
   const expandRow = {
     renderer: (row) => (
-      <div>
+
+      < div >
         <ToolkitProvider keyField="id" data={row.tarefas} columns={subcolunas}>
           {(props) => (
             <div>
@@ -355,7 +440,7 @@ const Index = () => {
             </div>
           )}
         </ToolkitProvider>
-      </div>
+      </div >
     ),
 
     expandColumnPosition: "right",
@@ -383,8 +468,10 @@ const Index = () => {
     },
   };
 
+  console.log(tarefa)
   return (
     <>
+
       <div className="title-container">
         <h1>Consultar Tarefas</h1>
       </div>
@@ -415,12 +502,131 @@ const Index = () => {
           )}
         </ToolkitProvider>
       </Container>
-      <ModalTarefas
-        data={dadosModal}
-        alunos={alunos}
-        _show={show}
-        setShow={setShow}
-      />
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            {tarefa.titulo + " na atividade " + tarefa.tituloAtividade}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Formik
+            enableReinitialize
+            initialValues={{
+              idAtividade: dadosModal.idAtividade,
+              titulo: dadosModal.titulo,
+              descricao: dadosModal.descricao,
+              concluido: dadosModal.concluido,
+              dataConclusao: dadosModal.dataConclusao,
+              alunos: dadosModal.alunos,
+            }}
+            validationSchema={SchemaTarefa}
+            onSubmit={(values) => {
+              setShow(false);
+              if (isUpdating) {
+                onUpdateHandler(values);
+              } else {
+                onSubmitHandler(values);
+              }
+
+            }}
+          >
+            {({
+              values,
+              errors,
+              touched,
+              handleSubmit,
+              handleChange,
+              isSubmitting,
+              validating,
+              valid,
+            }) => {
+              return (
+                <>
+                  <div className="spacer-div" />
+                  {isUpdating && (
+                    <>
+                      <div
+                        className="actions-form-button clear-button"
+                        type="button"
+                        onClick={onClearHandler}
+                      >
+                        <IoIcons.IoIosAdd className="icone-clear" />
+                      </div>
+                    </>
+                  )}
+                  <Card.Form
+                    style={{ "padding-top": "0" }}
+                    method="post"
+                    autoComplete="off"
+                    onSubmit={handleSubmit}
+                  >
+                    <Card.Form.Group>
+                      <Card.Form.Title>Titulo</Card.Form.Title>
+                      <Card.Form.InputText
+                        name="titulo"
+                        autocomplete="off"
+                        onChange={handleChange}
+                        value={values.titulo}
+                        valid={touched.titulo && !errors.titulo}
+                        error={touched.titulo && errors.titulo}
+                      />
+                      {errors.titulo && touched.v && (
+                        <Card.Form.StyledInlineErrorMessage>
+                          {errors.titulo}
+                        </Card.Form.StyledInlineErrorMessage>
+                      )}
+                    </Card.Form.Group>
+
+                    <Card.Form.Group>
+                      <Card.Form.Title>Data Conclusao</Card.Form.Title>
+
+                      <DatePicker
+                        onChange={setDtConclusao}
+                        locale={pt}
+                        useShortMonthInDropdown
+                        minDate={subDays(new Date(), 0)}
+                        dateFormat="dd/MM/yyyy"
+                        selected={dtConclusao}
+                        customInput={
+                          <Card.Form.InputText value={dtConclusao} />
+                        }
+                      />
+                    </Card.Form.Group>
+                    <Card.Form.BreakRow />
+                    <Card.Form.Group>
+                      <Card.Form.Title>Descrição</Card.Form.Title>
+                      <Card.Form.InputText
+                        name="descricao"
+                        autocomplete="off"
+                        onChange={handleChange}
+                        value={values.descricao}
+                      />
+                    </Card.Form.Group>
+                    <Card.Form.BreakRow />
+                    <Card.Form.Group style={{ flex: 5 }}>
+                      <Card.Form.Title>Alunos</Card.Form.Title>
+                      <DropDownListAlunos
+                        name="alunos"
+                        lista={alunos}
+                        onSelect={setSelectedAlunos}
+                      ></DropDownListAlunos>
+                    </Card.Form.Group>
+
+                    <Card.Form.GroupButton className="group-button">
+                      {!isUpdating && (
+                        <Card.Button type="submit">Incluir</Card.Button>
+                      )}
+                      {isUpdating && (
+                        <Card.Button type="submit">Atualizar</Card.Button>
+                      )}
+                    </Card.Form.GroupButton>
+                  </Card.Form>
+                </>
+              );
+            }}
+          </Formik>
+        </Modal.Body>
+      </Modal>
     </>
   );
 };
