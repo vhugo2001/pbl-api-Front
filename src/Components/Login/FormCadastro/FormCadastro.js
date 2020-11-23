@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Tabs, Tab } from "react-bootstrap";
+import { Tabs, Tab } from "react-bootstrap";
 
 import FormAluno from "./Aluno";
 import FormProfessor from "./Professor";
@@ -24,4 +24,5 @@ const FormCadastro = () => {
     </>
   );
 };
+
 export default FormCadastro;
