@@ -32,7 +32,7 @@ const Index = ({ selected, setIsAtualizar }) => {
       .incluir(data)
       .then((response) => {
         toast.success("Disciplina cadastrada com sucesso.");
-        setIsAtualizar(true);
+        setIsAtualizar(true);        
       })
       .catch((error) => {
         toast.error(error.response.data);
@@ -46,6 +46,7 @@ const Index = ({ selected, setIsAtualizar }) => {
       .then(() => {
         toast.success("Disciplina atualizada com sucesso.");
         setIsAtualizar(true);
+        onClearHandler();
       })
       .catch((error) => {
         toast.error(error.response.data);
