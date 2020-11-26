@@ -13,6 +13,7 @@ import "./styles.css";
 import { toast } from "react-toastify";
 import DisciplinaService from "../../../Services/DisciplinaService";
 import SchemaCadastrar from "../Schema/SchemaCadastrar";
+import AuthService from "../../../Services/AuthService";
 
 const Index = ({ selected, setIsAtualizar }) => {
   const [disciplina, setDisciplina] = useState("");
