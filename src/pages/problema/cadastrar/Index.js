@@ -5,12 +5,12 @@ import * as IoIcons from "react-icons/io";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
+import "react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css";
 import "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css";
 
 import "../../../Components/TableAtividade/style";
 import "./styles.css";
-import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
+import "react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css";
 import { toast } from "react-toastify";
 import problemaService from "../../../Services/ProblemaService";
 import SchemaCadastrar from "../Schema/SchemaCadastrar";
@@ -19,38 +19,43 @@ import RangeSlider from "react-bootstrap-range-slider";
 import authService from "../../../Services/AuthService";
 
 const Index = ({ selected, setSelectedProblema, setIsAtualizar }) => {
-  let usuarioLogado =  authService.getCurrentUser();
+  let usuarioLogado = authService.getCurrentUser();
   const [problema, setProblema] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
-  const [ range, setRange ] = useState("1");
+  const [range, setRange] = useState("1");
 
   useEffect(() => {
     if (selected !== null && selected !== undefined && selected !== "") {
       setProblema(selected);
       setRange(selected.prioridade);
-      console.log(selected)
+      console.log(selected);
       setIsUpdating(true);
     }
   }, [selected]);
 
   const onSubmitHandler = (data) => {
-    
-    let _data = { ...data, prioridade: range, idUsuario:usuarioLogado.id };
+    let _data = { ...data, prioridade: range, idUsuario: usuarioLogado.id };
 
     problemaService
       .incluir(_data)
       .then(() => {
+        onClearHandler(data);
         toast.success("Problema cadastrado com sucesso.");
         setIsAtualizar(true);
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
         toast.error(error.response.data);
       });
   };
 
   const onUpdateHandler = (data) => {
-    let _data = { ...data, id: problema.id, prioridade: range, idUsuario:usuarioLogado.id };
+    let _data = {
+      ...data,
+      id: problema.id,
+      prioridade: range,
+      idUsuario: usuarioLogado.id,
+    };
     console.log(_data);
     problemaService
       .atualizar(_data.id, _data)
@@ -63,9 +68,18 @@ const Index = ({ selected, setSelectedProblema, setIsAtualizar }) => {
       });
   };
 
-  const onClearHandler = () => {
-    setProblema({ ...problema, id: 0, descricao: "", ativo: false });
-    setSelectedProblema({})
+  const onClearHandler = (data) => {
+    data.descricao = "";
+    data.prioridade = 1;
+    data.ativo = false;
+    setProblema({
+      ...problema,
+      id: 0,
+      descricao: "",
+      prioridade: 1,
+      ativo: false,
+    });
+    setSelectedProblema(null);
     setRange(1);
     setIsUpdating(false);
   };
@@ -142,21 +156,20 @@ const Index = ({ selected, setSelectedProblema, setIsAtualizar }) => {
                   <Card.Form.Group>
                     <Card.Form.Title>Prioridade ({range})</Card.Form.Title>
                     <RangeSlider
-
                       value={range}
-                      onChange={e => setRange(e.target.value)}
-                      tooltip='off'
+                      onChange={(e) => setRange(e.target.value)}
+                      tooltip="off"
                       min={1}
                       max={10}
                     />
                   </Card.Form.Group>
 
                   <Card.Form.Group>
-                  <Card.Form.Title>Status</Card.Form.Title>
+                    <Card.Form.Title>Status</Card.Form.Title>
                     <Checkbox
-                     name="ativo"
-                     autocomplete="off"
-                     value={values.ativo}
+                      name="ativo"
+                      autocomplete="off"
+                      value={values.ativo}
                     >
                       Ativo
                     </Checkbox>

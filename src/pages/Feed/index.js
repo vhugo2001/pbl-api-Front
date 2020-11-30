@@ -1,4 +1,6 @@
 import React from "react";
+import FormularioPublicacao from '../../Components/InputPublicacao';
+
 
 import { Row, Col, Card } from "react-bootstrap";
 import LogoUff from "../../assets/uff-logo.png";

@@ -12,6 +12,7 @@ import "../../../Components/TableAtividade/style";
 import "./styles.css";
 import "react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css";
 import { toast } from "react-toastify";
+import { mask, unMask } from "remask";
 
 import SchemaCadastrar from "../Schema/SchemaCadastrar";
 import DropDownList from "../../../Components/DropDownList/Default/DropDownList";
