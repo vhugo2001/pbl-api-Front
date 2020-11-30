@@ -27,14 +27,16 @@ export const Span = styled.span`
 `;
 
 export const Button = styled.button`
-  background-color: #4caf50; /* Green */
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
+background-color: #8f8f8f; 
+border: none;
+border-radius: 5px;
+color: white;
+padding: 8px 20px;
+text-align: center;
+text-decoration: none;
+display: inline;
+font-size: 16px;
+top: 0;
 `;
 
 export const Table = styled.table`
@@ -114,4 +116,17 @@ export const Desativar = styled.button`
   padding: 15px 32px;
   display: inline-block;
  margin-left:50px;
+`;
+
+export const Excluir = styled.button`
+  background-color: #c93636; 
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding: 8px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline;
+  font-size: 16px;
+  top: 0;
 `;
