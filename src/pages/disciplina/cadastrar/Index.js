@@ -32,7 +32,8 @@ const Index = ({ selected, setIsAtualizar }) => {
       .incluir(data)
       .then((response) => {
         toast.success("Disciplina cadastrada com sucesso.");
-        setIsAtualizar(true);        
+        setIsAtualizar(true);
+        onClearHandler(data);        
       })
       .catch((error) => {
         toast.error(error.response.data);
@@ -53,7 +54,8 @@ const Index = ({ selected, setIsAtualizar }) => {
       });
   };
 
-  const onClearHandler = () => {
+  const onClearHandler = (data) => {    
+    data.nome = '';
     setDisciplina({ ...disciplina, nome: "" });
     setIsUpdating(false);
   };
@@ -82,7 +84,7 @@ const Index = ({ selected, setIsAtualizar }) => {
             values,
             errors,
             touched,
-            handleSubmit,
+            handleSubmit,            
             handleChange,
             isSubmitting,
             validating,
