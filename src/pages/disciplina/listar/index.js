@@ -181,10 +181,10 @@ const Index = ({ setSelectedDisciplina, selectedDisciplina, isAtualizar }) => {
       </Card>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Confirmar Exclusão</Modal.Title>
+          <Modal.Title>Confirma Exclusão?</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Não é possivel excluir disciplinas que já possuem vinculo com PBL
+          Deseja realmente excluir a disciplina {selectedDisciplina.nome} ?          
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

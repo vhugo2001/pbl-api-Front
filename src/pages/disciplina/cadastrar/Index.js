@@ -13,6 +13,7 @@ import "./styles.css";
 import { toast } from "react-toastify";
 import DisciplinaService from "../../../Services/DisciplinaService";
 import SchemaCadastrar from "../Schema/SchemaCadastrar";
+import AuthService from "../../../Services/AuthService";
 
 const Index = ({ selected, setIsAtualizar }) => {
   const [disciplina, setDisciplina] = useState("");
@@ -32,6 +33,7 @@ const Index = ({ selected, setIsAtualizar }) => {
       .then((response) => {
         toast.success("Disciplina cadastrada com sucesso.");
         setIsAtualizar(true);
+        onClearHandler(data);        
       })
       .catch((error) => {
         toast.error(error.response.data);
@@ -45,13 +47,15 @@ const Index = ({ selected, setIsAtualizar }) => {
       .then(() => {
         toast.success("Disciplina atualizada com sucesso.");
         setIsAtualizar(true);
+        onClearHandler();
       })
       .catch((error) => {
         toast.error(error.response.data);
       });
   };
 
-  const onClearHandler = () => {
+  const onClearHandler = (data) => {    
+    data.nome = '';
     setDisciplina({ ...disciplina, nome: "" });
     setIsUpdating(false);
   };
@@ -80,7 +84,7 @@ const Index = ({ selected, setIsAtualizar }) => {
             values,
             errors,
             touched,
-            handleSubmit,
+            handleSubmit,            
             handleChange,
             isSubmitting,
             validating,
