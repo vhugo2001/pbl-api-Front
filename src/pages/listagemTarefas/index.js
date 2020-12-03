@@ -41,6 +41,7 @@ const Index = () => {
   const [isUpdating, setIsUpdating] = useState(false);
   const [tarefa, setTarefa] = useState([]);
   const [dtConclusao, setDtConclusao] = useState("");
+  const [idTarefa, setIdTarefa] = useState("");
 
   let usuarioLogado = authService.getCurrentUser();
 
@@ -297,8 +298,9 @@ const Index = () => {
   }
 
   const excluirTarefa = (dados) => {
+    console.log(dados)
     serviceTarefa
-      .deletar(dados.id, dados.idAtividade)
+      .deletar(dados.idAtividade, dados.id)
       .then((response) => {
         // let data = response.data;
         // setTarefa(data);
@@ -317,14 +319,17 @@ const Index = () => {
   };
 
   const onSubmitHandler = (data) => {
+    data.dataConclusao = dtConclusao
     let _data = {
       ...data,
       dataConclusao: format(data.dataConclusao, "dd/MM/yyyy"),
     };
+
     tarefaService
       .incluir(_data)
       .then(() => {
         toast.success("Tarefa cadastrada com sucesso.");
+        listarTarefas()
       })
       .catch((error) => {
         toast.error(error.response.data);
@@ -332,10 +337,20 @@ const Index = () => {
   };
 
   const onUpdateHandler = (values) => {
+
+    values.dataConclusao = dtConclusao
+    let _data = {
+      ...values,
+      dataConclusao: format(values.dataConclusao, "dd/MM/yyyy"),
+    };
+
+    console.log(_data)
+
     tarefaService
-      .atualizar(values.id, values)
+      .atualizar(_data.idAtividade, idTarefa, _data)
       .then(() => {
         toast.success("Tarefa atualizada com sucesso.");
+        listarTarefas()
       })
       .catch((error) => {
         toast.error(error.response.data);
@@ -370,9 +385,11 @@ const Index = () => {
       titulo: "",
       idAtividade: item.id,
       descricao: "",
+      concluido: false
     };
 
     setDadosModal(novaTarefa);
+    setIsUpdating(false)
     setShow(true);
   };
   const rowEvents = {
@@ -386,7 +403,9 @@ const Index = () => {
         setDtConclusao("")
       }
 
+      setIdTarefa(row.id)
       setDadosModal(row);
+      setIsUpdating(true)
       setShow(true);
     },
   };
@@ -502,12 +521,13 @@ const Index = () => {
             }}
             validationSchema={SchemaTarefa}
             onSubmit={(values) => {
+              setShow(false);
               if (isUpdating) {
                 onUpdateHandler(values);
               } else {
                 onSubmitHandler(values);
               }
-              setShow(false);
+
             }}
           >
             {({

@@ -3,7 +3,7 @@ import Select from "react-select";
 import { toast } from "react-toastify";
 import professorService from "../../../Services/ProfessorService";
 
-const DropDowenDisciplinasProfessor = ({usuario, selected}) => {
+const DropDowenDisciplinasProfessor = ({ usuario, selected }) => {
   const [professor, setProfessor] = useState(usuario);
 
   useEffect(() => {
@@ -18,9 +18,9 @@ const DropDowenDisciplinasProfessor = ({usuario, selected}) => {
   }, []);
 
   const handleChange = (v) => {
-      console.log(v)
+    console.log(v);
     selected(v);
-  }
+  };
 
   return (
     <Select

@@ -45,7 +45,7 @@ const Index = ({ setSelectedProblema, selectedProblema, isAtualizar }) => {
     problemaService
       .deletar(selectedProblema.id)
       .then((response) => {
-        toast.success("Disciplina excluida com sucesso.");
+        toast.success("Problema excluido com sucesso.");
         listarTodos();
       })
       .catch((error) => {
@@ -106,7 +106,9 @@ const Index = ({ setSelectedProblema, selectedProblema, isAtualizar }) => {
       },
       formatter: (cellContent, row) => (
         <div>
-          <label className="TabelaListaPbl">{row.ativo ? "Ativo" : "Inativo"}</label>
+          <label className="TabelaListaPbl">
+            {row.ativo ? "Ativo" : "Inativo"}
+          </label>
         </div>
       ),
     },
@@ -124,7 +126,6 @@ const Index = ({ setSelectedProblema, selectedProblema, isAtualizar }) => {
         </div>
       ),
     },
-  
 
     {
       dataField: "acoes",
@@ -217,7 +218,7 @@ const Index = ({ setSelectedProblema, selectedProblema, isAtualizar }) => {
           <Modal.Title>Confirmar Exclusão</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Não é possivel excluir problemas que já possuem vinculo com PBL
+          Tem certeza que deseja excluir o problema selecionado?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
